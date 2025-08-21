@@ -1,0 +1,60 @@
+<?php
+
+error_log("Accessing URL: " . $_SERVER['REQUEST_URI']);
+include(__DIR__ . '/../config/bootstrap.php');
+
+$urlMap = [
+   '/about' => 'about.php',
+   '/admin_verifications' => 'admin_verifications.php',
+   '/composition_instrumentation' => 'composition_instrumentation.php',
+   '/compositions' => 'compositions.php',
+   '/comps2csv' => 'comps2csv.php',
+   '/concerts' => 'concerts.php',
+   '/enable_disable_manager' => 'enable_disable_manager.php',
+   '/ensembles' => 'ensembles.php',
+   '/genres' => 'genres.php',
+   '/HelloWorld' => 'HelloWorld.php',
+   '/home' => 'home.php',
+   '/instrumentsorderlist' => 'instrumentsorderlist.php',
+   '/instruments' => 'instruments.php',
+   '/login_newpassword' => 'login_newpassword.php',
+   '/login' => 'login.php',
+   '/login_register' => 'login_register.php',
+   '/login_reset' => 'login_reset.php',
+   '/logout' => 'logout.php',
+   '/papersizes' => 'papersizes.php',
+   '/partcollections' => 'partcollections.php',
+   '/part_distribution' => 'part_distribution.php',
+   '/partsections' => 'partsections.php',
+   '/parts' => 'parts.php',
+   '/parttypesorderlist' => 'parttypesorderlist.php',
+   '/parttypes' => 'parttypes.php',
+   '/playgram_builder' => 'playgram_builder.php',
+   '/playgramsorderlist' => 'playgramsorderlist.php',
+   '/playgrams' => 'playgrams.php',
+   '/privacy-statement' => 'privacy-statement.php',
+   '/recordings' => 'recordings.php',
+   '/reports' => 'reports.php',
+   '/search' => 'search.php',
+   '/sections' => 'sections.php',
+   '/terms-conditions' => 'terms-conditions.php',
+   '/users' => 'users.php',
+   '/verify_email' => 'verify_email.php',
+   '/welcome' => 'welcome.php',
+   '/' => 'index.php'
+];
+
+// Extract the path from REQUEST_URI (ignore query string)
+$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+// Remove trailing slash except for root
+if ($requestUri !== '/' && substr($requestUri, -1) === '/') {
+    $requestUri = rtrim($requestUri, '/');
+}
+
+if (isset($urlMap[$requestUri])) {
+    include(__DIR__ . '/../src/' . $urlMap[$requestUri]);
+} else {
+    header($_SERVER['SERVER_PROTOCOL'] . ' 404 Not Found');
+    include(__DIR__ . '/../src/error.php');
+}

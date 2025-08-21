@@ -1,3 +1,17 @@
+# 🚀 Modernized Version Notice
+
+This repository is a modernized version of the original `musicLibraryDB` application. It features a new structure based on a single entry point (front controller) and a simple internal router, making it easier to maintain and extend.
+
+**Key Differences from the Original:**
+- All requests are routed through `public/index.php` using a minimal `.htaccess` file.
+- Application logic is organized in the `src/` directory, with routing handled in `public/index.php`.
+- The project is ready for further modernization (e.g., adding controllers, autoloading, or a lightweight framework).
+- The original monolithic structure has been refactored for better maintainability and scalability.
+
+**Migration Note:**
+If you are upgrading from the original `musicLibraryDB`, review the new routing and directory structure. Update your Apache configuration to set the document root to the `public/` directory and use the provided `.htaccess` for clean URLs.
+
+---
 # Music Library DB V1
 
 This just takes the old monolithic PHP and moves it around without major restructuring.
@@ -62,13 +76,13 @@ Whether you're managing a small community band library or a large institutional 
 ```bash
 # Clone to your web server's document root
 cd /var/www/html
-git clone https://github.com/yourusername/musicLibraryDB.git
-cd musicLibraryDB
+git clone https://github.com/yourusername/musicLibraryDB1.git
+cd musicLibraryDB1
 
 # Set proper permissions
 chmod 755 .
-chmod -R 755 includes/
-chmod -R 777 files/  # For file uploads
+chmod -R 755 src/includes/
+chmod -R 777 public/files/  # For file uploads
 ```
 
 ### Step 2: Database Setup
@@ -89,7 +103,7 @@ Choose and import one of the SQL setup files from the `setup/` directory:
 
 ```sql
 USE musicLibraryDB;
-SOURCE setup/musicLibraryDB-demo.sql;
+SOURCE src/setup/musicLibraryDB-demo.sql;
 ```
 
 ### Step 3: Configuration
@@ -132,9 +146,9 @@ define('DEBUG', 1); // Set verbose logging to error_log
 Ensure the web server can write to upload directories:
 
 ```bash
-mkdir -p files/recordings files/parts files/distributions
-chmod -R 755 files/
-chown -R www-data:www-data files/  # Use your web server user
+mkdir -p public/files/recordings public/files/parts public/files/distributions
+chmod -R 755 public/files/
+chown -R www-data:www-data public/files/  # Use your web server user
 ```
 
 ### Step 5: First Login

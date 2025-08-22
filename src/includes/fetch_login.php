@@ -1,7 +1,7 @@
 <?php  
  //fetch_login.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running LOGIN at fetch_login.php with id=". $_POST["username"]);
 $message = "error";
 if(isset($_POST["username"]) && isset($_POST["password"])) {

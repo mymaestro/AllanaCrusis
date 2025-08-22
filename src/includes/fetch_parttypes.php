@@ -1,7 +1,7 @@
 <?php  
  //fetch_parttypes.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_parttypes.php");
 
 if(isset($_POST["user_role"])) {

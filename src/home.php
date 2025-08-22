@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'Home');
 define('PAGE_NAME', 'home');
-require_once("includes/header.php");
+require_once(__DIR__. "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -11,9 +11,9 @@ if (isset($_SESSION['username'])) {
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once('includes/config.php');
-require_once("includes/navbar.php");
-require_once('includes/functions.php');
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__. "/includes/navbar.php");
+require_once(__DIR__ . "/includes/functions.php");
 
 ferror_log("RUNNING home.php");
 
@@ -276,7 +276,7 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with compositions in the music library. This table holds the data about the music in the library including title, composer, arranger, and publish date.</p>
-                        <a href="compositions.php" class="btn btn-secondary">
+                        <a href="/compositions" class="btn btn-secondary">
                             <i class="fas fa-music"></i> Manage compositions
                         </a>
                     </div>
@@ -300,7 +300,7 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with instrument parts for each composition. You find which parts are in a composition, and where they are located.</p>
-                        <a href="parts.php" class="btn btn-secondary">
+                        <a href="/parts" class="btn btn-secondary">
                             <i class="fas fa-puzzle-piece"></i> Manage parts
                         </a>
                     </div>
@@ -325,7 +325,7 @@ mysqli_close($f_link);
                         </div>
                         <p>Work with "playgrams". Playgrams are program playlists, or lists of compositions to be performed, in order, at a concert.</p>
                         <div class="d-flex gap-2 flex-wrap">
-                            <a href="playgrams.php" class="btn btn-secondary">
+                            <a href="/playgrams" class="btn btn-secondary">
                                 <i class="fas fa-list-ol"></i> Manage playgrams
                             </a>
                         </div>
@@ -355,7 +355,7 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with concerts. Concerts are performances of playlists at a venue on a particular date.</p>
-                        <a href="concerts.php" class="btn btn-secondary">
+                        <a href="/concerts" class="btn btn-secondary">
                             <i class="fas fa-calendar-alt"></i> Manage concerts
                         </a>
                     </div>
@@ -380,7 +380,7 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with recordings. Recordings are digital audio files that captured a concert performance of one composition at a concert.</p>
-                        <a href="recordings.php" class="btn btn-secondary">
+                        <a href="/recordings" class="btn btn-secondary">
                             <i class="fas fa-microphone"></i> Manage recordings
                         </a>
                     </div>
@@ -408,7 +408,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['instruments']); ?> items</small>
                         </div>
-                        <a href="instruments.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/instruments" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -423,7 +423,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['part_types']); ?> items</small>
                         </div>
-                        <a href="parttypes.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/parttypes" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -438,7 +438,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['ensembles']); ?> items</small>
                         </div>
-                        <a href="ensembles.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/ensembles" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -453,7 +453,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['genres']); ?> items</small>
                         </div>
-                        <a href="genres.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/genres" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -468,7 +468,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted">Collections</small>
                         </div>
-                        <a href="partcollections.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/partcollections" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -483,7 +483,7 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted">Page formats</small>
                         </div>
-                        <a href="papersizes.php" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <a href="/papersizes" class="btn btn-outline-secondary btn-sm">Manage</a>
                     </div>
                 </div>
             </div>
@@ -525,7 +525,7 @@ mysqli_close($f_link);
                             <p class="text-muted">No recent activity</p>
                         <?php endif; ?>
                         <div class="mt-3">
-                            <a href="compositions.php" class="btn btn-outline-primary btn-sm">View All Compositions</a>
+                            <a href="/compositions" class="btn btn-outline-primary btn-sm">View All Compositions</a>
                         </div>
                     </div>
                 </div>
@@ -574,7 +574,7 @@ mysqli_close($f_link);
                             <p class="text-muted">No recent parts activity</p>
                         <?php endif; ?>
                         <div class="mt-3">
-                            <a href="parts.php" class="btn btn-outline-primary btn-sm">View All Parts</a>
+                            <a href="/parts" class="btn btn-outline-primary btn-sm">View All Parts</a>
                         </div>
                     </div>
                 </div>
@@ -801,7 +801,7 @@ mysqli_close($f_link);
     </div>
 </main>
 
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 
 <!-- Chart.js Library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

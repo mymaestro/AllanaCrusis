@@ -3,9 +3,9 @@
 define('PAGE_TITLE', 'New password');
 define('PAGE_NAME', 'new password');
 
-require_once('includes/header.php');
-require_once('includes/config.php');
-require_once('includes/navbar.php');
+require_once(__DIR__ . "/includes/header.php");
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/includes/navbar.php");
 
 // Use this page to put in your new password
 // User gets here only by clicking the link sent to their e-mail address
@@ -89,7 +89,7 @@ if (empty($selector) || empty($validator)) {
 
 </main>
 </div>
-<?php require_once('includes/footer.php'); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
 <script>
     $(document).ready(function(){
         $('#password_form').on("submit", function(event){

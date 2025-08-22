@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'Enable/Disable Manager');
 define('PAGE_NAME', 'Enable/Disable Manager');
-require_once("includes/header.php");
+require_once(__DIR__. "/includes/header.php");
 
 // Check user permissions
 $u_admin = FALSE;
@@ -20,9 +20,9 @@ if (!$u_librarian) {
     exit();
 }
 
-require_once("includes/config.php");
-require_once("includes/navbar.php");
-require_once("includes/functions.php");
+require_once(__DIR__. "/includes/config.php");
+require_once(__DIR__. "/includes/navbar.php");
+require_once(__DIR__. "/includes/functions.php");
 
 // Define tables with enabled columns
 $enabled_tables = [
@@ -269,7 +269,7 @@ mysqli_close($f_link);
     </div>
 </main>
 
-<?php require_once("includes/footer.php"); ?>
+<?php require_once(__DIR__. "/includes/footer.php"); ?>
 
 <script>
 $(document).ready(function() {

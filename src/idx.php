@@ -1,7 +1,7 @@
 <?php
   define('PAGE_TITLE','Music Library');
   define('PAGE_NAME', 'home');
-  require_once("includes/header.php");
+  require_once(__DIR__. "/includes/header.php");
   $u_admin = FALSE;
   $u_librarian = FALSE;
   $u_user = FALSE;
@@ -21,8 +21,8 @@
 	require_once($configFile);
   };
 
-  require_once("includes/navbar.php");
-  require_once('includes/functions.php');
+  require_once(__DIR__. "/includes/navbar.php");
+  require_once(__DIR__ . "/includes/functions.php");
   ferror_log("RUNNING idx.php");
 ?>
 <main role="main" class="container">
@@ -41,7 +41,7 @@
 				<div class="card-body text-center">
 					<h5 class="card-title">Today's composition</h5>
 					<?php
-					require_once('includes/functions.php');
+					require_once(__DIR__ . "/includes/functions.php");
 					$f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 					$sql = "SELECT name, composer FROM compositions ORDER BY RAND() LIMIT 1;";
 					$res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
@@ -101,6 +101,6 @@
 		</div>
 	</div>
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 </body>
 </html>

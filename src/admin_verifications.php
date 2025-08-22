@@ -5,7 +5,7 @@
 define('PAGE_TITLE', 'Pending Requests');
 define('PAGE_NAME', 'Admin - Password Reset & Email Verification');
 
-require_once('includes/header.php');
+require_once(__DIR__ . "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -15,9 +15,9 @@ $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FA
 $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
 $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once('includes/config.php');
-require_once('includes/functions.php');
-require_once('includes/navbar.php');
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/includes/functions.php");
+require_once(__DIR__ . "/includes/navbar.php");
 
 // Note: In a production environment, you should add proper authentication here
 // to ensure only administrators can access this page
@@ -191,6 +191,6 @@ mysqli_close($f_link);
 </main>
 </div>
 
-<?php require_once('includes/footer.php'); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
 </body>
 </html>

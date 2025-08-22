@@ -2,8 +2,8 @@
 // delete_compositions.php
 // Called from the compositions page
 // Remove a composition and all its parts
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_compositions.php with id=" . $_POST["catalog_number"]);
 

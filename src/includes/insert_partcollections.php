@@ -2,8 +2,8 @@
  //insert_partcollections.php
 define('PAGE_TITLE', 'Insert part collections');
 define('PAGE_NAME', 'Insert part collections');
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running insert_partcollections.php with update = ".print_r($_POST, true));
 
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -110,15 +110,15 @@ if (isset($catalog_number_key) && isset($id_part_type_key) && isset($id_instrume
         // end loop
     } // update button = add
 } else { // empty
-    require_once("header.php");
+    require_once(__DIR__ . "/header.php");
     echo '<body>
 ';
-    require_once("navbar.php");
+    require_once(__DIR__ . "/navbar.php");
     echo '
     <div class="container">
     <h2 align="center">'. ORGNAME . ' ' . PAGE_NAME . '</h2>
     <div><p align="center" class="text-danger">You can get here only from the Part collections menu.</p></div>';
-    require_once("footer.php");
+    require_once(__DIR__ . "/footer.php");
     echo '</body>';
 }
 mysqli_close($f_link);

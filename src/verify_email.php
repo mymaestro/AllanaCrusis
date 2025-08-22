@@ -1,10 +1,10 @@
 <?php
 define('PAGE_TITLE', 'Verify Email');
 define('PAGE_NAME', 'Email Verification');
-require_once('includes/header.php');
-require_once('includes/config.php');
-require_once('includes/functions.php');
-require_once('includes/navbar.php');
+require_once(__DIR__ . "/includes/header.php");
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/includes/functions.php");
+require_once(__DIR__ . "/includes/navbar.php");
 ferror_log("RUNNING verify_email.php");
 
 $verification_result = "";
@@ -144,6 +144,6 @@ if (isset($_GET["selector"]) && isset($_GET["validator"])) {
 </main>
 </div>
 
-<?php require_once('includes/footer.php'); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
 </body>
 </html>

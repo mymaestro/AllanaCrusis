@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 /* called by parts.php when user selects "View" */
 ferror_log("RUNNING select_parts.php with POST data: ". print_r($_POST, true));
 if (isset($_POST["id_part_type"]) && isset($_POST["catalog_number"])) {

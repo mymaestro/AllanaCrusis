@@ -1,8 +1,8 @@
 <?php  
  //delete_records.php
  // remodel to fit music library database
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running delete_records.php");
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

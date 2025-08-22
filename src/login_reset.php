@@ -3,11 +3,11 @@
 define('PAGE_TITLE', 'Reset your password');
 define('PAGE_NAME', 'reset your password');
 
-require_once('includes/header.php');
-require_once('includes/config.php');
-require_once('includes/navbar.php');
-require_once('includes/password_hash.php');
-require_once('includes/functions.php');
+require_once(__DIR__ . "/includes/header.php");
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/includes/navbar.php");
+require_once(__DIR__ . "/includes/password_hash.php");
+require_once(__DIR__ . "/includes/functions.php");
 
 if(isset($_GET["reset"])) {
     $result = htmlspecialchars($_GET["reset"]);
@@ -84,6 +84,6 @@ ferror_log("Running login_reset.php");
     </div>
 </main>
 </div>
-<?php require_once('includes/footer.php'); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php  
  //fetch_sections.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 $section_id = intval($_POST['id_section']);
 
 ferror_log("Running fetch_sections.php with id=". $section_id);

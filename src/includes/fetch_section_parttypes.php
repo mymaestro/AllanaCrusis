@@ -1,7 +1,7 @@
 <?php
 // includes/fetch_section_parttypes.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 $section_id = intval($_POST['section_id']);
 
 ferror_log("RUNNING fetch_section_parttypes.php for section_id: $section_id");

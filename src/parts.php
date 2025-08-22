@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'List parts');
 define('PAGE_NAME', 'Parts');
-require_once("includes/header.php");
+require_once(__DIR__. "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -11,9 +11,9 @@ if (isset($_SESSION['username'])) {
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once('includes/config.php');
-require_once("includes/navbar.php");
-require_once('includes/functions.php');
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__. "/includes/navbar.php");
+require_once(__DIR__ . "/includes/functions.php");
 ferror_log("RUNNING parts.php");
 ?>
 
@@ -246,7 +246,7 @@ ferror_log("RUNNING parts.php");
         </div><!-- editModal -->
     </section>
 </main>
-<?php require_once("includes/footer.php"); ?>
+<?php require_once(__DIR__. "/includes/footer.php"); ?>
 <!-- Load instruments data into JSON array and object -->
 <script>
 <?php

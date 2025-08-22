@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 if (isset($_POST["registration-submit"])) {
     $selector = bin2hex(random_bytes(8));

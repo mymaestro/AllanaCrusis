@@ -2,8 +2,8 @@
  //insert_ensembles.php
 define('PAGE_TITLE', 'Insert ensembles');
 define('PAGE_NAME', 'InsertEnsembles');
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Insert ensembles POST ".print_r($_POST, true));
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if(!empty($_POST)) {
@@ -64,15 +64,15 @@ if(!empty($_POST)) {
         echo $output;
     }
  } else {
-    require_once("header.php");
+    require_once(__DIR__ . "/header.php");
     echo '<body>
 ';
-    require_once("navbar.php");
+    require_once(__DIR__ . "/navbar.php");
     echo '
     <div class="container">
     <h2 align="center">'. ORGNAME . ' ' . PAGE_NAME . '</h2>
     <div><p align="center" class="text-danger">You should not be here.</p></div>';
-    require_once("footer.php");
+    require_once(__DIR__ . "/footer.php");
     echo '</body>';
  }
  mysqli_close($f_link);

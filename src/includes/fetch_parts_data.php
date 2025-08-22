@@ -1,7 +1,7 @@
 <?php  
 /* Called by parts.php to fetch parts data as JSON */
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 header('Content-Type: application/json');
 

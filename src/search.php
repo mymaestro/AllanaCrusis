@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'Search');
 define('PAGE_NAME', 'search');
-require_once("includes/header.php");
+require_once(__DIR__. "/includes/header.php");
 
 // User permissions
 $u_admin = FALSE;
@@ -13,9 +13,9 @@ if (isset($_SESSION['username'])) {
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once("includes/config.php");
-require_once("includes/navbar.php");
-require_once("includes/functions.php");
+require_once(__DIR__. "/includes/config.php");
+require_once(__DIR__. "/includes/navbar.php");
+require_once(__DIR__. "/includes/functions.php");
 ferror_log("RUNNING search.php");
 ?>
 
@@ -430,7 +430,7 @@ ferror_log("RUNNING search.php");
 
 <?php
 mysqli_close($f_link);
-require_once("includes/footer.php");
+require_once(__DIR__. "/includes/footer.php");
 ?>
 
 <script>

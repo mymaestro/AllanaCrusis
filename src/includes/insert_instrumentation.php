@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'Insert instrumentation');
 define('PAGE_NAME', 'Insert instrumentation');
-require_once("header.php");
+require_once(__DIR__ . "/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -11,12 +11,12 @@ if (isset($_SESSION['username'])) {
   $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
   $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once('config.php');
-require_once("navbar.php");
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/navbar.php");
 ?>
 <main role="main">
     <?php
-    require_once('functions.php');
+    require_once(__DIR__ . "/functions.php");
     ferror_log("RUNNING insert_instrumentation.php with catalog_num=". $_POST["catalog_number"]);
     ?>
     <div class="container">
@@ -160,5 +160,5 @@ require_once("navbar.php");
 </main>
 </body>
 <?php
-require_once("footer.php");
+require_once(__DIR__ . "/footer.php");
 ?>

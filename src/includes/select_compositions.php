@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running select_compositions.php with id=". $_POST["catalog_number"]);
 if (isset($_POST["catalog_number"])) {
     $output = '

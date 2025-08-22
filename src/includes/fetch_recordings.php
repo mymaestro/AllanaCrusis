@@ -1,7 +1,7 @@
 <?php  
  //fetch_recordings.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 if(isset($_POST["user_role"])) {
     $u_librarian = (($_POST["user_role"] == 'librarian') !== FALSE ? TRUE : FALSE);

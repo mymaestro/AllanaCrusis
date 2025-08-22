@@ -1,10 +1,10 @@
 <?php
 define('PAGE_TITLE', 'Register');
 define('PAGE_NAME', 'Register');
-require_once('includes/header.php');
-require_once('includes/config.php');
-require_once('includes/functions.php');
-require_once('includes/password_hash.php');
+require_once(__DIR__ . "/includes/header.php");
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/includes/functions.php");
+require_once(__DIR__ . "/includes/password_hash.php");
 
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
@@ -160,7 +160,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Close connection
     mysqli_close($f_link);
 }
-require_once('includes/navbar.php');
+require_once(__DIR__ . "/includes/navbar.php");
 ?>
 <div class="container">
 <main>
@@ -226,6 +226,6 @@ require_once('includes/navbar.php');
 
 </main>
 </div>
-<?php require_once('includes/footer.php'); ?>
+<?php require_once(__DIR__ . "/includes/footer.php"); ?>
 </body>
 </html>

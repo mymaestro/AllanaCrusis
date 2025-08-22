@@ -9,7 +9,7 @@
  * @link https://github.com/Antnee/phpPasswordHashingLib
  */
 
-require_once('passwordLibClass.php');
+require_once(__DIR__ . "/passwordLibClass.php");
 
 if (!function_exists('password_hash')){
     function password_hash($password, $algo=PASSWORD_DEFAULT, $options=array()){

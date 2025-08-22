@@ -1,7 +1,7 @@
 <?php
   define('PAGE_TITLE', 'Instruments score order');
   define('PAGE_NAME', 'InstrumentsOrder');
-  require_once("includes/header.php");
+  require_once(__DIR__. "/includes/header.php");
   $u_admin = FALSE;
   $u_librarian = FALSE;
   $u_user = FALSE;
@@ -11,9 +11,9 @@
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
   }
-  require_once('includes/config.php');
-  require_once('includes/functions.php');
-  require_once("includes/navbar.php");
+  require_once(__DIR__ . "/includes/config.php");
+  require_once(__DIR__ . "/includes/functions.php");
+  require_once(__DIR__. "/includes/navbar.php");
   ferror_log("RUNNING instrumentsorderlist.php");
 ?>
 <main role="main">
@@ -61,7 +61,7 @@
 <?php endif; ?>
 
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 <!-- jquery function to add/update database records -->
 <script>

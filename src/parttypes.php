@@ -1,7 +1,7 @@
 <?php
   define('PAGE_TITLE', 'Part types');
   define('PAGE_NAME', 'PartTypes');
-  require_once("includes/header.php");
+  require_once(__DIR__. "/includes/header.php");
   $u_admin = FALSE;
   $u_librarian = FALSE;
   $u_user = FALSE;
@@ -11,9 +11,9 @@
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
   }
-  require_once('includes/config.php');
-  require_once('includes/functions.php');
-  require_once("includes/navbar.php");
+  require_once(__DIR__ . "/includes/config.php");
+  require_once(__DIR__ . "/includes/functions.php");
+  require_once(__DIR__. "/includes/navbar.php");
   ferror_log("RUNNING parttypes.php");
 ?>
 <main role="main">
@@ -206,7 +206,7 @@
         </div>
     </div><!-- container -->
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 <script>
     // Load instruments data into a JSON array for frequent use
 <?php

@@ -1,7 +1,7 @@
 <?php
 define('PAGE_TITLE', 'Manage instrumentation');
 define('PAGE_NAME', 'Manage instrumentation');
-require_once("includes/header.php");
+require_once(__DIR__. "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -11,9 +11,9 @@ if (isset($_SESSION['username'])) {
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
-require_once('includes/config.php');
-require_once("includes/navbar.php");
-require_once('includes/functions.php');
+require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__. "/includes/navbar.php");
+require_once(__DIR__ . "/includes/functions.php");
 
 ferror_log("composition_instrumentation.php POST: " . print_r($_POST, TRUE));
 
@@ -183,7 +183,7 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
     <?php endif; ?>
     </div><!-- container -->
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 <?php if($u_librarian) : ?>
 <!-- jquery function to add/update database records -->
 <script>

@@ -2,8 +2,8 @@
  //insert_users.php
 define('PAGE_TITLE', 'Insert users');
 define('PAGE_NAME', 'Insert users');
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running ". PAGE_NAME . " with POST data: " . print_r($_POST, true));
 
 if(!empty($_POST)) {
@@ -71,15 +71,15 @@ if(!empty($_POST)) {
     }
     mysqli_close($f_link);
  } else {
-    require_once("header.php");
+    require_once(__DIR__ . "/header.php");
     echo '<body>
 ';
-    require_once("navbar.php");
+    require_once(__DIR__ . "/navbar.php");
     echo '
     <div class="container">
     <h2 align="center">'. ORGNAME . ' ' . PAGE_NAME . '</h2>
     <div><p align="center" class="text-danger">You should not be here.</p></div>';
-    require_once("footer.php");
+    require_once(__DIR__ . "/footer.php");
     echo '</body>';
  }
  ?>

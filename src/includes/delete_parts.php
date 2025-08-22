@@ -1,8 +1,8 @@
 <?php  
  //delete_parts.php
  //
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_parts.php with id=". $_POST["catalog_number"] . ":" . $_POST["id_part_type"]);
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);

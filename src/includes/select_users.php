@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running select_users.php with id_users=". $_POST["id_users"]);
 if (isset($_POST["id_users"])) {
     $output = "";

@@ -41,6 +41,7 @@ $urlMap = [
    '/users' => 'users.php',
    '/verify_email' => 'verify_email.php',
    '/welcome' => 'welcome.php',
+   '/fetch_compositions' => '/includes/fetch_compositions.php',
    '/' => 'index.php'
 ];
 

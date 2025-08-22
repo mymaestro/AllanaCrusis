@@ -1,7 +1,7 @@
 <?php
   define('PAGE_TITLE', 'Music paper sizes');
   define('PAGE_NAME', 'PaperSizes');
-  require_once("includes/header.php");
+  require_once(__DIR__. "/includes/header.php");
   $u_admin = FALSE;
   $u_librarian = FALSE;
   $u_user = FALSE;
@@ -11,9 +11,9 @@
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
   }
-  require_once('includes/config.php');
-  require_once("includes/navbar.php");
-  require_once('includes/functions.php');
+  require_once(__DIR__ . "/includes/config.php");
+  require_once(__DIR__. "/includes/navbar.php");
+  require_once(__DIR__ . "/includes/functions.php");
   ferror_log("Running papersizes.php");
 ?>
 <main role="main">
@@ -175,7 +175,7 @@
         </div><!-- modal-dialog -->
     </div><!-- editModal -->
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 <!-- jquery function to add/update database records -->
 <script>
 $(document).ready(function(){

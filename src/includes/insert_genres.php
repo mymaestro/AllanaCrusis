@@ -5,8 +5,8 @@ use Dom\Mysql;
 
 define('PAGE_TITLE', 'Insert genres');
 define('PAGE_NAME', 'Insert genres');
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running insert_genres.php with POST data: " . print_r($_POST, true));
 if(!empty($_POST)) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -47,15 +47,15 @@ if(!empty($_POST)) {
             $referred = str_replace(array('?', $query), '', $referred);
             
             // Include proper HTML structure for success message
-            require_once("header.php");
+            require_once(__DIR__ . "/header.php");
             echo '<body>';
-            require_once("navbar.php");
+            require_once(__DIR__ . "/navbar.php");
             echo '<div class="container mt-4">';
             echo '<h2 class="text-center">' . ORGNAME . ' ' . PAGE_NAME . '</h2>';
             echo $output;
             echo '<div class="text-center mt-3"><a href="'.$referred.'" class="btn btn-primary">Return</a></div>';
             echo '</div>';
-            require_once("footer.php");
+            require_once(__DIR__ . "/footer.php");
             echo '</body>';
         }
     } catch (mysqli_sql_exception $e) {
@@ -66,9 +66,9 @@ if(!empty($_POST)) {
         ferror_log("Error: " . $error_message . " (Error Code: " . $mysql_errno . ")");
         
         // Include proper HTML structure for error message
-        require_once("header.php");
+        require_once(__DIR__ . "/header.php");
         echo '<body>';
-        require_once("navbar.php");
+        require_once(__DIR__ . "/navbar.php");
         echo '<div class="container mt-4">';
         echo '<h2 class="text-center">' . ORGNAME . ' ' . PAGE_NAME . '</h2>';
         
@@ -81,20 +81,20 @@ if(!empty($_POST)) {
         
         echo '<div class="text-center mt-3"><a href="'.$referred.'" class="btn btn-primary">Return</a></div>';
         echo '</div>';
-        require_once("footer.php");
+        require_once(__DIR__ . "/footer.php");
         echo '</body>';
     }
     mysqli_close($f_link);
  } else {
-    require_once("header.php");
+    require_once(__DIR__ . "/header.php");
     echo '<body>
 ';
-    require_once("navbar.php");
+    require_once(__DIR__ . "/navbar.php");
     echo '
     <div class="container">
     <h2 align="center">'. ORGNAME . ' ' . PAGE_NAME . '</h2>
     <div><p align="center" class="text-danger">You can get here only from the Genres menu.</p></div>';
-    require_once("footer.php");
+    require_once(__DIR__ . "/footer.php");
     echo '</body>';
  }
  ?>

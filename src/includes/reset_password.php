@@ -1,6 +1,6 @@
 <?php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 // Called from login_newpassword.php, where the user entered their new password twice.
 ferror_log("Running reset_password.php");

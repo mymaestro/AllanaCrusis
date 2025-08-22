@@ -1,7 +1,7 @@
 <?php
   define('PAGE_TITLE','Error');
   define('PAGE_NAME', 'Error');
-  require_once("includes/header.php");
+  require_once(__DIR__. "/includes/header.php");
   $u_admin = FALSE;
   $u_librarian = FALSE;
   $u_user = FALSE;
@@ -35,6 +35,6 @@
 		</div>
 	</div>
 </main>
-<?php require_once("includes/footer.php");?>
+<?php require_once(__DIR__. "/includes/footer.php");?>
 </body>
 </html>

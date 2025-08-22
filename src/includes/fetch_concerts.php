@@ -1,7 +1,7 @@
 <?php  
  //fetch_concerts.php
-require_once('config.php');
-require_once('functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_concerts.php with id=". $_POST["id_concert"]);
 
 if(isset($_POST["id_concert"])) {

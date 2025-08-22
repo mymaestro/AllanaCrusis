@@ -3,6 +3,27 @@
 error_log("Accessing URL: " . $_SERVER['REQUEST_URI']);
 include(__DIR__ . '/../config/bootstrap.php');
 
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    // Only allow certain prefixes for security
+    if (preg_match('/^(fetch_|insert_|delete_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+        $file = __DIR__ . '/../src/includes/' . $action . '.php';
+        if (file_exists($file)) {
+            require $file;
+            exit;
+        } else {
+            http_response_code(404);
+            error_log("Action file not found.");
+            exit;
+        }
+    } else {
+        http_response_code(400);
+        error_log("Invalid action.");
+        exit;
+    }
+}
+
+
 $urlMap = [
    '/about' => 'about.php',
    '/admin_verifications' => 'admin_verifications.php',
@@ -41,7 +62,6 @@ $urlMap = [
    '/users' => 'users.php',
    '/verify_email' => 'verify_email.php',
    '/welcome' => 'welcome.php',
-   '/fetch_compositions' => '/includes/fetch_compositions.php',
    '/' => 'index.php'
 ];
 

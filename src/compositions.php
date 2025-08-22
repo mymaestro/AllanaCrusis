@@ -459,7 +459,7 @@ $(document).ready(function() {
         $data['user_role'] = ($u_librarian) ? 'librarian' : 'nobody';
     ?>
     $.ajax({
-        url:"/fetch_compositions",
+        url:"index.php?action=fetch_compositions",
         method:"POST",
         data: <?php echo json_encode($data); ?>,
         success:function(data){
@@ -557,7 +557,7 @@ $(document).ready(function() {
     $(document).on('click', '.edit_data', function(){
         //var catalog_number = $(this).attr("id");
         $.ajax({
-            url:"includes/fetch_compositions.php",
+            url:"index.php?action=fetch_compositions",
             type:"POST",
             data:{catalog_number:catalog_number},
             dataType:"json",
@@ -637,7 +637,7 @@ $(document).ready(function() {
                     ?>
                     // Refresh the table
                     $.ajax({
-                        url:"includes/fetch_compositions.php",
+                        url:"index.php?action=fetch_compositions",
                         method:"POST",
                         data: <?php echo json_encode($data); ?>,
                         success:function(data){
@@ -671,7 +671,7 @@ $(document).ready(function() {
         else
         {
             $.ajax({
-                url:"includes/insert_compositions.php",
+                url:"index.php?action=insert_compositions",
                 type:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -689,7 +689,7 @@ $(document).ready(function() {
                     $data['user_role'] = ($u_librarian) ? 'librarian' : 'nobody';
                     ?>
                     $.ajax({
-                        url:"includes/fetch_compositions.php",
+                        url:"index.php?action=fetch_compositions",
                         method:"POST",
                         data: <?php echo json_encode($data); ?>,
                         success:function(data){

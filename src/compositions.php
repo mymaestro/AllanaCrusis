@@ -505,7 +505,7 @@ $(document).ready(function() {
         if(clicked_id)
         {
             $.ajax({
-                url:"includes/select_compositions.php",
+                url:"index.php?action=select_compositions",
                 type:"POST",
                 data:{catalog_number: clicked_id}, // Use clicked_id instead of catalog_number
                 success:function(data){
@@ -520,7 +520,7 @@ $(document).ready(function() {
         if(catalog_number != '')
         {
             $.ajax({
-                url:"includes/select_composition_parts.php",
+                url:"index.php?action=select_composition_parts",
                 type:"POST",
                 data:{catalog_number:catalog_number},
                 success:function(data){
@@ -618,7 +618,7 @@ $(document).ready(function() {
         // The confirm delete button
         var catalog_number = $(this).data('id');
         $.ajax({
-            url:"includes/delete_compositions.php",
+            url:"index.php?action=delete_compositions",
             type:"POST",
             data:{
                 catalog_number: catalog_number

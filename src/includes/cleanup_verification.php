@@ -2,8 +2,8 @@
 // Cleanup script for expired tokens (both password reset and email verification)
 // This should be run periodically (e.g., via cron job)
 
-require_once('./config.php');
-require_once('./functions.php');
+require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/functions.php");
 
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

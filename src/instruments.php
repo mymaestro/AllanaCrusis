@@ -26,7 +26,7 @@
             <div class="col-auto">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
 <?php if($u_librarian) : ?>
-                <a href="instrumentsorderlist.php" class="btn btn-info" role="button" name="sort" id="sort">Set score order</a>
+                <a href="/instrumentsorderlist" class="btn btn-info" role="button" name="sort" id="sort">Set score order</a>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="add" class="btn btn-warning">Add</button>
@@ -183,7 +183,7 @@ $(document).ready(function(){
     });
 
     $.ajax({
-        url:"includes/fetch_instruments.php",
+        url:"index.php?action=fetch_instruments",
         method:"POST",
         data:{
             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -212,7 +212,7 @@ $(document).ready(function(){
         // var id_instrument = $(this).attr("id");
         // Load instruments table
         $.ajax({
-            url:"includes/fetch_instruments.php",
+            url:"index.php?action=fetch_instruments",
             method:"POST",
             data:{id_instrument:id_instrument},
             dataType:"json",
@@ -242,7 +242,7 @@ $(document).ready(function(){
         // The confirm delete button
         // var id_instrument = $(this).data('id');
         $.ajax({
-            url:"includes/delete_records.php",
+            url:"index.php?action=delete_records",
             method:"POST",
             data:{
                 table_name: "instruments",
@@ -254,7 +254,7 @@ $(document).ready(function(){
                     $('#message_detail').html('<p class="text-success">Record ' + response.message + ' deleted from instruments</p>');
                     $('#messageModal').modal('show');
                     $.ajax({
-                        url:"includes/fetch_instruments.php",
+                        url:"index.php?action=fetch_instruments",
                         method:"POST",
                         data:{
                             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -286,7 +286,7 @@ $(document).ready(function(){
         else
         {
             $.ajax({
-                url:"includes/insert_instruments.php",
+                url:"index.php?action=insert_instruments",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -296,7 +296,7 @@ $(document).ready(function(){
                     $('#insert_form')[0].reset();
                     $('#editModal').modal('hide');
                     $.ajax({
-                        url:"includes/fetch_instruments.php",
+                        url:"index.php?action=fetch_instruments",
                         method:"POST",
                         data:{
                             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -335,7 +335,7 @@ $(document).ready(function(){
         
         if (clicked_id) {
             $.ajax({
-                url:"includes/select_instruments.php",
+                url:"index.php?action=select_instruments",
                 method:"POST",
                 data:{id_instrument:clicked_id},
                 success:function(data){

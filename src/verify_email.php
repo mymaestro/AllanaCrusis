@@ -101,42 +101,42 @@ if (isset($_GET["selector"]) && isset($_GET["validator"])) {
                     <h4 class="alert-heading">Email Verified Successfully!</h4>
                     <p>Your email has been verified and your account has been created. You can now log in to access the music library.</p>
                     <hr>
-                    <a href="login.php" class="btn btn-primary">Go to Login</a>
+                    <a href="/login" class="btn btn-primary">Go to Login</a>
                 </div>
             <?php elseif ($verification_result == "expired"): ?>
                 <div class="alert alert-warning" role="alert">
                     <h4 class="alert-heading">Verification Link Expired</h4>
                     <p>Your verification link has expired. Please register again to receive a new verification email.</p>
                     <hr>
-                    <a href="login_register.php" class="btn btn-primary">Register Again</a>
+                    <a href="/login_register" class="btn btn-primary">Register Again</a>
                 </div>
             <?php elseif ($verification_result == "invalid"): ?>
                 <div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading">Invalid Verification Link</h4>
                     <p>The verification link is invalid. Please check your email for the correct link or register again.</p>
                     <hr>
-                    <a href="login_register.php" class="btn btn-primary">Register Again</a>
+                    <a href="/login_register" class="btn btn-primary">Register Again</a>
                 </div>
             <?php elseif ($verification_result == "username_taken"): ?>
                 <div class="alert alert-warning" role="alert">
                     <h4 class="alert-heading">Username Already Taken</h4>
                     <p>The username you chose has been taken by another user while your verification was pending. Please register again with a different username.</p>
                     <hr>
-                    <a href="login_register.php" class="btn btn-primary">Register Again</a>
+                    <a href="/login_register" class="btn btn-primary">Register Again</a>
                 </div>
             <?php elseif ($verification_result == "missing"): ?>
                 <div class="alert alert-info" role="alert">
                     <h4 class="alert-heading">Missing Verification Information</h4>
                     <p>Please click the verification link in your email to complete your registration.</p>
                     <hr>
-                    <a href="login_register.php" class="btn btn-primary">Back to Registration</a>
+                    <a href="/login_register" class="btn btn-primary">Back to Registration</a>
                 </div>
             <?php else: ?>
                 <div class="alert alert-danger" role="alert">
                     <h4 class="alert-heading">Verification Error</h4>
                     <p>An error occurred during verification. Please try again or contact support if the problem persists.</p>
                     <hr>
-                    <a href="login_register.php" class="btn btn-primary">Register Again</a>
+                    <a href="/login_register" class="btn btn-primary">Register Again</a>
                 </div>
             <?php endif; ?>
         </div>

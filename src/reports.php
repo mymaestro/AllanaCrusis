@@ -216,22 +216,22 @@ mysqli_close($f_link);
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3 mb-2">
-                                <a href="part_distribution.php" class="btn btn-outline-secondary w-100">
+                                <a href="/part_distribution" class="btn btn-outline-secondary w-100">
                                     <i class="fas fa-file-archive"></i> Part distribution
                                 </a>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <a href="comps2csv.php" class="btn btn-outline-secondary w-100">
+                                <a href="/comps2csv" class="btn btn-outline-secondary w-100">
                                     <i class="fas fa-file-csv"></i> Export to CSV
                                 </a>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <a href="composition_instrumentation.php" class="btn btn-outline-secondary w-100">
+                                <a href="/composition_instrumentation" class="btn btn-outline-secondary w-100">
                                     <i class="fas fa-list-ul"></i> Manage instrumentations
                                 </a>
                             </div>
                             <div class="col-md-3 mb-2">
-                                <a href="home.php" class="btn btn-outline-primary w-100">
+                                <a href="/home" class="btn btn-outline-primary w-100">
                                     <i class="fas fa-tachometer-alt"></i> Back to Home
                                 </a>
                             </div>
@@ -275,7 +275,7 @@ $(document).ready(function() {
         button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
         
         $.ajax({
-            url: "includes/generate_reports.php",
+            url: "index.php?action=generate_reports",
             type: "POST",
             data: {
                 report_type: report_type

@@ -6,7 +6,7 @@ if (isset($_POST["reset-request-submit"])) {
 
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
-    $url = ORGHOME . "/login_newpassword.php?selector=" . $selector . "&validator=" . bin2hex($token);
+    $url = ORGHOME . "/login_newpassword?selector=" . $selector . "&validator=" . bin2hex($token);
     $expires = date("U") + 1800;
 
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -62,14 +62,14 @@ if (isset($_POST["reset-request-submit"])) {
             $headers .= "Content-type: text/html\r\n";
             $headers .= "X-Mailer: PHP/" . phpversion();
             mail($to, $subject, $message, $headers);
-        
-            header("Location: ../login_reset.php?reset=success");
-        
+
+            header("Location: /login_reset?reset=success");
+
         } else {
-            header("Location: ../login_reset.php?reset=fail");
+            header("Location: /login_reset?reset=fail");
         }
     }
 
 } else {
-    header("Location: ../login.php");
+    header("Location: /login");
 }

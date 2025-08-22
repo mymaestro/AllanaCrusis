@@ -738,7 +738,7 @@ require_once(__DIR__. "/includes/footer.php");
 
             // Load composition details
             $.ajax({
-                url: 'includes/select_compositions.php',
+                url: 'index.php?action=select_compositions',
                 type: 'POST',
                 data: {
                     catalog_number: catalogNumber
@@ -767,7 +767,7 @@ require_once(__DIR__. "/includes/footer.php");
 
             // Load parts details
             $.ajax({
-                url: 'includes/select_composition_parts.php',
+                url: 'index.php?action=select_composition_parts',
                 type: 'POST',
                 data: {
                     catalog_number: catalogNumber

@@ -30,8 +30,8 @@
 		<h1 class="display-5 fw-bold text-body-emphasis"><?php echo ORGDESC ?></h1>
 		<div class="col-lg-6 mx-auto">
 			<p class="lead mb-4">The <strong>music library</strong> is an application you can use to keep track of the sheet music in your library. While intended for full-size concert bands, brass bands, wind ensembles, and orchestras, the music database can be tailored to fit the complexity of any size library. </p>
-			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center"> <a href="home.php" class="btn btn-primary btn-lg px-4 gap-3">Home</a> <a
-					href="about.php" class="btn btn-outline-secondary btn-lg px-4">About</a> </div>
+			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center"> <a href="/home" class="btn btn-primary btn-lg px-4 gap-3">Home</a> <a
+					href="/about" class="btn btn-outline-secondary btn-lg px-4">About</a> </div>
 		</div>
 	</div>
 	

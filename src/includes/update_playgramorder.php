@@ -35,7 +35,7 @@ if(!empty($_POST)) {
     $referred = $_SERVER['HTTP_REFERER'];
     $query = parse_url($referred, PHP_URL_QUERY);
     $referred = str_replace(array('?', $query), '', $referred);
-    echo '<p><a href="playgrams.php">Refresh</a></p>';
+    echo '<p><a href="/playgrams">Refresh</a></p>';
     echo $output;
     mysqli_close($f_link);
  } else {

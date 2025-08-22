@@ -218,7 +218,7 @@ require_once(__DIR__ . "/includes/navbar.php");
                 <div class="card-body">
                     <h5 class="card-title text-secondary">Already have an account?</h5>
                     <p class="card-text">Go to the login page.</p>
-                    <a href="login.php" class="card-link">Login</a>
+                    <a href="/login" class="card-link">Login</a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 <?php  
- // includes/fetch_composition_parts.php
+ // index.php?action=fetch_composition_parts
  // Get parts array for composition_instrumentation.php
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");

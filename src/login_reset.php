@@ -77,7 +77,7 @@ ferror_log("Running login_reset.php");
                 <div class="card-body">
                     <h5 class="card-title text-secondary">Want to login?</h5>
                     <p class="card-text">Go to the login page.</p>
-                    <a href="login.php" class="card-link">Login</a>
+                    <a href="/login" class="card-link">Login</a>
                 </div>
             </div>
         </div>

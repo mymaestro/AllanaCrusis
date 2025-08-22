@@ -39,8 +39,8 @@
         <p id="login-message" align="center">Enter your user name and password.</p>
 
         <div class="text-center">
-            <p><a href="login_reset.php">Forgot your password?</a></p>
-            <p>Not a member? <a href="login_register.php">Register</a></p>
+            <p><a href="/login_reset">Forgot your password?</a></p>
+            <p>Not a member? <a href="/login_register">Register</a></p>
         </div>
     </form>
     </div><!-- container -->
@@ -58,7 +58,7 @@ $(document).ready(function(){
             alert("Password is required");
         } else {
             $.ajax({
-                url: "includes/fetch_login.php",
+                url: "index.php?action=fetch_login",
                 method: "POST",
                 data: $('#signin_form').serialize(),
                 beforeSend: function(){
@@ -70,16 +70,16 @@ $(document).ready(function(){
                     switch(data) {
                         case "success":
                             $("#login-message").addClass("text-success");
-                            $("#login-message").html('You are logged in. <a href="logout.php">Logout</a>.');
-                            window.location.replace("welcome.php");
+                            $("#login-message").html('You are logged in. <a href="/logout">Logout</a>.');
+                            window.location.replace("/welcome");
                             break;
                         case "username":
                             $("#login-message").addClass("text-danger");
-                            $("#login-message").html('No user by that name.<br>Need an account? <a href="login_register.php">Sign up now</a>.');
+                            $("#login-message").html('No user by that name.<br>Need an account? <a href="/login_register">Sign up now</a>.');
                             break;
                         case "password":
                             $("#login-message").addClass("text-danger");
-                            $("#login-message").html('Password does not match.<br>Need to reset? <a href="login_reset.php">Reset your password</a>.');
+                            $("#login-message").html('Password does not match.<br>Need to reset? <a href="/login_reset">Reset your password</a>.');
                             break;
                         default:
                             $("#login-message").addClass("text-danger");

@@ -40,7 +40,7 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
         <h1><?php echo ORGNAME . ' '. PAGE_NAME ?></h1>
         <?php if($u_librarian) : ?>
         <div id="instrumentation">
-            <form action="includes/insert_instrumentation.php" method="post" id="instrumentation_form">
+            <form action="index.php?action=insert_instrumentation" method="post" id="instrumentation_form">
                 <div class="row mb-3">
                     <div class="col-sm-2 col-form-label">
                         <label for="catalog_number" class="form-label">Catalog number*</label>
@@ -137,7 +137,7 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
                     <div class="col-sm-10 offset-sm-2">
                         <p>Select multiple parts by holding the Shift or Ctrl keys while clicking.</p>
                         <p><strong>Important:</strong> The parts list will be synchronized to match your selection. New parts will be added, unselected parts will be removed, and existing selected parts will be kept with their customizations preserved.</p>
-                        <p>If a type of part does not appear on the list, check the <a href="parttypes.php">Part types</a> page.</p>
+                        <p>If a type of part does not appear on the list, check the <a href="/parttypes">Part types</a> page.</p>
                     <!-- Read part types from part_types table -->
                     <?php
                         $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -164,8 +164,8 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
                         <button class="btn btn-primary" type="submit" name="submit" value="add">Synchronize parts</button>
                         <button type="reset" class="btn btn-secondary" id="revertSelect">Cancel</button>
                         <a href="#" class="btn btn-link" role="button" onclick="goBack()">Back</a>
-                        <a href="compositions.php" class="btn btn-link" role="button">Compositions</a>
-                        <a href="parts.php" class="btn btn-link" role="button">Parts</a>
+                        <a href="/compositions" class="btn btn-link" role="button">Compositions</a>
+                        <a href="/parts" class="btn btn-link" role="button">Parts</a>
                     </div>
                 </div>
             </form>
@@ -197,7 +197,7 @@ function goBack() {
 $(document).ready(function(){
     var catalog_number = $("#catalog_number").val();
     $.ajax({
-        url:"includes/fetch_composition_parts.php",
+        url:"index.php?action=fetch_composition_parts",
         method:"POST",
         dataType: "json",
         data:{
@@ -213,7 +213,7 @@ $(document).ready(function(){
     $('#catalog_number').change(function() {
         var catalog_number = this.value;
         $.ajax({
-            url:"includes/fetch_composition_parts.php",
+            url:"index.php?action=fetch_composition_parts",
             method:"POST",
             dataType: "json",
             data:{
@@ -247,7 +247,7 @@ $(document).ready(function(){
         {
             alert("Going for AJAX.");
             $.ajax({
-                url:"includes/insert_instrumentation.php",
+                url:"index.php?action=insert_instrumentation",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){

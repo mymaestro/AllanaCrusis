@@ -1,5 +1,5 @@
 <?php
-// includes/insert_section_parttypes.php
+// index.php?action=insert_section_parttypes
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 

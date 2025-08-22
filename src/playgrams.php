@@ -200,7 +200,7 @@ $(document).ready(function(){
 
     let id_playgram = null;  // Which row user clicks
     $.ajax({
-        url:"includes/fetch_playgrams.php",
+        url:"index.php?action=fetch_playgrams",
         method:"POST",
         data:{
             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -223,7 +223,7 @@ $(document).ready(function(){
     });
     $(document).on('click', '.edit_data', function(){
         $.ajax({
-            url:"includes/fetch_playgrams.php",
+            url:"index.php?action=fetch_playgrams",
             method:"POST",
             data:{ id_playgram : id_playgram },
             dataType:"json",
@@ -291,7 +291,7 @@ $(document).ready(function(){
     $(document).on('click', '.delete_data', function() { // button that brings up delete modal
         if(id_playgram !== null) {
             $.ajax({
-                url:"includes/select_playgrams.php",
+                url:"index.php?action=select_playgrams",
                 method:"POST",
                 data:{id_playgram:id_playgram},
                 success:function(data){
@@ -304,7 +304,7 @@ $(document).ready(function(){
     });
     $('#confirm-delete').click(function(){ // The confirm delete button
         $.ajax({
-            url:"includes/delete_playgrams.php",
+            url:"index.php?action=delete_playgrams",
             method:"POST",
             data:{
                 id_playgram: id_playgram
@@ -334,7 +334,7 @@ $(document).ready(function(){
             alert("Program playlist name is required");
         } else {
             $.ajax({
-                url:"includes/insert_playgrams.php",
+                url:"index.php?action=insert_playgrams",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -344,7 +344,7 @@ $(document).ready(function(){
                     $('#insert_form')[0].reset();
                     $('#editModal').modal('hide');
                     $.ajax({
-                        url:"includes/fetch_playgrams.php",
+                        url:"index.php?action=fetch_playgrams",
                         method:"POST",
                         data:{
                             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -383,7 +383,7 @@ $(document).ready(function(){
         
         if (clicked_id) {
             $.ajax({
-                url:"includes/select_playgrams.php",
+                url:"index.php?action=select_playgrams",
                 method:"POST",
                 data:{id_playgram: clicked_id},
                 success:function(data){

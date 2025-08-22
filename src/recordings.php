@@ -233,7 +233,7 @@ $("#id_concert").change(function(){
 
     // Dynamically update catalog_number options based on selected concert
     $.ajax({
-        url: "includes/fetch_playgram_items.php",
+        url: "index.php?action=fetch_playgram_items",
         method: "POST",
         data: { id_concert: selectedConcert },
         success: function(options) {
@@ -268,7 +268,7 @@ $(document).ready(function(){
     let id_recording = null; // Which row the user clicks
 
     $.ajax({
-        url:"includes/fetch_recordings.php",
+        url:"index.php?action=fetch_recordings",
         method:"POST",
         data:{
             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -319,7 +319,7 @@ $(document).ready(function(){
         var catalog_number = this.value;
         console.log("Catalog number changed to " + catalog_number);
         $.ajax({
-            url: "includes/fetch_recordings.php",
+            url: "index.php?action=fetch_recordings",
             method: "POST",
             dataType: "json",
             data: {
@@ -334,7 +334,7 @@ $(document).ready(function(){
                 if (catalog_number) {
                     console.log("Fetching composition for catalog number: " + catalog_number);
                     $.ajax({
-                        url: "includes/fetch_compositions.php",
+                        url: "index.php?action=fetch_compositions",
                         method: "POST",
                         dataType: "json",
                         data: { catalog_number: catalog_number },
@@ -358,7 +358,7 @@ $(document).ready(function(){
     // Get recording when user clicks the edit button
     $(document).on('click', '.edit_data', function(){
         $.ajax({
-            url:"includes/fetch_recordings.php",
+            url:"index.php?action=fetch_recordings",
             method:"POST",
             data:{id_recording:id_recording},
             dataType:"json",
@@ -406,7 +406,7 @@ $(document).ready(function(){
         // The confirm delete button
         var id_recording = $(this).data('id');
         $.ajax({
-            url:"includes/delete_records.php",
+            url:"index.php?action=delete_records",
             method:"POST",
             data:{
                 table_name: "recordings",
@@ -418,7 +418,7 @@ $(document).ready(function(){
                     $('#message_detail').html('<p class="text-success">Record ' + response.message + ' deleted from recordings</p>');
                     $('#messageModal').modal('show');
                     $.ajax({
-                        url:"includes/fetch_recordings.php",
+                        url:"index.php?action=fetch_recordings",
                         method:"POST",
                         data:{
                             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -465,7 +465,7 @@ $(document).ready(function(){
             formData.append('linkDisplay', $('#linkDisplay').text());
             formData.append('venue', $('#venue').val()); // Add the venue to the form data
             $.ajax({
-                url: "includes/insert_recordings.php",
+                url: "index.php?action=insert_recordings",
                 method: "POST",
                 data: formData,
                 contentType: false,
@@ -490,7 +490,7 @@ $(document).ready(function(){
                         $('#messageModal').modal('show');
                         // Refresh the table
                         $.ajax({
-                            url: "includes/fetch_recordings.php",
+                            url: "index.php?action=fetch_recordings",
                             method: "POST",
                             data: {
                                 user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -550,7 +550,7 @@ $(document).ready(function(){
         if (clicked_id) {
 
             $.ajax({
-                url:"includes/select_recordings.php",
+                url:"index.php?action=select_recordings",
                 method:"POST",
                 data:{id_recording:clicked_id},
                 success:function(data){

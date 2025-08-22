@@ -337,7 +337,7 @@ $(document).ready(function() {
         });
         
         $.ajax({
-            url: 'includes/update_enabled_status.php',
+            url: 'index.php?action=update_enabled_status',
             type: 'POST',
             data: {
                 table: selectedTable,

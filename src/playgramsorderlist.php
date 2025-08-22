@@ -130,7 +130,7 @@ $(document).ready(function(){
     $("#update").click(function(){
         var order=$("ul#playgramlistorder").sortable("serialize");
         $('#playgramlistordermessage').html('Saving changes.');
-        $.post("includes/update_playgramorder.php",order,function(theResponse){
+        $.post("index.php?action=update_playgramorder",order,function(theResponse){
             $('#playgramlistordermessage').html(theResponse);
             $('#playgramlistordermessage').css("color", "green");
         });

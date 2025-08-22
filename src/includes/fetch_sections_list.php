@@ -1,5 +1,5 @@
 <?php
-// includes/fetch_sections_list.php
+// index.php?action=fetch_sections_list
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 

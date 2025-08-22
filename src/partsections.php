@@ -91,7 +91,7 @@ $(document).ready(function() {
     // 1. Load sections and part types when modal opens
     $('#assignModal').on('show.bs.modal', function () {
         // Load sections
-        $.getJSON('includes/fetch_sections_list.php', function(sections) {
+        $.getJSON('index.php?action=fetch_sections_list', function(sections) {
             let $sectionSelect = $('#sectionSelect');
             $sectionSelect.empty().append('<option value="">Choose section...</option>');
             $.each(sections, function(i, section) {
@@ -99,7 +99,7 @@ $(document).ready(function() {
             });
         });
         // Load all part types
-        $.getJSON('includes/fetch_parttypes_list.php', function(parttypes) {
+        $.getJSON('index.php?action=fetch_parttypes_list', function(parttypes) {
             allPartTypes = parttypes;
             $('#availablePartTypes').empty();
             $('#assignedPartTypes').empty();
@@ -115,7 +115,7 @@ $(document).ready(function() {
             return;
         }
         // Get assigned part types for this section
-        $.post('includes/fetch_section_parttypes.php', {section_id: sectionId}, function(assigned) {
+        $.post('index.php?action=fetch_section_parttypes', {section_id: sectionId}, function(assigned) {
             // assigned is an array of id_part_type
             let assignedSet = new Set(assigned);
             let $available = $('#availablePartTypes').empty();
@@ -154,7 +154,7 @@ $(document).ready(function() {
         $('#assignedPartTypes option').each(function() {
             assigned.push($(this).val());
         });
-        $.post('includes/insert_section_parttypes.php', {
+        $.post('index.php?action=insert_section_parttypes', {
             section_id: sectionId,
             assigned_part_types: assigned
         }, function(response) {

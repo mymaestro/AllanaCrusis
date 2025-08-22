@@ -94,7 +94,7 @@ $(document).ready(function(){
     $("#update").click(function(){
         var order=$("ul#partscoreorder").sortable("serialize");
         $('#scoreordersavemessage').html('Saving changes.');
-        $.post("includes/update_scoreorder.php",order,function(theResponse){
+        $.post("index.php?action=update_scoreorder",order,function(theResponse){
             $('#scoreordersavemessage').html(theResponse);
             $('#scoreordersavemessage').css("color", "green");
         });

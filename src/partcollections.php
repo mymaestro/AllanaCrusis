@@ -326,7 +326,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div><!-- modal-header -->
                     <div class="modal-body">
-                        <form action="includes/insert_partcollections.php" method="post" id="insert_form">
+                        <form action="index.php?action=insert_partcollections" method="post" id="insert_form">
                             <input type="hidden" name="is_part_collection" id="is_part_collection" value="0" />
                             <div class="row bg-white">
                                 <div class="col-md-3">
@@ -506,7 +506,7 @@ $(document).ready(function(){
         var id_part_type_key = part_collection_id.split(':')[1];
         var id_instrument_key = part_collection_id.split(':')[2];
         $.ajax({
-            url:"includes/fetch_partcollections.php",
+            url:"index.php?action=fetch_partcollections",
             method:"POST",
             data:{
                 catalog_number_key: catalog_number_key,
@@ -542,7 +542,7 @@ $(document).ready(function(){
         var id_part_type_key = part_collection_id.split(':')[1];
         var id_instrument_key = part_collection_id.split(':')[2];
         $.ajax({
-            url:"includes/delete_partcollections.php",
+            url:"index.php?action=delete_partcollections",
             method:"POST",
             data:{
                 catalog_number_key: catalog_number_key,
@@ -571,7 +571,7 @@ $(document).ready(function(){
         var update = $('#update2').val();
         var insert = $('#insert2').val();
         $.ajax({
-            url:"includes/insert_partcollections.php",
+            url:"index.php?action=insert_partcollections",
             method:"POST",
             data:{
                 catalog_number_key: catalog_number_key,
@@ -605,7 +605,7 @@ $(document).ready(function(){
         var description = $('#description').val();
         var update = $('#update').val();
         $.ajax({
-            url:"includes/insert_partcollections.php",
+            url:"index.php?action=insert_partcollections",
             method:"POST",
             data:{
                 catalog_number_key: catalog_number_key,
@@ -631,7 +631,7 @@ $(document).ready(function(){
         var id_part_type_key = part_collection_id.split(':')[1];
         var id_instrument_key = part_collection_id.split(':')[2];
         $.ajax({
-            url:"includes/select_partcollections.php",
+            url:"index.php?action=select_partcollections",
             method:"POST",
             data:{
                 catalog_number_key: catalog_number_key,

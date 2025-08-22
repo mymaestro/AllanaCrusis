@@ -277,7 +277,7 @@ $(document).ready(function(){
         // Not needed, id_user is already set from the row click
         // var id_users = $(this).attr("id");
         $.ajax({
-            url:"includes/fetch_users.php",
+            url:"index.php?action=fetch_users",
             method:"POST",
             data:{id_users:id_user},
             dataType:"json",
@@ -312,7 +312,7 @@ $(document).ready(function(){
         // Not needed, id_user is already set from the row click
         // var id_user = $(this).data('id');
         $.ajax({
-            url:"includes/delete_records.php", 
+            url:"index.php?action=delete_records", 
             method:"POST",
             data:{
                 table_name: "users",
@@ -355,7 +355,7 @@ $(document).ready(function(){
         else
         {
             $.ajax({
-                url:"includes/insert_users.php",
+                url:"index.php?action=insert_users",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -396,7 +396,7 @@ $(document).ready(function(){
         
         if (clicked_id) {
             $.ajax({
-                url:"includes/select_users.php",
+                url:"index.php?action=select_users",
                 method:"POST",
                 data:{id_users:clicked_id},
                 success:function(data){

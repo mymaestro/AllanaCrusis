@@ -200,7 +200,7 @@ $(document).ready(function() {
         $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
 
         $.ajax({
-            url: 'includes/fetch_playgram_distribution.php',
+            url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
             data: {
                 action: 'load_playgram',
@@ -241,7 +241,7 @@ $(document).ready(function() {
         $('#download_links').hide();
 
         $.ajax({
-            url: 'includes/fetch_playgram_distribution.php',
+            url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
             data: {
                 action: 'generate_zips',
@@ -337,7 +337,7 @@ $(document).ready(function() {
         button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Generating...');
         
         $.ajax({
-            url: 'includes/fetch_playgram_distribution.php',
+            url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
             data: {
                 action: 'generate_section_zip',

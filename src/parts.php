@@ -78,7 +78,7 @@ ferror_log("RUNNING parts.php");
                     </div><!-- modal-header -->
                     <div class="modal-body">
                         <div class="container-fluid">
-                            <form action="includes/insert_parts.php" method="post" id="insert_form">
+                            <form action="index.php?action=insert_parts" method="post" id="insert_form">
                                 <div class="row bg-light">
                                     <div class="col-md-2">
                                         <label for="id_part_type" class="col-form-label">Part type*</label>
@@ -439,7 +439,7 @@ $(document).ready(function() {
 
     // Load compositions data into the left-hand list
     $.ajax({
-        url:"includes/fetch_parts_data.php",
+        url:"index.php?action=fetch_parts_data",
         method:"POST",
         data:{
             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -487,7 +487,7 @@ $(document).ready(function() {
         catalog_number = catno_select.replace(regex, '');
         e.preventDefault();
         $.ajax({
-            url: "includes/fetch_parts_data.php",
+            url: "index.php?action=fetch_parts_data",
             method: "POST",
             data: {
                 catalog_number: catalog_number,
@@ -571,7 +571,7 @@ $(document).ready(function() {
         // Clear the form
         $('#insert_form')[0].reset();
         $.ajax({
-            url: "includes/fetch_parts_data.php",
+            url: "index.php?action=fetch_parts_data",
             method: "POST",
             data: {
                 id_part_type: id_part_type,
@@ -665,7 +665,7 @@ $(document).ready(function() {
         var part_id = $(this).data('id');
         console.log("Delete this part confirm " + catalog_number + " " + id_part_type + " " + part_id);
         $.ajax({
-            url: "includes/delete_parts.php",
+            url: "index.php?action=delete_parts",
             method: "POST",
             data: {
                 catalog_number: catalog_number,
@@ -674,7 +674,7 @@ $(document).ready(function() {
             success: function(data) {
                 $('#insert_form')[0].reset();
                 $.ajax({
-                    url: "includes/fetch_parts_data.php",
+                    url: "index.php?action=fetch_parts_data",
                     method: "POST",
                     data: {
                         catalog_number: catalog_number,
@@ -707,7 +707,7 @@ $(document).ready(function() {
         //var id_part_type = part_id.split('-')[1];
         if (id_part_type != '') {
             $.ajax({
-                url: "includes/select_parts.php",
+                url: "index.php?action=select_parts",
                 method: "POST",
                 data: {
                     id_part_type: id_part_type,
@@ -739,7 +739,7 @@ $(document).ready(function() {
         
         // Open the modal
         $.ajax({
-            url: "includes/select_parts.php",
+            url: "index.php?action=select_parts",
             method: "POST",
             data: {
                 id_part_type: temp_id_part_type,
@@ -783,7 +783,7 @@ $(document).ready(function() {
             }
 
             $.ajax({
-                url: "includes/insert_parts.php",
+                url: "index.php?action=insert_parts",
                 method: "POST",
                 data: formData,
                 contentType: false,
@@ -795,7 +795,7 @@ $(document).ready(function() {
                         $('#insert_form')[0].reset();
                         $('#editModal').modal('hide');
                         $.ajax({
-                            url: "includes/fetch_parts_data.php",
+                            url: "index.php?action=fetch_parts_data",
                             method: "POST",
                             data: {
                                 catalog_number: catalog_number,

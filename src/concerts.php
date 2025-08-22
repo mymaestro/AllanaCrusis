@@ -247,7 +247,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit_data', function() {
         $.ajax({
-            url: "includes/fetch_concerts.php",
+            url: "index.php?action=fetch_concerts",
             method: "POST",
             data:{ id_concert : id_concert },
             dataType: "text",
@@ -288,7 +288,7 @@ $(document).ready(function(){
             alert("Program playlist name is required");
         } else {
             $.ajax({
-                url:"includes/insert_concerts.php",
+                url:"index.php?action=insert_concerts",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -310,7 +310,7 @@ $(document).ready(function(){
     });
     $('#confirm-delete').click(function(){ // The confirm delete button
         $.ajax({
-            url:"includes/delete_records.php",
+            url:"index.php?action=delete_records",
             method:"POST",
             data:{
                 table_name: "concerts",
@@ -334,7 +334,7 @@ $(document).ready(function(){
         var id_playgram = $(this).attr("id");
         if(id_playgram !== null) {
             $.ajax({
-                url:"includes/select_playgrams.php",
+                url:"index.php?action=select_playgrams",
                 method:"POST",
                 data:{id_playgram:id_playgram},
                 success:function(data){
@@ -349,7 +349,7 @@ $(document).ready(function(){
         // and the playgram ID from the table row
         if(id_concert !== null) {
             $.ajax({
-                url:"includes/select_concerts.php",
+                url:"index.php?action=select_concerts",
                 method:"POST",
                 data:{id_concert:id_concert},
                 success:function(data){

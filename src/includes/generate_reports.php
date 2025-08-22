@@ -108,7 +108,7 @@ if (isset($_POST["report_type"])) {
             $output .= '</tbody></table>';
             $output .= $u_librarian ?
                 '<div class="alert alert-info mt-3">
-                    <strong>Action Required:</strong> Consider assigning these part types to appropriate sections in the <a href="partsections.php">Part Sections</a> management page.
+                    <strong>Action Required:</strong> Consider assigning these part types to appropriate sections in the <a href="/partsections">Part Sections</a> management page.
                 </div>' : '';
             break;
             
@@ -184,7 +184,7 @@ if (isset($_POST["report_type"])) {
             if (mysqli_num_rows($res) > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $grade_badge = $row['grade'] ? '<span class="badge bg-info">' . $row['grade'] . '</span>' : '<span class="text-muted">N/A</span>';
-                    $action_cell = $u_librarian ? '<a href="composition_instrumentation.php?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Add Parts</a>' : '<span class="text-muted">-</span>';
+                    $action_cell = $u_librarian ? '<a href="/composition_instrumentation?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Add Parts</a>' : '<span class="text-muted">-</span>';
                     $output .= '<tr>
                         <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>
                         <td>' . htmlspecialchars($row['name']) . '</td>
@@ -275,7 +275,7 @@ if (isset($_POST["report_type"])) {
                     if ($row['missing_duration']) $missing_items[] = 'Duration';
                     
                     $missing_text = implode(', ', $missing_items);
-                    $action_cell = $u_librarian ? '<a href="compositions.php?edit=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Edit</a>' : '<span class="text-muted">-</span>';
+                    $action_cell = $u_librarian ? '<a href="/compositions?edit=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Edit</a>' : '<span class="text-muted">-</span>';
                     
                     $output .= '<tr>
                         <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>

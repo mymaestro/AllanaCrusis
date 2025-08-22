@@ -92,7 +92,7 @@ $(document).ready(function(){
     $("#update").click(function(){
         var order=$("ul#instrumentscoreorder").sortable("serialize");
         $('#scoreordersavemessage').html('Saving changes.');
-        $.post("includes/update_instruments_scoreorder.php",order,function(theResponse){
+        $.post("index.php?action=update_instruments_scoreorder",order,function(theResponse){
             $('#scoreordersavemessage').html(theResponse);
             $('#scoreordersavemessage').css("color", "green");
         });

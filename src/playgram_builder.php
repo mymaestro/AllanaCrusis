@@ -74,11 +74,11 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 </p>
             </div>
             <div class="col-auto">
-                <a href="playgrams.php" class="btn btn-outline-secondary">
+                <a href="/playgrams" class="btn btn-outline-secondary">
                     <i class="fas fa-arrow-left"></i> Back to Playgrams
                 </a>
                 <?php if ($editing_playgram): ?>
-                <a href="playgram_builder.php" class="btn btn-outline-primary">
+                <a href="/playgram_builder" class="btn btn-outline-primary">
                     <i class="fas fa-plus"></i> Create New
                 </a>
                 <?php endif; ?>
@@ -328,7 +328,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 <i class="fas fa-trash"></i> Clear program
                             </button>
                             <?php if ($editing_playgram): ?>
-                            <a href="playgramsorderlist.php?id=<?php echo $playgram_data['id_playgram']; ?>" class="btn btn-outline-info">
+                            <a href="/playgramsorderlist?id=<?php echo $playgram_data['id_playgram']; ?>" class="btn btn-outline-info">
                                 <i class="fas fa-sort"></i> Reorder program
                             </a>
                             <?php endif; ?>
@@ -839,7 +839,7 @@ $(document).ready(function() {
             formData.update = 'add';
         }
         $.ajax({
-            url: 'includes/insert_playgrams.php',
+            url: 'index.php?action=insert_playgrams',
             method: 'POST',
             data: formData,
             success: function(response) {

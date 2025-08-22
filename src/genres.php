@@ -174,7 +174,7 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit_data', function(){
         $.ajax({
-            url:"includes/fetch_genres.php",
+            url:"index.php?action=fetch_genres",
             method:"POST",
             data:{id_genre:id_genre},
             dataType:"json",
@@ -201,7 +201,7 @@ $(document).ready(function(){
     $('#confirm-delete').click(function(){
         // The confirm delete button
         $.ajax({
-            url:"includes/delete_records.php",
+            url:"index.php?action=delete_records",
             method:"POST",
             data:{
                 table_name: "genres",
@@ -234,7 +234,7 @@ $(document).ready(function(){
         else
         {
             $.ajax({
-                url:"includes/insert_genres.php",
+                url:"index.php?action=insert_genres",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -274,7 +274,7 @@ $(document).ready(function(){
         
         if (clicked_id) {
             $.ajax({
-                url:"includes/select_genres.php",
+                url:"index.php?action=select_genres",
                 method:"POST",
                 data:{id_genre:clicked_id},
                 success:function(data){

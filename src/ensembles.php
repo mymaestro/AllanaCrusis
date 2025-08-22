@@ -139,7 +139,7 @@ $(document).ready(function(){
     });
 
     $.ajax({
-        url:"includes/fetch_ensembles.php",
+        url:"index.php?action=fetch_ensembles",
         method:"POST",
         data:{
             user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
@@ -167,7 +167,7 @@ $(document).ready(function(){
     $(document).on('click', '.edit_data', function(){
         // var id_ensemble = $(this).attr("id");
         $.ajax({
-            url:"includes/fetch_ensembles.php",
+            url:"index.php?action=fetch_ensembles",
             method:"POST",
             data:{id_ensemble:id_ensemble},
             dataType:"json",
@@ -194,7 +194,7 @@ $(document).ready(function(){
     $('#confirm-delete').click(function(){
         // The confirm delete button
         $.ajax({
-            url:"includes/delete_records.php",
+            url:"index.php?action=delete_records",
             method:"POST",
             data:{
                 table_name: "ensembles",
@@ -227,7 +227,7 @@ $(document).ready(function(){
         else
         {
             $.ajax({
-                url:"includes/insert_ensembles.php",
+                url:"index.php?action=insert_ensembles",
                 method:"POST",
                 data:$('#insert_form').serialize(),
                 beforeSend:function(){
@@ -268,7 +268,7 @@ $(document).ready(function(){
         
         if (clicked_id) {
             $.ajax({
-                url:"includes/select_ensembles.php",
+                url:"index.php?action=select_ensembles",
                 method:"POST",
                 data:{id_ensemble:clicked_id},
                 success:function(data){

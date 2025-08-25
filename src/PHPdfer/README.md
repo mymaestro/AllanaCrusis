@@ -1,26 +1,25 @@
-# Phpdfer
 
-**Phpdfer** - this library on PHP, for modify metadata in PFD files.
+# PHPdfer
 
-For start work with this library You must create instance of class `PHPdfer`, and use method `changeMetadata()` for
-modify metadata in PDF files. This method accepts three arguments:
+**PHPdfer** is a PHP library for modifying metadata in PDF files.
 
-1. `$pdf` - path to PDF file in which You need change metadata;
-2. `$arMetadata` - array with metadata in which need include in PDF file;
-3. `$logMode` - enables the mode in which the output of the CLI command is saved to a log file.
+To start using this library, create an instance of the `PHPdfer` class and use the `changeMetadata()` method to modify metadata in PDF files. This method accepts three arguments:
 
-`$arMetadata` can contained next elements:
+1. `$pdf` - the path to the PDF file in which you want to change the metadata
+2. `$arMetadata` - an array containing the metadata to include in the PDF file
+3. `$logMode` - enables a mode in which the output of the CLI command is saved to a log file
 
-* `TITLE` - title PDF file;
-* `AUTHOR` - author of the PDF file;
-* `SUBJECT` - short description content PDF file;
-* `KEYWORDS` - keywords describing content PDF file;
-* `MOD_DATE` - date modification PDF file;
-* `CREATION_DATE` - date creation PDF file;
-* `CREATOR` - creator PDF file.
+`$arMetadata` can contain the following elements:
 
-After end work library will create new PDF file with prefix `phpdfer_`, when into it will change metadata specified in
-`$arMetadata`.
+* `TITLE` - the title of the PDF file
+* `AUTHOR` - the author of the PDF file
+* `SUBJECT` - a short description of the PDF file's content
+* `KEYWORDS` - keywords describing the PDF file's content
+* `MOD_DATE` - the modification date of the PDF file
+* `CREATION_DATE` - the creation date of the PDF file
+* `CREATOR` - the creator of the PDF file
+
+After processing, the library will create a new PDF file with the prefix `phpdfer_`, in which the metadata specified in `$arMetadata` will be updated.
 
 ## Installation
 
@@ -30,25 +29,24 @@ composer require jasta-fly/phpdfer
 
 ## Warning!
 
-For work this library need install `Ghostscript` in You operating system. You can check is this program installed,
-running this command in CLI:
+
+For this library to work, you need to have `Ghostscript` installed on your operating system. You can check if it is installed by running this command in your terminal:
 
 ```
 gs -v
 ```
 
-if in response You get version installed `Ghostscrip` version:
+If you see a version number in the response, for example:
 
 ```
 GPL Ghostscript 9.55.0 (2021-09-27)
 Copyright (C) 2021 Artifex Software, Inc.  All rights reserved.
 ```
 
-this means that the program necessary for the library to work is installed, and You may continue use it. If you get next
-output:
+this means that the program required for the library to work is installed, and you may continue to use it. If you get the following output:
 
 ```php
 gs: not found
 ```
 
-this means that You must install `Ghostscrip` in Your operating system, before continue work.
+this means that you must install `Ghostscript` on your operating system before continuing.

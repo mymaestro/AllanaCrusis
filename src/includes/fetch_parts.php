@@ -53,7 +53,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) { // User
     ferror_log("Get parts for catalog number " . $catalog_number);
     echo '<div class="panel"><div class="row border-bottom">';
     echo '<div class="col-auto"><div class="bg-white"><h4 id="composition_header">Composition parts</h4></div></div>';
-    if ($u_librarian) { echo '<div class="col-auto"><form method="post" id="instr_data_'.$catalog_number.'" action="composition_instrumentation.php"><input type="hidden" name="catalog_number" value="'.$catalog_number.'" /><input type="submit" name="compositions" value="Instrumentation" id="'.$catalog_number.'" class="btn btn-warning instr_data" />
+    if ($u_librarian) { echo '<div class="col-auto"><form method="post" id="instr_data_'.$catalog_number.'" action="/composition_instrumentation"><input type="hidden" name="catalog_number" value="'.$catalog_number.'" /><input type="submit" name="compositions" value="Instrumentation" id="'.$catalog_number.'" class="btn btn-warning instr_data" />
         </form></div>';
         }
     echo '</div><!-- row -->
@@ -189,7 +189,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) { // User
                 <td class="text-muted">0 parts</td>';
         }
         if ($u_librarian) { echo '
-            <td><form method="post" id="instr_data_'.$catalog_number.'" action="composition_instrumentation.php"><input type="hidden" name="catalog_number" value="'.$catalog_number.'" />
+            <td><form method="post" id="instr_data_'.$catalog_number.'" action="/composition_instrumentation"><input type="hidden" name="catalog_number" value="'.$catalog_number.'" />
             <input type="submit" name="compositions" value="Instrumentation" id="'.$catalog_number.'" class="btn btn-warning btn-sm instr_data" /></form></td>'.PHP_EOL;
         }
         echo '

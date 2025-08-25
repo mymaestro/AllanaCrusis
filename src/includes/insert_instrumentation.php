@@ -41,7 +41,7 @@ require_once(__DIR__ . "/navbar.php");
                 // loop over part types selected in the dropdown <option>
 
                 if(!empty($_POST['parttypes']) && isset($catalog_number) && isset($paper_size) && isset($page_count)) {
-                    echo '<form action="../parts.php" method="POST"><input type="hidden" name="catalog_number" value="'.$catalog_number.'"><button class="btn btn-primary"/>Edit parts</button></form>';
+                    echo '<form action="/parts" method="POST"><input type="hidden" name="catalog_number" value="'.$catalog_number.'"><button class="btn btn-primary"/>Edit parts</button></form>';
                     
                     // Get current parts for this composition
                     $current_parts_sql = "SELECT id_part_type FROM parts WHERE catalog_number = ?";
@@ -151,7 +151,7 @@ require_once(__DIR__ . "/navbar.php");
                     $referred = str_replace(array('?', $query), '', $referred);
                     echo $output;
                     echo '</tbody></table>';
-                    echo '<form action="../parts.php" method="POST"><input type="hidden" name="catalog_number" value="'.$catalog_number.'"><button class="btn btn-outline-secondary" type="submit">Edit parts</button></form>';
+                    echo '<form action="/parts" method="POST"><input type="hidden" name="catalog_number" value="'.$catalog_number.'"><button class="btn btn-outline-secondary" type="submit">Edit parts</button></form>';
                 } // Part types array is not empty
             } // Submit function was "add"
             mysqli_close($f_link);

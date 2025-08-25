@@ -69,7 +69,7 @@ if (isset($_POST["catalog_number"])) {
     </div><!-- table-responsive -->
     </div><!-- modal body -->
 <div class="modal-footer">
-<form action="parts.php" method="POST">
+<form action="/parts" method="POST">
     <input type="hidden" name="catalog_number" value="'.$_POST["catalog_number"].'"/>
     <input type="submit" name="parts_button" value="Edit parts" class="btn btn-info">
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

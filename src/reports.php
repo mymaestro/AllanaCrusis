@@ -275,7 +275,7 @@ $(document).ready(function() {
         button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Loading...');
         
         $.ajax({
-            url: "index.php?action=generate_reports",
+            url: "index.php?action=fetch_reports",
             type: "POST",
             data: {
                 report_type: report_type

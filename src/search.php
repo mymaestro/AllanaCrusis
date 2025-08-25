@@ -503,7 +503,7 @@ require_once(__DIR__. "/includes/footer.php");
 
             // Perform AJAX search
             $.ajax({
-                url: 'includes/search_compositions.php',
+                url: 'index.php?action=search_compositions',
                 method: 'POST',
                 data: searchData,
                 dataType: 'json',
@@ -529,7 +529,7 @@ require_once(__DIR__. "/includes/footer.php");
         function showRandomComposition() {
             // Load a random composition
             $.ajax({
-                url: 'includes/search_compositions.php',
+                url: 'index.php?action=search_compositions',
                 method: 'POST',
                 data: {
                     random: 1
@@ -776,7 +776,7 @@ require_once(__DIR__. "/includes/footer.php");
                     $('#instrumentation_detail').html(data);
                 },
                 error: function() {
-                    $('#instrumentation_detail').html('<div class="modal-header"><h3 class="modal-title">Error</h3><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="text-center text-danger py-4"><i class="fas fa-exclamation-triangle fa-3x mb-3"></i><h5>Error Loading Parts</h5><p>Unable to load parts information. Please try again.</p></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>');
+                    $('#instrumentation_detail').html('<div class="modal-header"><h3 class="modal-title">Error</h3><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="text-center text-danger py-4"><i class="fas fa-exclamation-triangle fa-3x mb-3"></i><h5>Error loading parts</h5><p>Unable to load parts information. Please try again.</p></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>');
                 }
             });
         });

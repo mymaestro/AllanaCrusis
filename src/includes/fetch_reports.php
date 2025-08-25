@@ -1,8 +1,4 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 
@@ -17,7 +13,7 @@ if (isset($_SESSION['username'])) {
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
 
-ferror_log("Running generate_reports.php");
+ferror_log("Running fetch_reports.php");
 
 if (isset($_POST["report_type"])) {
     $report_type = $_POST["report_type"];

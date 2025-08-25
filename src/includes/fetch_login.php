@@ -27,8 +27,7 @@ if(isset($_POST["username"]) && isset($_POST["password"])) {
                 mysqli_stmt_bind_result($stmt, $username, $hashed_password, $roles);
                 if (mysqli_stmt_fetch($stmt)) {
                     if (password_verify($password, $hashed_password)) {
-                        /* Password is correct, so start a new session and save the username to the session */
-                        session_start();
+                        /* Password is correct, so save the username to the session */
                         $_SESSION['username'] = $username;
                         $_SESSION['roles'] = $roles;
                         ferror_log("Session starting with SESSION username = " . $_SESSION['username'] . " and SESSION roles = '" . $_SESSION['roles']."'");

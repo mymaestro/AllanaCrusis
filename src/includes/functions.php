@@ -6,10 +6,6 @@
 #############################################################################
 */
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 function f_getIP() {
     $ip_keys = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR');
     foreach ($ip_keys as $key) {

@@ -6,7 +6,7 @@ include(__DIR__ . '/../config/bootstrap.php');
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     // Only allow certain prefixes for security
-    if (preg_match('/^(fetch_|insert_|delete_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+    if (preg_match('/^(fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
         $file = __DIR__ . '/../src/includes/' . $action . '.php';
         if (file_exists($file)) {
             require $file;

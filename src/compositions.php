@@ -534,9 +534,10 @@ $(document).ready(function() {
         if(catalog_number != '')
         {
             // Create a form and submit it with POST to composition_instrumentation.php
+            // FIX ME
             var form = $('<form></form>');
             form.attr('method', 'post');
-            form.attr('action', 'composition_instrumentation.php');
+            form.attr('action', '/composition_instrumentation');
             form.append('<input type="hidden" name="catalog_number" value="' + catalog_number + '" />');
             $('body').append(form);
             form.submit();

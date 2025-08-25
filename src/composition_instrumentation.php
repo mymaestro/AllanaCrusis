@@ -16,10 +16,18 @@ require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 
 ferror_log("composition_instrumentation.php POST: " . print_r($_POST, TRUE));
+// NEED TO HANDLE GETS
 
-if(!empty($_POST["catalog_number"])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['catalog_number'])) {
     $catalog_number = $_POST['catalog_number'];
-} else $catalog_number = '';
+    // Handle the POST logic (e.g., update instrumentation)
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['catalog_number'])) {
+    $catalog_number = $_GET['catalog_number'];
+    // Handle the GET logic (e.g., display instrumentation)
+} else {
+    $catalog_number = '';
+    // Show a default page or error
+}
 
 ferror_log("Running composition_instrumentation.php with catalog_number: " . $catalog_number);
 
@@ -130,6 +138,10 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
                     <div class="col-sm-6">
                         <div id="page_countHelp" class="form-text">Default page count for new parts only. Existing parts retain their current page count.</div>                
                     </div>
+                </div>
+
+                <div class="alert alert-info" role="alert" style="margin-bottom: 1rem;">
+                    <strong>Reminder:</strong> Set the <b>page size</b> and <b>default number of pages</b> for parts every time you use this page. This ensures all new parts are created with the correct settings.
                 </div>
                 <hr />
                 <div class="row mb-3">

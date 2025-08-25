@@ -15,6 +15,18 @@ require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 ferror_log("RUNNING parts.php");
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['catalog_number'])) {
+    $catalog_number = $_POST['catalog_number'];
+    // Handle the POST logic (e.g., update instrumentation)
+} elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['catalog_number'])) {
+    $catalog_number = $_GET['catalog_number'];
+    // Handle the GET logic (e.g., display instrumentation)
+} else {
+    // Show a default page or error
+}
+
 ?>
 
 <!-- Main title above the panels -->
@@ -364,7 +376,7 @@ mysqli_close($f_link);
                     </td>
                     {{#u_librarian}}
                     <td>
-                        <form method="post" id="instr_data_{{catalog_number}}" action="composition_instrumentation.php">
+                        <form method="post" id="instr_data_{{catalog_number}}" action="/composition_instrumentation">
                             <input type="hidden" name="catalog_number" value="{{catalog_number}}" />
                             <input type="submit" name="compositions" value="Instrumentation" id="{{catalog_number}}" class="btn btn-warning btn-sm instr_data" />
                         </form>
@@ -560,7 +572,7 @@ $(document).ready(function() {
             // Create a form and submit it with POST to composition_instrumentation.php
             var form = $('<form></form>');
             form.attr('method', 'post');
-            form.attr('action', 'composition_instrumentation.php');
+            form.attr('action', '/composition_instrumentation');
             form.append('<input type="hidden" name="catalog_number" value="' + catalog_number + '" />');
             $('body').append(form);
             form.submit();

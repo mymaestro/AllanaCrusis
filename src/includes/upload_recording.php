@@ -7,10 +7,6 @@
 #############################################################################
 */
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 define('PAGE_TITLE', 'Upload Recording');
 define('PAGE_NAME', 'upload_recording');
 require_once(__DIR__ . "/config.php");

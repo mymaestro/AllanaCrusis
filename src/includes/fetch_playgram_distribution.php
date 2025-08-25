@@ -5,7 +5,6 @@ require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_playgram_distribution.php");
 
 // Check if user has permission
-session_start();
 $u_librarian = FALSE;
 $u_admin = FALSE;
 if (isset($_SESSION['username'])) {

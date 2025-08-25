@@ -6,10 +6,6 @@ ob_start();
 # (C) Copyright Austin Civic Wind Ensemble, 2022, 2025 All rights reserved.
 #############################################################################
 */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 define('PAGE_TITLE', 'Insert recordings');
 define('PAGE_NAME', 'Insert recordings');
 require_once(__DIR__ . "/config.php");

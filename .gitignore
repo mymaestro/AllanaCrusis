@@ -1,2 +1,15 @@
 .env
+error_log
+*-backup.php
+musicLibraryDB.sql
+phpinfo.php
+backups/
 /vendor/
+public/files/
+public/images/logo_large.png
+public/images/logo_184x256.png
+public/images/dbicon-sm.png
+public/images/musicLibraryDB.png
+public/images/musicLibraryDBlogo.png
+src/includes/config.php
+src/PHPdfer/command_output.log

@@ -5,6 +5,7 @@ musicLibraryDB.sql
 phpinfo.php
 backups/
 /vendor/
+parts/
 public/files/
 public/images/logo_large.png
 public/images/logo_184x256.png

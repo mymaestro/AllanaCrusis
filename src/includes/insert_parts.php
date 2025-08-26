@@ -8,14 +8,16 @@ require_once(__DIR__ . "/functions.php");
 // Include PHPdfer for PDF metadata handling
 $phpdfer_available = false;
 
-if (file_exists('../PHPdfer/PHPdfer.php') && file_exists('../PHPdfer/MetadataDirector.php') && file_exists('../PHPdfer/MetadataBuilder.php')) {
+if (file_exists(__DIR__ . '/PHPdfer/PHPdfer.php') && file_exists(__DIR__ . '/PHPdfer/MetadataDirector.php') && file_exists(__DIR__ . '/PHPdfer/MetadataBuilder.php')) {
     ferror_log("PHPdfer library found at: " . __DIR__ . "/PHPdfer/");
-    require_once('../PHPdfer/PHPdfer.php');
-    require_once('../PHPdfer/MetadataDirector.php');
-    require_once('../PHPdfer/MetadataBuilder.php');
+    require_once(__DIR__ . '/PHPdfer/PHPdfer.php');
+    require_once(__DIR__ . '/PHPdfer/MetadataDirector.php');
+    require_once(__DIR__ . '/PHPdfer/MetadataBuilder.php');
     $phpdfer_available = true;
 } else {
-    ferror_log("PHPdfer library not found at: " . __DIR__ . "/PHPdfer/");
+    ferror_log("WARNING: PHPdfer library not found at: " . __DIR__ . "/PHPdfer/");
+    ferror_log("         PDF metadata will not be included.");
+    ferror_log("         Please install PHPdfer to enable PDF metadata handling.");
     // Do not die; allow upload to continue without PDF metadata
 }
 
@@ -124,13 +126,19 @@ if(!empty($_POST)) {
             die("Invalid file type. Only JPEG, PNG, and PDF files are allowed.");
         }
 
-        $uploadDir = __DIR__ . "/" . ORGPRIVATE; // Directory to save uploaded files
-        
+        $uploadDir = rtrim(ORGPRIVATE, '/\\') . '/'; // Directory to save uploaded files
+        ferror_log("Uploading to " . $uploadDir);
+
         // Create the uploads directory if it doesn't exist
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true) && ferror_log("Uploads directory created: " . $uploadDir);
+            if (!mkdir($uploadDir, 0755, true)) {
+                ferror_log("Failed to create uploads directory: " . $uploadDir);
+                die("Error: Unable to create uploads directory. Please check permissions for: $uploadDir");
+            } else {
+                ferror_log("Uploads directory created: " . $uploadDir);
+            }
         } else {
-            ferror_log("Uploads directory already exists: " . $uploadDir);  
+            ferror_log("Uploads directory already exists: " . $uploadDir);
         }
 
         // Check file size

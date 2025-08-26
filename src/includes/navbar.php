@@ -15,7 +15,7 @@
                         <ul class="dropdown-menu" aria-labelledby="nav_menu_dropdown">
                         <li><a class="dropdown-item" href="/compositions"><i class="fas fa-music"></i> Compositions</a></li>
                         <li><a class="dropdown-item" href="/concerts"><i class="fas fa-calendar"></i> Concerts</a></li>
-                        <li><a class="dropdown-item" href="/parts"><i class="fas fa-file-music"></i> Parts</a></li>
+                        <li><a class="dropdown-item" href="/parts"><i class="fas fa-puzzle-piece"></i> Parts</a></li>
                         <li><a class="dropdown-item" href="/recordings"><i class="fas fa-microphone"></i> Recordings</a></li>
                         <li><a class="dropdown-item" href="/reports"><i class="fas fa-chart-line"></i> Reports</a></li>
                         <li><hr class="dropdown-divider"></li>

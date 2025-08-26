@@ -257,13 +257,16 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
     if (empty($parts)) {
         return ['success' => false, 'message' => 'No parts with PDF files found for this section.'];
     }
-    
+
     // Create ZIP file
     $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';
     $zip_path = __DIR__ . '/' . ORGDIST . $zip_filename;
     
     // Ensure distributions directory exists
     $distributions_dir = __DIR__ . '/' . ORGDIST;
+
+    ferror_log("Checking distributions directory: " . $distributions_dir);
+    
     if (!is_dir($distributions_dir)) {
         if (!mkdir($distributions_dir, 0755, true)) {
             return ['success' => false, 'message' => 'Could not create distributions directory.'];
@@ -279,10 +282,10 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
     $skipped_files = [];
     
     foreach ($parts as $part) {
-        $source_path = __DIR__ . '/' . ORGPRIVATE . $part['image_path'];
+        $source_path = rtrim(ORGPRIVATE, '/\\') . '/' . ltrim($part['image_path'], '/\\');
 
         ferror_log("Processing part: " . $part['part_name'] . " (source: " . $source_path . ")");
-        
+    
         if (file_exists($source_path)) {
             // Create new filename: Order - Composition - Part.pdf
             $order = str_pad($part['comp_order'], 2, '0', STR_PAD_LEFT);

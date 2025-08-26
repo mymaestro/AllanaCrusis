@@ -8,16 +8,16 @@
 define('ORGNAME', '4th Wind');
 define('ORGDESC', 'Fourth Wind Wind Ensemble');
 // with trailing slash
-define('ORGHOME', 'http://library.local/');
-define('ORGRECORDINGS', 'http://library.local/files/recordings/'); // Where browser can access recordings
-define('ORGPARTDISTRO', 'http://library.local/files/distributions/'); // Where browser can access distributions
+define('ORGHOME', 'http://library1.local/');
+define('ORGRECORDINGS', 'http://library1.local/files/recordings/'); // Where browser can access recordings
+define('ORGPARTDISTRO', 'http://library1.local/files/distributions/'); // Where browser can access distributions
 /* Define the path to the recordings directory.
  * This is used for file uploads and downloads.
  * Make sure this path is correct and accessible by the web server. */
-define('ORGPUBLIC', '../files/recordings/'); // Where to put recordings
-define('ORGPRIVATE', '../files/parts/'); // Where to put parts
-define('ORGDIST', '../files/distributions/'); // Where to put distributions
-define('ORGUPLOADS', '../files/uploads/'); // not sure if this is used
+define('ORGPUBLIC', '../../public/files/recordings/'); // Where to put recordings
+define('ORGPRIVATE', '/opt/data/gill/public_html/musicLibraryDB1/parts/'); // Where to put parts
+define('ORGDIST', '../../public/files/distributions/'); // Where to put distributions
+define('ORGUPLOADS', '../../public/files/uploads/'); // not sure if this is used
 
 define('ORGLOGO', 'images/logo.png');
 define('ORGMAIL', 'librarian@musicLibraryDB.com');

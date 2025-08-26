@@ -14,10 +14,10 @@ define('ORGPARTDISTRO', 'http://library.local/files/distributions/'); // Where b
 /* Define the path to the recordings directory.
  * This is used for file uploads and downloads.
  * Make sure this path is correct and accessible by the web server. */
-define('ORGPUBLIC', 'files/recordings/'); // Where to put recordings
-define('ORGPRIVATE', 'files/parts/'); // Where to put parts
-define('ORGDIST', 'files/distributions/'); // Where to put parts
-define('ORGUPLOADS', 'files/uploads/'); // not sure if this is used
+define('ORGPUBLIC', '../../public/files/recordings/'); // Where to put recordings relative to src/includes
+define('ORGPRIVATE', '/home/user/files/parts/'); // Where to put parts - use a full path outside the web server public
+define('ORGDIST', '../../public/files/distributions/'); // Where to put parts relative to src/includes
+define('ORGUPLOADS', '../../public/files/uploads/'); // not sure if this is used
 
 define('ORGLOGO', 'images/logo.png');
 define('ORGMAIL', 'librarian@musicLibraryDB.com');

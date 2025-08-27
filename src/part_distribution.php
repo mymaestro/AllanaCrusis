@@ -253,11 +253,12 @@ $(document).ready(function() {
                     $('#progress_bar').css('width', '100%').text('100%');
                     $('#progress_log').append('<p class="text-success"><i class="fas fa-check"></i> Generation completed successfully!</p>');
                     
-                    // Display download links
+                    // Display copy link buttons for each section
                     let linksHtml = '';
                     response.data.zip_files.forEach(function(zipFile) {
-                        linksHtml += '<li><a href="' + zipFile.url + '" class="btn btn-outline-primary btn-sm me-2 mb-2" download>' +
-                                   '<i class="fas fa-download"></i> ' + zipFile.section_name + ' (' + zipFile.part_count + ' parts)</a></li>';
+                        let linkHref = zipFile.download_link || zipFile.url;
+                        let label = zipFile.section_name ? (zipFile.section_name + ' (' + zipFile.part_count + ' parts)') : zipFile.filename;
+                        linksHtml += '<li><button type="button" class="btn btn-primary btn-sm copy-link-btn me-2 mb-2" data-link="' + linkHref + '"><i class="fas fa-link"></i> Copy Link for ' + label + '</button></li>';
                     });
                     $('#zip_files_list').html(linksHtml);
                     $('#download_links').show();
@@ -347,14 +348,14 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    // Create download link
-                    const link = $('<a>').attr({
-                        href: response.data.zip_url,
-                        download: response.data.filename,
-                        class: 'btn btn-success btn-sm'
-                    }).html('<i class="fas fa-download"></i> Download ZIP');
-                    
-                    button.replaceWith(link);
+                    // Create Copy Link button
+                    const linkToCopy = response.data.download_link || response.data.zip_url;
+                    const copyBtn = $('<button>').attr({
+                        type: 'button',
+                        class: 'btn btn-primary btn-sm copy-link-btn',
+                        'data-link': linkToCopy
+                    }).html('<i class="fas fa-link"></i> Copy Link');
+                    button.replaceWith(copyBtn);
                 } else {
                     alert('Error: ' + response.message);
                     button.prop('disabled', false).html('<i class="fas fa-file-archive"></i> Generate ZIP');
@@ -365,6 +366,36 @@ $(document).ready(function() {
                 button.prop('disabled', false).html('<i class="fas fa-file-archive"></i> Generate ZIP');
             }
         });
+    });
+
+    // Clipboard copy handler for all copy-link-btn buttons
+    $(document).on('click', '.copy-link-btn', function() {
+        const link = $(this).data('link');
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(window.location.origin + link)
+                .then(() => {
+                    $(this).text('Copied!').removeClass('btn-primary').addClass('btn-success');
+                    setTimeout(() => {
+                        $(this).html('<i class="fas fa-link"></i> Copy Link');
+                        $(this).removeClass('btn-success').addClass('btn-primary');
+                    }, 1500);
+                })
+                .catch(() => {
+                    alert('Failed to copy link.');
+                });
+        } else {
+            // Fallback for older browsers
+            const tempInput = $('<input>');
+            $('body').append(tempInput);
+            tempInput.val(window.location.origin + link).select();
+            document.execCommand('copy');
+            tempInput.remove();
+            $(this).text('Copied!').removeClass('btn-primary').addClass('btn-success');
+            setTimeout(() => {
+                $(this).html('<i class="fas fa-link"></i> Copy Link');
+                $(this).removeClass('btn-success').addClass('btn-primary');
+            }, 1500);
+        }
     });
 });
 </script>

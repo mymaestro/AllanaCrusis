@@ -183,7 +183,6 @@ function generateAllSectionZips($f_link, $playgram_id) {
     
     while ($section = mysqli_fetch_assoc($sections_result)) {
         $zip_result = generateSectionZip($f_link, $playgram_id, $section['id_section']);
-        
         if ($zip_result['success']) {
             $zip_files[] = [
                 'section_name' => $section['section_name'],
@@ -192,6 +191,22 @@ function generateAllSectionZips($f_link, $playgram_id) {
                 'part_count' => $zip_result['data']['part_count']
             ];
             $generation_log[] = "Generated ZIP for " . $section['section_name'] . " (" . $zip_result['data']['part_count'] . " parts)";
+            // Generate a secure token
+            $token = bin2hex(random_bytes(16)); // 32-char token
+            $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
+            $id_user = $_SESSION['user_id'];
+            $id_playgram = $playgram_id;
+            $id_section = $section['id_section'];
+            $zip_filename = $zip_result['data']['filename'];
+
+            // Insert token into the database
+            $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "siissi", $token, $id_playgram, $id_section, $zip_filename, $expires_at, $id_user);
+            mysqli_stmt_execute($stmt);
+
+            // Add the token and clean download link to your response
+            $zip_result['data']['token'] = $token;
+            $zip_result['data']['download_link'] = '/d/' . $token;
         } else {
             $generation_log[] = "Error generating ZIP for " . $section['section_name'] . ": " . $zip_result['message'];
         }
@@ -201,7 +216,9 @@ function generateAllSectionZips($f_link, $playgram_id) {
         'success' => true,
         'data' => [
             'zip_files' => $zip_files,
-            'log' => $generation_log
+            'log' => $generation_log,
+            'download_link' => $zip_result['data']['download_link'] ?? null,
+            'token' => $zip_result['data']['token'] ?? null
         ]
     ];
 }
@@ -315,13 +332,26 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
 
     $zip_url = ORGPARTDISTRO . $zip_filename;
 
+    // Generate a secure token for this ZIP
+    $token = bin2hex(random_bytes(16)); // 32-char token
+    $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
+    $id_user = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    // Insert token into the database
+    $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt, "siissi", $token, $playgram_id, $section_id, $zip_filename, $expires_at, $id_user);
+    mysqli_stmt_execute($stmt);
+
+    $download_link = '/d/' . $token;
+
     return [
         'success' => true,
         'data' => [
             'zip_url' => $zip_url,
             'filename' => $zip_filename,
             'part_count' => $added_count,
-            'skipped_files' => $skipped_files
+            'skipped_files' => $skipped_files,
+            'token' => $token,
+            'download_link' => $download_link
         ]
     ];
 }

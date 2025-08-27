@@ -73,6 +73,14 @@ if ($requestUri !== '/' && substr($requestUri, -1) === '/') {
     $requestUri = rtrim($requestUri, '/');
 }
 
+// Route /d/{token} to download_token.php
+if (preg_match('#^/d/([a-f0-9]{32})$#', $requestUri, $matches)) {
+    // Pass token as GET param for handler
+    $_GET['token'] = $matches[1];
+    include(__DIR__ . '/../src/download_token.php');
+    exit;
+}
+
 if (isset($urlMap[$requestUri])) {
     include(__DIR__ . '/../src/' . $urlMap[$requestUri]);
 } else {

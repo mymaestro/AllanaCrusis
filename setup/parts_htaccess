@@ -1,0 +1,36 @@
+# Deny all access to this directory and its contents
+# This protects PDF files and other sensitive materials
+
+# Disable directory browsing
+Options -Indexes
+
+# Deny access to all files by default
+<Files "*">
+    Require all denied
+</Files>
+
+# Deny access to specific file types
+<FilesMatch "\.(pdf|PDF|doc|docx|txt|log|php|html|htm)$">
+    Require all denied
+</FilesMatch>
+
+# Prevent access to any hidden files
+<FilesMatch "^\.">
+    Require all denied
+</FilesMatch>
+
+# Prevent execution of PHP scripts
+<Files "*.php">
+    Require all denied
+</Files>
+
+# Additional security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options DENY
+    Header always set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet"
+</IfModule>
+
+# Custom error pages to avoid revealing server information
+ErrorDocument 403 "Access Denied"
+ErrorDocument 404 "File Not Found"

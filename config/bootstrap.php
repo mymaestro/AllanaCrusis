@@ -29,6 +29,7 @@ set_exception_handler(
         header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error');
 
         $displayErrors = (bool)ini_get('display_errors');
+        $errorMessage = $exception->getMessage();
 
         include(__DIR__ . '/../src/error.php');
     }

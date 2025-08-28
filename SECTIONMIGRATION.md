@@ -5,7 +5,7 @@
 ● Here's the migration to change sections from referencing part_types to instruments:
 
 ● -- Migration: Change sections to reference instruments instead of part_types
-
+  DROP TABLE `section_instruments`;  -- if left over from previous testing a restore won't delete this
   -- Step 1: Create new section_instruments table
   CREATE TABLE `section_instruments` (
     `id_section` int(10) unsigned NOT NULL COMMENT 'Section ID',

@@ -20,7 +20,21 @@ ferror_log("RUNNING reports.php");
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // Get counts for each report
+
 $report_counts = array();
+// X. Compositions with parts but no PDFs
+$sql = "SELECT COUNT(DISTINCT c.catalog_number) as count
+        FROM compositions c
+        JOIN parts p ON c.catalog_number = p.catalog_number
+        LEFT JOIN parts p2 ON c.catalog_number = p2.catalog_number AND (p2.image_path IS NOT NULL AND p2.image_path != '')
+        WHERE c.enabled = 1
+        GROUP BY c.catalog_number
+        HAVING SUM(CASE WHEN p2.image_path IS NOT NULL AND p2.image_path != '' THEN 1 ELSE 0 END) = 0";
+$res = mysqli_query($f_link, $sql);
+$report_counts['compositions_parts_no_pdfs'] = 0;
+if ($res && mysqli_num_rows($res) > 0) {
+    $report_counts['compositions_parts_no_pdfs'] = mysqli_num_rows($res);
+}
 
 // 1. Parts with zero originals
 $sql = "SELECT COUNT(*) as count FROM parts WHERE originals_count = 0";
@@ -64,6 +78,22 @@ $sql = "SELECT COUNT(*) as count FROM compositions
 $res = mysqli_query($f_link, $sql);
 $report_counts['incomplete_metadata'] = mysqli_fetch_assoc($res)['count'];
 
+// Urgent: Compositions with parts but missing PDFs in future playgrams
+$sql = "SELECT COUNT(DISTINCT c.catalog_number) as count
+        FROM playgrams pg
+        JOIN playgram_items pi ON pg.id_playgram = pi.id_playgram
+        JOIN compositions c ON pi.catalog_number = c.catalog_number
+        JOIN parts p ON c.catalog_number = p.catalog_number
+        LEFT JOIN parts p2 ON c.catalog_number = p2.catalog_number AND (p2.image_path IS NOT NULL AND p2.image_path != '')
+        WHERE pg.performance_date > CURDATE() AND pg.enabled = 1 AND c.enabled = 1
+        GROUP BY pg.id_playgram, c.catalog_number
+        HAVING SUM(CASE WHEN p2.image_path IS NOT NULL AND p2.image_path != '' THEN 1 ELSE 0 END) = 0";
+$res = mysqli_query($f_link, $sql);
+$report_counts['urgent_missing_pdfs_future_playgrams'] = 0;
+if ($res && mysqli_num_rows($res) > 0) {
+    $report_counts['urgent_missing_pdfs_future_playgrams'] = mysqli_num_rows($res);
+}
+
 mysqli_close($f_link);
 ?>
 
@@ -78,6 +108,27 @@ mysqli_close($f_link);
 
         <!-- Summary Cards -->
         <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card border-danger">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> Future playgrams missing PDFs
+                                </h6>
+                                <h3 class="text-danger"><?php echo number_format($report_counts['urgent_missing_pdfs_future_playgrams']); ?></h3>
+                                <small class="text-muted">Upcoming concerts with missing PDFs</small>
+                            </div>
+                            <div class="align-self-center">
+                                <button class="btn btn-outline-danger btn-sm report-btn" data-report="urgent_missing_pdfs_future_playgrams">
+                                    View Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card border-danger">
                     <div class="card-body">
@@ -141,6 +192,7 @@ mysqli_close($f_link);
                 </div>
             </div>
 
+
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card border-secondary">
                     <div class="card-body">
@@ -154,6 +206,29 @@ mysqli_close($f_link);
                             </div>
                             <div class="align-self-center">
                                 <button class="btn btn-outline-secondary btn-sm report-btn" data-report="compositions_no_parts">
+                                    View Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-primary">
+                                    <i class="fas fa-file-pdf"></i> Parts but no PDFs
+                                </h6>
+                                <h3 class="text-primary"><?php echo number_format($report_counts['compositions_parts_no_pdfs']); ?></h3>
+                                <small class="text-muted">Compositions with parts but no PDFs</small>
+                            </div>
+                            <div class="align-self-center">
+                                <button class="btn btn-outline-primary btn-sm report-btn" data-report="compositions_parts_no_pdfs">
                                     View Report
                                 </button>
                             </div>

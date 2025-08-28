@@ -21,6 +21,55 @@ if (isset($_POST["report_type"])) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     
     switch($report_type) {
+        case 'urgent_missing_pdfs_future_playgrams':
+            $today = date('Y-m-d');
+            $sql = 'SELECT pg.name AS playgram_name, pg.performance_date, c.catalog_number, c.name AS composition_name, c.composer,
+                           COUNT(p.id_part_type) AS total_parts,
+                           SUM(CASE WHEN (p.image_path IS NULL OR p.image_path = "") THEN 1 ELSE 0 END) AS missing_pdfs
+                    FROM playgrams pg
+                    JOIN playgram_items pi ON pg.id_playgram = pi.id_playgram
+                    JOIN compositions c ON pi.catalog_number = c.catalog_number
+                    JOIN parts p ON c.catalog_number = p.catalog_number
+                    WHERE pg.performance_date > "' . $today . '" AND pg.enabled = 1 AND c.enabled = 1
+                    GROUP BY pg.id_playgram, c.catalog_number
+                    HAVING missing_pdfs > 0
+                    ORDER BY pg.performance_date ASC, pg.name, c.name';
+            $output .= '<div class="table-responsive">
+                <h4><i class="fas fa-exclamation-triangle text-danger"></i> URGENT: Future Playgrams with Parts Missing PDFs</h4>
+                <p class="text-danger">These compositions are scheduled for future concerts and have parts but no PDFs uploaded. Please address these immediately!</p>
+                <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Playgram</th>
+                    <th>Date</th>
+                    <th>Catalog #</th>
+                    <th>Composition</th>
+                    <th>Composer</th>
+                    <th>Missing PDFs</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>';
+            $res = mysqli_query($f_link, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $action_cell = $u_librarian ? '<a href="/parts?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Go to Parts</a>' : '<span class="text-muted">-</span>';
+                    $output .= '<tr>'
+                        . '<td>' . htmlspecialchars($row['playgram_name']) . '</td>'
+                        . '<td>' . htmlspecialchars($row['performance_date']) . '</td>'
+                        . '<td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>'
+                        . '<td>' . htmlspecialchars($row['composition_name']) . '</td>'
+                        . '<td>' . htmlspecialchars($row['composer']) . '</td>'
+                        . '<td><span class="badge bg-danger">' . $row['missing_pdfs'] . '</span></td>'
+                        . '<td>' . $action_cell . '</td>'
+                        . '</tr>';
+                }
+            } else {
+                $output .= '<tr><td colspan="7" class="text-center text-success">No urgent missing PDFs for future playgrams!</td></tr>';
+            }
+            $output .= '</tbody></table></div>';
+            break;
+            
         case 'missing_originals':
             $sql = 'SELECT c.catalog_number, c.name as composition_name, c.composer, 
                            pt.name as part_name, p.originals_count, p.copies_count,
@@ -283,6 +332,45 @@ if (isset($_POST["report_type"])) {
                 }
             } else {
                 $output .= '<tr><td colspan="5" class="text-center text-success">All compositions have complete metadata!</td></tr>';
+            }
+            $output .= '</tbody></table></div>';
+            break;
+            
+        case 'compositions_parts_no_pdfs':
+            $sql = 'SELECT c.catalog_number, c.name as composition_name, c.composer
+                    FROM compositions c
+                    JOIN parts p ON c.catalog_number = p.catalog_number
+                    LEFT JOIN parts p2 ON c.catalog_number = p2.catalog_number AND (p2.image_path IS NOT NULL AND p2.image_path != "")
+                    WHERE c.enabled = 1
+                    GROUP BY c.catalog_number
+                    HAVING SUM(CASE WHEN p2.image_path IS NOT NULL AND p2.image_path != "" THEN 1 ELSE 0 END) = 0
+                    ORDER BY c.name';
+            $output .= '<div class="table-responsive">
+                <h4><i class="fas fa-file-pdf text-primary"></i> Compositions with parts but no PDFs</h4>
+                <p class="text-muted">These compositions have at least one part, but none of their parts have a PDF file attached.</p>
+                <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>Catalog #</th>
+                    <th>Composition</th>
+                    <th>Composer</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>';
+            $res = mysqli_query($f_link, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $action_cell = $u_librarian ? '<a href="/composition_instrumentation?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Instrumentation</a>' : '<span class="text-muted">-</span>';
+                    $output .= '<tr>'
+                        . '<td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>'
+                        . '<td>' . htmlspecialchars($row['composition_name']) . '</td>'
+                        . '<td>' . htmlspecialchars($row['composer']) . '</td>'
+                        . '<td>' . $action_cell . '</td>'
+                        . '</tr>';
+                }
+            } else {
+                $output .= '<tr><td colspan="4" class="text-center text-success">All compositions with parts have at least one PDF!</td></tr>';
             }
             $output .= '</tbody></table></div>';
             break;

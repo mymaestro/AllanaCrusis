@@ -10,10 +10,10 @@ if ($id_section > 0) {
     $output = "";
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     
-    $sql = "SELECT s.*, u.name AS leader_name, COUNT(spt.id_part_type) AS parttype_count
+    $sql = "SELECT s.*, u.name AS leader_name, COUNT(si.id_instrument) AS instrument_count
         FROM sections s
         LEFT JOIN users u ON s.section_leader = u.id_users
-        LEFT JOIN section_part_types spt ON s.id_section = spt.id_section
+        LEFT JOIN section_instruments si ON s.id_section = si.id_section
         WHERE s.id_section = $id_section";
 
     ferror_log("Getting section detail for section " . $id_section);
@@ -36,8 +36,8 @@ if ($id_section > 0) {
                 <td>'.$rowList["leader_name"].'</td>
             </tr>
             <tr>
-                <td><label>Part types</label></td>
-                <td>'.intval($rowList['parttype_count']).'</td>
+                <td><label>Instruments</label></td>
+                <td>'.intval($rowList['instrument_count']).'</td>
             </tr>
             <tr>
                 <td><label>Enabled</label></td>

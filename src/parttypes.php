@@ -26,8 +26,7 @@
             <div class="col-auto">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
 <?php if($u_librarian) : ?>
-                        <!-- Button to open the assignment modal -->
-                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#assignModal">Assign part types to sections</button>
+                        <!-- Part type to section assignment removed - sections now reference instruments directly -->
                 <a href="/parttypesorderlist" class="btn btn-info" role="button" name="sort" id="sort">Set score order</a>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
@@ -164,46 +163,7 @@
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- editModal -->
-        <!-- Assignment Modal -->
-        <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="assignModalLabel">Assign Part Types to Section</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="assignForm">
-                            <div class="mb-3">
-                                <label for="sectionSelect" class="form-label">Select Section</label>
-                                <select class="form-select" id="sectionSelect" name="section_id">
-                                    <!-- Populate with PHP or JS -->
-                                    <option value="">Choose section...</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <label>Available Part Types</label>
-                                    <select multiple class="form-control" id="availablePartTypes" size="10"></select>
-                                </div>
-                                <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                                    <button type="button" id="addPartType" class="btn btn-outline-primary mb-2">&gt;&gt;</button>
-                                    <button type="button" id="removePartType" class="btn btn-outline-secondary">&lt;&lt;</button>
-                                </div>
-                                <div class="col">
-                                    <label>Assigned to Section</label>
-                                    <select multiple class="form-control" id="assignedPartTypes" name="assigned_part_types[]" size="10"></select>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success" id="saveAssignments">Save Assignments</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Assignment modal removed - sections now reference instruments directly -->
     </div><!-- container -->
 </main>
 <?php require_once(__DIR__. "/includes/footer.php");?>
@@ -407,86 +367,7 @@ $(document).ready(function(){
         }
     });
 
-    let allPartTypes = [];
-
-    // 1. Load sections and part types when modal opens
-    $('#assignModal').on('show.bs.modal', function () {
-        // Load sections
-        $.getJSON('index.php?action=fetch_sections_list', function(sections) {
-            let $sectionSelect = $('#sectionSelect');
-            $sectionSelect.empty().append('<option value="">Choose section...</option>');
-            $.each(sections, function(i, section) {
-                $sectionSelect.append('<option value="' + section.id_section + '">' + section.name + '</option>');
-            });
-        });
-        // Load all part types
-        $.getJSON('index.php?action=fetch_parttypes_list', function(parttypes) {
-            allPartTypes = parttypes;
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
-        });
-    });
-
-    // 2. When a section is selected, load assigned part types
-    $('#sectionSelect').on('change', function() {
-        let sectionId = $(this).val();
-        if (!sectionId) {
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
-            return;
-        }
-        // Get assigned part types for this section
-        $.post('index.php?action=fetch_section_parttypes', {section_id: sectionId}, function(assigned) {
-            // assigned is an array of id_part_type
-            let assignedSet = new Set(assigned);
-            let $available = $('#availablePartTypes').empty();
-            let $assigned = $('#assignedPartTypes').empty();
-            $.each(allPartTypes, function(i, pt) {
-                let option = $('<option>').val(pt.id_part_type).text(pt.name);
-                if (assignedSet.has(pt.id_part_type)) {
-                    $assigned.append(option);
-                } else {
-                    $available.append(option);
-                }
-            });
-        }, 'json');
-    });
-
-    // 3. Move part types between lists
-    $('#addPartType').on('click', function() {
-        $('#availablePartTypes option:selected').each(function() {
-            $('#assignedPartTypes').append($(this));
-        });
-    });
-    $('#removePartType').on('click', function() {
-        $('#assignedPartTypes option:selected').each(function() {
-            $('#availablePartTypes').append($(this));
-        });
-    });
-
-    // 4. Save assignments
-    $('#saveAssignments').on('click', function() {
-        let sectionId = $('#sectionSelect').val();
-        if (!sectionId) {
-            alert('Please select a section.');
-            return;
-        }
-        let assigned = [];
-        $('#assignedPartTypes option').each(function() {
-            assigned.push($(this).val());
-        });
-        $.post('index.php?action=insert_section_parttypes', {
-            section_id: sectionId,
-            assigned_part_types: assigned
-        }, function(response) {
-            if (response.success) {
-                alert('Assignments saved!');
-                $('#assignModal').modal('hide');
-            } else {
-                alert('Error saving assignments.');
-            }
-        }, 'json');
-    });
+    // Section assignment functionality removed - sections now reference instruments directly
 });
 </script>
 </body>

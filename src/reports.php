@@ -27,12 +27,12 @@ $sql = "SELECT COUNT(*) as count FROM parts WHERE originals_count = 0";
 $res = mysqli_query($f_link, $sql);
 $report_counts['missing_originals'] = mysqli_fetch_assoc($res)['count'];
 
-// 2. Part types not in any sections
-$sql = "SELECT COUNT(*) as count FROM part_types pt 
-        LEFT JOIN section_part_types spt ON pt.id_part_type = spt.id_part_type 
-        WHERE spt.id_part_type IS NULL AND pt.enabled = 1";
+// 2. Instruments not in any sections
+$sql = "SELECT COUNT(*) as count FROM instruments i
+        LEFT JOIN section_instruments si ON i.id_instrument = si.id_instrument 
+        WHERE si.id_instrument IS NULL AND i.enabled = 1";
 $res = mysqli_query($f_link, $sql);
-$report_counts['orphaned_part_types'] = mysqli_fetch_assoc($res)['count'];
+$report_counts['orphaned_instruments'] = mysqli_fetch_assoc($res)['count'];
 
 // 3. Compositions in playgrams without all required parts
 $sql = "SELECT COUNT(DISTINCT pi.catalog_number) as count 
@@ -105,13 +105,13 @@ mysqli_close($f_link);
                         <div class="d-flex justify-content-between">
                             <div>
                                 <h6 class="card-title text-warning">
-                                    <i class="fas fa-puzzle-piece"></i> Orphaned part types
+                                    <i class="fas fa-music"></i> Orphaned instruments
                                 </h6>
-                                <h3 class="text-warning"><?php echo number_format($report_counts['orphaned_part_types']); ?></h3>
-                                <small class="text-muted">Part types not in sections</small>
+                                <h3 class="text-warning"><?php echo number_format($report_counts['orphaned_instruments']); ?></h3>
+                                <small class="text-muted">Instruments not in sections</small>
                             </div>
                             <div class="align-self-center">
-                                <button class="btn btn-outline-warning btn-sm report-btn" data-report="orphaned_part_types">
+                                <button class="btn btn-outline-warning btn-sm report-btn" data-report="orphaned_instruments">
                                     View Report
                                 </button>
                             </div>

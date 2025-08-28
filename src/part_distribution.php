@@ -130,7 +130,7 @@ mysqli_close($f_link);
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5><i class="fas fa-spinner"></i> Generation progress</h5>
+                        <h5 id="progress_header"><i class="fas fa-spinner fa-spin"></i> Generation progress</h5>
                     </div>
                     <div class="card-body">
                         <div class="progress mb-3">
@@ -236,7 +236,8 @@ $(document).ready(function() {
 
         $(this).prop('disabled', true);
         $('#generation_progress').show();
-        $('#progress_bar').css('width', '0%').text('0%');
+        $('#progress_header').html('<i class="fas fa-spinner fa-spin"></i> Generation in progress');
+        $('#progress_bar').css('width', '0%').text('0%').removeClass('bg-success').addClass('bg-primary');
         $('#progress_log').html('<p class="text-info"><i class="fas fa-spinner fa-spin"></i> Starting generation process...</p>');
         $('#download_links').hide();
 
@@ -250,8 +251,10 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    $('#progress_bar').css('width', '100%').text('100%');
-                    $('#progress_log').append('<p class="text-success"><i class="fas fa-check"></i> Generation completed successfully!</p>');
+                    // Update header to show completion
+                    $('#progress_header').html('<i class="fas fa-check-circle text-success"></i> Generation completed');
+                    $('#progress_bar').css('width', '100%').text('Complete').removeClass('bg-primary').addClass('bg-success');
+                    $('#progress_log').append('<p class="text-success"><i class="fas fa-check"></i> All ZIP files generated successfully!</p>');
                     
                     // Display copy link buttons for each section
                     let linksHtml = '';
@@ -272,11 +275,15 @@ $(document).ready(function() {
                         $('#progress_log').append('</ul></div>');
                     }
                 } else {
+                    $('#progress_header').html('<i class="fas fa-exclamation-triangle text-danger"></i> Generation failed');
+                    $('#progress_bar').removeClass('bg-primary').addClass('bg-danger');
                     $('#progress_log').append('<p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Error: ' + response.message + '</p>');
                 }
             },
             error: function(xhr, status, error) {
                 console.error('AJAX error:', error);
+                $('#progress_header').html('<i class="fas fa-exclamation-triangle text-danger"></i> Generation failed');
+                $('#progress_bar').removeClass('bg-primary').addClass('bg-danger');
                 $('#progress_log').append('<p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Error generating ZIP files. Please try again.</p>');
             },
             complete: function() {

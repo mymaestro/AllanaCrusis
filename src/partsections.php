@@ -1,5 +1,5 @@
 <?php
-define('PAGE_TITLE', 'Assign parts to sections');
+define('PAGE_TITLE', 'Assign instruments to sections');
 define('PAGE_NAME', 'PartSections');
 require_once(__DIR__. "/includes/header.php");
 $u_admin = FALSE;
@@ -24,7 +24,7 @@ ferror_log("RUNNING partsections.php");
 <?php if($u_librarian) : ?>
         <!-- Button to open the assignment modal -->
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#assignModal">
-            Assign part types to sections
+            Assign instruments to sections
         </button>
 <?php else: ?>
     <div id="instrumentation_view">
@@ -42,7 +42,7 @@ ferror_log("RUNNING partsections.php");
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="assignModalLabel">Assign Part Types to Section</h5>
+                        <h5 class="modal-title" id="assignModalLabel">Assign Instruments to Section</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -56,16 +56,16 @@ ferror_log("RUNNING partsections.php");
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <label>Available Part Types</label>
-                                    <select multiple class="form-control" id="availablePartTypes" size="10"></select>
+                                    <label>Available Instruments</label>
+                                    <select multiple class="form-control" id="availableInstruments" size="10"></select>
                                 </div>
                                 <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                                    <button type="button" id="addPartType" class="btn btn-outline-primary mb-2">&gt;&gt;</button>
-                                    <button type="button" id="removePartType" class="btn btn-outline-secondary">&lt;&lt;</button>
+                                    <button type="button" id="addInstrument" class="btn btn-outline-primary mb-2">&gt;&gt;</button>
+                                    <button type="button" id="removeInstrument" class="btn btn-outline-secondary">&lt;&lt;</button>
                                 </div>
                                 <div class="col">
                                     <label>Assigned to Section</label>
-                                    <select multiple class="form-control" id="assignedPartTypes" name="assigned_part_types[]" size="10"></select>
+                                    <select multiple class="form-control" id="assignedInstruments" name="assigned_instruments[]" size="10"></select>
                                 </div>
                             </div>
                         </form>
@@ -86,9 +86,9 @@ ferror_log("RUNNING partsections.php");
 <script>
 $(document).ready(function() {
 
-    let allPartTypes = [];
+    let allInstruments = [];
 
-    // 1. Load sections and part types when modal opens
+    // 1. Load sections and instruments when modal opens
     $('#assignModal').on('show.bs.modal', function () {
         // Load sections
         $.getJSON('index.php?action=fetch_sections_list', function(sections) {
@@ -98,31 +98,31 @@ $(document).ready(function() {
                 $sectionSelect.append('<option value="' + section.id_section + '">' + section.name + '</option>');
             });
         });
-        // Load all part types
-        $.getJSON('index.php?action=fetch_parttypes_list', function(parttypes) {
-            allPartTypes = parttypes;
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
+        // Load all instruments
+        $.getJSON('index.php?action=fetch_instruments_list', function(instruments) {
+            allInstruments = instruments;
+            $('#availableInstruments').empty();
+            $('#assignedInstruments').empty();
         });
     });
 
-    // 2. When a section is selected, load assigned part types
+    // 2. When a section is selected, load assigned instruments
     $('#sectionSelect').on('change', function() {
         let sectionId = $(this).val();
         if (!sectionId) {
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
+            $('#availableInstruments').empty();
+            $('#assignedInstruments').empty();
             return;
         }
-        // Get assigned part types for this section
-        $.post('index.php?action=fetch_section_parttypes', {section_id: sectionId}, function(assigned) {
-            // assigned is an array of id_part_type
+        // Get assigned instruments for this section
+        $.post('index.php?action=fetch_section_instruments', {section_id: sectionId}, function(assigned) {
+            // assigned is an array of id_instrument
             let assignedSet = new Set(assigned);
-            let $available = $('#availablePartTypes').empty();
-            let $assigned = $('#assignedPartTypes').empty();
-            $.each(allPartTypes, function(i, pt) {
-                let option = $('<option>').val(pt.id_part_type).text(pt.name);
-                if (assignedSet.has(pt.id_part_type)) {
+            let $available = $('#availableInstruments').empty();
+            let $assigned = $('#assignedInstruments').empty();
+            $.each(allInstruments, function(i, inst) {
+                let option = $('<option>').val(inst.id_instrument).text(inst.name);
+                if (assignedSet.has(inst.id_instrument)) {
                     $assigned.append(option);
                 } else {
                     $available.append(option);
@@ -131,15 +131,15 @@ $(document).ready(function() {
         }, 'json');
     });
 
-    // 3. Move part types between lists
-    $('#addPartType').on('click', function() {
-        $('#availablePartTypes option:selected').each(function() {
-            $('#assignedPartTypes').append($(this));
+    // 3. Move instruments between lists
+    $('#addInstrument').on('click', function() {
+        $('#availableInstruments option:selected').each(function() {
+            $('#assignedInstruments').append($(this));
         });
     });
-    $('#removePartType').on('click', function() {
-        $('#assignedPartTypes option:selected').each(function() {
-            $('#availablePartTypes').append($(this));
+    $('#removeInstrument').on('click', function() {
+        $('#assignedInstruments option:selected').each(function() {
+            $('#availableInstruments').append($(this));
         });
     });
 
@@ -151,12 +151,12 @@ $(document).ready(function() {
             return;
         }
         let assigned = [];
-        $('#assignedPartTypes option').each(function() {
+        $('#assignedInstruments option').each(function() {
             assigned.push($(this).val());
         });
-        $.post('index.php?action=insert_section_parttypes', {
+        $.post('index.php?action=insert_section_instruments', {
             section_id: sectionId,
-            assigned_part_types: assigned
+            assigned_instruments: assigned
         }, function(response) {
             if (response.success) {
                 alert('Assignments saved!');

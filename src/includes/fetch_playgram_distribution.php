@@ -117,8 +117,8 @@ function loadPlaygramData($f_link, $playgram_id) {
                 COUNT(DISTINCT CASE WHEN p.image_path IS NULL OR p.image_path = '' 
                      THEN CONCAT(p.catalog_number, '-', p.id_part_type) END) as parts_without_pdf
             FROM sections s
-            JOIN section_part_types spt ON s.id_section = spt.id_section
-            JOIN part_types pt ON spt.id_part_type = pt.id_part_type
+            JOIN section_instruments si ON s.id_section = si.id_section
+            JOIN part_types pt ON si.id_instrument = pt.default_instrument
             JOIN parts p ON pt.id_part_type = p.id_part_type
             JOIN playgram_items pi ON p.catalog_number = pi.catalog_number
             JOIN compositions c ON pi.catalog_number = c.catalog_number
@@ -164,8 +164,8 @@ function generateAllSectionZips($f_link, $playgram_id) {
     // Get all sections that have parts in this playgram
     $sql = "SELECT DISTINCT s.id_section, s.name as section_name
             FROM sections s
-            JOIN section_part_types spt ON s.id_section = spt.id_section
-            JOIN part_types pt ON spt.id_part_type = pt.id_part_type
+            JOIN section_instruments si ON s.id_section = si.id_section
+            JOIN part_types pt ON si.id_instrument = pt.default_instrument
             JOIN parts p ON pt.id_part_type = p.id_part_type
             JOIN playgram_items pi ON p.catalog_number = pi.catalog_number
             JOIN compositions c ON pi.catalog_number = c.catalog_number
@@ -187,14 +187,27 @@ function generateAllSectionZips($f_link, $playgram_id) {
             $zip_files[] = [
                 'section_name' => $section['section_name'],
                 'url' => $zip_result['data']['zip_url'],
+                'download_link' => $zip_result['data']['download_link'],
                 'filename' => $zip_result['data']['filename'],
-                'part_count' => $zip_result['data']['part_count']
+                'part_count' => $zip_result['data']['part_count'],
+                'token' => $zip_result['data']['token']
             ];
             $generation_log[] = "Generated ZIP for " . $section['section_name'] . " (" . $zip_result['data']['part_count'] . " parts)";
             // Generate a secure token
             $token = bin2hex(random_bytes(16)); // 32-char token
             $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
-            $id_user = $_SESSION['user_id'];
+            // Get user ID from database using session username
+            $id_user = null;
+            if (isset($_SESSION['username'])) {
+                $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
+                mysqli_stmt_bind_param($user_stmt, "s", $_SESSION['username']);
+                mysqli_stmt_execute($user_stmt);
+                $user_result = mysqli_stmt_get_result($user_stmt);
+                if ($user_row = mysqli_fetch_assoc($user_result)) {
+                    $id_user = $user_row['id_users'];
+                }
+                mysqli_stmt_close($user_stmt);
+            }
             $id_playgram = $playgram_id;
             $id_section = $section['id_section'];
             $zip_filename = $zip_result['data']['filename'];
@@ -254,8 +267,8 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
             JOIN compositions c ON pi.catalog_number = c.catalog_number
             JOIN parts p ON c.catalog_number = p.catalog_number
             JOIN part_types pt ON p.id_part_type = pt.id_part_type
-            JOIN section_part_types spt ON pt.id_part_type = spt.id_part_type
-            JOIN sections s ON spt.id_section = s.id_section
+            JOIN section_instruments si ON pt.default_instrument = si.id_instrument
+            JOIN sections s ON si.id_section = s.id_section
             WHERE pi.id_playgram = ? AND s.id_section = ? 
                 AND c.enabled = 1 AND p.originals_count > 0 
                 AND p.image_path IS NOT NULL AND p.image_path != ''
@@ -335,7 +348,18 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
     // Generate a secure token for this ZIP
     $token = bin2hex(random_bytes(16)); // 32-char token
     $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
-    $id_user = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+    // Get user ID from database using session username
+    $id_user = null;
+    if (isset($_SESSION['username'])) {
+        $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
+        mysqli_stmt_bind_param($user_stmt, "s", $_SESSION['username']);
+        mysqli_stmt_execute($user_stmt);
+        $user_result = mysqli_stmt_get_result($user_stmt);
+        if ($user_row = mysqli_fetch_assoc($user_result)) {
+            $id_user = $user_row['id_users'];
+        }
+        mysqli_stmt_close($user_stmt);
+    }
     // Insert token into the database
     $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "siissi", $token, $playgram_id, $section_id, $zip_filename, $expires_at, $id_user);

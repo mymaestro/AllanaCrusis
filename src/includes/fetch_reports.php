@@ -67,21 +67,21 @@ if (isset($_POST["report_type"])) {
             $output .= '</tbody></table></div>';
             break;
             
-        case 'orphaned_part_types':
-            $sql = 'SELECT pt.id_part_type, pt.name, pt.description, pt.family, pt.enabled
-                    FROM part_types pt
-                    LEFT JOIN section_part_types spt ON pt.id_part_type = spt.id_part_type
-                    WHERE spt.id_part_type IS NULL AND pt.enabled = 1
-                    ORDER BY pt.family, pt.name';
+        case 'orphaned_instruments':
+            $sql = 'SELECT i.id_instrument, i.name, i.description, i.family, i.enabled
+                    FROM instruments i
+                    LEFT JOIN section_instruments si ON i.id_instrument = si.id_instrument
+                    WHERE si.id_instrument IS NULL AND i.enabled = 1
+                    ORDER BY i.family, i.name';
             
             $output .= '<div class="table-responsive">
-                <h4><i class="fas fa-puzzle-piece text-warning"></i> Part types not assigned to sections</h4>
-                <p class="text-muted">These part types are enabled but not assigned to any section.</p>
+                <h4><i class="fas fa-music text-warning"></i> Instruments not assigned to sections</h4>
+                <p class="text-muted">These instruments are enabled but not assigned to any section.</p>
                 <table class="table table-striped table-hover">
                 <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Part Type Name</th>
+                    <th>Instrument Name</th>
                     <th>Family</th>
                     <th>Description</th>
                 </tr>
@@ -92,19 +92,19 @@ if (isset($_POST["report_type"])) {
             if (mysqli_num_rows($res) > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $output .= '<tr>
-                        <td>' . $row['id_part_type'] . '</td>
+                        <td>' . $row['id_instrument'] . '</td>
                         <td><strong>' . htmlspecialchars($row['name']) . '</strong></td>
                         <td><span class="badge bg-secondary">' . htmlspecialchars($row['family']) . '</span></td>
                         <td>' . htmlspecialchars($row['description']) . '</td>
                     </tr>';
                 }
             } else {
-                $output .= '<tr><td colspan="4" class="text-center text-success">All part types are properly assigned to sections!</td></tr>';
+                $output .= '<tr><td colspan="4" class="text-center text-success">All instruments are properly assigned to sections!</td></tr>';
             }
             $output .= '</tbody></table>';
             $output .= $u_librarian ?
                 '<div class="alert alert-info mt-3">
-                    <strong>Action Required:</strong> Consider assigning these part types to appropriate sections in the <a href="/partsections">Part Sections</a> management page.
+                    <strong>Action Required:</strong> Consider assigning these instruments to appropriate sections in the <a href="/sections">Sections</a> management page.
                 </div>' : '';
             break;
             

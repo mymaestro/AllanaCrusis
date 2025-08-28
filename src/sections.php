@@ -23,7 +23,7 @@
             <div class="col-auto">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
 <?php if($u_librarian) : ?>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#assignModal" id="assign" class="btn btn-info assign_sections">Assign part types to section</button>    
+                <button type="button" data-bs-toggle="modal" data-bs-target="#assignModal" id="assign" class="btn btn-info assign_sections">Assign instruments to section</button>    
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="add"  class="btn btn-warning">Add</button>
@@ -45,16 +45,16 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Section leader</th>
-                        <th>Part types</th>
+                        <th>Instruments</th>
                         <th>Enabled</th>
                     </tr>
                     </thead>
                     <tbody>';
         $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        $sql = "SELECT s.*, u.name AS leader_name, COUNT(spt.id_part_type) AS parttype_count
+        $sql = "SELECT s.*, u.name AS leader_name, COUNT(si.id_instrument) AS instrument_count
         FROM sections s
         LEFT JOIN users u ON s.section_leader = u.id_users
-        LEFT JOIN section_part_types spt ON s.id_section = spt.id_section
+        LEFT JOIN section_instruments si ON s.id_section = si.id_section
         GROUP BY s.id_section
         ORDER BY s.name;";
 
@@ -70,7 +70,7 @@
                         <td><strong><a href="#" class="view_data" data-id="'.$id_section.'">'.$name.'</a></strong></td>
                         <td>'.htmlspecialchars($description ?? '').'</td>
                         <td>'.htmlspecialchars($section_leader ?? '').'</td>
-                        <td>'.intval($rowList['parttype_count']).'</td>
+                        <td>'.intval($rowList['instrument_count']).'</td>
                         <td>' . (($enabled == 1) ? "Yes" : "No") .'</td>
                         </tr>';
         }
@@ -168,7 +168,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="assignModalLabel">Assign part types to section</h5>
+                    <h5 class="modal-title" id="assignModalLabel">Assign instruments to section</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -182,16 +182,16 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <label>Available Part Types</label>
-                                <select multiple class="form-control" id="availablePartTypes" size="10"></select>
+                                <label>Available Instruments</label>
+                                <select multiple class="form-control" id="availableInstruments" size="10"></select>
                             </div>
                             <div class="col-1 d-flex flex-column justify-content-center align-items-center">
-                                <button type="button" id="addPartType" class="btn btn-outline-primary mb-2">&gt;&gt;</button>
-                                <button type="button" id="removePartType" class="btn btn-outline-secondary">&lt;&lt;</button>
+                                <button type="button" id="addInstrument" class="btn btn-outline-primary mb-2">&gt;&gt;</button>
+                                <button type="button" id="removeInstrument" class="btn btn-outline-secondary">&lt;&lt;</button>
                             </div>
                             <div class="col">
                                 <label>Assigned to Section</label>
-                                <select multiple class="form-control" id="assignedPartTypes" name="assigned_part_types[]" size="10"></select>
+                                <select multiple class="form-control" id="assignedInstruments" name="assigned_instruments[]" size="10"></select>
                             </div>
                         </div>
                     </form>
@@ -379,9 +379,9 @@ $(document).ready(function(){
         }
     });
 
-    let allPartTypes = [];
+    let allInstruments = [];
 
-    // 1. Load sections and part types when modal opens
+    // 1. Load sections and instruments when modal opens
     $('#assignModal').on('show.bs.modal', function () {
         // Load sections
         $.getJSON('index.php?action=fetch_sections_list', function(sections) {
@@ -392,31 +392,31 @@ $(document).ready(function(){
             });
             setTimeout(function() { $sectionSelect.val(id_section).trigger('change'); }, 200)
         });
-        // Load all part types
-        $.getJSON('index.php?action=fetch_parttypes_list', function(parttypes) {
-            allPartTypes = parttypes;
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
+        // Load all instruments
+        $.getJSON('index.php?action=fetch_instruments_list', function(instruments) {
+            allInstruments = instruments;
+            $('#availableInstruments').empty();
+            $('#assignedInstruments').empty();
         });
     });
 
-    // 2. When a section is selected, load assigned part types
+    // 2. When a section is selected, load assigned instruments
     $('#sectionSelect').on('change', function() {
         let sectionId = $(this).val();
         if (!sectionId) {
-            $('#availablePartTypes').empty();
-            $('#assignedPartTypes').empty();
+            $('#availableInstruments').empty();
+            $('#assignedInstruments').empty();
             return;
         }
-        // Get assigned part types for this section
-        $.post('index.php?action=fetch_section_parttypes', {section_id: sectionId}, function(assigned) {
-            // assigned is an array of id_part_type
+        // Get assigned instruments for this section
+        $.post('index.php?action=fetch_section_instruments', {section_id: sectionId}, function(assigned) {
+            // assigned is an array of id_instrument
             let assignedSet = new Set(assigned);
-            let $available = $('#availablePartTypes').empty();
-            let $assigned = $('#assignedPartTypes').empty();
-            $.each(allPartTypes, function(i, pt) {
-                let option = $('<option>').val(pt.id_part_type).text(pt.name);
-                if (assignedSet.has(pt.id_part_type)) {
+            let $available = $('#availableInstruments').empty();
+            let $assigned = $('#assignedInstruments').empty();
+            $.each(allInstruments, function(i, inst) {
+                let option = $('<option>').val(inst.id_instrument).text(inst.name);
+                if (assignedSet.has(inst.id_instrument)) {
                     $assigned.append(option);
                 } else {
                     $available.append(option);
@@ -425,15 +425,15 @@ $(document).ready(function(){
         }, 'json');
     });
 
-    // 3. Move part types between lists
-    $('#addPartType').on('click', function() {
-        $('#availablePartTypes option:selected').each(function() {
-            $('#assignedPartTypes').append($(this));
+    // 3. Move instruments between lists
+    $('#addInstrument').on('click', function() {
+        $('#availableInstruments option:selected').each(function() {
+            $('#assignedInstruments').append($(this));
         });
     });
-    $('#removePartType').on('click', function() {
-        $('#assignedPartTypes option:selected').each(function() {
-            $('#availablePartTypes').append($(this));
+    $('#removeInstrument').on('click', function() {
+        $('#assignedInstruments option:selected').each(function() {
+            $('#availableInstruments').append($(this));
         });
     });
 
@@ -445,12 +445,12 @@ $(document).ready(function(){
             return;
         }
         let assigned = [];
-        $('#assignedPartTypes option').each(function() {
+        $('#assignedInstruments option').each(function() {
             assigned.push($(this).val());
         });
-        $.post('index.php?action=insert_section_parttypes', {
+        $.post('index.php?action=insert_section_instruments', {
             section_id: sectionId,
-            assigned_part_types: assigned
+            assigned_instruments: assigned
         }, function(response) {
             if (response.success) {
                 $('#assignModal').modal('hide');

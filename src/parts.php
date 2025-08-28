@@ -23,10 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['catalog_number'])) {
 } elseif ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['catalog_number'])) {
     $catalog_number = $_GET['catalog_number'];
     // Handle the GET logic (e.g., display instrumentation)
+    echo "<script>window._autoload_catalog_number = '" . addslashes($catalog_number) . "';</script>";
 } else {
     // Show a default page or error
 }
-
+ferror_log(print_r($_GET, true));
+ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_number : 'Not set'));
 ?>
 
 <!-- Main title above the panels -->
@@ -428,6 +430,20 @@ function renderSimpleTemplate(template, data) {
         return data[key] !== undefined && data[key] !== null ? data[key] : '';
     });
 }
+
+// Auto-load composition if catalog_number is present in URL
+if (window._autoload_catalog_number) {
+    $(function() {
+        setTimeout(function() {
+            var selector = '#catno_' + window._autoload_catalog_number;
+            var $item = $(selector);
+            if ($item.length) {
+                $item.trigger('click');
+                $item.addClass('active');
+            }
+        }, 400); // Wait for AJAX to populate the list
+    });
+};
 
 // jquery functions to add/update database records
 $(document).ready(function() {

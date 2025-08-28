@@ -858,10 +858,10 @@ $(document).ready(function() {
                         updateCompositionsList();
                         updateTimeDisplay();
                     } else {
-                        window.location.href = 'playgrams.php';
+                        window.location.href = '/playgrams';
                     }
                 } else {
-                    window.location.href = 'playgrams.php';
+                    window.location.href = '/playgrams';
                 }
             },
             error: function() {

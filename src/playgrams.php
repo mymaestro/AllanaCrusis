@@ -34,7 +34,7 @@
                 <button type="button" id="edit_builder" class="btn btn-success" disabled>Edit in builder</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
-                <a href="playgram_builder.php" class="btn btn-warning">Add</a>
+                <a href="/playgram_builder" class="btn btn-warning">Add</a>
 <?php endif; ?>
             </div>
         </div><!-- right button -->
@@ -280,12 +280,12 @@ $(document).ready(function(){
     });
     $('#sort').click(function() {
         if (id_playgram !== null) {
-            window.location.href = 'playgramsorderlist.php?id=' + encodeURIComponent(id_playgram);
+            window.location.href = '/playgramsorderlist?id=' + encodeURIComponent(id_playgram);
         }
     });
     $('#edit_builder').click(function() {
         if (id_playgram !== null) {
-            window.location.href = 'playgram_builder.php?id=' + encodeURIComponent(id_playgram);
+            window.location.href = '/playgram_builder?id=' + encodeURIComponent(id_playgram);
         }
     });
     $(document).on('click', '.delete_data', function() { // button that brings up delete modal

@@ -14,7 +14,6 @@ if (isset($_SESSION['username'])) {
 require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
-ferror_log("Running part_distribution.php");
 
 // Check if user has permission
 if (!$u_librarian && !$u_admin) {

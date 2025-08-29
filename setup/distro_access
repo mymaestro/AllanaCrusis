@@ -1,0 +1,12 @@
+# Only allow direct access to .zip files
+<FilesMatch "\\.zip$">
+    Require all granted
+</FilesMatch>
+
+# Deny access to everything else
+<FilesMatch "^(?!.*\\.zip$).*$">
+    Require all denied
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes

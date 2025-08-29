@@ -45,6 +45,7 @@ $urlMap = [
    '/logout' => 'logout.php',
    '/papersizes' => 'papersizes.php',
    '/partcollections' => 'partcollections.php',
+   '/part_delivery' => 'part_delivery.php',
    '/part_distribution' => 'part_distribution.php',
    '/partsections' => 'partsections.php',
    '/parts' => 'parts.php',

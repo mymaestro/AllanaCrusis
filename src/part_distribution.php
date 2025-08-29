@@ -56,6 +56,40 @@ mysqli_close($f_link);
             </div>
         </div>
 
+        <!-- Help and Instructions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-info">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> How part distribution works</h6>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#helpInstructionsCollapse" aria-expanded="false" aria-controls="helpInstructionsCollapse">
+                            <span class="collapsed"><i class="fas fa-plus"></i></span>
+                            <span class="expanded d-none"><i class="fas fa-minus"></i></span>
+                        </button>
+                    </div>
+                    <div id="helpInstructionsCollapse" class="collapse">
+                        <div class="card-body">
+                            <ol>
+                                <li><strong>Select a Playgram:</strong> Choose the concert program that contains the compositions you want to distribute from the Choose Playgram menu.</li>
+                                <li><strong>Load program details:</strong> Click <em>Load program details</em> to view the compositions in the playgram and their available parts.</li>
+                                <li><strong>Generate ZIP files:</strong> For each section (Woodwinds, Brass, Percussion, etc.), click <em>Generate ZIP file</em> to create a ZIP file that contains:</li>
+                                <ul>
+                                    <li>All PDF parts for that section across all compositions in the playgram</li>
+                                    <li>The PDF files are named as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
+                                    <li>Example: <code>01 - March Grandioso - Flute 1.pdf</code></li>
+                                    <li><strong>Note:</strong> Only parts with PDF files are included. Missing PDFs are noted in the generation log.</li>
+                                </ul>
+                                <li><strong>Copy download link:</strong> Click <em>Copy link</em> to copy the download link for the ZIP file. You can send this link to a band member to download their parts.</li>
+                            </ol>
+                            <div class="alert alert-warning mt-3">
+                                <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within 2 days, or it will expire.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Playgram Selection -->
         <div class="row mt-4">
             <div class="col-12">
@@ -80,9 +114,6 @@ mysqli_close($f_link);
                                 <div class="col-md-6 d-flex align-items-end">
                                     <button type="button" id="load_playgram" class="btn btn-primary me-2">
                                         <i class="fas fa-search"></i> Load program details
-                                    </button>
-                                    <button type="button" id="generate_all" class="btn btn-success" disabled>
-                                        <i class="fas fa-file-archive"></i> Generate all section ZIPs
                                     </button>
                                 </div>
                             </div>
@@ -149,40 +180,27 @@ mysqli_close($f_link);
                 </div>
             </div>
         </div>
-
-        <!-- Help and Instructions -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card border-info">
-                    <div class="card-header bg-info text-white">
-                        <h6><i class="fas fa-info-circle"></i> How Part Distribution Works</h6>
-                    </div>
-                    <div class="card-body">
-                        <ol>
-                            <li><strong>Select a Playgram:</strong> Choose the concert program containing the compositions you want to distribute.</li>
-                            <li><strong>Review compositions:</strong> The system will show all compositions in the playgram and their available parts.</li>
-                            <li><strong>Generate ZIP files:</strong> For each section (Woodwinds, Brass, Percussion, etc.), a ZIP file will be created containing:</li>
-                            <ul>
-                                <li>All PDF parts for that section across all compositions in the playgram</li>
-                                <li>Files renamed as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
-                                <li>Example: <code>01 - March Grandioso - Flute 1.pdf</code></li>
-                            </ul>
-                            <li><strong>Download and distribute:</strong> Section leaders can download their ZIP file and distribute individual PDFs to musicians.</li>
-                        </ol>
-                        <div class="alert alert-warning mt-3">
-                            <strong>Note:</strong> Only parts with PDF files (image_path) will be included. Missing PDFs will be noted in the generation log.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </main>
 
 <?php require_once(__DIR__. "/includes/footer.php"); ?>
 
 <script>
+// Show/hide help instructions
+$(function() {
+    var $collapse = $('#helpInstructionsCollapse');
+    var $button = $('[data-bs-target="#helpInstructionsCollapse"]');
+    if ($collapse.length && $button.length) {
+        $collapse.on('show.bs.collapse', function() {
+            $button.find('.collapsed').addClass('d-none');
+            $button.find('.expanded').removeClass('d-none');
+        });
+        $collapse.on('hide.bs.collapse', function() {
+            $button.find('.collapsed').removeClass('d-none');
+            $button.find('.expanded').addClass('d-none');
+        });
+    }
+});
 $(document).ready(function() {
     let currentPlaygramId = null;
     let playgramData = null;
@@ -212,7 +230,6 @@ $(document).ready(function() {
                     playgramData = response.data;
                     displayPlaygramDetails(response.data);
                     displaySectionsDistribution(response.data);
-                    $('#generate_all').prop('disabled', false);
                 } else {
                     alert('Error: ' + response.message);
                 }
@@ -227,70 +244,6 @@ $(document).ready(function() {
         });
     });
 
-    // Generate all section ZIP files
-    $('#generate_all').on('click', function() {
-        if (!currentPlaygramId || !playgramData) {
-            alert('Please load a playgram first.');
-            return;
-        }
-
-        $(this).prop('disabled', true);
-        $('#generation_progress').show();
-        $('#progress_header').html('<i class="fas fa-spinner fa-spin"></i> Generation in progress');
-        $('#progress_bar').css('width', '0%').text('0%').removeClass('bg-success').addClass('bg-primary');
-        $('#progress_log').html('<p class="text-info"><i class="fas fa-spinner fa-spin"></i> Starting generation process...</p>');
-        $('#download_links').hide();
-
-        $.ajax({
-            url: 'index.php?action=fetch_playgram_distribution',
-            method: 'POST',
-            data: {
-                action: 'generate_zips',
-                playgram_id: currentPlaygramId
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    // Update header to show completion
-                    $('#progress_header').html('<i class="fas fa-check-circle text-success"></i> Generation completed');
-                    $('#progress_bar').css('width', '100%').text('Complete').removeClass('bg-primary').addClass('bg-success');
-                    $('#progress_log').append('<p class="text-success"><i class="fas fa-check"></i> All ZIP files generated successfully!</p>');
-                    
-                    // Display copy link buttons for each section
-                    let linksHtml = '';
-                    response.data.zip_files.forEach(function(zipFile) {
-                        let linkHref = zipFile.download_link || zipFile.url;
-                        let label = zipFile.section_name ? (zipFile.section_name + ' (' + zipFile.part_count + ' parts)') : zipFile.filename;
-                        linksHtml += '<li><button type="button" class="btn btn-primary btn-sm copy-link-btn me-2 mb-2" data-link="' + linkHref + '"><i class="fas fa-link"></i> Copy Link for ' + label + '</button></li>';
-                    });
-                    $('#zip_files_list').html(linksHtml);
-                    $('#download_links').show();
-
-                    // Show generation log
-                    if (response.data.log && response.data.log.length > 0) {
-                        $('#progress_log').append('<div class="mt-3"><h6>Generation Details:</h6><ul class="text-muted small">');
-                        response.data.log.forEach(function(logEntry) {
-                            $('#progress_log').append('<li>' + logEntry + '</li>');
-                        });
-                        $('#progress_log').append('</ul></div>');
-                    }
-                } else {
-                    $('#progress_header').html('<i class="fas fa-exclamation-triangle text-danger"></i> Generation failed');
-                    $('#progress_bar').removeClass('bg-primary').addClass('bg-danger');
-                    $('#progress_log').append('<p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Error: ' + response.message + '</p>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX error:', error);
-                $('#progress_header').html('<i class="fas fa-exclamation-triangle text-danger"></i> Generation failed');
-                $('#progress_bar').removeClass('bg-primary').addClass('bg-danger');
-                $('#progress_log').append('<p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Error generating ZIP files. Please try again.</p>');
-            },
-            complete: function() {
-                $('#generate_all').prop('disabled', false);
-            }
-        });
-    });
 
     function displayPlaygramDetails(data) {
         let html = '<div class="table-responsive"><table class="table table-striped">';

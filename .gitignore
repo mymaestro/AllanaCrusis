@@ -14,3 +14,4 @@ public/images/musicLibraryDB.png
 public/images/musicLibraryDBlogo.png
 src/includes/config.php
 src/PHPdfer/command_output.log
+public/popup-*.html

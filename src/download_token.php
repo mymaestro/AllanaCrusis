@@ -6,6 +6,11 @@ require_once __DIR__ . '/../config/bootstrap.php';
 require_once __DIR__ . '/includes/config.php';
 require_once __DIR__ . '/includes/functions.php';
 
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'none';
+$ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
+
+
 // Extract token from URL (assume routed as /d/{token})
 $token = null;
 if (isset($_GET['token'])) {
@@ -20,12 +25,14 @@ if (isset($_GET['token'])) {
     }
 }
 
+ferror_log("Download request for token=$token from IP=$ip, Referer=$referer, UA=$user_agent, Time=" . date('Y-m-d H:i:s'));
+
 if (!$token || !preg_match('/^[a-f0-9]{32}$/', $token)) {
+    ferror_log("Invalid or missing download token.");
     http_response_code(400);
     echo 'Invalid or missing download token.';
     exit;
 }
-
 
 // Use MySQLi connection
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -37,22 +44,31 @@ $row = mysqli_fetch_assoc($result);
 mysqli_stmt_close($stmt);
 
 if (!$row) {
+    ferror_log("Download token not found.");
     http_response_code(404);
     echo 'Download token not found.';
     exit;
 }
 
-if ($row['used'] || strtotime($row['expires_at']) < time()) {
+if ($row['used']) {
+    ferror_log("Download token has already been used.");
     http_response_code(403);
-    echo 'This download link has expired or already been used.';
+    echo 'This download link has been used.';
     exit;
 }
 
+if (strtotime($row['expires_at']) < time()) {
+    ferror_log("Download token expired at " . $row['expires_at']);
+    http_response_code(403);
+    echo 'This download link has expired.';
+    exit;
+}
 
 // Reconstruct the full path to the ZIP file from zip_filename
 $zip_filename = $row['zip_filename'];
 $zip_path = __DIR__ . '/includes/' . ORGDIST . $zip_filename;
 if (!file_exists($zip_path)) {
+    ferror_log("ZIP file not found: " . $zip_path);
     http_response_code(410);
     echo 'File no longer available.';
     exit;

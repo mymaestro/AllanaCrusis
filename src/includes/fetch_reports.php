@@ -394,66 +394,23 @@ if (isset($_POST["report_type"])) {
                              GROUP BY dt.zip_filename
                              ORDER BY dt.zip_filename';
             
-            $output .= '<div class="row">';
-            
-            // Recent tokens section
-            $output .= '<div class="col-md-6">
-                <h4><i class="fas fa-key text-success"></i> Recent Download Tokens</h4>
-                <p class="text-muted">Most recent 50 download tokens (showing status and expiration).</p>
-                <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm">
-                <thead class="table-dark">
-                <tr>
-                    <th>Token (Last 8)</th>
-                    <th>Playgram</th>
-                    <th>Section</th>
-                    <th>ZIP File</th>
-                    <th>Status</th>
-                    <th>Expires</th>
-                    <th>Created By</th>
-                </tr>
-                </thead>
-                <tbody>';
-            
-            $res = mysqli_query($f_link, $active_tokens_sql);
-            if (mysqli_num_rows($res) > 0) {
-                while($row = mysqli_fetch_assoc($res)) {
-                    $token_short = '...' . substr($row['token'], -8);
-                    $expires_date = date('M j, Y H:i', strtotime($row['expires_at']));
-                    $created_by = $row['username'] ? htmlspecialchars($row['username']) : 'Unknown';
-                    $status_badge = $row['used'] ? '<span class="badge bg-secondary">Used</span>' : '<span class="badge bg-success">Available</span>';
-                    
-                    $output .= '<tr>
-                        <td><code>' . $token_short . '</code></td>
-                        <td>' . htmlspecialchars($row['playgram_name']) . '</td>
-                        <td><span class="badge bg-info">' . htmlspecialchars($row['section_name']) . '</span></td>
-                        <td>' . htmlspecialchars($row['zip_filename']) . '</td>
-                        <td>' . $status_badge . '</td>
-                        <td><small>' . $expires_date . '</small></td>
-                        <td>' . $created_by . '</td>
-                    </tr>';
-                }
-            } else {
-                $output .= '<tr><td colspan="7" class="text-center text-muted">No active tokens</td></tr>';
-            }
-            $output .= '</tbody></table></div></div>';
-            
-            // ZIP files section
-            $output .= '<div class="col-md-6">
-                <h4><i class="fas fa-file-archive text-success"></i> Available ZIP Files</h4>
-                <p class="text-muted">All ZIP files referenced in download tokens.</p>
-                <div class="table-responsive">
-                <table class="table table-striped table-hover table-sm">
-                <thead class="table-dark">
-                <tr>
-                    <th>ZIP Filename</th>
-                    <th>Total Tokens</th>
-                    <th>Active</th>
-                    <th>Latest Expiry</th>
-                    <th>First Created</th>
-                </tr>
-                </thead>
-                <tbody>';
+            // ZIP files section (first, at top)
+            $output .= '<div class="row mb-4">
+                <div class="col-12">
+                    <h4><i class="fas fa-file-archive text-success"></i> Available ZIP Files</h4>
+                    <p class="text-muted">All ZIP files referenced in download tokens.</p>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>ZIP Filename</th>
+                        <th>Total Tokens</th>
+                        <th>Active</th>
+                        <th>Latest Expiry</th>
+                        <th>First Created</th>
+                    </tr>
+                    </thead>
+                    <tbody>';
             
             $res = mysqli_query($f_link, $all_zips_sql);
             if (mysqli_num_rows($res) > 0) {
@@ -475,7 +432,54 @@ if (isset($_POST["report_type"])) {
             } else {
                 $output .= '<tr><td colspan="5" class="text-center text-muted">No ZIP files found</td></tr>';
             }
-            $output .= '</tbody></table></div></div></div>';
+            $output .= '</tbody></table></div>
+                </div>
+            </div>';
+            
+            // Recent tokens section (second, below ZIP files)
+            $output .= '<div class="row">
+                <div class="col-12">
+                    <h4><i class="fas fa-key text-success"></i> Recent Download Tokens</h4>
+                    <p class="text-muted">Most recent 50 download tokens (showing status and expiration).</p>
+                    <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>Token (Last 8)</th>
+                        <th>Playgram</th>
+                        <th>Section</th>
+                        <th>ZIP File</th>
+                        <th>Status</th>
+                        <th>Expires</th>
+                        <th>Created By</th>
+                    </tr>
+                    </thead>
+                    <tbody>';
+            
+            $res = mysqli_query($f_link, $active_tokens_sql);
+            if (mysqli_num_rows($res) > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $token_short = '...' . substr($row['token'], -8);
+                    $expires_date = date('M j, Y H:i', strtotime($row['expires_at']));
+                    $created_by = $row['username'] ? htmlspecialchars($row['username']) : 'Unknown';
+                    $status_badge = $row['used'] ? '<span class="badge bg-secondary">Used</span>' : '<span class="badge bg-success">Available</span>';
+                    
+                    $output .= '<tr>
+                        <td><code>' . $token_short . '</code></td>
+                        <td>' . htmlspecialchars($row['playgram_name']) . '</td>
+                        <td><span class="badge bg-info">' . htmlspecialchars($row['section_name']) . '</span></td>
+                        <td>' . htmlspecialchars($row['zip_filename']) . '</td>
+                        <td>' . $status_badge . '</td>
+                        <td><small>' . $expires_date . '</small></td>
+                        <td>' . $created_by . '</td>
+                    </tr>';
+                }
+            } else {
+                $output .= '<tr><td colspan="7" class="text-center text-muted">No tokens found</td></tr>';
+            }
+            $output .= '</tbody></table></div>
+                </div>
+            </div>';
             
             $output .= '<div class="alert alert-info mt-3">
                 <strong><i class="fas fa-info-circle"></i> About Download Tokens:</strong><br>

@@ -78,6 +78,15 @@ $sql = "SELECT COUNT(*) as count FROM compositions
 $res = mysqli_query($f_link, $sql);
 $report_counts['incomplete_metadata'] = mysqli_fetch_assoc($res)['count'];
 
+// 7. Download tokens and ZIP files report
+$sql = "SELECT COUNT(*) as active_tokens FROM download_tokens WHERE used = 0 AND expires_at > NOW()";
+$res = mysqli_query($f_link, $sql);
+$report_counts['active_tokens'] = mysqli_fetch_assoc($res)['active_tokens'];
+
+$sql = "SELECT COUNT(DISTINCT zip_filename) as zip_count FROM download_tokens";
+$res = mysqli_query($f_link, $sql);
+$report_counts['zip_files'] = mysqli_fetch_assoc($res)['zip_count'];
+
 // Urgent: Compositions with parts but missing PDFs in future playgrams
 $sql = "SELECT COUNT(DISTINCT c.catalog_number) as count
         FROM playgrams pg
@@ -271,6 +280,27 @@ mysqli_close($f_link);
                             </div>
                             <div class="align-self-center">
                                 <button class="btn btn-outline-primary btn-sm report-btn" data-report="incomplete_metadata">
+                                    View Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-3">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title text-success">
+                                    <i class="fas fa-download"></i> Download tokens & ZIP files
+                                </h6>
+                                <h3 class="text-success"><?php echo number_format($report_counts['active_tokens']); ?> / <?php echo number_format($report_counts['zip_files']); ?></h3>
+                                <small class="text-muted">Active tokens / Available ZIP files</small>
+                            </div>
+                            <div class="align-self-center">
+                                <button class="btn btn-outline-success btn-sm report-btn" data-report="download_tokens_zips">
                                     View Report
                                 </button>
                             </div>

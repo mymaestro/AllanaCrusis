@@ -375,6 +375,117 @@ if (isset($_POST["report_type"])) {
             $output .= '</tbody></table></div>';
             break;
             
+        case 'download_tokens_zips':
+            $active_tokens_sql = 'SELECT dt.token, dt.zip_filename, dt.expires_at, dt.used, dt.created_at,
+                                         pg.name as playgram_name, s.name as section_name, u.username
+                                  FROM download_tokens dt
+                                  LEFT JOIN playgrams pg ON dt.id_playgram = pg.id_playgram
+                                  LEFT JOIN sections s ON dt.id_section = s.id_section
+                                  LEFT JOIN users u ON dt.id_user = u.id_users
+                                  ORDER BY dt.created_at DESC
+                                  LIMIT 50';
+            
+            $all_zips_sql = 'SELECT DISTINCT dt.zip_filename,
+                                    COUNT(*) as total_tokens,
+                                    SUM(CASE WHEN dt.used = 0 AND dt.expires_at > NOW() THEN 1 ELSE 0 END) as active_tokens,
+                                    MAX(dt.expires_at) as latest_expiration,
+                                    MIN(dt.created_at) as first_created
+                             FROM download_tokens dt
+                             GROUP BY dt.zip_filename
+                             ORDER BY dt.zip_filename';
+            
+            $output .= '<div class="row">';
+            
+            // Recent tokens section
+            $output .= '<div class="col-md-6">
+                <h4><i class="fas fa-key text-success"></i> Recent Download Tokens</h4>
+                <p class="text-muted">Most recent 50 download tokens (showing status and expiration).</p>
+                <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                <thead class="table-dark">
+                <tr>
+                    <th>Token (Last 8)</th>
+                    <th>Playgram</th>
+                    <th>Section</th>
+                    <th>ZIP File</th>
+                    <th>Status</th>
+                    <th>Expires</th>
+                    <th>Created By</th>
+                </tr>
+                </thead>
+                <tbody>';
+            
+            $res = mysqli_query($f_link, $active_tokens_sql);
+            if (mysqli_num_rows($res) > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $token_short = '...' . substr($row['token'], -8);
+                    $expires_date = date('M j, Y H:i', strtotime($row['expires_at']));
+                    $created_by = $row['username'] ? htmlspecialchars($row['username']) : 'Unknown';
+                    $status_badge = $row['used'] ? '<span class="badge bg-secondary">Used</span>' : '<span class="badge bg-success">Available</span>';
+                    
+                    $output .= '<tr>
+                        <td><code>' . $token_short . '</code></td>
+                        <td>' . htmlspecialchars($row['playgram_name']) . '</td>
+                        <td><span class="badge bg-info">' . htmlspecialchars($row['section_name']) . '</span></td>
+                        <td>' . htmlspecialchars($row['zip_filename']) . '</td>
+                        <td>' . $status_badge . '</td>
+                        <td><small>' . $expires_date . '</small></td>
+                        <td>' . $created_by . '</td>
+                    </tr>';
+                }
+            } else {
+                $output .= '<tr><td colspan="7" class="text-center text-muted">No active tokens</td></tr>';
+            }
+            $output .= '</tbody></table></div></div>';
+            
+            // ZIP files section
+            $output .= '<div class="col-md-6">
+                <h4><i class="fas fa-file-archive text-success"></i> Available ZIP Files</h4>
+                <p class="text-muted">All ZIP files referenced in download tokens.</p>
+                <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                <thead class="table-dark">
+                <tr>
+                    <th>ZIP Filename</th>
+                    <th>Total Tokens</th>
+                    <th>Active</th>
+                    <th>Latest Expiry</th>
+                    <th>First Created</th>
+                </tr>
+                </thead>
+                <tbody>';
+            
+            $res = mysqli_query($f_link, $all_zips_sql);
+            if (mysqli_num_rows($res) > 0) {
+                while($row = mysqli_fetch_assoc($res)) {
+                    $latest_exp = $row['latest_expiration'] ? date('M j, Y', strtotime($row['latest_expiration'])) : 'N/A';
+                    $first_created = date('M j, Y', strtotime($row['first_created']));
+                    $active_badge = $row['active_tokens'] > 0 ? 
+                        '<span class="badge bg-success">' . $row['active_tokens'] . '</span>' : 
+                        '<span class="badge bg-secondary">0</span>';
+                    
+                    $output .= '<tr>
+                        <td><strong>' . htmlspecialchars($row['zip_filename']) . '</strong></td>
+                        <td>' . $row['total_tokens'] . '</td>
+                        <td>' . $active_badge . '</td>
+                        <td><small>' . $latest_exp . '</small></td>
+                        <td><small>' . $first_created . '</small></td>
+                    </tr>';
+                }
+            } else {
+                $output .= '<tr><td colspan="5" class="text-center text-muted">No ZIP files found</td></tr>';
+            }
+            $output .= '</tbody></table></div></div></div>';
+            
+            $output .= '<div class="alert alert-info mt-3">
+                <strong><i class="fas fa-info-circle"></i> About Download Tokens:</strong><br>
+                • Tokens are valid for 2 days after creation<br>
+                • Each token can only be used once<br>
+                • ZIP files are served from the distribution directory<br>
+                • Tokens are automatically created when ZIP distributions are requested
+            </div>';
+            break;
+            
         default:
             $output = '<div class="alert alert-danger">Unknown report type requested.</div>';
             break;

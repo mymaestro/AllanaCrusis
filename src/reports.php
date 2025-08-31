@@ -225,6 +225,7 @@ mysqli_close($f_link);
 
 
 
+            <?php if ($u_librarian): ?>
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card border-primary">
                     <div class="card-body">
@@ -245,6 +246,7 @@ mysqli_close($f_link);
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
 
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card border-dark">
@@ -288,6 +290,7 @@ mysqli_close($f_link);
                 </div>
             </div>
 
+            <?php if ($u_librarian || $u_admin): ?>
             <div class="col-lg-4 col-md-6 mb-3">
                 <div class="card border-success">
                     <div class="card-body">
@@ -308,6 +311,7 @@ mysqli_close($f_link);
                     </div>
                 </div>
             </div>
+            <?php endif; ?>
         </div>
 
         <?php if ($u_librarian): ?>
@@ -395,6 +399,42 @@ $(document).ready(function() {
                 alert('Error loading report. Please try again.');
                 // Reset button
                 button.prop('disabled', false).html('View Report');
+            }
+        });
+    });
+    
+    // Handle cleanup button clicks (delegated event since button is dynamically loaded)
+    $(document).on('click', '#cleanup-tokens-btn', function() {
+        var button = $(this);
+        var resultDiv = $('#cleanup-result');
+        
+        if (!confirm('Are you sure you want to clean up expired tokens and ZIP files? This action cannot be undone.')) {
+            return;
+        }
+        
+        // Show loading state
+        button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cleaning...');
+        resultDiv.html('');
+        
+        $.ajax({
+            url: "index.php?action=delete_expired_tokens",
+            type: "GET",
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    resultDiv.html('<div class="alert alert-success"><i class="fas fa-check"></i> ' + response.message + '</div>');
+                    // Refresh the report to show updated counts
+                    $('.report-btn[data-report="download_tokens_zips"]').click();
+                } else {
+                    resultDiv.html('<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> ' + response.message + '</div>');
+                }
+                // Reset button
+                button.prop('disabled', false).html('<i class="fas fa-broom"></i> Clean up');
+            },
+            error: function() {
+                resultDiv.html('<div class="alert alert-danger"><i class="fas fa-times"></i> Error performing cleanup. Please try again.</div>');
+                // Reset button
+                button.prop('disabled', false).html('<i class="fas fa-broom"></i> Clean up');
             }
         });
     });

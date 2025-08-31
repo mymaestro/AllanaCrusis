@@ -488,6 +488,16 @@ if (isset($_POST["report_type"])) {
                 • ZIP files are served from the distribution directory<br>
                 • Tokens are automatically created when ZIP distributions are requested
             </div>';
+            
+            if ($u_librarian || $u_admin) {
+                $output .= '<div class="mt-3">
+                    <button id="cleanup-tokens-btn" class="btn btn-warning">
+                        <i class="fas fa-broom"></i> Clean up
+                    </button>
+                    <small class="text-muted ms-2">Remove expired and used tokens and their associated ZIP files</small>
+                    <div id="cleanup-result" class="mt-2"></div>
+                </div>';
+            }
             break;
             
         default:

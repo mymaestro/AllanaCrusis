@@ -347,7 +347,7 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
 
     // Generate a secure token for this ZIP
     $token = bin2hex(random_bytes(16)); // 32-char token
-    $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
+    $expires_at = date('Y-m-d H:i:s', strtotime('+5 days'));
     // Get user ID from database using session username
     $id_user = null;
     if (isset($_SESSION['username'])) {

@@ -128,7 +128,7 @@ define('ORGRECORDINGS', 'https://yourdomain.com/musicLibraryDB/files/recordings/
 define('ORGPARTDISTRO', 'https://yourdomain.com/distributions/'); // Where the browser can download ZIP file for parts distribution
 define('ORGPUBLIC', 'files/recordings/'); // Directory with public access, to download recordings
 define('ORGPRIVATE','files/parts/'); // Where your parts PDF files are stored. Protect from browsing
-define('ORGDIST','files/distributions/'); // Where to put ZIP files of parts for each section.
+define('ORGD1IST','files/distributions/'); // Where to put ZIP files of parts for each section.
 define('ORGUPLOADS','files/uploads/'); // TBD
 
 define('DB_HOST', 'localhost');

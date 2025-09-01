@@ -66,7 +66,8 @@ if (strtotime($row['expires_at']) < time()) {
 
 // Reconstruct the full path to the ZIP file from zip_filename
 $zip_filename = $row['zip_filename'];
-$zip_path = __DIR__ . '/includes/' . ORGDIST . $zip_filename;
+$distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
+$zip_path = $distrPath . $zip_filename;
 if (!file_exists($zip_path)) {
     ferror_log("ZIP file not found: " . $zip_path);
     http_response_code(410);

@@ -126,7 +126,7 @@ if(!empty($_POST)) {
             die("Invalid file type. Only JPEG, PNG, and PDF files are allowed.");
         }
 
-        $uploadDir = rtrim(ORGPRIVATE, '/\\') . '/'; // Directory to save uploaded files
+        $uploadDir = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
         ferror_log("Uploading to " . $uploadDir);
 
         // Create the uploads directory if it doesn't exist

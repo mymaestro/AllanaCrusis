@@ -308,7 +308,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     // Create Copy Link button
-                    const linkToCopy = response.data.download_link || response.data.zip_url;
+                    const linkToCopy = response.data.download_link;
                     const copyBtn = $('<button>').attr({
                         type: 'button',
                         class: 'btn btn-primary btn-sm copy-link-btn',

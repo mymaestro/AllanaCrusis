@@ -47,7 +47,8 @@ if ($res) {
 $deleted_files = 0;
 $failed_deletions = 0;
 foreach ($expired_zips as $zip_filename) {
-    $zip_path = __DIR__ . '/' . ORGDIST . $zip_filename;
+    $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
+    $zip_path = $distrPath . $zip_filename;
     if (file_exists($zip_path)) {
         if (unlink($zip_path)) {
             ferror_log("Successfully deleted ZIP file: " . $zip_filename);

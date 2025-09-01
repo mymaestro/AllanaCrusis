@@ -186,7 +186,6 @@ function generateAllSectionZips($f_link, $playgram_id) {
         if ($zip_result['success']) {
             $zip_files[] = [
                 'section_name' => $section['section_name'],
-                'url' => $zip_result['data']['zip_url'],
                 'download_link' => $zip_result['data']['download_link'],
                 'filename' => $zip_result['data']['filename'],
                 'part_count' => $zip_result['data']['part_count'],
@@ -290,10 +289,11 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
 
     // Create ZIP file
     $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';
-    $zip_path = __DIR__ . '/' . ORGDIST . $zip_filename;
-    
+    $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
+    $zip_path = $distrPath . $zip_filename;
+
     // Ensure distributions directory exists
-    $distributions_dir = __DIR__ . '/' . ORGDIST;
+    $distributions_dir = $distrPath;
 
     ferror_log("Checking distributions directory: " . $distributions_dir);
     
@@ -312,7 +312,8 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
     $skipped_files = [];
     
     foreach ($parts as $part) {
-        $source_path = rtrim(ORGPRIVATE, '/\\') . '/' . ltrim($part['image_path'], '/\\');
+        $partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
+        $source_path = $partsPath . ltrim($part['image_path'], '/\\');
 
         ferror_log("Processing part: " . $part['part_name'] . " (source: " . $source_path . ")");
     
@@ -343,8 +344,6 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
         return ['success' => false, 'message' => 'No PDF files could be added to ZIP.'];
     }
 
-    $zip_url = ORGPARTDISTRO . $zip_filename;
-
     // Generate a secure token for this ZIP
     $token = bin2hex(random_bytes(16)); // 32-char token
     $expires_at = date('Y-m-d H:i:s', strtotime('+5 days'));
@@ -370,7 +369,6 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
     return [
         'success' => true,
         'data' => [
-            'zip_url' => $zip_url,
             'filename' => $zip_filename,
             'part_count' => $added_count,
             'skipped_files' => $skipped_files,

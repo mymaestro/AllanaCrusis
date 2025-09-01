@@ -21,8 +21,8 @@ while ($row = mysqli_fetch_assoc($res)) {
     $referenced[] = $row['image_path'];
 }
 $referencedSet = array_flip($referenced);
-
-$baseDir = realpath(ORGPRIVATE); // ORGPRIVATE is an absolute path
+$partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
+$baseDir = realpath($partsPath); 
 if ($baseDir === false) {
     debug_log('Could not resolve parts directory (ORGPRIVATE).');
     exit(1);

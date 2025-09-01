@@ -149,7 +149,7 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
                                     </div>
                                     <div class="col-md-3">
                                         <!-- How many pages -->
-                                        <input type="number" class="form-control" id="page_count" name="page_count" aria-label="Page count" min="1" max="12" required />
+                                        <input type="number" class="form-control" id="page_count" name="page_count" aria-label="Page count" min="1" max="99" required />
                                     </div>
                                     <div class="col-md-3">
                                         <!-- Request paper size -->

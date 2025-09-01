@@ -81,6 +81,7 @@ mysqli_stmt_execute($update);
 mysqli_stmt_close($update);
 mysqli_close($f_link);
 
+ferror_log("Serving ZIP file: " . $zip_path);
 // Serve ZIP file
 header('Content-Type: application/zip');
 header('Content-Disposition: attachment; filename="' . basename($zip_path) . '"');

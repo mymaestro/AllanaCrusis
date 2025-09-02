@@ -8,14 +8,14 @@ require_once(__DIR__ . "/functions.php");
 // Include PHPdfer for PDF metadata handling
 $phpdfer_available = false;
 
-if (file_exists(__DIR__ . '/PHPdfer/PHPdfer.php') && file_exists(__DIR__ . '/PHPdfer/MetadataDirector.php') && file_exists(__DIR__ . '/PHPdfer/MetadataBuilder.php')) {
-    ferror_log("PHPdfer library found at: " . __DIR__ . "/PHPdfer/");
-    require_once(__DIR__ . '/PHPdfer/PHPdfer.php');
-    require_once(__DIR__ . '/PHPdfer/MetadataDirector.php');
-    require_once(__DIR__ . '/PHPdfer/MetadataBuilder.php');
+if (file_exists(__DIR__ . '/../PHPdfer/PHPdfer.php') && file_exists(__DIR__ . '/../PHPdfer/MetadataDirector.php') && file_exists(__DIR__ . '/../PHPdfer/MetadataBuilder.php')) {
+    ferror_log("PHPdfer library found at: " . __DIR__ . "/../PHPdfer/");
+    require_once(__DIR__ . '/../PHPdfer/PHPdfer.php');
+    require_once(__DIR__ . '/../PHPdfer/MetadataDirector.php');
+    require_once(__DIR__ . '/../PHPdfer/MetadataBuilder.php');
     $phpdfer_available = true;
 } else {
-    ferror_log("WARNING: PHPdfer library not found at: " . __DIR__ . "/PHPdfer/");
+    ferror_log("WARNING: PHPdfer library not found at: " . __DIR__ . "/../PHPdfer/");
     ferror_log("         PDF metadata will not be included.");
     ferror_log("         Please install PHPdfer to enable PDF metadata handling.");
     // Do not die; allow upload to continue without PDF metadata
@@ -397,4 +397,5 @@ if(!empty($_POST)) {
     require_once(__DIR__ . "/footer.php");
     echo '</body>';
 }
+
 ?>

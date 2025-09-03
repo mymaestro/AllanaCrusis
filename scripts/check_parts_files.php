@@ -32,12 +32,25 @@ while ($row = mysqli_fetch_assoc($result)) {
     } else {
         $missing[] = $row['image_path'];
         echo "MISSING: {$row['catalog_number']}: {$part_type} - {$row['name']} -- {$row['image_path']}\n";
-        // Update DB to set image_path to NULL for this part
-        $update_sql = "UPDATE parts SET image_path = NULL WHERE catalog_number = ? AND id_part_type = ?";
-        $update_stmt = mysqli_prepare($f_link, $update_sql);
-        mysqli_stmt_bind_param($update_stmt, 'si', $row['catalog_number'], $row['id_part_type']);
-        mysqli_stmt_execute($update_stmt);
-        mysqli_stmt_close($update_stmt);
+        // Prompt for confirmation before updating
+        echo "Set image_path to NULL for this part? (y/N/q): ";
+        $handle = fopen('php://stdin', 'r');
+        $line = trim(fgets($handle));
+        if (strtolower($line) === 'y') {
+            $update_sql = "UPDATE parts SET image_path = NULL WHERE catalog_number = ? AND id_part_type = ?";
+            $update_stmt = mysqli_prepare($f_link, $update_sql);
+            mysqli_stmt_bind_param($update_stmt, 'si', $row['catalog_number'], $row['id_part_type']);
+            mysqli_stmt_execute($update_stmt);
+            mysqli_stmt_close($update_stmt);
+            echo "Updated.\n";
+        } elseif (strtolower($line) === 'q') {
+            echo "Quitting.\n";
+            fclose($handle);
+            break;
+        } else {
+            echo "Skipped.\n";
+        }
+        fclose($handle);
     }
 }
 

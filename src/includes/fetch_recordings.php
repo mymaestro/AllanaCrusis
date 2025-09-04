@@ -133,16 +133,16 @@ if(isset($_POST["id_recording"])) {  // EDIT
     while ($rowList = mysqli_fetch_array($res)) {
         $id_recording     = $rowList["id_recording"];
         $catalog_number   = $rowList["catalog_number"];
-        $composition_name = htmlspecialchars($rowList["composition_name"]);
-        $name             = htmlspecialchars($rowList["name"]);
-        $ensemble         = htmlspecialchars($rowList["ensemble"]);
+        $composition_name = htmlspecialchars($rowList["composition_name"] ?? '');
+        $name             = htmlspecialchars($rowList["name"] ?? '');
+        $ensemble         = htmlspecialchars($rowList["ensemble"] ?? '');
         $id_ensemble      = $rowList["id_ensemble"];
-        $composer         = htmlspecialchars($rowList["composer"]);
-        $arranger         = htmlspecialchars($rowList["arranger"]);
+        $composer         = htmlspecialchars($rowList["composer"] ?? '');
+        $arranger         = htmlspecialchars($rowList["arranger"] ?? '');
         $date             = $rowList["date"];
-        $venue            = htmlspecialchars($rowList["venue"]);
-        $notes            = nl2br(htmlspecialchars($rowList["concert_notes"]));
-        $link             = htmlspecialchars($rowList["link"]);
+        $venue            = htmlspecialchars($rowList["venue"] ?? '');
+        $notes            = nl2br(htmlspecialchars($rowList["concert_notes"] ?? ''));
+        $link             = htmlspecialchars($rowList["link"] ?? '');
         $enabled          = $rowList["enabled"] ? "Yes" : "No";
 
         $the_name = $name ; 

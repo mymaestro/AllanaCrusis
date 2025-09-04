@@ -3,7 +3,6 @@
 
 define('PAGE_TITLE', 'Part Delivery for Concert Series');
 define('PAGE_NAME', 'Part Delivery');
-require_once(__DIR__. "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -13,17 +12,18 @@ if (isset($_SESSION['username'])) {
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
+
+// Check if user has permission (librarian or admin)
+if (!$u_librarian && !$u_admin) {
+    header("Location: index.php");
+    exit();
+}
+
+require_once(__DIR__. "/includes/header.php");
 require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 ferror_log("Running part_delivery.php");
-
-// Check if user has permission
-if (!$u_librarian && !$u_admin) {
-    echo '<main role="main" class="container"><div class="alert alert-danger">Access denied.</div></main>';
-    require_once(__DIR__. "/includes/footer.php");
-    exit;
-}
 
 ?>
 <main role="main" class="container-fluid">

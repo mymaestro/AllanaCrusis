@@ -5,7 +5,6 @@
 define('PAGE_TITLE', 'Pending Requests');
 define('PAGE_NAME', 'Admin - Password Reset & Email Verification');
 
-require_once(__DIR__ . "/includes/header.php");
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;
@@ -15,6 +14,14 @@ $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FA
 $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
 $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
 }
+
+// Only allow admin to access this page
+if (!$u_admin) {
+    header("Location: index.php");
+    exit();
+}
+
+require_once(__DIR__ . "/includes/header.php");
 require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__ . "/includes/functions.php");
 require_once(__DIR__ . "/includes/navbar.php");

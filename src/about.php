@@ -120,7 +120,7 @@
             <div id="collapseCore" class="accordion-collapse collapse show" aria-labelledby="headingCore" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>
-                  <dt><a href="/index"><i class="fa fa-hands"></i> Welcome</a></dt>
+                  <dt><a href="/#"><i class="fa fa-hands"></i> Welcome</a></dt>
                   <dd>You see the Welcome page first. You'll find an introduction to the library's features and a random selection of featured compositions and recordings.</dd>
 
                   <dt><a href="/home"><i class="fa fa-home"></i> Home</a></dt>

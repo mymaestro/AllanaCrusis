@@ -152,12 +152,12 @@ if(isset($_POST["id_recording"])) {  // EDIT
 
         echo '<tr data-id="'. $id_recording .'">
         <td><input type="radio" name="record_select" value="'.$id_recording.'" class="form-check-input select-radio"></td>
-        <td><strong><a href="#" class="view_data" name="view" data-id="'.$id_recording.'">'.$the_name.'</a></strong></td><!-- '.$composition_name.' -->
-        <td>'.$ensemble.'</td>
-        <td>'.$date.'</td>
-        <td>'.$composer.'</td>
-        <td>'.$arranger.'</td>
-        <td>'.$venue.'</td>
+        <td class="tablesearch-source"><strong><a href="#" class="view_data" name="view" data-id="'.$id_recording.'">'.$the_name.'</a></strong></td><!-- '.$composition_name.' -->
+        <td class="tablesearch-source">'.$ensemble.'</td>
+        <td class="tablesearch-source">'.$date.'</td>
+        <td class="tablesearch-source">'.$composer.'</td>
+        <td class="tablesearch-source">'.$arranger.'</td>
+        <td class="tablesearch-source">'.$venue.'</td>
         <td>'. (($enabled == 1) ? "Yes" : "No") .'</td>
         </tr>';
     }

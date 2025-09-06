@@ -24,7 +24,7 @@
         <div class="row pb-1 pt-5 border-bottom"><h1><?php echo ORGNAME  . ' '. PAGE_NAME ?></h1></div>
         <div class="row pt-3 justify-content-end">
             <div class="col-auto">
-                <input type="text" class="tablesearch-input" data-tablesearch-table="#recordings_table" placeholder="Search doesn't work">
+                <input type="text" class="tablesearch-input" data-tablesearch-table="#recordings_table" placeholder="Search">
             </div>
             <div class="col-auto">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
@@ -275,6 +275,7 @@ $(document).ready(function(){
         },   
         success:function(data){
             $('#recordings_table').html(data);
+            loadAllTableText();
         }
     });
 

@@ -57,10 +57,10 @@
         $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
         while ($rowList = mysqli_fetch_array($res)) {
             $id_user = $rowList['id_users'];
-            $username = htmlspecialchars($rowList['username']);
-            $name = htmlspecialchars($rowList['name']);
-            $address = htmlspecialchars($rowList['address']);
-            $roles = htmlspecialchars($rowList['roles']);
+            $username = htmlspecialchars($rowList['username'] ?? '');
+            $name = htmlspecialchars($rowList['name'] ?? '');
+            $address = htmlspecialchars($rowList['address'] ?? '');
+            $roles = htmlspecialchars($rowList['roles'] ?? '');
             $isAdmin = (strpos($roles, 'administrator') !== FALSE ? "Yes" : "No");
             $isLibrarian = (strpos($roles, 'librarian') !== FALSE ? "Yes" : "No");
             $isUser = (strpos($roles, 'user') !== FALSE ? "Yes" : "No");

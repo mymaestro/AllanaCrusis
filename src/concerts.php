@@ -24,6 +24,9 @@ if (isset($_SESSION['username'])) {
         <div class="row pb-1 pt-5 border-bottom"><h1><?php echo ORGNAME . ' '. PAGE_TITLE ?></h1></div>
         <div class="row pt-3 justify-content-end">
             <div class="col-auto">
+                <input type="text" class="tablesearch-input" data-tablesearch-table="#concert_table" placeholder="Search">
+            </div>
+            <div class="col-auto">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
 <?php if($u_librarian) : ?>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
@@ -37,16 +40,16 @@ if (isset($_SESSION['username'])) {
         echo '
             <div class="panel panel-default">
                <div class="table-responsive scrolling-data">
-                    <table class="table table-hover">
+                    <table class="table table-hover tablesort tablesearch-table" id="concert_table">
                     <caption class="title">Concerts</caption>
                     <thead class="thead-light" style="position: sticky; top: 0; z-index: 1;">
                     <tr>
                         <th style="width: 50px;"></th>
-                        <th>Performance date</th>
-                        <th>Venue</th>
-                        <th>Playgram</th>
-                        <th>Conductor</th>
-                        <th>Notes</th>
+                        <th data-tablesort-type="date">Performance date <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        <th data-tablesort-type="string">Venue <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        <th data-tablesort-type="string">Playgram <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        <th data-tablesort-type="string">Conductor <i class="fa fa-sort" aria-hidden="true"></i></th>
+                        <th data-tablesort-type="string">Notes <i class="fa fa-sort" aria-hidden="true"></i></th>
                     </tr>
                     </thead>
                     <tbody>';
@@ -70,11 +73,11 @@ if (isset($_SESSION['username'])) {
             $notes = $rowList['notes'];
             echo '<tr data-id="'.$id_concert.'" >
                         <td><input type="radio" name="record_select" value="'.$id_concert.'" class="form-check-input select-radio"></td>
-                        <td>'.$performance_date.'</td>
-                        <td>'.$venue.'</td>
-                        <td><a href="#" class="view_playgram_data" name="view" id="'.$id_playgram.'">'.$playgram_count.' items</a></td>
-                        <td>'.$conductor.'</td>
-                        <td>'.$notes.'</td>
+                        <td class="tablesearch-source">'.$performance_date.'</td>
+                        <td class="tablesearch-source">'.$venue.'</td>
+                        <td class="tablesearch-source"><a href="#" class="view_playgram_data" name="view" id="'.$id_playgram.'">'.$playgram_count.' items</a></td>
+                        <td class="tablesearch-source">'.$conductor.'</td>
+                        <td class="tablesearch-source">'.$notes.'</td>
                   </tr>';
         }
         echo '
@@ -184,6 +187,7 @@ if (isset($_SESSION['username'])) {
     </div><!-- container -->
 </main>
 <?php require_once(__DIR__. "/includes/footer.php"); ?>
+<script src="js/auto-tables.js"></script>
 <script>
     // Load playgrams into a JSON array for frequent use
 <?php
@@ -224,6 +228,7 @@ $(document).ready(function(){
     });
 
     let id_concert = null; // Which concert the user clicks
+    loadAllTableText();
 
     // When user clicks add button
     $('#add').click(function(){

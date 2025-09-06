@@ -105,7 +105,7 @@ mysqli_close($f_link);
                 <strong>Pending Password Resets:</strong> <?php echo count($pending_resets); ?><br>
                 <strong>Expired Requests:</strong> <?php echo $expired_count; ?>
                 <?php if ($expired_count > 0): ?>
-                    <br><small>Run cleanup_verification.php to remove expired entries.</small>
+                    <br><small>Run cleanup_verification to remove expired entries.</small>
                 <?php endif; ?>
             </div>
             

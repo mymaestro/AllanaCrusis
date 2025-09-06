@@ -467,17 +467,14 @@ $(document).ready(function() {
 
     // Load compositions data into the left-hand list
     $.ajax({
-        url:"index.php?action=fetch_parts_data",
-        method:"POST",
-        data:{
-            user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
-        },
+    url:"index.php?action=fetch_parts_data",
+    method:"POST",
+    data:{},
         dataType:"text",
         success:function(response){
             try {
                 var data = JSON.parse(response);
-                // Explicitly set as boolean true/false
-                data.u_librarian = data.user_role === 'librarian';
+                // ...existing code...
                 var compositionsHtml = '';
                 data.compositions.forEach(function(comp) {
                     comp.hasparts = comp.parts > 0;
@@ -518,14 +515,12 @@ $(document).ready(function() {
             url: "index.php?action=fetch_parts_data",
             method: "POST",
             data: {
-                catalog_number: catalog_number,
-                user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
+                catalog_number: catalog_number
             },
             dataType: "text",
             success: function(response) {
                 var data = JSON.parse(response);
-                // Explicitly set as boolean true/false
-                data.u_librarian = data.user_role === 'librarian';
+                // ...existing code...
                 
                 console.log("Fetched parts data for catalog number: ", catalog_number);
                 console.log("Data received: ", data);
@@ -705,14 +700,12 @@ $(document).ready(function() {
                     url: "index.php?action=fetch_parts_data",
                     method: "POST",
                     data: {
-                        catalog_number: catalog_number,
-                        user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
+                        catalog_number: catalog_number
                     },
                     dataType: "text",
                     success: function(response) {
                         var data = JSON.parse(response);
-                        // Explicitly set as boolean true/false
-                        data.u_librarian = data.user_role === 'librarian';
+                        // ...existing code...
                         
                         // Add u_librarian to each part object so it's available in the nested context
                         if (data.parts && Array.isArray(data.parts)) {
@@ -826,14 +819,12 @@ $(document).ready(function() {
                             url: "index.php?action=fetch_parts_data",
                             method: "POST",
                             data: {
-                                catalog_number: catalog_number,
-                                user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
+                                catalog_number: catalog_number
                             },
                             dataType: "text",
                             success: function(response) {
                                 var data = JSON.parse(response);
-                                // Explicitly set as boolean true/false
-                                data.u_librarian = data.user_role === 'librarian';
+                                // ...existing code...
                                 var partsHtml = renderTemplate('parts-table-template', data);
                                 $('#parts_table').html(partsHtml);
                                 $('#composition_header').text(catno_name);
@@ -846,5 +837,4 @@ $(document).ready(function() {
 });
 </script>
 </body>
-
 </html>

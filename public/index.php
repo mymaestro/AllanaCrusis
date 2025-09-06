@@ -3,35 +3,6 @@
 error_log("Accessing URL: " . $_SERVER['REQUEST_URI']);
 include(__DIR__ . '/../config/bootstrap.php');
 
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-    if ($action === 'email_verification') {
-        require_once __DIR__ . '/../src/includes/email_verification.php';
-        exit;
-    }
-    if ($action === 'verify_email') {
-        require_once __DIR__ . '/../src/verify_email.php';
-        exit;
-    }
-    // Only allow certain prefixes for security
-    if (preg_match('/^(admin_|fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
-        $file = __DIR__ . '/../src/includes/' . $action . '.php';
-        if (file_exists($file)) {
-            require $file;
-            exit;
-        } else {
-            http_response_code(404);
-            error_log("Action file not found.");
-            exit;
-        }
-    } else {
-        http_response_code(400);
-        error_log("Invalid action.");
-        exit;
-    }
-}
-
-
 $urlMap = [
    '/about' => 'about.php',
    '/admin_verifications' => 'admin_verifications.php',
@@ -73,6 +44,63 @@ $urlMap = [
    '/welcome' => 'welcome.php',
    '/' => 'index.php'
 ];
+
+$actionRoleMap = [
+    'admin_'   => 'admin',
+    'delete_'  => 'librarian',
+    'insert_'  => 'librarian',
+    'update_'  => 'librarian',
+    // Add more as needed
+];
+
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    if ($action === 'email_verification') {
+        require_once __DIR__ . '/../src/includes/email_verification.php';
+        exit;
+    }
+    if ($action === 'verify_email') {
+        require_once __DIR__ . '/../src/verify_email.php';
+        exit;
+    }
+    // Only allow certain prefixes for security
+    // Function to get required role for an action
+    function getRequiredRole($action, $map) {
+        // fetch_ and select_ actions are always allowed
+        if (strpos($action, 'fetch_') === 0 || strpos($action, 'select_') === 0) {
+            return null;
+        }
+        foreach ($map as $prefix => $role) {
+            if (strpos($action, $prefix) === 0) {
+                return $role;
+            }
+        }
+        return null; // No restriction
+    }
+    if (preg_match('/^(admin_|fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+        $requiredRole = getRequiredRole($action, $actionRoleMap);
+        if ($requiredRole) {
+            if (!isset($_SESSION['role']) || $_SESSION['role'] !== $requiredRole) {
+                http_response_code(403);
+                echo "Access denied.";
+                exit;
+            }
+        }
+        $file = __DIR__ . '/../src/includes/' . $action . '.php';
+        if (file_exists($file)) {
+            require $file;
+            exit;
+        } else {
+            http_response_code(404);
+            error_log("Action file not found.");
+            exit;
+        }
+    } else {
+        http_response_code(400);
+        error_log("Invalid action.");
+        exit;
+    }
+}
 
 // Extract the path from REQUEST_URI (ignore query string)
 $requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

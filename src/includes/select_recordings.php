@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
-ferror_log("Running select_recordings.php with id=". $_POST["id_recording"]);
+ferror_log("Running select_recordings.php with POST ". print_r($_POST, true));
 if (isset($_POST["id_recording"])) {
     $output = "";
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);

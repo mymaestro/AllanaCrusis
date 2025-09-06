@@ -2,26 +2,14 @@
 define('PAGE_TITLE', 'Insert instrumentation');
 define('PAGE_NAME', 'Insert instrumentation');
 require_once(__DIR__ . "/header.php");
-$u_admin = FALSE;
-$u_librarian = FALSE;
-$u_user = FALSE;
-if (isset($_SESSION['username'])) {
-  $username = $_SESSION['username'];
-  $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
-  $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
-  $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
-}
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/navbar.php");
+require_once(__DIR__ . "/functions.php");
+ferror_log("RUNNING insert_instrumentation.php with POST ". print_r($_POST, true));
 ?>
 <main role="main">
-    <?php
-    require_once(__DIR__ . "/functions.php");
-    ferror_log("RUNNING insert_instrumentation.php with catalog_num=". $_POST["catalog_number"]);
-    ?>
     <div class="container">
         <h1><?php echo ORGNAME . ' ' . PAGE_NAME ?></h1>
-        <?php if ($u_librarian) : ?>
         <?php if(!empty($_POST)) {
             $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
             if (isset($_POST['catalog_number'])) $catalog_number = mysqli_real_escape_string($f_link, $_POST['catalog_number']);
@@ -156,7 +144,6 @@ require_once(__DIR__ . "/navbar.php");
             } // Submit function was "add"
             mysqli_close($f_link);
         }?>
-        <?php endif; ?>
 </main>
 </body>
 <?php

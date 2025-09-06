@@ -4,12 +4,6 @@ require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_compositions.php");
 
-if(isset($_POST["user_role"])) {
-    $u_librarian = (($_POST["user_role"] == 'librarian') !== FALSE ? TRUE : FALSE);
-} else {
-    $u_librarian = FALSE;
-}
-
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 if(isset($_POST["catalog_number"])) {

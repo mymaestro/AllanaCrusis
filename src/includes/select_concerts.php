@@ -1,7 +1,7 @@
 <?php
 require_once 'config.php';
 require_once 'functions.php';
-ferror_log("Running select_concerts.php with id=". $_POST["id_concert"]);
+ferror_log("Running select_concerts.php with POST ". print_r($_POST, true));
 if (isset($_POST["id_concert"])) {
     $output = '
     <div class="table-responsive">

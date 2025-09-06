@@ -4,9 +4,9 @@ define('PAGE_TITLE', 'Update score order');
 define('PAGE_NAME', 'Update score order');
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
+ferror_log("RUNNING update_instruments_scoreorder.php with POST ". print_r($_POST, true));
 if(!empty($_POST)) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    ferror_log("RUNNING update_instruments_scoreorder.php with id_instrument=". $_POST["id_instrument"]);
     $output = '';
     $message = '';
     $updated = 0;

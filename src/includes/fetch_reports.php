@@ -3,6 +3,7 @@ require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 
 // Check user roles
+// DON'T REMOVE THIS - we need to know user roles for some reports
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;

@@ -2,18 +2,6 @@
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 
-// Check user permissions
-$u_librarian = FALSE;
-if (isset($_SESSION['username'])) {
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
-}
-
-// Only allow librarians to update enabled status
-if (!$u_librarian) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized access']);
-    exit();
-}
-
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
     exit();

@@ -1,10 +1,9 @@
 <?php
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
+ferror_log("Running select_sections.php with POST ". print_r($_POST, true));
 
 $id_section = isset($_POST["id_section"]) ? intval($_POST["id_section"]) : 0;
-
-ferror_log("Running select_sections.php with id=". $id_section);
 
 if ($id_section > 0) {
     $output = "";

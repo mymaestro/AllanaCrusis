@@ -5,15 +5,6 @@ require_once(__DIR__ . "/functions.php");
 
 header('Content-Type: application/json');
 
-if(isset($_POST["user_role"])) {
-    // Make sure we're sending a consistent value
-    $u_librarian = $_POST["user_role"] === 'librarian';
-    $user_role = $_POST["user_role"];
-} else {
-    $u_librarian = FALSE;
-    $user_role = 'nobody'; // Default to nobody if not set
-}
-
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 if (!$f_link) {
@@ -104,13 +95,12 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) {
     
     echo json_encode([
         'catalog_number' => $catalog_number,
-        'user_role' => $user_role,
         'parts' => $parts
     ]);
 
 } elseif (isset($_POST['action']) && $_POST['action'] == 'compositions_table') {
     // Get compositions table data - show ALL compositions, not just those with parts
-    ferror_log("Fetching compositions table data for user role: " . $user_role);
+    ferror_log("Fetching compositions table data.");
     $sql = "SELECT c.catalog_number,
                    c.name title,
                    c.composer composer,
@@ -133,8 +123,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) {
     }
     
     echo json_encode([
-        'compositions' => $compositions,
-        'user_role' => $user_role
+        'compositions' => $compositions
     ]);
 
 } else { 
@@ -149,7 +138,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) {
             ON     c.catalog_number = p.catalog_number
             GROUP BY c.catalog_number, c.name, c.composer, c.arranger
             ORDER BY c.name;";
-    ferror_log("Fetching compositions list for menu: " . $user_role);
+    ferror_log("Fetching compositions list for menu.");
 
     $res = mysqli_query($f_link, $sql);
     if (!$res) {
@@ -162,8 +151,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) {
     }
     
     echo json_encode([
-        'compositions' => $compositions,
-        'user_role' => $user_role
+        'compositions' => $compositions
     ]);
 }
 

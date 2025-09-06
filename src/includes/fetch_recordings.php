@@ -3,12 +3,6 @@
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
 
-if(isset($_POST["user_role"])) {
-    $u_librarian = (($_POST["user_role"] == 'librarian') !== FALSE ? TRUE : FALSE);
-} else {
-    $u_librarian = FALSE;
-}
-
 ferror_log("Running fetch_recordings.php");
 ferror_log(print_r($_POST, true));
 

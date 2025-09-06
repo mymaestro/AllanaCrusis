@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
-ferror_log("Running select_compositions.php with id=". $_POST["catalog_number"]);
+ferror_log("Running select_compositions.php with POST ". print_r($_POST, true));
 if (isset($_POST["catalog_number"])) {
     $output = '
     <div class="table-responsive">

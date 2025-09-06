@@ -4,7 +4,7 @@ define('PAGE_TITLE', 'Update score order');
 define('PAGE_NAME', 'Update score order');
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
-ferror_log(print_r($_POST, true));
+ferror_log("Running update_playgramorder.php with POST ". print_r($_POST, true));
 if(!empty($_POST)) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

@@ -5,6 +5,14 @@ include(__DIR__ . '/../config/bootstrap.php');
 
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
+    if ($action === 'email_verification') {
+        require_once __DIR__ . '/../src/includes/email_verification.php';
+        exit;
+    }
+    if ($action === 'verify_email') {
+        require_once __DIR__ . '/../src/verify_email.php';
+        exit;
+    }
     // Only allow certain prefixes for security
     if (preg_match('/^(admin_|fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
         $file = __DIR__ . '/../src/includes/' . $action . '.php';

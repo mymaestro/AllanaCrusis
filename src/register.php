@@ -182,7 +182,7 @@ require_once(__DIR__ . "/includes/navbar.php");
             <p class="lead">Please submit this form to create an account.</p>
 
             <div class="col-12">
-                <form action="includes/email_verification.php" method="post">
+                <form action="index.php?action=email_verification" method="post">
                 <label for="username" class="col-form-label">Username*</label>
                 <input type="text" id="username" name="username" class="form-control<?php echo (!empty($username_err)) ? ' is-invalid' : ''; ?>" placeholder="username" value="<?php echo $username; ?>" required>
                 <span class="help-block"><?php echo $username_err; ?></span>                            

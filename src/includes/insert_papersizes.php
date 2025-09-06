@@ -59,7 +59,7 @@ if(!empty($_POST)) {
         if ($mysql_errno == 1062) {
             $output .= '<p class="text-danger">Duplicate Entry Error: A paper size with this ID or name already exists. Please use a different ID or name.</p>';
         } else {
-            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
         }
         
         echo '<p><a href="'.$referred.'">Return</a></p>';

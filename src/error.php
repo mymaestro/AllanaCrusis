@@ -2,7 +2,7 @@
 // Aggressive error display: show error at the very top of the page, always visible
 if (isset($errorMessage) && $errorMessage) {
   echo '<div style="position:fixed;top:0;left:0;width:100%;z-index:99999;background:#dc3545;color:#fff;padding:2em 1em;text-align:center;font-size:2em;font-weight:bold;">'
-    . 'ERROR: ' . htmlspecialchars($errorMessage) .
+    . 'ERROR: ' . htmlspecialchars($errorMessage ?? '') .
     '</div>';
   flush();
 }
@@ -14,9 +14,9 @@ $u_librarian = FALSE; // User librarian flag
 $u_user = FALSE; // User general flag
 if (isset($_SESSION['username'])) {
   $username = $_SESSION['username'];
-  $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-  $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-  $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+  $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+  $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+  $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 $configFile = __DIR__ . "/includes/config.php";
 if (!file_exists($configFile)) {

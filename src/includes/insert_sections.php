@@ -60,7 +60,7 @@ if(!empty($_POST)) {
         if ($mysql_errno == 1062) {
             $output .= '<p class="text-danger">Duplicate Entry Error: A section with this name already exists. Please use a different name.</p>';
         } else {
-            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
         }
         
         echo '<p><a href="'.$referred.'">Return</a></p>';

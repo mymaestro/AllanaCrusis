@@ -9,9 +9,9 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 require_once(__DIR__. "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
@@ -205,7 +205,7 @@ ferror_log("RUNNING search.php");
                             $sql = "SELECT DISTINCT composer FROM compositions WHERE composer IS NOT NULL AND composer != '' AND enabled = 1 ORDER BY composer";
                             $res = mysqli_query($f_link, $sql);
                             while ($row = mysqli_fetch_array($res)) {
-                                $composer = htmlspecialchars($row['composer']);
+                                $composer = htmlspecialchars($row['composer'] ?? '');
                                 $composer_id = preg_replace('/[^a-zA-Z0-9]/', '_', $composer);
                                 echo '<div class="form-check">';
                                 echo '<input class="form-check-input" type="radio" name="composer_filter" id="composer_' . $composer_id . '" value="' . $composer . '">';
@@ -239,7 +239,7 @@ ferror_log("RUNNING search.php");
                             $res = mysqli_query($f_link, $sql);
                             while ($row = mysqli_fetch_array($res)) {
                                 $genre_id = $row['id_genre'];
-                                $genre_name = htmlspecialchars($row['name']);
+                                $genre_name = htmlspecialchars($row['name'] ?? '');
                                 echo '<div class="form-check">';
                                 echo '<input class="form-check-input" type="radio" name="genre_filter" id="genre_' . $genre_id . '" value="' . $genre_id . '">';
                                 echo '<label class="form-check-label" for="genre_' . $genre_id . '">' . $genre_name . '</label>';
@@ -271,7 +271,7 @@ ferror_log("RUNNING search.php");
                             $res = mysqli_query($f_link, $sql);
                             while ($row = mysqli_fetch_array($res)) {
                                 $ensemble_id = $row['id_ensemble'];
-                                $ensemble_name = htmlspecialchars($row['name']);
+                                $ensemble_name = htmlspecialchars($row['name'] ?? '');
                                 echo '<div class="form-check">';
                                 echo '<input class="form-check-input" type="radio" name="ensemble_filter" id="ensemble_' . $ensemble_id . '" value="' . $ensemble_id . '">';
                                 echo '<label class="form-check-label" for="ensemble_' . $ensemble_id . '">' . $ensemble_name . '</label>';

@@ -7,9 +7,9 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
@@ -508,13 +508,13 @@ mysqli_close($f_link);
                                 <?php foreach ($recent_activity as $activity): ?>
                                 <div class="list-group-item">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1"><?php echo htmlspecialchars($activity['name']); ?></h6>
+                                        <h6 class="mb-1"><?php echo htmlspecialchars($activity['name'] ?? ''); ?></h6>
                                         <small><?php echo date('M j, Y', strtotime($activity['last_update'])); ?></small>
                                     </div>
                                     <p class="mb-1">
-                                        <strong><?php echo htmlspecialchars($activity['catalog_number']); ?></strong>
+                                        <strong><?php echo htmlspecialchars($activity['catalog_number'] ?? ''); ?></strong>
                                         <?php if ($activity['composer']): ?>
-                                        - <?php echo htmlspecialchars($activity['composer']); ?>
+                                        - <?php echo htmlspecialchars($activity['composer'] ?? ''); ?>
                                         <?php endif; ?>
                                     </p>
                                     <small class="text-muted">Updated <?php echo ucfirst($activity['type']); ?></small>
@@ -542,13 +542,13 @@ mysqli_close($f_link);
                                 <?php foreach ($recent_parts_activity as $activity): ?>
                                 <div class="list-group-item">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h6 class="mb-1"><?php echo htmlspecialchars($activity['composition_name']); ?></h6>
+                                        <h6 class="mb-1"><?php echo htmlspecialchars($activity['composition_name'] ?? ''); ?></h6>
                                         <small><?php echo date('M j, Y', strtotime($activity['last_update_date'])); ?></small>
                                     </div>
                                     <p class="mb-1">
-                                        <strong><?php echo htmlspecialchars($activity['catalog_number']); ?></strong>
+                                        <strong><?php echo htmlspecialchars($activity['catalog_number'] ?? ''); ?></strong>
                                         <?php if ($activity['composer']): ?>
-                                        - <?php echo htmlspecialchars($activity['composer']); ?>
+                                        - <?php echo htmlspecialchars($activity['composer'] ?? ''); ?>
                                         <?php endif; ?>
                                     </p>
                                     <div class="d-flex align-items-center justify-content-between">
@@ -559,7 +559,7 @@ mysqli_close($f_link);
                                             $part_types = explode(', ', $activity['part_types_updated']);
                                             $display_types = array_slice($part_types, 0, 3); // Show max 3 types
                                             foreach ($display_types as $type): ?>
-                                                <span class="badge bg-info me-1"><?php echo htmlspecialchars($type); ?></span>
+                                                <span class="badge bg-info me-1"><?php echo htmlspecialchars($type ?? ''); ?></span>
                                             <?php endforeach; ?>
                                             <?php if (count($part_types) > 3): ?>
                                                 <span class="badge bg-secondary">+<?php echo count($part_types) - 3; ?> more</span>
@@ -605,7 +605,7 @@ mysqli_close($f_link);
                                             $percentage = $max_count > 0 ? ($genre['count'] / $max_count) * 100 : 0;
                                         ?>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($genre['genre_name']); ?></td>
+                                            <td><?php echo htmlspecialchars($genre['genre_name'] ?? ''); ?></td>
                                             <td class="text-end"><?php echo number_format($genre['count']); ?></td>
                                             <td>
                                                 <div class="progress" style="height: 10px;">
@@ -650,7 +650,7 @@ mysqli_close($f_link);
                                             $percentage = $max_count > 0 ? ($ensemble['count'] / $max_count) * 100 : 0;
                                         ?>
                                         <tr>
-                                            <td><?php echo htmlspecialchars($ensemble['ensemble_name']); ?></td>
+                                            <td><?php echo htmlspecialchars($ensemble['ensemble_name'] ?? ''); ?></td>
                                             <td class="text-end"><?php echo number_format($ensemble['count']); ?></td>
                                             <td>
                                                 <div class="progress" style="height: 10px;">
@@ -704,7 +704,7 @@ mysqli_close($f_link);
                                             <tbody>
                                                 <?php foreach ($performance_stats as $stat): ?>
                                                 <tr>
-                                                    <td><small><?php echo htmlspecialchars($stat['genre_name']); ?></small></td>
+                                                    <td><small><?php echo htmlspecialchars($stat['genre_name'] ?? ''); ?></small></td>
                                                     <td class="text-center">
                                                         <span class="badge bg-info"><?php echo $stat['recordings_count']; ?></span>
                                                     </td>
@@ -768,7 +768,7 @@ mysqli_close($f_link);
                                             <tbody>
                                                 <?php foreach ($venue_stats as $venue): ?>
                                                 <tr>
-                                                    <td><small><?php echo htmlspecialchars($venue['venue']); ?></small></td>
+                                                    <td><small><?php echo htmlspecialchars($venue['venue'] ?? ''); ?></small></td>
                                                     <td class="text-center">
                                                         <span class="badge bg-primary"><?php echo $venue['concert_count']; ?></span>
                                                     </td>

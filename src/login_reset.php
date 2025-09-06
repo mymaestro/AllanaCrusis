@@ -10,7 +10,7 @@ require_once(__DIR__ . "/includes/password_hash.php");
 require_once(__DIR__ . "/includes/functions.php");
 
 if(isset($_GET["reset"])) {
-    $result = htmlspecialchars($_GET["reset"]);
+    $result = htmlspecialchars($_GET["reset"] ?? '');
 } else {
     $result = "new";
 }

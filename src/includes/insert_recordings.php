@@ -224,7 +224,7 @@ if(!empty($_POST)) {
         } else {
             echo json_encode([
                 'success' => false,
-                'message' => 'Failed with error: Error Code ' . $mysql_errno . ' - ' . htmlspecialchars($error_message),
+                'message' => 'Failed with error: Error Code ' . $mysql_errno . ' - ' . htmlspecialchars($error_message ?? ''),
             ]);
         }
     }

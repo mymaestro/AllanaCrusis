@@ -76,7 +76,7 @@ if(!empty($_POST)) {
         if ($mysql_errno == 1062) {
             echo '<div class="alert alert-danger"><strong>Duplicate Entry Error:</strong> A genre with this ID or name already exists. Please use a different ID or name.</div>';
         } else {
-            echo '<div class="alert alert-danger"><strong>' . $message . '</strong><br>Error Code: ' . $mysql_errno . '<br>Details: ' . htmlspecialchars($error_message) . '</div>';
+            echo '<div class="alert alert-danger"><strong>' . $message . '</strong><br>Error Code: ' . $mysql_errno . '<br>Details: ' . htmlspecialchars($error_message ?? '') . '</div>';
         }
         
         echo '<div class="text-center mt-3"><a href="'.$referred.'" class="btn btn-primary">Return</a></div>';

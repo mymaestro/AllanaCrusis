@@ -16,8 +16,8 @@ require_once(__DIR__. "/includes/navbar.php");
 <main>
   <div class="text-center page-header">
     <br />
-    <h1>Hi, <b><?php echo htmlspecialchars($_SESSION['username']); ?></b>. Welcome to our site.</h1>
-    <p>You have the role(s) <b><?php echo htmlspecialchars($_SESSION['roles']); ?></b>. Use wisely.</p>
+  <h1>Hi, <b><?php echo htmlspecialchars($_SESSION['username'] ?? ''); ?></b>. Welcome to our site.</h1>
+  <p>You have the role(s) <b><?php echo htmlspecialchars($_SESSION['roles'] ?? ''); ?></b>. Use wisely.</p>
   </div>
   <div class="text-center">
     <p><a href="logout.php" class="btn btn-danger">Sign out of your account</a></p>

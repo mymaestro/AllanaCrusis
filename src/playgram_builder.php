@@ -9,9 +9,9 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 
 // Only allow librarians to access the dashboard
@@ -67,7 +67,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <h1><i class="fas fa-tachometer-alt"></i> <?php echo ORGNAME; ?> Playgram builder</h1>
                 <p class="lead">
                     <?php if ($editing_playgram): ?>
-                        Editing program: <strong><?php echo htmlspecialchars($playgram_data['name']); ?></strong>
+                        Editing program: <strong><?php echo htmlspecialchars($playgram_data['name'] ?? ''); ?></strong>
                     <?php else: ?>
                         Intelligent program builder for music directors
                     <?php endif; ?>
@@ -98,7 +98,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                 <label for="program_name" class="form-label">Playgram name*</label>
                                 <input type="text" class="form-control" id="program_name" name="program_name" 
                                        placeholder="e.g., Spring Concert 2027" 
-                                       value="<?php echo $editing_playgram ? htmlspecialchars($playgram_data['name']) : ''; ?>" required/>
+                                       value="<?php echo $editing_playgram ? htmlspecialchars($playgram_data['name'] ?? '') : ''; ?>" required/>
                                 <?php if ($editing_playgram): ?>
                                 <input type="hidden" id="playgram_id" value="<?php echo $playgram_data['id_playgram']; ?>"/>
                                 <?php endif; ?>
@@ -111,13 +111,13 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                             <div class="col-md-2">
                                 <label for="performance_date" class="form-label">Performance Date</label>
                                 <input type="date" class="form-control" id="performance_date" name="performance_date"
-                                    value="<?php echo $editing_playgram && !empty($playgram_data['performance_date']) ? htmlspecialchars($playgram_data['performance_date']) : ''; ?>" />
+                                    value="<?php echo $editing_playgram && !empty($playgram_data['performance_date']) ? htmlspecialchars($playgram_data['performance_date'] ?? '') : ''; ?>" />
                             </div>                           
                             <div class="col-md-4">
                                 <label for="program_description" class="form-label">Description</label>
                                 <input type="text" class="form-control" id="program_description" name="program_description" 
                                        placeholder="Concert theme or notes..."
-                                       value="<?php echo $editing_playgram ? htmlspecialchars($playgram_data['description']) : ''; ?>"/>
+                                       value="<?php echo $editing_playgram ? htmlspecialchars($playgram_data['description'] ?? '') : ''; ?>"/>
                             </div>
                         </div>
                         <div class="row mt-3">

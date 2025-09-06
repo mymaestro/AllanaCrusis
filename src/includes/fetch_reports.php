@@ -8,9 +8,9 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 
 ferror_log("Running fetch_reports.php");
@@ -55,12 +55,12 @@ if (isset($_POST["report_type"])) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $action_cell = $u_librarian ? '<a href="/parts?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Go to Parts</a>' : '<span class="text-muted">-</span>';
                     $output .= '<tr>'
-                        . '<td>' . htmlspecialchars($row['playgram_name']) . '</td>'
-                        . '<td>' . htmlspecialchars($row['performance_date']) . '</td>'
-                        . '<td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>'
-                        . '<td>' . htmlspecialchars($row['composition_name']) . '</td>'
-                        . '<td>' . htmlspecialchars($row['composer']) . '</td>'
-                        . '<td><span class="badge bg-danger">' . $row['missing_pdfs'] . '</span></td>'
+                        . '<td>' . htmlspecialchars($row['playgram_name'] ?? '') . '</td>'
+                        . '<td>' . htmlspecialchars($row['performance_date'] ?? '') . '</td>'
+                        . '<td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>'
+                        . '<td>' . htmlspecialchars($row['composition_name'] ?? '') . '</td>'
+                        . '<td>' . htmlspecialchars($row['composer'] ?? '') . '</td>'
+                        . '<td><span class="badge bg-danger">' . ($row['missing_pdfs'] ?? 0) . '</span></td>'
                         . '<td>' . $action_cell . '</td>'
                         . '</tr>';
                 }
@@ -102,11 +102,11 @@ if (isset($_POST["report_type"])) {
                     $status_class = $row['comp_enabled'] == 1 ? 'text-success' : 'text-muted';
                     $enabled_text = $row['comp_enabled'] == 1 ? 'Yes' : 'No';
                     $output .= '<tr>
-                        <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>
-                        <td>' . htmlspecialchars($row['composition_name']) . '</td>
-                        <td>' . htmlspecialchars($row['composer']) . '</td>
-                        <td>' . htmlspecialchars($row['part_name']) . '</td>
-                        <td><span class="badge bg-warning">' . $row['copies_count'] . '</span></td>
+                        <td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>
+                        <td>' . htmlspecialchars($row['composition_name'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['composer'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['part_name'] ?? '') . '</td>
+                        <td><span class="badge bg-warning">' . ($row['copies_count'] ?? 0) . '</span></td>
                         <td><span class="' . $status_class . '">' . $enabled_text . '</span></td>
                     </tr>';
                 }
@@ -141,10 +141,10 @@ if (isset($_POST["report_type"])) {
             if (mysqli_num_rows($res) > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $output .= '<tr>
-                        <td>' . $row['id_instrument'] . '</td>
-                        <td><strong>' . htmlspecialchars($row['name']) . '</strong></td>
-                        <td><span class="badge bg-secondary">' . htmlspecialchars($row['family']) . '</span></td>
-                        <td>' . htmlspecialchars($row['description']) . '</td>
+                        <td>' . ($row['id_instrument'] ?? '') . '</td>
+                        <td><strong>' . htmlspecialchars($row['name'] ?? '') . '</strong></td>
+                        <td><span class="badge bg-secondary">' . htmlspecialchars($row['family'] ?? '') . '</span></td>
+                        <td>' . htmlspecialchars($row['description'] ?? '') . '</td>
                     </tr>';
                 }
             } else {
@@ -187,11 +187,11 @@ if (isset($_POST["report_type"])) {
             if (mysqli_num_rows($res) > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $output .= '<tr>
-                        <td><span class="badge bg-primary">' . htmlspecialchars($row['playgram_name']) . '</span></td>
-                        <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>
-                        <td>' . htmlspecialchars($row['composition_name']) . '</td>
-                        <td>' . htmlspecialchars($row['composer']) . '</td>
-                        <td><span class="text-danger">' . htmlspecialchars($row['missing_part']) . '</span></td>
+                        <td><span class="badge bg-primary">' . htmlspecialchars($row['playgram_name'] ?? '') . '</span></td>
+                        <td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>
+                        <td>' . htmlspecialchars($row['composition_name'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['composer'] ?? '') . '</td>
+                        <td><span class="text-danger">' . htmlspecialchars($row['missing_part'] ?? '') . '</span></td>
                     </tr>';
                 }
             } else {
@@ -231,9 +231,9 @@ if (isset($_POST["report_type"])) {
                     $grade_badge = $row['grade'] ? '<span class="badge bg-info">' . $row['grade'] . '</span>' : '<span class="text-muted">N/A</span>';
                     $action_cell = $u_librarian ? '<a href="/composition_instrumentation?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Add Parts</a>' : '<span class="text-muted">-</span>';
                     $output .= '<tr>
-                        <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>
-                        <td>' . htmlspecialchars($row['name']) . '</td>
-                        <td>' . htmlspecialchars($row['composer']) . '</td>
+                        <td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>
+                        <td>' . htmlspecialchars($row['name'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['composer'] ?? '') . '</td>
                         <td>' . $grade_badge . '</td>
                         <td>' . $action_cell . '</td>
                     </tr>';
@@ -269,10 +269,10 @@ if (isset($_POST["report_type"])) {
             if (mysqli_num_rows($res) > 0) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $output .= '<tr>
-                        <td>' . $row['id_instrument'] . '</td>
-                        <td><strong>' . htmlspecialchars($row['name']) . '</strong></td>
-                        <td><span class="badge bg-secondary">' . htmlspecialchars($row['family']) . '</span></td>
-                        <td>' . htmlspecialchars($row['description']) . '</td>
+                        <td>' . ($row['id_instrument'] ?? '') . '</td>
+                        <td><strong>' . htmlspecialchars($row['name'] ?? '') . '</strong></td>
+                        <td><span class="badge bg-secondary">' . htmlspecialchars($row['family'] ?? '') . '</span></td>
+                        <td>' . htmlspecialchars($row['description'] ?? '') . '</td>
                     </tr>';
                 }
             } else {
@@ -323,9 +323,9 @@ if (isset($_POST["report_type"])) {
                     $action_cell = $u_librarian ? '<a href="/compositions?edit=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Edit</a>' : '<span class="text-muted">-</span>';
                     
                     $output .= '<tr>
-                        <td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>
-                        <td>' . htmlspecialchars($row['name']) . '</td>
-                        <td>' . htmlspecialchars($row['composer']) . '</td>
+                        <td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>
+                        <td>' . htmlspecialchars($row['name'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['composer'] ?? '') . '</td>
                         <td><span class="text-warning">' . $missing_text . '</span></td>
                         <td>' . $action_cell . '</td>
                     </tr>';
@@ -363,9 +363,9 @@ if (isset($_POST["report_type"])) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $action_cell = $u_librarian ? '<a href="/composition_instrumentation?catalog_number=' . urlencode($row['catalog_number']) . '" class="btn btn-sm btn-outline-primary">Instrumentation</a>' : '<span class="text-muted">-</span>';
                     $output .= '<tr>'
-                        . '<td><strong>' . htmlspecialchars($row['catalog_number']) . '</strong></td>'
-                        . '<td>' . htmlspecialchars($row['composition_name']) . '</td>'
-                        . '<td>' . htmlspecialchars($row['composer']) . '</td>'
+                        . '<td><strong>' . htmlspecialchars($row['catalog_number'] ?? '') . '</strong></td>'
+                        . '<td>' . htmlspecialchars($row['composition_name'] ?? '') . '</td>'
+                        . '<td>' . htmlspecialchars($row['composer'] ?? '') . '</td>'
                         . '<td>' . $action_cell . '</td>'
                         . '</tr>';
                 }
@@ -422,8 +422,8 @@ if (isset($_POST["report_type"])) {
                         '<span class="badge bg-secondary">0</span>';
                     
                     $output .= '<tr>
-                        <td><strong>' . htmlspecialchars($row['zip_filename']) . '</strong></td>
-                        <td>' . $row['total_tokens'] . '</td>
+                        <td><strong>' . htmlspecialchars($row['zip_filename'] ?? '') . '</strong></td>
+                        <td>' . ($row['total_tokens'] ?? 0) . '</td>
                         <td>' . $active_badge . '</td>
                         <td><small>' . $latest_exp . '</small></td>
                         <td><small>' . $first_created . '</small></td>
@@ -461,14 +461,14 @@ if (isset($_POST["report_type"])) {
                 while($row = mysqli_fetch_assoc($res)) {
                     $token_short = '...' . substr($row['token'], -8);
                     $expires_date = date('M j, Y H:i', strtotime($row['expires_at']));
-                    $created_by = $row['username'] ? htmlspecialchars($row['username']) : 'Unknown';
+                    $created_by = $row['username'] ? htmlspecialchars($row['username'] ?? '') : 'Unknown';
                     $status_badge = $row['used'] ? '<span class="badge bg-secondary">Used</span>' : '<span class="badge bg-success">Available</span>';
                     
                     $output .= '<tr>
                         <td><code>' . $token_short . '</code></td>
-                        <td>' . htmlspecialchars($row['playgram_name']) . '</td>
-                        <td><span class="badge bg-info">' . htmlspecialchars($row['section_name']) . '</span></td>
-                        <td>' . htmlspecialchars($row['zip_filename']) . '</td>
+                        <td>' . htmlspecialchars($row['playgram_name'] ?? '') . '</td>
+                        <td><span class="badge bg-info">' . htmlspecialchars($row['section_name'] ?? '') . '</span></td>
+                        <td>' . htmlspecialchars($row['zip_filename'] ?? '') . '</td>
                         <td>' . $status_badge . '</td>
                         <td><small>' . $expires_date . '</small></td>
                         <td>' . $created_by . '</td>

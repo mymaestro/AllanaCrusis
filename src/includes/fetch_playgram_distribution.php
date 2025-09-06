@@ -8,8 +8,8 @@ ferror_log("Running fetch_playgram_distribution.php");
 $u_librarian = FALSE;
 $u_admin = FALSE;
 if (isset($_SESSION['username'])) {
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
 }
 
 if (!$u_librarian && !$u_admin) {

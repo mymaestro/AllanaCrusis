@@ -23,14 +23,14 @@
                         <li><a class="dropdown-item" href="/instruments"><i class="fas fa-guitar"></i> Instruments</a></li>
                         <li><a class="dropdown-item" href="/genres"><i class="fas fa-music"></i> Genres</a></li>
                         <li><a class="dropdown-item" href="/papersizes"><i class="fas fa-file-pdf"></i> Paper sizes</a></li>
-                        <li><a class="dropdown-item" href="/parttypes"><i class="fas fa-file-alt"></i> Part types</a></li><?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ) echo '
+                        <li><a class="dropdown-item" href="/parttypes"><i class="fas fa-file-alt"></i> Part types</a></li><?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ) echo '
                         <li><a class="dropdown-item" href="/playgrams"><i class="fas fa-play-circle"></i> Playgrams</a></li>
                         <li><a class="dropdown-item" href="/sections"><i class="fas fa-th-list"></i> Sections</a></li>
 '; ?>
-<?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ) echo '
+<?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ) echo '
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/enable_disable_manager"><i class="fas fa-toggle-on"></i> Enable/Disable Manager</a></li>
-'; ?><?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ) echo '
+'; ?><?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ) echo '
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/admin_verifications"><i class="fas fa-user-check"></i> Password reset & email verification</a></li>
                         <li><a class="dropdown-item" href="/users"><i class="fas fa-users"></i> Users</a></li>

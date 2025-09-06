@@ -5,7 +5,7 @@ require_once(__DIR__ . "/functions.php");
 // Check user permissions
 $u_librarian = FALSE;
 if (isset($_SESSION['username'])) {
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
 }
 
 // Only allow librarians to update enabled status

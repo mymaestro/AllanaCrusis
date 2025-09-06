@@ -7,9 +7,9 @@
   $u_user = FALSE;
   if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
   }
   require_once(__DIR__ . "/includes/config.php");
   require_once(__DIR__. "/includes/navbar.php");
@@ -213,8 +213,8 @@
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                                     data-bs-target="#collapse' . $comp_id . '" aria-expanded="false" 
                                     aria-controls="collapse' . $comp_id . '">
-                                <strong>' . htmlspecialchars($comp_data['catalog_number']) . '</strong> &nbsp;&nbsp;
-                                ' . htmlspecialchars($comp_data['composition_title']) . '
+                                <strong>' . htmlspecialchars($comp_data['catalog_number'] ?? '') . '</strong> &nbsp;&nbsp;
+                                ' . htmlspecialchars($comp_data['composition_title'] ?? '') . '
                                 <span class="badge bg-secondary ms-2">' . count($comp_data['parts']) . ' parts with collections</span>
                             </button>
                         </h2>
@@ -227,17 +227,17 @@
                     echo '<div class="card mb-3">
                             <div class="card-header">
                                 <h5 class="mb-0">
-                                    <strong>' . htmlspecialchars($part_data['part_type_name']) . '</strong>';
-                    
+                                    <strong>' . htmlspecialchars($part_data['part_type_name'] ?? '') . '</strong>';
+
                     if (!empty($part_data['collection_name'])) {
-                        echo ' <small class="text-muted">(' . htmlspecialchars($part_data['collection_name']) . ')</small>';
+                        echo ' <small class="text-muted">(' . htmlspecialchars($part_data['collection_name'] ?? '') . ')</small>';
                     }
                     
                     echo ' <span class="badge bg-primary ms-2">' . $instrument_count . ' instruments</span>
                                 </h5>';
                     
                     if (!empty($part_data['description'])) {
-                        echo '<p class="text-muted mb-0"><small>' . htmlspecialchars($part_data['description']) . '</small></p>';
+                        echo '<p class="text-muted mb-0"><small>' . htmlspecialchars($part_data['description'] ?? '') . '</small></p>';
                     }
                     
                     echo '</div>
@@ -247,7 +247,7 @@
                     foreach ($part_data['instruments'] as $instrument) {
                         echo '<div class="col-md-4 mb-2">
                                 <div class="d-flex justify-content-between align-items-center p-2 border rounded">
-                                    <span>' . htmlspecialchars($instrument['instrument_name']) . '</span>
+                                    <span>' . htmlspecialchars($instrument['instrument_name'] ?? '') . '</span>
                                     <div class="btn-group btn-group-sm" role="group">';
                         
                         if ($u_librarian) {

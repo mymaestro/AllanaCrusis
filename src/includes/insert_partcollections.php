@@ -72,7 +72,7 @@ if (isset($catalog_number_key) && isset($id_part_type_key) && isset($id_instrume
                 if ($mysql_errno == 1062) {
                     echo '<p class="text-danger">Duplicate Entry Error: A part collection with this key combination already exists for ' . $catalog_number_key .':'.$id_part_type_key .':'. $id_instrument_key . '.</p>';
                 } else {
-                    echo '<p class="text-danger">Error updating ' . $catalog_number_key .':'.$id_part_type_key .':'. $id_instrument_key . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+                    echo '<p class="text-danger">Error updating ' . $catalog_number_key .':'.$id_part_type_key .':'. $id_instrument_key . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
                 }
             }
         }
@@ -99,7 +99,7 @@ if (isset($catalog_number_key) && isset($id_part_type_key) && isset($id_instrume
                 if ($mysql_errno == 1062) {
                     echo '<p class="text-danger">Duplicate Entry Error: A part collection with this key combination already exists for ' . $id_part_type . '.</p>';
                 } else {
-                    echo '<p class="text-danger">Error inserting ' . $id_part_type . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+                    echo '<p class="text-danger">Error inserting ' . $id_part_type . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
                 }
             }
         } // foreach

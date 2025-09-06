@@ -32,10 +32,10 @@ if (isset($_POST['id_concert'])) {
         mysqli_stmt_execute($stmt2);
         $res = mysqli_stmt_get_result($stmt2);
         while ($row = mysqli_fetch_assoc($res)) {
-            $comp_catno = htmlspecialchars($row['catalog_number']);
-            $comp_name = htmlspecialchars($row['name']);
-            $comp_composer = htmlspecialchars($row['composer']);
-            $comp_arranger = htmlspecialchars($row['arranger']);
+            $comp_catno = htmlspecialchars($row['catalog_number'] ?? '');
+            $comp_name = htmlspecialchars($row['name'] ?? '');
+            $comp_composer = htmlspecialchars($row['composer'] ?? '');
+            $comp_arranger = htmlspecialchars($row['arranger'] ?? '');
             $comp_display = $comp_name . " - " . $comp_catno;
             if ($comp_composer || $comp_arranger) $comp_display .= ' (';
             if ($comp_composer && $comp_arranger) $comp_display .= $comp_composer . ", arr. " . $comp_arranger . ")";

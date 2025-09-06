@@ -61,7 +61,7 @@ if(!empty($_POST)) {
         if ($mysql_errno == 1062) {
             $output .= '<p class="text-danger">Duplicate Entry Error: An instrument with this ID or name already exists. Please use a different ID or name.</p>';
         } else {
-            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
         }
         
         // Echo the output for error display

@@ -7,9 +7,9 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 if (isset($_SESSION['username'])) {
   $username = $_SESSION['username'];
-  $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
-  $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
-  $u_user = (strpos(htmlspecialchars($_SESSION['roles']), 'user') !== FALSE ? TRUE : FALSE);
+  $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
+  $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+  $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/navbar.php");
@@ -135,7 +135,7 @@ require_once(__DIR__ . "/navbar.php");
                             if ($mysql_errno == 1062) {
                                 $output .= '<span class="text-danger">Duplicate Entry Error: Part ' . $catalog_number . '-' . $id_part_type . ' already exists.</span></td></tr>';
                             } else {
-                                $output .= '<span class="text-danger">Insert failed. Error Code ' . $mysql_errno . ': ' . htmlspecialchars($error_message) . '</span></td></tr>';
+                                $output .= '<span class="text-danger">Insert failed. Error Code ' . $mysql_errno . ': ' . htmlspecialchars($error_message ?? '') . '</span></td></tr>';
                             }
                         }
                     }

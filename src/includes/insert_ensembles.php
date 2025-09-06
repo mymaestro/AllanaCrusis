@@ -57,7 +57,7 @@ if(!empty($_POST)) {
         if ($mysql_errno == 1062) {
             $output .= '<p class="text-danger">Duplicate Entry Error: An ensemble with this ID already exists. Please use a different ID.</p>';
         } else {
-            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message) . '</p>';
+            $output .= '<p class="text-danger">' . $message . '. Error Code: ' . $mysql_errno . ' - Details: ' . htmlspecialchars($error_message ?? '') . '</p>';
         }
         
         echo '<p><a href="'.$referred.'">Return</a></p>';

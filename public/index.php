@@ -83,7 +83,7 @@ if (isset($_GET['action'])) {
         if ($requiredRole) {
             if (!isset($_SESSION['roles']) || strpos($_SESSION['roles'], $requiredRole) === false) {
                 http_response_code(403);
-                echo "Access denied. You need $requiredRole role. You have role: " . ($_SESSION['roles'] ?? 'none');
+                echo "Access denied.";
                 exit;
             }
         }

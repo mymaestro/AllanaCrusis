@@ -5,7 +5,7 @@ require_once(__DIR__ . "/functions.php");
 if (isset($_POST["registration-submit"])) {
     $selector = bin2hex(random_bytes(8));
     $token = random_bytes(32);
-    $url = ORGHOME . "/verify_email?selector=" . $selector . "&validator=" . bin2hex($token);
+    $url = ORGHOME . "/index.php?action=verify_email&selector=" . $selector . "&validator=" . bin2hex($token);
     $expires = date("U") + 3600; // 1 hour expiration
 
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);

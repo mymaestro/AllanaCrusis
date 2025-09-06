@@ -43,7 +43,6 @@ if (isset($_POST["registration-submit"])) {
         
         if (mysqli_stmt_execute($stmt)) {
             mysqli_stmt_close($stmt);
-            mysqli_close($f_link);
 
             // Send verification email
             $to = $address;

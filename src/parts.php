@@ -602,17 +602,18 @@ $(document).ready(function() {
             success: function(result) {
                 console.log("Part data result: ", result);
                 try {
-                    const obj = JSON.parse(result);
-                    console.log("Parsed part data: ", obj);
+                    const data = JSON.parse(result);
+                    console.log("Parsed part data: ", data);
+                    data.u_librarian = window.u_librarian; // Ensure template gets correct role
 
-                    if (!obj || !obj.part ) {
+                    if (!data || !data.part ) {
                         console.error("Invalid part data structure");
                         alert("Error: Invalid part data structure");
                         return;
                     }
 
-                    var part = obj.part;
-                    var inst_options = obj.instruments;
+                    var part = data.part;
+                    var inst_options = data.instruments;
                     var selectitems = '';
 
                     console.log("Part data: ", part);
@@ -792,7 +793,6 @@ $(document).ready(function() {
                 $('#image_path').val('');
             } else if ($('#image_path')[0].files.length > 0) {
                 // If a file is selected, it will be handled by FormData
-
                 $file_name = $('#image_path')[0].files[0].name;
                 console.log("File selected for upload: " + $file_name);
                 formData.append('image_path', $('#image_path')[0].files[0]);
@@ -819,7 +819,7 @@ $(document).ready(function() {
                             dataType: "text",
                             success: function(response) {
                                 var data = JSON.parse(response);
-                                // ...existing code...
+                                data.u_librarian = window.u_librarian; // Ensure template gets correct role
                                 var partsHtml = renderTemplate('parts-table-template', data);
                                 $('#parts_table').html(partsHtml);
                                 $('#composition_header').text(catno_name);

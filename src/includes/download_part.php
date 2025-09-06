@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/includes/config.php');
+require_once(__DIR__ . '/config.php');
 // Add your authentication/authorization checks here
 
 if (!isset($_GET['file'])) {

@@ -2,6 +2,7 @@
 define('PAGE_TITLE', 'List parts');
 define('PAGE_NAME', 'Parts');
 require_once(__DIR__. "/includes/header.php");
+// DO NOT REMOVE the role checks - they are used by JavaScript to enable/disable buttons
 $u_admin = FALSE;
 $u_librarian = FALSE;
 $u_user = FALSE;

@@ -1,13 +1,18 @@
 <?php
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
+// Detect librarian role
+$u_librarian = FALSE;
+if (isset($_SESSION['roles'])) {
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE);
+}
 /* called by parts.php when user selects "View" */
 ferror_log("RUNNING select_parts.php with POST data: ". print_r($_POST, true));
 if (isset($_POST["id_part_type"]) && isset($_POST["catalog_number"])) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     $catalog_number = mysqli_real_escape_string($f_link, $_POST['catalog_number']);
     $id_part_type = mysqli_real_escape_string($f_link, $_POST['id_part_type']);
-    
+
     $output = "";
     $sql = "SELECT t.name  'Part',
     p.id_part_type         'Part type ID',
@@ -22,6 +27,7 @@ if (isset($_POST["id_part_type"]) && isset($_POST["catalog_number"])) {
     p.page_count           'Pages',
     p.originals_count      'Originals',
     p.copies_count         'Copies',
+    p.image_path           'PDF path',
     CASE 
         WHEN p.image_path IS NULL OR p.image_path = '' THEN 'No'
         ELSE 'Yes'
@@ -32,7 +38,7 @@ if (isset($_POST["id_part_type"]) && isset($_POST["catalog_number"])) {
     LEFT JOIN part_types t ON t.id_part_type = p.id_part_type
     LEFT JOIN paper_sizes z ON z.id_paper_size = p.paper_size
     WHERE  p.catalog_number = '" . $catalog_number . "'
-    AND    p.id_part_type = " . $id_part_type .";";
+    AND    p.id_part_type = " . $id_part_type . ";";
 
     $output .= '
     <div class="table-responsive">
@@ -45,9 +51,24 @@ if (isset($_POST["id_part_type"]) && isset($_POST["catalog_number"])) {
             $col++;
         }
         while ($rowList = mysqli_fetch_array($res, MYSQLI_NUM)) {
+            $pdf_path = null;
             for ($row = 0; $row < $col; $row++) {
-                $output .= '<tr><td><strong>'. $fields[$row] . '</strong></td>';
-                $output .= '<td>'. $rowList[$row] . '</td></tr>';
+                $field_name = $fields[$row];
+                $field_value = $rowList[$row];
+                // Save PDF path for later
+                if ($field_name === 'PDF path') {
+                    $pdf_path = $field_value;
+                    continue; // Don't output PDF path directly
+                }
+                if ($field_name === 'PDF available' && $u_librarian && $pdf_path && $field_value === 'Yes') {
+                    // Show secure download link for librarians
+                    $safe_file = htmlspecialchars($pdf_path);
+                    $output .= '<tr><td><strong>PDF available</strong></td>';
+                    $output .= '<td><a href="index.php?action=download_part&file=' . urlencode($safe_file) . '" target="_blank">' . basename($safe_file) . '</a></td></tr>';
+                } else {
+                    $output .= '<tr><td><strong>'. $field_name . '</strong></td>';
+                    $output .= '<td>'. $field_value . '</td></tr>';
+                }
             }
         }
     }

@@ -50,6 +50,7 @@ $actionRoleMap = [
     'delete_'  => 'librarian',
     'insert_'  => 'librarian',
     'update_'  => 'librarian',
+    'download_' => 'librarian'
     // Add more as needed
 ];
 
@@ -77,12 +78,12 @@ if (isset($_GET['action'])) {
         }
         return null; // No restriction
     }
-    if (preg_match('/^(admin_|fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+    if (preg_match('/^(admin_|fetch_|insert_|delete_|download_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
         $requiredRole = getRequiredRole($action, $actionRoleMap);
         if ($requiredRole) {
-            if (!isset($_SESSION['role']) || $_SESSION['role'] !== $requiredRole) {
+            if (!isset($_SESSION['roles']) || strpos($_SESSION['roles'], $requiredRole) === false) {
                 http_response_code(403);
-                echo "Access denied.";
+                echo "Access denied. You need $requiredRole role. You have role: " . ($_SESSION['roles'] ?? 'none');
                 exit;
             }
         }

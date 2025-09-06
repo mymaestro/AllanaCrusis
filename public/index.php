@@ -6,7 +6,7 @@ include(__DIR__ . '/../config/bootstrap.php');
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     // Only allow certain prefixes for security
-    if (preg_match('/^(fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+    if (preg_match('/^(admin_|fetch_|insert_|delete_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
         $file = __DIR__ . '/../src/includes/' . $action . '.php';
         if (file_exists($file)) {
             require $file;
@@ -40,7 +40,6 @@ $urlMap = [
    '/instruments' => 'instruments.php',
    '/login_newpassword' => 'login_newpassword.php',
    '/login' => 'login.php',
-   '/login_register' => 'login_register.php',
    '/login_reset' => 'login_reset.php',
    '/logout' => 'logout.php',
    '/papersizes' => 'papersizes.php',
@@ -56,6 +55,7 @@ $urlMap = [
    '/playgrams' => 'playgrams.php',
    '/privacy-statement' => 'privacy-statement.php',
    '/recordings' => 'recordings.php',
+   '/register' => 'register.php',
    '/reports' => 'reports.php',
    '/search' => 'search.php',
    '/sections' => 'sections.php',

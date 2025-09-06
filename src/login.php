@@ -40,7 +40,7 @@
 
         <div class="text-center">
             <p><a href="/login_reset">Forgot your password?</a></p>
-            <p>Not a member? <a href="/login_register">Register</a></p>
+            <p>Not a member? <a href="/register">Register</a></p>
         </div>
     </form>
     </div><!-- container -->
@@ -75,7 +75,7 @@ $(document).ready(function(){
                             break;
                         case "username":
                             $("#login-message").addClass("text-danger");
-                            $("#login-message").html('No user by that name.<br>Need an account? <a href="/login_register">Sign up now</a>.');
+                            $("#login-message").html('No user by that name.<br>Need an account? <a href="/register">Sign up now</a>.');
                             break;
                         case "password":
                             $("#login-message").addClass("text-danger");

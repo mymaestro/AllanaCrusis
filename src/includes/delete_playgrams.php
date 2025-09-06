@@ -3,6 +3,21 @@
  // Deletes a playgram and its items
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
+// Check user roles - only allow librarians or administrators
+$u_admin = FALSE;
+$u_librarian = FALSE;
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
+}
+
+if (!$u_librarian) {
+    ferror_log("Unauthorized access attempt to delete_playgrams.php by user: " . (isset($_SESSION['username']) ? $_SESSION['username'] : 'anonymous'));
+    http_response_code(403);
+    echo json_encode(['success' => false, 'error' => 'Access denied.']);
+    exit;
+}
 
 ferror_log("Running delete_playgrams.php with id=". $_POST["id_playgram"]);
 header('Content-Type: application/json');

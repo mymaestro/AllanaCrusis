@@ -12,7 +12,7 @@ This system implements email verification for new user registrations by extendin
 5. `admin_verifications.php` - Admin page to view both pending verifications and password resets
 
 ### Files Modified:
-1. `login_register.php` - Updated to use email verification workflow
+1. `register.php` - Updated to use email verification workflow
 
 ## Database Changes
 

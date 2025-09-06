@@ -58,11 +58,13 @@ if (isset($_POST["registration-submit"])) {
             $headers .= "Reply-To: ". ORGMAIL . "\r\n";
             $headers .= "Content-type: text/html\r\n";
             $headers .= "X-Mailer: PHP/" . phpversion();
-            
+
+            // Uh-oh, we need to figure out how to set the routing for the register
+            // Check the routing from register to register.php
             if (mail($to, $subject, $message, $headers)) {
-                header("Location: ../login_register.php?verification=sent");
+                header("Location: /register?verification=sent");
             } else {
-                header("Location: ../login_register.php?verification=email_error");
+                header("Location: /register?verification=email_error");
             }
         } else {
             ferror_log("Database error during verification insert.");

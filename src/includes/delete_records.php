@@ -3,6 +3,23 @@
  // remodel to fit music library database
 require_once(__DIR__ . "/config.php");
 require_once(__DIR__ . "/functions.php");
+
+// Check user roles - only allow librarians or administrators
+$u_admin = FALSE;
+$u_librarian = FALSE;
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $u_admin = (strpos(htmlspecialchars($_SESSION['roles']), 'administrator') !== FALSE ? TRUE : FALSE);
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles']), 'librarian') !== FALSE ? TRUE : FALSE);
+}
+
+if (!$u_librarian && !$u_admin) {
+    ferror_log("Unauthorized access attempt to delete_records.php by user: " . (isset($_SESSION['username']) ? $_SESSION['username'] : 'anonymous'));
+    http_response_code(403);
+    echo json_encode(['success' => false, 'error' => 'Access denied.']);
+    exit;
+}
+
 ferror_log("Running delete_records.php");
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 

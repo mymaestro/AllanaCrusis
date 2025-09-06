@@ -16,7 +16,6 @@ require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 ferror_log("RUNNING parts.php");
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['catalog_number'])) {
     $catalog_number = $_POST['catalog_number'];
     // Handle the POST logic (e.g., update instrumentation)
@@ -282,6 +281,7 @@ mysqli_close($f_link);
 ?>
   window.instrumentdataArray = <?php echo json_encode($instrumentdataArray, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
   window.instrumentdata = <?php echo json_encode($instrumentdata, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+  window.u_librarian = <?php echo ($u_librarian ? 'true' : 'false'); ?>;
 </script>
 <!-- HTML Templates for dynamic content -->
 <script type="text/html" id="composition-list-template">
@@ -474,11 +474,11 @@ $(document).ready(function() {
         success:function(response){
             try {
                 var data = JSON.parse(response);
-                // ...existing code...
+                data.u_librarian = window.u_librarian; // Ensure template gets correct role
                 var compositionsHtml = '';
                 data.compositions.forEach(function(comp) {
                     comp.hasparts = comp.parts > 0;
-                    comp.u_librarian = data.u_librarian; // Add librarian status to each composition
+                    comp.u_librarian = data.u_librarian;
                     compositionsHtml += renderTemplate('composition-list-template', comp);
                 });
                 $('#compositions_list').html('<ul class="list-group list-group-flush">' + compositionsHtml + '</ul>');
@@ -520,17 +520,14 @@ $(document).ready(function() {
             dataType: "text",
             success: function(response) {
                 var data = JSON.parse(response);
-                // ...existing code...
-                
+                data.u_librarian = window.u_librarian; // Ensure template gets correct role
                 console.log("Fetched parts data for catalog number: ", catalog_number);
                 console.log("Data received: ", data);
-                // Add u_librarian to each part object so it's available in the nested context
                 if (data.parts && Array.isArray(data.parts)) {
                     data.parts.forEach(function(part) {
                         part.u_librarian = data.u_librarian;
                     });
                 }
-                
                 var partsHtml = renderTemplate('parts-table-template', data);
                 $('#parts_table').html(partsHtml);
                 $('#composition_header').text(catno_name);
@@ -703,21 +700,18 @@ $(document).ready(function() {
                         catalog_number: catalog_number
                     },
                     dataType: "text",
-                    success: function(response) {
-                        var data = JSON.parse(response);
-                        // ...existing code...
-                        
-                        // Add u_librarian to each part object so it's available in the nested context
-                        if (data.parts && Array.isArray(data.parts)) {
-                            data.parts.forEach(function(part) {
-                                part.u_librarian = data.u_librarian;
-                            });
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            data.u_librarian = window.u_librarian; // Ensure template gets correct role
+                            if (data.parts && Array.isArray(data.parts)) {
+                                data.parts.forEach(function(part) {
+                                    part.u_librarian = data.u_librarian;
+                                });
+                            }
+                            var partsHtml = renderTemplate('parts-table-template', data);
+                            $('#parts_table').html(partsHtml);
+                            $('#composition_header').text(catno_name);
                         }
-                        
-                        var partsHtml = renderTemplate('parts-table-template', data);
-                        $('#parts_table').html(partsHtml);
-                        $('#composition_header').text(catno_name);
-                    }
                 });
             }
         });

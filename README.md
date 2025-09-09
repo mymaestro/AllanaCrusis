@@ -1,28 +1,24 @@
-# 🚀 Modernized Version Notice
+# Music Library DB
 
-This repository is a modernized version of the original `musicLibraryDB` application. It features a new structure based on a single entry point (front controller) and a simple internal router, making it easier to maintain and extend.
-
-**Key Differences from the Original:**
-- All requests are routed through `public/index.php` using a minimal `.htaccess` file.
-- Application logic is organized in the `src/` directory, with routing handled in `public/index.php`.
-- The project is ready for further modernization (e.g., adding controllers, autoloading, or a lightweight framework).
-- The original monolithic structure has been refactored for better maintainability and scalability.
-
-**Migration Note:**
-If you are upgrading from the original `musicLibraryDB`, review the new routing and directory structure. Update your Apache configuration to set the document root to the `public/` directory and use the provided `.htaccess` for clean URLs.
-
----
-# Music Library DB V1
-
-This just takes the old monolithic PHP and moves it around without major restructuring.
-# musicLibraryDB
+![Music library logo](public/images/logo.png)
 
 A comprehensive web-based music library management system designed for concert bands, wind ensembles, orchestras, and other large musical groups. Track your sheet music collection, manage parts, organize concerts, and maintain performance recordings with this full-featured database application.
 
 ## 🎵 Overview
 
+
 The musicLibraryDB is a sophisticated music library management system that helps music organizations:
 
+### Features You Will Love
+- **No more spreadsheets:** Catalog your entire music library, including compositions, parts, concerts, and recordings, in one organized, searchable system.
+- **Easy part distribution:** Instantly see which parts are missing, preview distribution lists, and share download links with your musicians; no more email chains or lost PDFs.
+- **Quick answers for Music directors:** Find out what pieces you own, who played what, and which parts are available with just a few clicks.
+- **Effortless reporting:** Generate inventory, concert history, and statistics reports for your board or director; no manual tallying required.
+- **Simple user management:** Add new users, assign librarian/admin roles, and control access to sensitive features, all from one dashboard.
+- **Secure & Reliable:** Your files and data are protected, with secure downloads and automatic HTTPS. Only authorized users can access sensitive materials.
+- **Fast Search & Sort:** Instantly search and sort your library by composer, title, grade, or any field. Perfect for planning concerts or finding missing parts.
+
+### Now you can:
 - **Catalog compositions** with detailed metadata (composer, arranger, grade, genre, etc.)
 - **Manage sheet music parts** for different instruments and sections
 - **Organize concerts and programs** with playgrams (concert playlists)
@@ -76,7 +72,7 @@ Whether you're managing a small community band library or a large institutional 
 ```bash
 # Clone to your web server's document root
 cd /var/www/html
-git clone https://github.com/yourusername/musicLibraryDB1.git
+git clone https://github.com/mymaestro/musicLibraryDB1.git
 cd musicLibraryDB1
 
 # Set proper permissions
@@ -115,31 +111,19 @@ cd includes/
 cp config.example.php config.php
 ```
 
-Edit `config.php` with your settings:
+Edit `config.php` with your settings. Key options include:
 
-```php
-define('ORGNAME', 'Your Ensemble Name or acronym');
-define('ORGDESC', 'Your Full Organization Name');
-define('ORDLOGO', 'images/logo.png'); // Your band's logo
-define('ORGMAIL', 'librarian@musiclibrarydb.com'); // Your email address
-define('ORGHOME', 'https://yourdomain.com/musicLibraryDB/'); // Where this library lives on the web
-// File locations
-define('ORGRECORDINGS', 'https://yourdomain.com/musicLibraryDB/files/recordings/'); // Where browsers can find your MP3s
-define('ORGPARTDISTRO', 'https://yourdomain.com/distributions/'); // Where the browser can download ZIP file for parts distribution
-define('ORGPUBLIC', 'files/recordings/'); // Directory with public access, to download recordings
-define('ORGPRIVATE','files/parts/'); // Where your parts PDF files are stored. Protect from browsing
-define('ORGD1IST','files/distributions/'); // Where to put ZIP files of parts for each section.
-define('ORGUPLOADS','files/uploads/'); // TBD
-
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'musicLibraryDB');
-define('DB_USER', 'musicLibraryDB');
-define('DB_PASS', 'your_secure_password');
-define('DB_CHARSET','utf8mb4');
-
-define('REGION','HOME');
-define('DEBUG', 1); // Set verbose logging to error_log
-```
+- `ORGNAME`: Short name or acronym for your organization
+- `ORGDESC`: Full organization name
+- `ORGLOGO`: Path to your logo image
+- `ORGMAIL`: Contact email address
+- `ORGHOME`: Main site URL (with trailing slash)
+- `ORGRECORDINGS`: Public URL for recordings
+- `ORGPUBLIC`: Directory for recordings (relative to src/includes)
+- `ORGPRIVATE`: Directory for parts/distributions (absolute path, outside web root recommended)
+- `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`, `DB_CHARSET`: Database connection settings
+- `REGION`: Default region/homepage
+- `DEBUG`: Set to 1 for verbose error logging
 
 ### Step 4: File Permissions and Directories
 
@@ -317,11 +301,13 @@ tar -czf files_backup_$(date +%Y%m%d).tar.gz files/
 
 ### Security Best Practices
 1. **Change default passwords** immediately
-2. **Use HTTPS** for all access
+2. **Use HTTPS** for all access (enforced by `.htaccess`)
 3. **Regular backups** of database and files
-4. **Limit file upload types** to audio formats only
+4. **Limit file upload types** to audio formats and PDFs only
 5. **Keep PHP and database updated**
-6. **Protect your parts directory** with an htaccess file so that casual browsers cannot download your PDF library.
+6. **Store parts and recordings outside the web root** and use the secure download handler
+7. **Centralized role-based access control** ensures only authorized users can access sensitive features
+8. **Protect your parts directory** with an htaccess file if you must store files inside the web root
 
 ## 📈 Reporting Features
 
@@ -355,7 +341,7 @@ The system includes several built-in reports:
 **Permission denied errors**
 - Check user roles in database
 - Verify session is active
-- Confirm role-based access controls
+- Confirm role-based access controls (see `public/index.php`)
 
 ### Debug Mode
 Enable debug mode in `config.php`:
@@ -411,15 +397,27 @@ Future enhancements may include:
 - [ ] Install LAMP/LEMP stack
 - [ ] Create database and import schema
 - [ ] Upload your logo
-- [ ] Configure `config.php` with your settings
-- [ ] Set file permissions for uploads
+- [ ] Configure `config.php` with your settings (see new options for secure file storage and tokens)
+- [ ] Set file permissions for uploads and storage directories
 - [ ] Login with default credentials
 - [ ] Change default password
 - [ ] Set up supporting data (ensembles, instruments, genres, paper sizes, part types) to fit your organization
 - [ ] Add your first composition
 - [ ] Create user accounts for your organization
+- [ ] Verify email addresses for new users (if enabled)
 - [ ] Begin cataloging your music library!
 
 ---
 
 *The musicLibraryDB system was designed by and for musicians who understand the unique challenges of managing large music libraries. Whether you're running a community band, school ensemble, or professional organization, this system provides the tools you need to keep your music organized and accessible.*
+
+---
+
+**Key Differences from the Original:**
+- All requests are routed through `public/index.php` using a minimal `.htaccess` file.
+- Application logic is organized in the `src/` directory, with routing handled in `public/index.php`.
+- The project is ready for further modernization (e.g., adding controllers, autoloading, or a lightweight framework).
+- The original monolithic structure has been refactored for better maintainability and scalability.
+
+**Migration Note:**
+If you are upgrading from the original `musicLibraryDB`, review the new routing and directory structure. Update your Apache configuration to set the document root to the `public/` directory and use the provided `.htaccess` for clean URLs.

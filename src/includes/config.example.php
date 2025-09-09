@@ -5,24 +5,30 @@
 # (C) Copyright Austin Civic Wind Ensemble 2020, 2022, 2025. All rights reserved.
 #############################################################################
 */
-define('ORGNAME', '4th Wind');
-define('ORGDESC', 'Fourth Wind Wind Ensemble');
-// with trailing slash
-define('ORGHOME', 'http://library.local/');
-define('ORGRECORDINGS', 'http://library.local/files/recordings/'); 
-/* Define the path to the recordings directory.
- * This is used for file uploads and downloads.
- * Make sure this path is correct and accessible by the web server. */
-define('ORGPUBLIC', '../../public/files/recordings/'); // Where to put recordings relative to src/includes
-define('ORGPRIVATE', '/home/user/files/'); // Where to put parts and distributions - use a full path outside the web server public
+// Organization branding
+define('ORGNAME', '4th Wind'); // Short name or acronym
+define('ORGDESC', 'Fourth Wind Wind Ensemble'); // Full organization name
+define('ORGLOGO', 'images/logo.png'); // Path to logo image
+define('ORGMAIL', 'librarian@musicLibraryDB.com'); // Contact email
 
-define('ORGLOGO', 'images/logo.png');
-define('ORGMAIL', 'librarian@musicLibraryDB.com');
+// Web root and public URLs (with trailing slash)
+define('ORGHOME', 'http://library.local/'); // Main site URL
+define('ORGRECORDINGS', 'http://library.local/files/recordings/'); // Public URL for recordings
+
+// Secure file storage (recommended: outside web root)
+define('ORGPUBLIC', '../../public/files/recordings/'); // Directory for recordings (relative to src/includes)
+define('ORGPRIVATE', '/home/user/files/'); // Directory for parts/distributions (absolute path, outside web root)
+
+// Database settings
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'musicLibraryDB');
 define('DB_USER', 'musicLibraryDB');
 define('DB_PASS', 'superS3cretPa$$wo4d');
 define('DB_CHARSET', 'utf8mb4');
+
+// Region/homepage
 define('REGION', 'HOME');
+
+// Debug mode (set to 1 for verbose error logging)
 define('DEBUG', 1);
 ?>

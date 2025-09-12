@@ -2,21 +2,32 @@
 define('PAGE_TITLE', 'Part Delivery for Concert Series');
 define('PAGE_NAME', 'Part Delivery');
 require_once(__DIR__. "/includes/header.php");
-$u_admin = FALSE;
-$u_librarian = FALSE;
-$u_user = FALSE;
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
-    $u_admin = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ? TRUE : FALSE);
-    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
-    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
-}
 require_once(__DIR__ . "/includes/config.php");
 require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 
+$u_librarian = FALSE;
+$u_user = FALSE;
+$username = null;
+$user_id = null;
+
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
+    $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
+
+    // Fetch user ID from users table
+    $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $sql_user = "SELECT id_users FROM users WHERE username = '" . mysqli_real_escape_string($f_link, $username) . "' LIMIT 1";
+    $res_user = mysqli_query($f_link, $sql_user);
+    if ($row_user = mysqli_fetch_assoc($res_user)) {
+        $user_id = $row_user['id_users'];
+    }
+    mysqli_free_result($res_user);
+    mysqli_close($f_link);
+}
 // Check if user has permission
-if (!$u_librarian && !$u_admin) {
+if (!$u_librarian && !$u_user) {
     echo '<main role="main" class="container"><div class="alert alert-danger">Access denied.</div></main>';
     require_once(__DIR__. "/includes/footer.php");
     exit;
@@ -35,19 +46,29 @@ while($row = mysqli_fetch_assoc($playgrams_result)) {
     $playgrams[] = $row;
 }
 
-// Get my sections
-$sql = "SELECT s.id_section, s.name, s.description
-        FROM sections s
-        LEFT JOIN users u ON s.section_leader = u.id_users
-        WHERE s.enabled = 1 AND u.username = '" . mysqli_real_escape_string($f_link, $username) . "'
-        ORDER BY s.name";
-ferror_log("Fetching sections for user " . $username . " with SQL: " . $sql);
-$sections_result = mysqli_query($f_link, $sql);
+// Build section_ids array to fetch sections for this user
 $sections = [];
-while($row = mysqli_fetch_assoc($sections_result)) {
-    $sections[] = $row;
+$section_ids = [];
+if ($u_librarian) {
+    // Librarian: all sections
+    $sql = "SELECT id_section, name, description, section_leader FROM sections WHERE enabled = 1 ORDER BY name";
+    ferror_log("Fetching ALL sections for librarian with SQL: " . $sql);
+    $sections_result = mysqli_query($f_link, $sql);
+    while($row = mysqli_fetch_assoc($sections_result)) {
+        $sections[] = $row;
+        $section_ids[] = $row['id_section'];
+    }
+} elseif ($user_id !== null) {
+    // Section leader: only their sections
+    $sql = "SELECT id_section, name, description, section_leader FROM sections WHERE enabled = 1 AND section_leader = " . intval($user_id) . " ORDER BY name";
+    ferror_log("Fetching sections for section_leader user_id " . $user_id . " with SQL: " . $sql);
+    $sections_result = mysqli_query($f_link, $sql);
+    while($row = mysqli_fetch_assoc($sections_result)) {
+        $sections[] = $row;
+        $section_ids[] = $row['id_section'];
+    }
 }
-
+// else: no sections
 mysqli_close($f_link);
 ?>
 
@@ -226,7 +247,8 @@ $(document).ready(function() {
             method: 'POST',
             data: {
                 action: 'load_playgram',
-                playgram_id: playgramId
+                playgram_id: playgramId,
+                section_ids: <?php echo json_encode($section_ids); ?>
             },
             dataType: 'json',
             success: function(response) {
@@ -269,6 +291,7 @@ $(document).ready(function() {
     }
 
     function displaySectionsDistribution(data) {
+        console.log("Displaying sections:", data.sections);
         let html = '';
         
         data.sections.forEach(function(section) {

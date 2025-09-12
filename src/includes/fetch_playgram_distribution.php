@@ -107,8 +107,13 @@ function loadPlaygramData($f_link, $playgram_id) {
         $compositions[] = $row;
     }
     
-    // Get sections with parts info for this playgram
-    $sql = "SELECT 
+    // Get section_ids array from POST
+    $section_ids = isset($_POST['section_ids']) && is_array($_POST['section_ids']) ? $_POST['section_ids'] : [];
+
+    if (!empty($section_ids)) {
+        // Filter by provided section IDs
+        $in = implode(',', array_map('intval', $section_ids));
+        $sql = "SELECT 
                 s.id_section,
                 s.name as section_name,
                 COUNT(DISTINCT CONCAT(p.catalog_number, '-', p.id_part_type)) as total_parts,
@@ -122,19 +127,23 @@ function loadPlaygramData($f_link, $playgram_id) {
             JOIN parts p ON pt.id_part_type = p.id_part_type
             JOIN playgram_items pi ON p.catalog_number = pi.catalog_number
             JOIN compositions c ON pi.catalog_number = c.catalog_number
-            WHERE pi.id_playgram = ? AND s.enabled = 1 AND c.enabled = 1 AND p.originals_count > 0
+            WHERE pi.id_playgram = ? AND s.enabled = 1 AND c.enabled = 1 AND p.originals_count > 0 AND s.id_section IN ($in)
             GROUP BY s.id_section, s.name
             ORDER BY s.name";
-    
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
+        $stmt = mysqli_prepare($f_link, $sql);
+        mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
+    } else {
+        // No sections
+        $sections = [];
+        goto finish_response;
+    }
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    
     $sections = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $sections[] = $row;
     }
+    finish_response:
     
     return [
         'success' => true,

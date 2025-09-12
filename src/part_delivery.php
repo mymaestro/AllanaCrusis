@@ -440,7 +440,7 @@ $(document).ready(function() {
         }
         $('#send_email').prop('disabled', true).val('Sending...');
         $.ajax({
-            url: 'index.php?action=send_part_email',
+            url: 'index.php?action=sound',
             method: 'POST',
             data: {
                 email: email,

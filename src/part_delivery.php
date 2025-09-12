@@ -10,18 +10,20 @@ $u_librarian = FALSE;
 $u_user = FALSE;
 $username = null;
 $user_id = null;
-
+$user_real_name = '';
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
     $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 
-    // Fetch user ID from users table
+    // Fetch user ID, real name, and email from users table
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    $sql_user = "SELECT id_users FROM users WHERE username = '" . mysqli_real_escape_string($f_link, $username) . "' LIMIT 1";
+    $sql_user = "SELECT id_users, name, address FROM users WHERE username = '" . mysqli_real_escape_string($f_link, $username) . "' LIMIT 1";
     $res_user = mysqli_query($f_link, $sql_user);
     if ($row_user = mysqli_fetch_assoc($res_user)) {
         $user_id = $row_user['id_users'];
+        $user_real_name = $row_user['name'];
+        $user_email = $row_user['address'];
     }
     mysqli_free_result($res_user);
     mysqli_close($f_link);
@@ -104,7 +106,7 @@ mysqli_close($f_link);
                                     <li>Example: <code>01 - March Grandioso - Flute 1.pdf</code></li>
                                     <li><strong>Note:</strong> Only parts with PDF files are included. Missing PDFs are noted in the generation log.</li>
                                 </ul>
-                                <li><strong>Copy download link:</strong> Click <em>Copy link</em> to copy the download link for the ZIP file. You can send this link to a band member to download their parts.</li>
+                                <li><strong>Send download link:</strong> Click <em>Send link</em> to open the email form to send the link to the ZIP file. You can send this link to a band member to download their parts.</li>
                             </ol>
                             <div class="alert alert-warning mt-3">
                                 <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within 2 days, or it will expire.
@@ -205,6 +207,36 @@ mysqli_close($f_link);
                 </div>
             </div>
         </div>
+        <!-- eMail Modal for future use -->
+        <div id="emailModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true"><!-- edit data -->
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Send parts - NOT WORKING YET!</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div><!-- modal-header -->
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <form method="post" id="send_email_form">
+                                <div class="mb-3">
+                                <label for="emailFormControlInput1" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="emailFormControlInput1" placeholder="name@example.com">
+                                </div>
+                                <div class="mb-3">
+                                <label for="emailFormControlTextarea1" class="form-label">Parts textarea</label>
+                                <textarea class="form-control" id="emailFormControlTextarea1" rows="3"></textarea>
+                                </div>
+                            </form>
+                        </div><!-- container-fluid -->
+                    </div><!-- modal-body -->
+                    <div class="modal-footer">  
+                            <input type="submit" name="send_email" id="send_email" value="Send" class="btn btn-success" />
+                        </form>  
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>  
+                    </div><!-- modal-footer -->
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- editModal -->
     </div>
 </main>
 
@@ -291,7 +323,6 @@ $(document).ready(function() {
     }
 
     function displaySectionsDistribution(data) {
-        console.log("Displaying sections:", data.sections);
         let html = '';
         
         data.sections.forEach(function(section) {
@@ -341,7 +372,7 @@ $(document).ready(function() {
                         type: 'button',
                         class: 'btn btn-primary btn-sm copy-link-btn',
                         'data-link': linkToCopy
-                    }).html('<i class="fas fa-link"></i> Copy Link');
+                    }).html('<i class="fas fa-link"></i> Send Link');
                     button.replaceWith(copyBtn);
                 } else {
                     alert('Error: ' + response.message);
@@ -355,34 +386,82 @@ $(document).ready(function() {
         });
     });
 
-    // Clipboard copy handler for all copy-link-btn buttons
+    // Email modal handler for all copy-link-btn buttons
     $(document).on('click', '.copy-link-btn', function() {
         const link = $(this).data('link');
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(window.location.origin + link)
-                .then(() => {
-                    $(this).text('Copied!').removeClass('btn-primary').addClass('btn-success');
-                    setTimeout(() => {
-                        $(this).html('<i class="fas fa-link"></i> Copy Link');
-                        $(this).removeClass('btn-success').addClass('btn-primary');
-                    }, 1500);
-                })
-                .catch(() => {
-                    alert('Failed to copy link.');
-                });
+        // Try to get section name from the UI
+        let sectionName = $(this).closest('.card').find('h6').text().trim();
+        // Get band name from PHP constant
+        const bandName = <?php echo json_encode(defined('ORGDESC') ? ORGDESC : 'Your Band'); ?>;
+        // Get Playgram name from JS state
+        let playgramName = '';
+        if (playgramData && playgramData.playgram_name) {
+            playgramName = playgramData.playgram_name;
         } else {
-            // Fallback for older browsers
-            const tempInput = $('<input>');
-            $('body').append(tempInput);
-            tempInput.val(window.location.origin + link).select();
-            document.execCommand('copy');
-            tempInput.remove();
-            $(this).text('Copied!').removeClass('btn-primary').addClass('btn-success');
-            setTimeout(() => {
-                $(this).html('<i class="fas fa-link"></i> Copy Link');
-                $(this).removeClass('btn-success').addClass('btn-primary');
-            }, 1500);
+            // fallback: try to get from select
+            playgramName = $('#playgram_select option:selected').text().trim();
         }
+        // Get real name and email of current user from PHP
+        const contactName = <?php echo json_encode($user_real_name); ?>;
+        const fromEmail = <?php echo json_encode(isset($user_email) ? $user_email : ''); ?>;
+        let contactText = contactName ? `please contact ${contactName}.` : 'please contact the librarian.';
+        // Open the email modal
+        $('#emailModal').modal('show');
+        // Pre-fill the textarea with enhanced message
+        const message = `Hello,\n\nYou have been sent a secure download link for your ${sectionName} parts for ${bandName}, for the concert program: ${playgramName}.\n\nDownload link:\n${window.location.origin + link}\n\nThis link will expire after one use or in 2 days.\n\nIf you have any issues, ${contactText}`;
+        $('#emailFormControlTextarea1').val(message);
+        // Store the sender's email for backend use
+        $('#send_email_form').data('from-email', fromEmail);
+    });
+
+    // Enable/disable Send button based on required fields
+    function updateSendButtonState() {
+        const email = $('#emailFormControlInput1').val();
+        const message = $('#emailFormControlTextarea1').val();
+        const isValid = email.length > 0 && message.length > 0;
+        $('#send_email').prop('disabled', !isValid);
+    }
+
+    $('#emailFormControlInput1, #emailFormControlTextarea1').on('input', updateSendButtonState);
+
+    // Initialize button state when modal opens
+    $('#emailModal').on('shown.bs.modal', function() {
+        updateSendButtonState();
+    });
+
+    // Email form submission handler
+    $('#send_email_form').on('submit', function(e) {
+        e.preventDefault();
+        const email = $('#emailFormControlInput1').val();
+        const message = $('#emailFormControlTextarea1').val();
+        if (!email || !message) {
+            alert('Please enter both email and message.');
+            return;
+        }
+        $('#send_email').prop('disabled', true).val('Sending...');
+        $.ajax({
+            url: 'index.php?action=send_part_email',
+            method: 'POST',
+            data: {
+                email: email,
+                message: message
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert('Email sent successfully!');
+                    $('#emailModal').modal('hide');
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Error sending email: ' + error);
+            },
+            complete: function() {
+                $('#send_email').prop('disabled', false).val('Send');
+            }
+        });
     });
 });
 </script>

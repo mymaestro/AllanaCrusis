@@ -139,8 +139,9 @@ UNLOCK TABLES;
 -- Table structure for table `download_tokens`
 --
 CREATE TABLE download_tokens (
-    id_download_token INT AUTO_INCREMENT PRIMARY KEY,
-    token VARCHAR(64) NOT NULL UNIQUE COMMENT 'The unique download token (use a secure random string).',
+  id_download_token INT AUTO_INCREMENT PRIMARY KEY,
+  token VARCHAR(64) NOT NULL UNIQUE COMMENT 'The unique download token (use a secure random string).',
+  email VARCHAR(255) DEFAULT NULL COMMENT 'Optional: email address to which the token was sent.',
     id_playgram INT(11) NOT NULL COMMENT 'The ID of the playgram this token is for.',
     id_section INT(10) UNSIGNED NOT NULL COMMENT 'The ID of the section this token is for.',
     zip_filename VARCHAR(255) NOT NULL COMMENT 'The name of the ZIP file to serve.',

@@ -42,6 +42,7 @@ $urlMap = [
    '/users' => 'users.php',
    '/verify_email' => 'verify_email.php',
    '/welcome' => 'welcome.php',
+   '/test_sound' => 'test_sound.php',
    '/' => 'index.php'
 ];
 
@@ -62,6 +63,10 @@ if (isset($_GET['action'])) {
     }
     if ($action === 'verify_email') {
         require_once __DIR__ . '/../src/verify_email.php';
+        exit;
+    }
+    if ($action === 'sound') {
+        require_once __DIR__ . '/../src/includes/sound.php';
         exit;
     }
     // Only allow certain prefixes for security

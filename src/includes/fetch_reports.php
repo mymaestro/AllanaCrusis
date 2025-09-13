@@ -377,14 +377,14 @@ if (isset($_POST["report_type"])) {
             break;
             
         case 'download_tokens_zips':
-            $active_tokens_sql = 'SELECT dt.token, dt.zip_filename, dt.expires_at, dt.used, dt.created_at,
-                                         pg.name as playgram_name, s.name as section_name, u.username
-                                  FROM download_tokens dt
-                                  LEFT JOIN playgrams pg ON dt.id_playgram = pg.id_playgram
-                                  LEFT JOIN sections s ON dt.id_section = s.id_section
-                                  LEFT JOIN users u ON dt.id_user = u.id_users
-                                  ORDER BY dt.created_at DESC
-                                  LIMIT 50';
+         $active_tokens_sql = 'SELECT dt.token, dt.zip_filename, dt.expires_at, dt.used, dt.created_at,
+                          pg.name as playgram_name, s.name as section_name, u.username, dt.email
+                      FROM download_tokens dt
+                      LEFT JOIN playgrams pg ON dt.id_playgram = pg.id_playgram
+                      LEFT JOIN sections s ON dt.id_section = s.id_section
+                      LEFT JOIN users u ON dt.id_user = u.id_users
+                      ORDER BY dt.created_at DESC
+                      LIMIT 50';
             
             $all_zips_sql = 'SELECT DISTINCT dt.zip_filename,
                                     COUNT(*) as total_tokens,
@@ -450,6 +450,7 @@ if (isset($_POST["report_type"])) {
                         <th>Playgram</th>
                         <th>Section</th>
                         <th>ZIP File</th>
+                        <th>Email Sent To</th>
                         <th>Status</th>
                         <th>Expires</th>
                         <th>Created By</th>
@@ -470,6 +471,7 @@ if (isset($_POST["report_type"])) {
                         <td>' . htmlspecialchars($row['playgram_name'] ?? '') . '</td>
                         <td><span class="badge bg-info">' . htmlspecialchars($row['section_name'] ?? '') . '</span></td>
                         <td>' . htmlspecialchars($row['zip_filename'] ?? '') . '</td>
+                        <td>' . htmlspecialchars($row['email'] ?? '') . '</td>
                         <td>' . $status_badge . '</td>
                         <td><small>' . $expires_date . '</small></td>
                         <td>' . $created_by . '</td>

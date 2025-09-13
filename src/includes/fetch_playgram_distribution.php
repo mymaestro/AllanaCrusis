@@ -26,6 +26,32 @@ $action = $_POST['action'];
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 switch($action) {
+    case 'update_token_email':
+        // Update the email address for a given token
+        if (!isset($_POST['token']) || !isset($_POST['email'])) {
+            echo json_encode(['success' => false, 'message' => 'Token and email required.']);
+            exit;
+        }
+        $token = $_POST['token'];
+        $email = $_POST['email'];
+        if (!preg_match('/^[a-f0-9]{32}$/', $token)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid token format.']);
+            exit;
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['success' => false, 'message' => 'Invalid email address.']);
+            exit;
+        }
+        $stmt = mysqli_prepare($f_link, "UPDATE download_tokens SET email = ? WHERE token = ?");
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "ss", $email, $token);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Database error.']);
+        }
+        break;
     case 'load_playgram':
         if (!isset($_POST['playgram_id'])) {
             echo json_encode(['success' => false, 'message' => 'Playgram ID required.']);
@@ -36,18 +62,7 @@ switch($action) {
         $result = loadPlaygramData($f_link, $playgram_id);
         echo json_encode($result);
         break;
-        
-    case 'generate_zips':
-        if (!isset($_POST['playgram_id'])) {
-            echo json_encode(['success' => false, 'message' => 'Playgram ID required.']);
-            exit;
-        }
-        
-        $playgram_id = intval($_POST['playgram_id']);
-        $result = generateAllSectionZips($f_link, $playgram_id);
-        echo json_encode($result);
-        break;
-        
+
     case 'generate_section_zip':
         if (!isset($_POST['playgram_id']) || !isset($_POST['section_id'])) {
             echo json_encode(['success' => false, 'message' => 'Playgram ID and Section ID required.']);
@@ -151,95 +166,6 @@ function loadPlaygramData($f_link, $playgram_id) {
             'playgram' => $playgram,
             'compositions' => $compositions,
             'sections' => $sections
-        ]
-    ];
-}
-
-function generateAllSectionZips($f_link, $playgram_id) {
-    // Get playgram name
-    $sql = "SELECT name FROM playgrams WHERE id_playgram = ?";
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $playgram = mysqli_fetch_assoc($result);
-    
-    if (!$playgram) {
-        return ['success' => false, 'message' => 'Playgram not found.'];
-    }
-    
-    $playgram_name = sanitizeFilename($playgram['name']);
-    
-    // Get all sections that have parts in this playgram
-    $sql = "SELECT DISTINCT s.id_section, s.name as section_name
-            FROM sections s
-            JOIN section_instruments si ON s.id_section = si.id_section
-            JOIN part_types pt ON si.id_instrument = pt.default_instrument
-            JOIN parts p ON pt.id_part_type = p.id_part_type
-            JOIN playgram_items pi ON p.catalog_number = pi.catalog_number
-            JOIN compositions c ON pi.catalog_number = c.catalog_number
-            WHERE pi.id_playgram = ? AND s.enabled = 1 AND c.enabled = 1 
-                AND p.originals_count > 0 AND p.image_path IS NOT NULL AND p.image_path != ''
-            ORDER BY s.name";
-    
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
-    mysqli_stmt_execute($stmt);
-    $sections_result = mysqli_stmt_get_result($stmt);
-    
-    $zip_files = [];
-    $generation_log = [];
-    
-    while ($section = mysqli_fetch_assoc($sections_result)) {
-        $zip_result = generateSectionZip($f_link, $playgram_id, $section['id_section']);
-        if ($zip_result['success']) {
-            $zip_files[] = [
-                'section_name' => $section['section_name'],
-                'download_link' => $zip_result['data']['download_link'],
-                'filename' => $zip_result['data']['filename'],
-                'part_count' => $zip_result['data']['part_count'],
-                'token' => $zip_result['data']['token']
-            ];
-            $generation_log[] = "Generated ZIP for " . $section['section_name'] . " (" . $zip_result['data']['part_count'] . " parts)";
-            // Generate a secure token
-            $token = bin2hex(random_bytes(16)); // 32-char token
-            $expires_at = date('Y-m-d H:i:s', strtotime('+2 days'));
-            // Get user ID from database using session username
-            $id_user = null;
-            if (isset($_SESSION['username'])) {
-                $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
-                mysqli_stmt_bind_param($user_stmt, "s", $_SESSION['username']);
-                mysqli_stmt_execute($user_stmt);
-                $user_result = mysqli_stmt_get_result($user_stmt);
-                if ($user_row = mysqli_fetch_assoc($user_result)) {
-                    $id_user = $user_row['id_users'];
-                }
-                mysqli_stmt_close($user_stmt);
-            }
-            $id_playgram = $playgram_id;
-            $id_section = $section['id_section'];
-            $zip_filename = $zip_result['data']['filename'];
-
-            // Insert token into the database
-            $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($stmt, "siissi", $token, $id_playgram, $id_section, $zip_filename, $expires_at, $id_user);
-            mysqli_stmt_execute($stmt);
-
-            // Add the token and clean download link to your response
-            $zip_result['data']['token'] = $token;
-            $zip_result['data']['download_link'] = '/d/' . $token;
-        } else {
-            $generation_log[] = "Error generating ZIP for " . $section['section_name'] . ": " . $zip_result['message'];
-        }
-    }
-    
-    return [
-        'success' => true,
-        'data' => [
-            'zip_files' => $zip_files,
-            'log' => $generation_log,
-            'download_link' => $zip_result['data']['download_link'] ?? null,
-            'token' => $zip_result['data']['token'] ?? null
         ]
     ];
 }

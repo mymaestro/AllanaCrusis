@@ -1,7 +1,17 @@
 <?php
 // sound.php - Secure email handler for part delivery
+// Require user to be logged in
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+if (!isset($_SESSION['username'])) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Authentication required.']);
+    exit;
+}
 require_once(__DIR__ . '/config.php');
 require_once(__DIR__ . '/functions.php');
+ferror_log("sound.php accessed by user: " . $_SESSION['username']);
 
 header('Content-Type: application/json');
 
@@ -49,6 +59,21 @@ if ($isHtml) {
 
 // Send email
 $mailSuccess = mail($to, $subject, $message, $headers);
+
+// Log the attempt
+$logUser = isset($_SESSION['username']) ? $_SESSION['username'] : 'anonymous';
+$logMsg = sprintf(
+    'sound.php: user=%s, to=%s, subject=%s, result=%s',
+    $logUser,
+    $to,
+    $subject,
+    $mailSuccess ? 'success' : 'fail'
+);
+if (function_exists('ferror_log')) {
+    ferror_log($logMsg);
+} else {
+    error_log($logMsg);
+}
 
 if ($mailSuccess) {
     echo json_encode(['success' => true]);

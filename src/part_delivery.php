@@ -207,6 +207,26 @@ mysqli_close($f_link);
                 </div>
             </div>
         </div>
+            <!-- Download Tokens & ZIP Files Report (collapsible) -->
+        <?php if (!empty($sections)): ?>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-success">
+                    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0"><i class="fas fa-download"></i> Download tokens & ZIP files report</h6>
+                        <button class="btn btn-sm btn-light" type="button" id="showTokensReportBtn">
+                            <span id="showTokensReportIcon"><i class="fas fa-plus"></i></span> Show Report
+                        </button>
+                    </div>
+                    <div id="tokensReportCollapse" class="collapse">
+                        <div class="card-body" id="tokensReportContent">
+                            <div class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Loading report...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
         <!-- eMail Modal for future use -->
         <div id="emailModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true"><!-- edit data -->
             <div class="modal-dialog modal-lg">
@@ -226,7 +246,6 @@ mysqli_close($f_link);
                                 <label for="emailFormControlTextarea1" class="form-label">Parts textarea</label>
                                 <textarea class="form-control" id="emailFormControlTextarea1" rows="3"></textarea>
                                 </div>
-                            </form>
                         </div><!-- container-fluid -->
                     </div><!-- modal-body -->
                     <div class="modal-footer">  
@@ -259,8 +278,35 @@ $(function() {
     }
 });
 $(document).ready(function() {
+        // Download tokens & ZIP files report loader
+    $('#showTokensReportBtn').on('click', function() {
+        var $collapse = $('#tokensReportCollapse');
+        var $icon = $('#showTokensReportIcon i');
+        if ($collapse.hasClass('show')) {
+            $collapse.collapse('hide');
+            $icon.removeClass('fa-minus').addClass('fa-plus');
+        } else {
+            $collapse.collapse('show');
+            $icon.removeClass('fa-plus').addClass('fa-minus');
+            // Load report via AJAX only if not loaded yet or on every open
+            $('#tokensReportContent').html('<div class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Loading report...</div>');
+            $.ajax({
+                url: 'index.php?action=fetch_reports',
+                type: 'POST',
+                data: { report_type: 'download_tokens_zips' },
+                success: function(data) {
+                    $('#tokensReportContent').html(data);
+                },
+                error: function() {
+                    $('#tokensReportContent').html('<div class="alert alert-danger">Error loading report. Please try again.</div>');
+                }
+            });
+        }
+    });
+
     let currentPlaygramId = null;
     let playgramData = null;
+    let zipData = null;
 
     // Load playgram details when selected
     $('#load_playgram').on('click', function() {
@@ -366,6 +412,7 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
+                    zipData = response.data;
                     // Create Copy Link button
                     const linkToCopy = response.data.download_link;
                     const copyBtn = $('<button>').attr({
@@ -401,6 +448,17 @@ $(document).ready(function() {
             // fallback: try to get from select
             playgramName = $('#playgram_select option:selected').text().trim();
         }
+        // Get zip token from zipData if available
+        let token = '';
+        if (zipData && zipData.token) {
+            token = zipData.token;
+        } else {
+            // fallback: try to extract from link
+            const tokenMatch = /\/d\/([a-f0-9]{32})/.exec(link);
+            if (tokenMatch) {
+                token = tokenMatch[1];
+            }
+        }
         // Get real name and email of current user from PHP
         const contactName = <?php echo json_encode($user_real_name); ?>;
         const fromEmail = <?php echo json_encode(isset($user_email) ? $user_email : ''); ?>;
@@ -408,10 +466,14 @@ $(document).ready(function() {
         // Open the email modal
         $('#emailModal').modal('show');
         // Pre-fill the textarea with enhanced message
-        const message = `Hello,\n\nYou have been sent a secure download link for your ${sectionName} parts for ${bandName}, for the concert program: ${playgramName}.\n\nDownload link:\n${window.location.origin + link}\n\nThis link will expire after one use or in 2 days.\n\nIf you have any issues, ${contactText}`;
+        const message = `Hello,\n\nYou have been sent a secure download link for your ${sectionName} parts for ${bandName}, for the concert program: ${playgramName}.\n\nDownload link:\n${window.location.origin + link}\n\nThis link will expire after one use or in 2 days.\n\nIf you have any issues, ${contactText}\n\nBest regards,\n${bandName}`;
         $('#emailFormControlTextarea1').val(message);
-        // Store the sender's email for backend use
+        // Pre-fill subject and from fields
+        const subject = `Your ${sectionName} parts for ${bandName} (${playgramName})`;
+        $('#emailModal .modal-title').text('Send parts');
+        $('#emailFormControlInput1').val(''); // Clear previous email
         $('#send_email_form').data('from-email', fromEmail);
+        $('#send_email_form').data('subject', subject);
     });
 
     // Enable/disable Send button based on required fields
@@ -434,6 +496,8 @@ $(document).ready(function() {
         e.preventDefault();
         const email = $('#emailFormControlInput1').val();
         const message = $('#emailFormControlTextarea1').val();
+        const from = $(this).data('from-email') || '';
+        const subject = $(this).data('subject') || 'Parts Delivery';
         if (!email || !message) {
             alert('Please enter both email and message.');
             return;
@@ -444,11 +508,41 @@ $(document).ready(function() {
             method: 'POST',
             data: {
                 email: email,
-                message: message
+                message: message,
+                from: from,
+                subject: subject
             },
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
+                    // Get zip token from zipData if available
+                    let token = '';
+                    if (zipData && zipData.token) {
+                        token = zipData.token;
+                    } else {
+                        // fallback: try to extract from link
+                        const tokenMatch = /\/d\/([a-f0-9]{32})/.exec(link);
+                        if (tokenMatch) {
+                            token = tokenMatch[1];
+                        }
+                    }
+                    if (token) {
+                        $.ajax({
+                            url: 'index.php?action=fetch_playgram_distribution',
+                            method: 'POST',
+                            data: {
+                                action: 'update_token_email',
+                                token: token,
+                                email: email
+                            },
+                            dataType: 'json',
+                            success: function(resp) {
+                                if (!resp.success) {
+                                    alert('Warning: Could not update token email: ' + resp.message);
+                                }
+                            }
+                        });
+                    }
                     alert('Email sent successfully!');
                     $('#emailModal').modal('hide');
                 } else {

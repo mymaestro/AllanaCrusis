@@ -1,7 +1,7 @@
 <?php  
  //delete_records.php
  // remodel to fit music library database
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_records.php");

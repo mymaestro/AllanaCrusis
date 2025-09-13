@@ -2,7 +2,7 @@
  //update_scoreorder.php
 define('PAGE_TITLE', 'Update score order');
 define('PAGE_NAME', 'Update score order');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("RUNNING update_scoreorder.php with POST ". print_r($_POST, true));
 if(!empty($_POST)) {

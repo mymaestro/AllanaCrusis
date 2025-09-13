@@ -1,7 +1,7 @@
 <?php  
  // index.php?action=fetch_composition_parts
  // Get parts array for composition_instrumentation.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_composition_parts.php with id=". $_POST["catalog_number"]);
 

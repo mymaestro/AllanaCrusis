@@ -1,6 +1,6 @@
 <?php
 // index.php?action=fetch_section_instruments
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 $section_id = intval($_POST['section_id']);
 

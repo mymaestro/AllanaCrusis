@@ -1,6 +1,6 @@
 <?php
 // index.php?action=insert_section_instruments
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("RUNNING insert_section_instruments.php with POST data: " . print_r($_POST, true));

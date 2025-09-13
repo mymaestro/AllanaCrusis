@@ -2,7 +2,7 @@
  //insert_parts.php
 define('PAGE_TITLE', 'Insert parts');
 define('PAGE_NAME', 'Insert parts');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 // Include PHPdfer for PDF metadata handling

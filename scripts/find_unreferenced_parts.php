@@ -2,7 +2,7 @@
 // find_unreferenced_parts.php
 // Utility to list PDF files in ORGPRIVATE not referenced in the parts table
 
-require_once __DIR__ . '/../src/includes/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/includes/functions.php';
 
 function debug_log($msg) {

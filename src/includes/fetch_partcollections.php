@@ -1,6 +1,6 @@
 <?php  
  //fetch_partcollections.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 if(isset($_POST["catalog_number_key"])) {

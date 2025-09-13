@@ -1,6 +1,6 @@
 <?php  
 /* Called by parts.php to display parts table */
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running fetch_parts.php");

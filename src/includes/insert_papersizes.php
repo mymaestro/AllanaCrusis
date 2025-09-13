@@ -2,7 +2,7 @@
  //insert_papersizes.php
  define('PAGE_TITLE', 'Insert papersizes');
  define('PAGE_NAME', 'Insert papersizes');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Insert paper sizes POST ".print_r($_POST, true));
 if(!empty($_POST)) {

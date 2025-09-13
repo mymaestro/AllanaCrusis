@@ -2,7 +2,7 @@
  //insert_concerts.php
 define('PAGE_TITLE', 'Insert concerts');
 define('PAGE_NAME', 'Insert concerts');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log(print_r($_POST, true));

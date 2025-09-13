@@ -2,7 +2,7 @@
  //insert_ensembles.php
 define('PAGE_TITLE', 'Insert ensembles');
 define('PAGE_NAME', 'InsertEnsembles');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Insert ensembles POST ".print_r($_POST, true));
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);

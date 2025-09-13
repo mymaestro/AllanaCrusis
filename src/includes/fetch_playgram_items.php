@@ -2,7 +2,7 @@
 //fetch_playgram_items.php
 // This script fetches the playgram items for a given concert ID and returns them as HTML
 // It expects a POST request with 'id_concert' parameter
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 if (isset($_POST['id_concert'])) {

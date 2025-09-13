@@ -4,6 +4,9 @@ error_log
 musicLibraryDB.sql
 phpinfo.php
 backups/
+/config/config.php
+/config/*.env
+/config/*.local.php
 /vendor/
 files/
 public/files/

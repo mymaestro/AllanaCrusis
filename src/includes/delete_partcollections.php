@@ -2,7 +2,7 @@
 // delete_partcollections.php
 // Deletes a part collection entry based on catalog number, part type key, and instrument key.
 // Called from the part collections page partcollections.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_partcollections.php with id=". $_POST["catalog_number_key"] . ":" . $_POST["id_part_type_key"] . ":". $_POST["id_part_type"]);

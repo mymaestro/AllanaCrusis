@@ -2,7 +2,7 @@
  //insert_playgrams.php
 define('PAGE_TITLE', 'Insert playgrams');
 define('PAGE_NAME', 'Insert playgrams');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log(print_r($_POST,true));
 if(!empty($_POST)) {

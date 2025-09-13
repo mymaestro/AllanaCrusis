@@ -4,7 +4,7 @@ define('PAGE_TITLE', 'New password');
 define('PAGE_NAME', 'new password');
 
 require_once(__DIR__ . "/includes/header.php");
-require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__ . "/includes/navbar.php");
 
 // Use this page to put in your new password

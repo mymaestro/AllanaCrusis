@@ -1,6 +1,6 @@
 <?php  
  //fetch_sections.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 $section_id = intval($_POST['id_section']);
 

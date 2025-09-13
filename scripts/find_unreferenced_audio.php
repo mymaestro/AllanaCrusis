@@ -3,7 +3,7 @@
 // Utility to list audio and meta files not referenced in the recordings table
 
 
-require_once __DIR__ . '/../src/includes/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/includes/functions.php';
 
 function debug_log($msg) {

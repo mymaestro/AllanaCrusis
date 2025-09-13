@@ -4,7 +4,7 @@ define('PAGE_TITLE', 'Reset your password');
 define('PAGE_NAME', 'reset your password');
 
 require_once(__DIR__ . "/includes/header.php");
-require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__ . "/includes/navbar.php");
 require_once(__DIR__ . "/includes/password_hash.php");
 require_once(__DIR__ . "/includes/functions.php");

@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running select_composition_parts.php with POST data: ". print_r($_POST, true));
 if (isset($_POST["catalog_number"])) {

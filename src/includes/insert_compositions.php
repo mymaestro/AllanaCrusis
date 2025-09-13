@@ -2,7 +2,7 @@
  //insert_compositions.php
 define('PAGE_TITLE', 'Insert compositions');
 define('PAGE_NAME', 'Insert compositions');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 if(!empty($_POST)) {

@@ -1,6 +1,6 @@
 <?php  
  //fetch_papersizes.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running fetch_papersizes.php with id=". $_POST["id_paper_size"]);
 if(isset($_POST["id_paper_size"])) {

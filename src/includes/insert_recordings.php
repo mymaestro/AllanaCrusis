@@ -8,7 +8,7 @@ ob_start();
 */
 define('PAGE_TITLE', 'Insert recordings');
 define('PAGE_NAME', 'Insert recordings');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running ".PAGE_NAME." with POST data: " . print_r($_POST, true));

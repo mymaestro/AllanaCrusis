@@ -3,7 +3,7 @@
 define('PAGE_TITLE', 'Welcome');
 define('PAGE_NAME', 'welcome');
 require_once(__DIR__ . "/includes/header.php");
-require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__ . "/includes/functions.php");
 ferror_log("RUNNING welcome.php");
 // If session variable is not set it will redirect to login page

@@ -1,7 +1,7 @@
 <?php  
  //delete_playgrams.php
  // Deletes a playgram and its items
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_playgrams.php with id=". $_POST["id_playgram"]);

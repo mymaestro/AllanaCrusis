@@ -1,6 +1,6 @@
 <?php  
  //fetch_users.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running admin_fetch_users.php with id_users=". $_POST["id_users"]);
 if(isset($_POST["id_users"])) {

@@ -2,7 +2,7 @@
 // check_parts_files.php
 // Checks for parts with image_path not null and verifies file existence
 
-require_once __DIR__ . '/../src/includes/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/includes/functions.php';
 
 // Set the directory where part files are stored

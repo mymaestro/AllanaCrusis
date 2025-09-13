@@ -107,7 +107,7 @@ SOURCE src/setup/musicLibraryDB-demo.sql;
 Copy the example configuration file and customize it:
 
 ```bash
-cd includes/
+cd config
 cp config.example.php config.php
 ```
 

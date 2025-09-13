@@ -2,7 +2,7 @@
 // export_parts_csv.php
 // Export a CSV of all referenced PDF files with composition and part info
 
-require_once __DIR__ . '/../src/includes/config.php';
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/includes/functions.php';
 
 $link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);

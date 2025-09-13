@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
     echo json_encode(['success' => false, 'message' => 'Authentication required.']);
     exit;
 }
-require_once(__DIR__ . '/config.php');
+require_once(__DIR__ . '/../../config/config.php');
 require_once(__DIR__ . '/functions.php');
 ferror_log("sound.php accessed by user: " . $_SESSION['username']);
 

@@ -18,7 +18,7 @@ if (isset($_SESSION['username'])) {
   $u_librarian = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'librarian') !== FALSE ? TRUE : FALSE);
   $u_user = (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'user') !== FALSE ? TRUE : FALSE);
 }
-$configFile = __DIR__ . "/includes/config.php";
+$configFile = __DIR__ . "/../config/config.php";
 if (!file_exists($configFile)) {
   echo "<div class='alert alert-danger'>Error: failed to read required config.php. Did you create it yet?</div>
 	</body>

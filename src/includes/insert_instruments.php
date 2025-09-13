@@ -2,7 +2,7 @@
  //insert_instruments.php
 define('PAGE_TITLE', 'Insert instruments');
 define('PAGE_NAME', 'Insert instruments');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Insert instruments POST ".print_r($_POST, true));
 if(!empty($_POST)) {

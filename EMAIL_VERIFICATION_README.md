@@ -79,7 +79,7 @@ This single script now handles cleanup for both password reset tokens and email 
 
 ## Configuration
 
-The system uses existing email configuration from your `includes/config.php`:
+The system uses existing email configuration from your `config/config.php`:
 - `ORGNAME` - Organization name used in emails
 - `ORGMAIL` - From email address
 - `ORGHOME` - Base URL for verification links

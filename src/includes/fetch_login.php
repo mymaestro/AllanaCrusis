@@ -1,6 +1,6 @@
 <?php  
  //fetch_login.php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running LOGIN at fetch_login.php with id=". $_POST["username"]);
 $message = "error";

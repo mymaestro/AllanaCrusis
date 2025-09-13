@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 // Called from login_newpassword.php, where the user entered their new password twice.

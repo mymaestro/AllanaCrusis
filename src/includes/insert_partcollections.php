@@ -2,7 +2,7 @@
  //insert_partcollections.php
 define('PAGE_TITLE', 'Insert part collections');
 define('PAGE_NAME', 'Insert part collections');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running insert_partcollections.php with update = ".print_r($_POST, true));
 

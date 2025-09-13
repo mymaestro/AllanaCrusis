@@ -2,7 +2,7 @@
  //insert_users.php
 define('PAGE_TITLE', 'Insert users');
 define('PAGE_NAME', 'Insert users');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running ". PAGE_NAME . " with POST data: " . print_r($_POST, true));
 

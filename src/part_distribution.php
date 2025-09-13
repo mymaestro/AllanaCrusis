@@ -2,7 +2,7 @@
 define('PAGE_TITLE', 'Part Distribution for Concert Series');
 define('PAGE_NAME', 'Part Distribution');
 require_once(__DIR__. "/includes/header.php");
-require_once(__DIR__ . "/includes/config.php");
+require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__. "/includes/navbar.php");
 require_once(__DIR__ . "/includes/functions.php");
 

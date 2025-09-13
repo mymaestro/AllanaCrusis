@@ -2,7 +2,7 @@
  //insert_parttypes.php
 define('PAGE_TITLE', 'Insert part types');
 define('PAGE_NAME', 'Insert part types');
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 ferror_log("Running insert_parttypes.php with POST data: ". print_r($_POST, true));
 if(!empty($_POST)) {

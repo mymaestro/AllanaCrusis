@@ -1,7 +1,7 @@
 <?php  
  //delete_expired_tokens.php
  //
-require_once(__DIR__ . "/config.php");
+require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 ferror_log("Running delete_expired_tokens.php - authorized user: " . $_SESSION['username']);

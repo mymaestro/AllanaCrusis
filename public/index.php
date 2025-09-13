@@ -60,6 +60,14 @@ if (isset($_GET['action'])) {
         require_once __DIR__ . '/../src/includes/email_verification.php';
         exit;
     }
+    if ($action === 'password_reset') {
+        require_once __DIR__ . '/../src/includes/password_reset.php';
+        exit;
+    }
+    if ($action === 'reset_password') {
+        require_once __DIR__ . '/../src/includes/reset_password.php';
+        exit;
+    }
     if ($action === 'verify_email') {
         require_once __DIR__ . '/../src/verify_email.php';
         exit;
@@ -68,6 +76,7 @@ if (isset($_GET['action'])) {
         require_once __DIR__ . '/../src/includes/sound.php';
         exit;
     }
+
     // Only allow certain prefixes for security
     // Function to get required role for an action
     function getRequiredRole($action, $map) {

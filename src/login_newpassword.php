@@ -101,7 +101,7 @@ if (empty($selector) || empty($validator)) {
             else
             {
                 $.ajax({
-                    url:"includes/reset_password.php",
+                    url:"index.php?action=reset_password",
                     method:"POST",
                     data:$('#password_form').serialize(),
                     beforeSend:function(){

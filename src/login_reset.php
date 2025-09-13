@@ -33,7 +33,7 @@ ferror_log("Running login_reset.php");
             <?php if($result == "new") : ?>
             <p class="lead">Please submit this form to reset your password.</p>
             <div class="col-12">
-                <form action="includes/password_reset.php" method="post">
+                <form action="index.php?action=password_reset" method="post">
                 <label for="username" class="col-form-label">Username*</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="username" required>
                 <span class="help-block"></span>                            
@@ -55,7 +55,7 @@ ferror_log("Running login_reset.php");
             <?php if($result == "fail") : ?>
             <p class="lead">Address or username not found. Please submit this form to reset your password.</p>
             <div class="col-12">
-                <form action="includes/password_reset.php" method="post">
+                <form action="index.php?action=password_reset" method="post">
                 <label for="username" class="col-form-label">Username*</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="username" required>
                 <span class="help-block">Username on this system.</span>                            

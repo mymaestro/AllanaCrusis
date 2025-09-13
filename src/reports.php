@@ -325,8 +325,8 @@ mysqli_close($f_link);
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3 mb-2">
-                                <a href="/part_distribution" class="btn btn-outline-secondary w-100">
-                                    <i class="fas fa-file-archive"></i> Part distribution
+                                <a href="/part_delivery" class="btn btn-outline-secondary w-100">
+                                    <i class="fas fa-truck"></i> Part delivery
                                 </a>
                             </div>
                             <div class="col-md-3 mb-2">

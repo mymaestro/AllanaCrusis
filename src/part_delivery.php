@@ -88,7 +88,7 @@ mysqli_close($f_link);
             <div class="col-12">
                 <div class="card border-info">
                     <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> How part delivery works</h6>
+                        <h6 class="mb-0"><i class="fas fa-info-circle"></i> Instructions: How part delivery works</h6>
                         <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#helpInstructionsCollapse" aria-expanded="false" aria-controls="helpInstructionsCollapse">
                             <span class="collapsed"><i class="fas fa-plus"></i></span>
                             <span class="expanded d-none"><i class="fas fa-minus"></i></span>
@@ -97,16 +97,19 @@ mysqli_close($f_link);
                     <div id="helpInstructionsCollapse" class="collapse">
                         <div class="card-body">
                             <ol>
-                                <li><strong>Select a Playgram:</strong> Choose the concert program that contains the compositions you want to distribute from the Choose Playgram menu.</li>
-                                <li><strong>Load program details:</strong> Click <em>Load program details</em> to view the compositions in the playgram and their available parts.</li>
-                                <li><strong>Generate ZIP files:</strong> For each section (Woodwinds, Brass, Percussion, etc.), click <em>Generate ZIP file</em> to create a ZIP file that contains:</li>
+                                <li><strong>Select a playgram:</strong> Choose the concert program that contains the compositions you want to distribute from the Choose playgram menu.</li>
+                                <li><strong>Load playgram details:</strong> Click <em>Load playgram details</em> to view the compositions in the playgram and their available parts.</li>
+                                <li><strong>Generate ZIP files:</strong> For each section (Woodwinds, Brass, Percussion, etc.), click <em>Generate ZIP</em> to create a ZIP file that contains:</li>
                                 <ul>
                                     <li>All PDF parts for that section across all compositions in the playgram</li>
-                                    <li>The PDF files are named as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
+                                    <li>The PDF files insdide the ZIP are named as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
                                     <li>Example: <code>01 - March Grandioso - Flute 1.pdf</code></li>
                                     <li><strong>Note:</strong> Only parts with PDF files are included. Missing PDFs are noted in the generation log.</li>
+                                    <li>The button changes to <em>Send ZIP</em> after generation, so that you can email the download instructions.</li>
                                 </ul>
-                                <li><strong>Send download link:</strong> Click <em>Send link</em> to open the email form to send the link to the ZIP file. You can send this link to a band member to download their parts.</li>
+                                <li><strong>Send ZIP:</strong> Click <em>Send ZIP</em> to open the email form to send the link to the ZIP file. A dialog opens so you can enter the recipient's email address and message. The message contains a secure one-time download link to the ZIP file, instructions for use, and a reminder not to share the link.</li>
+                                <li><strong>Send email:</strong> In the email form, enter the recipient's email address. You can also edit the message before sending, and you can choose whether to send HTML or plain text. Choose the <strong>Send</strong> button to send the email.</li>
+                                <li><strong>Confirmation:</strong> After sending, you will see a confirmation message indicating that the email has been sent successfully. You can then choose <strong>Send ZIP</strong> again to generate a new token and send the email to a different recipient.</li>
                             </ol>
                             <div class="alert alert-warning mt-3">
                                 <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within 2 days, or it will expire.
@@ -128,7 +131,7 @@ mysqli_close($f_link);
                         <form id="playgram-form">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="playgram_select" class="form-label">Choose Playgram:</label>
+                                    <label for="playgram_select" class="form-label">Choose playgram:</label>
                                     <select class="form-select" id="playgram_select" name="playgram_id" required>
                                         <option value="">-- Select a Concert Program --</option>
                                         <?php foreach($playgrams as $playgram): ?>
@@ -140,7 +143,7 @@ mysqli_close($f_link);
                                 </div>
                                 <div class="col-md-6 d-flex align-items-end">
                                     <button type="button" id="load_playgram" class="btn btn-primary me-2">
-                                        <i class="fas fa-search"></i> Load program details
+                                        <i class="fas fa-search"></i> Load playgram details
                                     </button>
                                 </div>
                             </div>
@@ -357,7 +360,7 @@ $(document).ready(function() {
                 alert('Error loading playgram data. Please try again.');
             },
             complete: function() {
-                $('#load_playgram').prop('disabled', false).html('<i class="fas fa-search"></i> Load Program Details');
+                $('#load_playgram').prop('disabled', false).html('<i class="fas fa-search"></i> Load playgram details');
             }
         });
     });
@@ -412,9 +415,9 @@ $(document).ready(function() {
     $(document).on('click', '.generate-section', function() {
         const sectionId = $(this).data('section-id');
         const button = $(this);
-        
+
         button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Generating...');
-        
+
         $.ajax({
             url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
@@ -427,8 +430,18 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     zipData = response.data;
-                    console.log('ZIP data from create_section_zip:', zipData);
-                    // Create Copy Link button
+                    // Before creating new Send ZIP button, revert all other Send ZIP buttons to Generate ZIP
+                    $('#sections_grid .copy-link-btn').each(function() {
+                        const otherSectionId = $(this).data('section-id');
+                        // Replace with Generate ZIP button for that section
+                        const genBtn = $('<button>').attr({
+                            type: 'button',
+                            class: 'btn btn-outline-info btn-sm generate-section',
+                            'data-section-id': otherSectionId
+                        }).html('<i class="fas fa-file-archive"></i> Generate ZIP');
+                        $(this).replaceWith(genBtn);
+                    });
+                    // Create Copy Link button for this section
                     const zipToSend = zipData.filename;
                     const copyBtn = $('<button>').attr({
                         type: 'button',
@@ -468,12 +481,6 @@ $(document).ready(function() {
         }
         const contactName = <?php echo json_encode(isset($user_real_name) ? $user_real_name : 'the Librarian'); ?>;
         const fromEmail = <?php echo json_encode(isset($user_email) ? $user_email : ''); ?>;
-
-        // Debug: log zipData
-        console.log('zipData on Send Link click:', zipData);
-        console.log('Playgram data: ', playgramData);
-        console.log('Current Playgram ID: ', currentPlaygramId);
-        console.log('Section ID: ', sectionId);
         // Get ZIP info from zipData
         if (!zipData || !zipData.filename) {
             alert('ZIP info missing. Please generate ZIP first.');
@@ -500,7 +507,7 @@ $(document).ready(function() {
                 const expiresAt = response.data.expires_at;
                 zipData.token = token; // Update zipData with new token
                 zipData.download_link = link; // Update link
-                console.log('Generated new download link:', link, 'token:', token, 'expires at:', expiresAt);
+                console.log('Generated new download link that expires ', expiresAt);
 
                 <?php
                 $templatePath = __DIR__ . '/../config/download-contract.html';
@@ -518,17 +525,36 @@ $(document).ready(function() {
 
                 // Generate plain text version by stripping tags and formatting
                 function htmlToPlainText(html) {
-                    let text = html.replace(/<style[\s\S]*?<\/style>/gi, '') // Remove style blocks
-                        .replace(/<[^>]+>/g, '') // Remove all tags
-                        .replace(/\n{2,}/g, '\n') // Collapse multiple newlines
-                        .replace(/\s{2,}/g, ' ') // Collapse multiple spaces
-                        .replace(/&nbsp;/g, ' ')
+                    let text = html;
+                     // Remove style blocks
+                    text = text.replace(/<style[\s\S]*?<\/style>/gi, '');
+                    // Add newlines before and after <h1>-<h6> tags
+                    text = text.replace(/<(h[1-6])[^>]*>/gi, '\n');
+                    text = text.replace(/<\/h[1-6]>/gi, '\n');
+                    // Add newlines after block elements
+                    text = text.replace(/<\/?(p|div|ol|ul|br|footer)>/gi, '\n');
+                    // Convert list items to lines with dashes
+                    let liIndex = 1;
+                    text = text.replace(/<li[^>]*>([\s\S]*?)<\/li>/gi, function(match, content) {
+                        // Use numbered list if inside <ol>, dash if <ul>
+                        return '\n' + (liIndex++) + '. ' + content.trim() + '\n';
+                    });
+                    // Remove all remaining tags
+                    text = text.replace(/<[^>]+>/g, '');
+                    // Decode HTML entities
+                    text = text.replace(/&nbsp;/g, ' ')
                         .replace(/&amp;/g, '&')
                         .replace(/&lt;/g, '<')
                         .replace(/&gt;/g, '>')
                         .replace(/&quot;/g, '"')
                         .replace(/&#39;/g, "'");
-                    return text.trim();
+                    // Collapse multiple spaces and newlines
+                    text = text.replace(/ +/g, ' ').trim();
+                    // Trim leading/trailing whitespace and newlines
+                    text = text.replace(/^\s+|\s+$/g, '');
+                    // Replace multiple newlines with a single newline
+                    text = text.replace(/\n{2,}/g, '\n');
+                    return text;
                 }
 
                 $('#emailModal').modal('show');
@@ -600,35 +626,30 @@ $(document).ready(function() {
                 if (response.success) {
                     // Get zip token from zipData if available
                     let token = '';
-                    console.log('zipData at email send:', zipData);
                     if (zipData && zipData.token) {
                         token = zipData.token;
-                    } else {
-                        // fallback: try to extract from link
-                        const tokenMatch = /\/d\/([a-f0-9]{32})/.exec(link);
-                        if (tokenMatch) {
-                            token = tokenMatch[1];
-                        }
                     }
-                    console.log('Email sent. Updating token email for token:', token);
+                    if (!token) {
+                        alert('Error: No download token available to update.');
+                        return;
+                    }
+                    console.log('Email sent. Updating token email for token: ...', token.substring(0, 6) );
                     // Update token email in database
-                    if (token) {
-                        $.ajax({
-                            url: 'index.php?action=fetch_playgram_distribution',
-                            method: 'POST',
-                            data: {
-                                action: 'update_token_email',
-                                token: token,
-                                email: email
-                            },
-                            dataType: 'json',
-                            success: function(resp) {
-                                if (!resp.success) {
-                                    alert('Warning: Could not update token email: ' + resp.message);
-                                }
+                    $.ajax({
+                        url: 'index.php?action=fetch_playgram_distribution',
+                        method: 'POST',
+                        data: {
+                            action: 'update_token_email',
+                            token: token,
+                            email: email
+                        },
+                        dataType: 'json',
+                        success: function(resp) {
+                            if (!resp.success) {
+                                alert('Warning: Could not update token email: ' + resp.message);
                             }
-                        });
-                    }
+                        }
+                    });
                     alert('Email sent successfully!');
                     $('#emailModal').modal('hide');
                 } else {

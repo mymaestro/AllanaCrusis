@@ -389,7 +389,7 @@ $(document).ready(function() {
             html += '<div class="col-md-6 col-lg-4 mb-3">';
             html += '<div class="card border-info">';
             html += '<div class="card-header bg-light">';
-            html += '<h6 class="mb-0"><i class="fas fa-users"></i> ' + section.section_name + '</h6>';
+            html += '<h6 class="mb-0">' + section.section_name + '</h6>';
             html += '</div>';
             html += '<div class="card-body">';
             html += '<p class="card-text"><strong>' + section.total_parts + '</strong> parts across all compositions</p>';
@@ -419,7 +419,7 @@ $(document).ready(function() {
             url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
             data: {
-                action: 'generate_section_zip',
+                action: 'create_section_zip',
                 playgram_id: currentPlaygramId,
                 section_id: sectionId
             },
@@ -427,13 +427,15 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     zipData = response.data;
+                    console.log('ZIP data from create_section_zip:', zipData);
                     // Create Copy Link button
-                    const linkToCopy = response.data.download_link;
+                    const zipToSend = zipData.filename;
                     const copyBtn = $('<button>').attr({
                         type: 'button',
                         class: 'btn btn-primary btn-sm copy-link-btn',
-                        'data-link': linkToCopy
-                    }).html('<i class="fas fa-link"></i> Send Link');
+                        'data-link': zipToSend,
+                        'data-section-id': sectionId,
+                    }).html('<i class="fas fa-link"></i> Send ZIP');
                     button.replaceWith(copyBtn);
                 } else {
                     alert('Error: ' + response.message);
@@ -450,6 +452,7 @@ $(document).ready(function() {
     // Email modal handler for all copy-link-btn buttons
     $(document).on('click', '.copy-link-btn', function() {
         // Get section and playgram info
+        const sectionId = $(this).data('section-id');
         const sectionName = $(this).closest('.card').find('h6').text().trim();
         const bandName = <?php echo json_encode(defined('ORGDESC') ? ORGDESC : 'Your Band'); ?>;
         <?php
@@ -468,19 +471,23 @@ $(document).ready(function() {
 
         // Debug: log zipData
         console.log('zipData on Send Link click:', zipData);
+        console.log('Playgram data: ', playgramData);
+        console.log('Current Playgram ID: ', currentPlaygramId);
+        console.log('Section ID: ', sectionId);
         // Get ZIP info from zipData
-        if (!zipData || !zipData.filename || !zipData.id_playgram || !zipData.id_section) {
+        if (!zipData || !zipData.filename) {
             alert('ZIP info missing. Please generate ZIP first.');
             return;
         }
         // Request a new token/link for this ZIP
         $.ajax({
-            url: 'includes/fetch_distribution_zips.php',
+            url: 'index.php?action=fetch_playgram_distribution',
             method: 'POST',
             data: {
-                zip_filename: zipData.filename,
-                id_playgram: zipData.id_playgram,
-                id_section: zipData.id_section
+                action: 'generate_download_token',
+                playgram_id: currentPlaygramId,
+                section_id: sectionId,
+                zip_filename: zipData.filename
             },
             dataType: 'json',
             success: function(response) {
@@ -490,6 +497,10 @@ $(document).ready(function() {
                 }
                 const link = response.data.download_link;
                 const token = response.data.token;
+                const expiresAt = response.data.expires_at;
+                zipData.token = token; // Update zipData with new token
+                zipData.download_link = link; // Update link
+                console.log('Generated new download link:', link, 'token:', token, 'expires at:', expiresAt);
 
                 <?php
                 $templatePath = __DIR__ . '/../config/download-contract.html';
@@ -589,6 +600,7 @@ $(document).ready(function() {
                 if (response.success) {
                     // Get zip token from zipData if available
                     let token = '';
+                    console.log('zipData at email send:', zipData);
                     if (zipData && zipData.token) {
                         token = zipData.token;
                     } else {
@@ -598,6 +610,8 @@ $(document).ready(function() {
                             token = tokenMatch[1];
                         }
                     }
+                    console.log('Email sent. Updating token email for token:', token);
+                    // Update token email in database
                     if (token) {
                         $.ajax({
                             url: 'index.php?action=fetch_playgram_distribution',

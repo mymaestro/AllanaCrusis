@@ -32,6 +32,7 @@ switch($action) {
             echo json_encode(['success' => false, 'message' => 'Token and email required.']);
             exit;
         }
+        ferror_log("Updating token email for token: " . $_POST['token'] . " to email: " . $_POST['email']);
         $token = $_POST['token'];
         $email = $_POST['email'];
         if (!preg_match('/^[a-f0-9]{32}$/', $token)) {
@@ -81,6 +82,7 @@ switch($action) {
         $playgram_id = intval($_POST['playgram_id']);
         $section_id = intval($_POST['section_id']);
         $zip_filename = $_POST['zip_filename'];
+        ferror_log("Generating download token for playgram_id=" . $playgram_id . ", section_id=" . $section_id . ", zip_filename=" . $zip_filename);
         $result = generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_filename);
         echo json_encode($result);
         break;
@@ -301,10 +303,7 @@ function createSectionZip($f_link, $playgram_id, $section_id) {
 
 // Function to generate a download token for a given ZIP file
 function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_filename) {
-    // Create ZIP file name from playgram_id and section_id
-    $playgram_name = sanitizeFilename($playgram_id);
-    $section_name = sanitizeFilename($section_id);
-    $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';  
+    // Create ZIP path name and check if it exists
     $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
     $zip_path = $distrPath . $zip_filename;
 
@@ -335,8 +334,6 @@ function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_fi
             'filename' => $zip_filename,
             'token' => $token,
             'download_link' => $download_link,
-            'id_playgram' => $playgram_id,
-            'id_section' => $section_id,
             'expires_at' => $expires_at
         ]
     ];

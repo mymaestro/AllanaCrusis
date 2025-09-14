@@ -63,18 +63,28 @@ switch($action) {
         echo json_encode($result);
         break;
 
-    case 'generate_section_zip':
+    case 'create_section_zip':
         if (!isset($_POST['playgram_id']) || !isset($_POST['section_id'])) {
             echo json_encode(['success' => false, 'message' => 'Playgram ID and Section ID required.']);
             exit;
         }
-        
         $playgram_id = intval($_POST['playgram_id']);
         $section_id = intval($_POST['section_id']);
-        $result = generateSectionZip($f_link, $playgram_id, $section_id);
+        $result = createSectionZip($f_link, $playgram_id, $section_id);
         echo json_encode($result);
         break;
-        
+    case 'generate_download_token':
+        if (!isset($_POST['playgram_id']) || !isset($_POST['section_id']) || !isset($_POST['zip_filename'])) {
+            echo json_encode(['success' => false, 'message' => 'Playgram ID, Section ID, and ZIP filename required.']);
+            exit;
+        }
+        $playgram_id = intval($_POST['playgram_id']);
+        $section_id = intval($_POST['section_id']);
+        $zip_filename = $_POST['zip_filename'];
+        $result = generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_filename);
+        echo json_encode($result);
+        break;
+
     default:
         echo json_encode(['success' => false, 'message' => 'Invalid action.']);
         break;
@@ -170,7 +180,7 @@ function loadPlaygramData($f_link, $playgram_id) {
     ];
 }
 
-function generateSectionZip($f_link, $playgram_id, $section_id) {
+function createSectionZip($f_link, $playgram_id, $section_id) {
     // Get playgram and section info
     $sql = "SELECT pg.name as playgram_name, s.name as section_name 
             FROM playgrams pg, sections s 
@@ -279,10 +289,31 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
         return ['success' => false, 'message' => 'No PDF files could be added to ZIP.'];
     }
 
-    // Generate a secure token for this ZIP
-    $token = bin2hex(random_bytes(16)); // 32-char token
+    return [
+        'success' => true,
+        'data' => [
+            'filename' => $zip_filename,
+            'part_count' => $added_count,
+            'skipped_files' => $skipped_files
+        ]
+    ];
+}
+
+// Function to generate a download token for a given ZIP file
+function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_filename) {
+    // Create ZIP file name from playgram_id and section_id
+    $playgram_name = sanitizeFilename($playgram_id);
+    $section_name = sanitizeFilename($section_id);
+    $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';  
+    $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
+    $zip_path = $distrPath . $zip_filename;
+
+    if (!file_exists($zip_path)) {
+        return ['success' => false, 'message' => 'ZIP file does not exist.'];
+    };
+    // Generate a secure token
+    $token = bin2hex(random_bytes(16));
     $expires_at = date('Y-m-d H:i:s', strtotime('+5 days'));
-    // Get user ID from database using session username
     $id_user = null;
     if (isset($_SESSION['username'])) {
         $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
@@ -294,25 +325,22 @@ function generateSectionZip($f_link, $playgram_id, $section_id) {
         }
         mysqli_stmt_close($user_stmt);
     }
-    // Insert token into the database
     $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
     mysqli_stmt_bind_param($stmt, "siissi", $token, $playgram_id, $section_id, $zip_filename, $expires_at, $id_user);
     mysqli_stmt_execute($stmt);
-
     $download_link = '/d/' . $token;
-
     return [
         'success' => true,
         'data' => [
             'filename' => $zip_filename,
-            'part_count' => $added_count,
-            'skipped_files' => $skipped_files,
             'token' => $token,
-            'download_link' => $download_link
+            'download_link' => $download_link,
+            'id_playgram' => $playgram_id,
+            'id_section' => $section_id,
+            'expires_at' => $expires_at
         ]
     ];
 }
-
 function sanitizeFilename($filename) {
     // Remove or replace characters that are problematic in filenames
     $filename = preg_replace('/[\/\\\:*?"<>|]/', '', $filename);

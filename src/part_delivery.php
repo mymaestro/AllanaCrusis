@@ -228,34 +228,48 @@ mysqli_close($f_link);
         </div>
         <?php endif; ?>
         <!-- eMail Modal for future use -->
-        <div id="emailModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true"><!-- edit data -->
+        <div id="emailModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="emailModal" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Send parts - NOT WORKING YET!</h4>
+                        <h4 class="modal-title">Send parts</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div><!-- modal-header -->
+                    </div>
                     <div class="modal-body">
                         <div class="container-fluid">
                             <form method="post" id="send_email_form">
                                 <div class="mb-3">
-                                <label for="emailFormControlInput1" class="form-label">Email address</label>
-                                <input type="email" class="form-control" id="emailFormControlInput1" placeholder="name@example.com">
+                                    <label for="emailFormControlInput1" class="form-label">Email address</label>
+                                    <input type="email" class="form-control" id="emailFormControlInput1" placeholder="name@example.com">
                                 </div>
-                                <div class="mb-3">
-                                <label for="emailFormControlTextarea1" class="form-label">Parts textarea</label>
-                                <textarea class="form-control" id="emailFormControlTextarea1" rows="3"></textarea>
+                                <ul class="nav nav-tabs" id="emailTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="html-tab" data-bs-toggle="tab" data-bs-target="#htmlTabPane" type="button" role="tab" aria-controls="htmlTabPane" aria-selected="true">HTML</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="text-tab" data-bs-toggle="tab" data-bs-target="#textTabPane" type="button" role="tab" aria-controls="textTabPane" aria-selected="false">Plain Text</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content mt-3" id="emailTabContent">
+                                    <div class="tab-pane fade show active" id="htmlTabPane" role="tabpanel" aria-labelledby="html-tab">
+                                        <label for="emailFormControlTextareaHtml" class="form-label">HTML Message</label>
+                                        <textarea class="form-control" id="emailFormControlTextareaHtml" rows="15"></textarea>
+                                    </div>
+                                    <div class="tab-pane fade" id="textTabPane" role="tabpanel" aria-labelledby="text-tab">
+                                        <label for="emailFormControlTextareaText" class="form-label">Plain Text Message</label>
+                                        <textarea class="form-control" id="emailFormControlTextareaText" rows="15"></textarea>
+                                    </div>
                                 </div>
-                        </div><!-- container-fluid -->
-                    </div><!-- modal-body -->
+                        </div>
+                    </div>
                     <div class="modal-footer">  
-                            <input type="submit" name="send_email" id="send_email" value="Send" class="btn btn-success" />
+                        <input type="submit" name="send_email" id="send_email" value="Send" class="btn btn-success" />
                         </form>  
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>  
-                    </div><!-- modal-footer -->
-                </div><!-- modal-content -->
-            </div><!-- modal-dialog -->
-        </div><!-- editModal -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
@@ -435,58 +449,107 @@ $(document).ready(function() {
 
     // Email modal handler for all copy-link-btn buttons
     $(document).on('click', '.copy-link-btn', function() {
-        const link = $(this).data('link');
-        // Try to get section name from the UI
-        let sectionName = $(this).closest('.card').find('h6').text().trim();
-        // Get band name from PHP constant
+        // Get section and playgram info
+        const sectionName = $(this).closest('.card').find('h6').text().trim();
         const bandName = <?php echo json_encode(defined('ORGDESC') ? ORGDESC : 'Your Band'); ?>;
-        // Get Playgram name from JS state
+        <?php
+        $logoPath = rtrim(ORGHOME ?? '', '/') . '/' . ltrim(defined('ORGLOGO') ? ORGLOGO : '', '/');
+        $logoUrl = filter_var($logoPath, FILTER_VALIDATE_URL) ? $logoPath : '';
+        ?>
+        const logoUrl = <?php echo json_encode($logoUrl); ?>;
         let playgramName = '';
         if (playgramData && playgramData.playgram_name) {
             playgramName = playgramData.playgram_name;
         } else {
-            // fallback: try to get from select
             playgramName = $('#playgram_select option:selected').text().trim();
         }
-        // Get zip token from zipData if available
-        let token = '';
-        if (zipData && zipData.token) {
-            token = zipData.token;
-        } else {
-            // fallback: try to extract from link
-            const tokenMatch = /\/d\/([a-f0-9]{32})/.exec(link);
-            if (tokenMatch) {
-                token = tokenMatch[1];
-            }
-        }
-        // Get real name and email of current user from PHP
-        const contactName = <?php echo json_encode($user_real_name); ?>;
+        const contactName = <?php echo json_encode(isset($user_real_name) ? $user_real_name : 'the Librarian'); ?>;
         const fromEmail = <?php echo json_encode(isset($user_email) ? $user_email : ''); ?>;
-        let contactText = contactName ? `please contact ${contactName}.` : 'please contact the librarian.';
-        // Open the email modal
-        $('#emailModal').modal('show');
-        // Pre-fill the textarea with enhanced message
-        const message = `Hello,\n\nYou have been sent a secure download link for your ${sectionName} parts for ${bandName}, for the concert program: ${playgramName}.\n\nDownload link:\n${window.location.origin + link}\n\nThis link will expire after one use or in 2 days.\n\nIf you have any issues, ${contactText}\n\nBest regards,\n${bandName}`;
-        $('#emailFormControlTextarea1').val(message);
-        // Pre-fill subject and from fields
-        const subject = `Your ${sectionName} parts for ${bandName} (${playgramName})`;
-        $('#emailModal .modal-title').text('Send parts');
-        $('#emailFormControlInput1').val(''); // Clear previous email
-        $('#send_email_form').data('from-email', fromEmail);
-        $('#send_email_form').data('subject', subject);
+
+        // Debug: log zipData
+        console.log('zipData on Send Link click:', zipData);
+        // Get ZIP info from zipData
+        if (!zipData || !zipData.filename || !zipData.id_playgram || !zipData.id_section) {
+            alert('ZIP info missing. Please generate ZIP first.');
+            return;
+        }
+        // Request a new token/link for this ZIP
+        $.ajax({
+            url: 'includes/fetch_distribution_zips.php',
+            method: 'POST',
+            data: {
+                zip_filename: zipData.filename,
+                id_playgram: zipData.id_playgram,
+                id_section: zipData.id_section
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (!response.success || !response.data) {
+                    alert('Error generating new link: ' + (response.message || 'Unknown error'));
+                    return;
+                }
+                const link = response.data.download_link;
+                const token = response.data.token;
+
+                <?php
+                $templatePath = __DIR__ . '/../config/download-contract.html';
+                $templateHtml = file_exists($templatePath) ? file_get_contents($templatePath) : '';
+                $jsTemplate = json_encode($templateHtml);
+                ?>
+                let templateHtml = <?php echo $jsTemplate; ?>;
+                templateHtml = templateHtml
+                    .replace(/\{\{sectionName\}\}/g, sectionName)
+                    .replace(/\{\{bandName\}\}/g, bandName)
+                    .replace(/\{\{playgramName\}\}/g, playgramName)
+                    .replace(/\{\{download_link\}\}/g, window.location.origin + link)
+                    .replace(/\{\{contactName\}\}/g, contactName)
+                    .replace(/\{\{logoUrl\}\}/g, logoUrl);
+
+                // Generate plain text version by stripping tags and formatting
+                function htmlToPlainText(html) {
+                    let text = html.replace(/<style[\s\S]*?<\/style>/gi, '') // Remove style blocks
+                        .replace(/<[^>]+>/g, '') // Remove all tags
+                        .replace(/\n{2,}/g, '\n') // Collapse multiple newlines
+                        .replace(/\s{2,}/g, ' ') // Collapse multiple spaces
+                        .replace(/&nbsp;/g, ' ')
+                        .replace(/&amp;/g, '&')
+                        .replace(/&lt;/g, '<')
+                        .replace(/&gt;/g, '>')
+                        .replace(/&quot;/g, '"')
+                        .replace(/&#39;/g, "'");
+                    return text.trim();
+                }
+
+                $('#emailModal').modal('show');
+                $('#emailFormControlTextareaHtml').val(templateHtml);
+                $('#emailFormControlTextareaText').val(htmlToPlainText(templateHtml));
+                const subject = `Your ${sectionName} parts for ${bandName} (${playgramName})`;
+                $('#emailModal .modal-title').text('Send parts');
+                $('#emailFormControlInput1').val('');
+                $('#send_email_form').data('from-email', fromEmail);
+                $('#send_email_form').data('subject', subject);
+            },
+            error: function(xhr, status, error) {
+                alert('Error requesting new link: ' + error);
+            }
+        });
     });
 
     // Enable/disable Send button based on required fields
     function updateSendButtonState() {
         const email = $('#emailFormControlInput1').val();
-        const message = $('#emailFormControlTextarea1').val();
+        let message = '';
+        if ($('#htmlTabPane').hasClass('show')) {
+            message = $('#emailFormControlTextareaHtml').val();
+        } else {
+            message = $('#emailFormControlTextareaText').val();
+        }
         const isValid = email.length > 0 && message.length > 0;
         $('#send_email').prop('disabled', !isValid);
     }
 
-    $('#emailFormControlInput1, #emailFormControlTextarea1').on('input', updateSendButtonState);
+    $('#emailFormControlInput1, #emailFormControlTextareaHtml, #emailFormControlTextareaText').on('input', updateSendButtonState);
 
-    // Initialize button state when modal opens
     $('#emailModal').on('shown.bs.modal', function() {
         updateSendButtonState();
     });
@@ -495,7 +558,15 @@ $(document).ready(function() {
     $('#send_email_form').on('submit', function(e) {
         e.preventDefault();
         const email = $('#emailFormControlInput1').val();
-        const message = $('#emailFormControlTextarea1').val();
+        let message = '';
+        let isHtml = 1;
+        if ($('#htmlTabPane').hasClass('show')) {
+            message = $('#emailFormControlTextareaHtml').val();
+            isHtml = 1;
+        } else {
+            message = $('#emailFormControlTextareaText').val();
+            isHtml = 0;
+        }
         const from = $(this).data('from-email') || '';
         const subject = $(this).data('subject') || 'Parts Delivery';
         if (!email || !message) {
@@ -510,7 +581,8 @@ $(document).ready(function() {
                 email: email,
                 message: message,
                 from: from,
-                subject: subject
+                subject: subject,
+                is_html: isHtml
             },
             dataType: 'json',
             success: function(response) {

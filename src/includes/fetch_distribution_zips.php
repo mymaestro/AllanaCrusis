@@ -36,12 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['zip_filename']) && is
     if ($success) {
         echo json_encode([
             'success' => true,
-            'download_link' => $download_link,
-            'token' => $token,
-            'zip_filename' => $zip_filename,
-            'expires_at' => $expires_at,
-            'id_playgram' => $id_playgram,
-            'id_section' => $id_section
+            'data' => [
+                'filename' => $zip_filename,
+                'token' => $token,
+                'download_link' => $download_link,
+                'id_playgram' => $id_playgram,
+                'id_section' => $id_section,
+                'expires_at' => $expires_at
+            ]
         ]);
     } else {
         echo json_encode([

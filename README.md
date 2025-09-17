@@ -429,3 +429,12 @@ Future enhancements may include:
 
 **Migration Note:**
 If you are upgrading from the original `musicLibraryDB`, review the new routing and directory structure. Update your Apache configuration to set the document root to the `public/` directory and use the provided `.htaccess` for clean URLs.
+
+# Change into your local repository directory
+cd /path/to/your/local/repo
+
+# Update the remote origin
+git remote set-url origin https://github.com/your-username/Allanacrusis.git
+
+# Push your existing code to the new repository
+git push -u origin main

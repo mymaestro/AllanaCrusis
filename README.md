@@ -1,8 +1,16 @@
-# Music Library DB
+# AllanaCrusis
 
 ![Music library logo](public/images/logo.png)
 
 A comprehensive web-based music library management system designed for concert bands, wind ensembles, orchestras, and other large musical groups. Track your sheet music collection, manage parts, organize concerts, and maintain performance recordings with this full-featured database application.
+
+As the backbone of any successful ensemble performance, orchestra and band librarians face the critical task of meticulously preparing all musical materials before the first downbeat. AllanaCrusis is the comprehensive software solution designed to streamline and optimize this essential "anacrusis" phase.
+
+AllanaCrusis provides librarians with a centralized hub to manage their entire sheet music library - from maintaining digital catalogs and inventories to seamlessly distributing parts to performers. With powerful organizational tools and automated workflows, Allanacrusis ensures that every score, every part, and every logistical detail is ready to go before the first rehearsal.
+
+By taking the pain out of pre-performance prep, Allanacrusis empowers librarians to be true "Alla" - or "before the anacrusis" - maestros, freeing them up to focus on supporting the ensemble's artistic vision. With Allanacrusis as their ally, librarians can confidently lead their organizations from the proverbial backstage, ensuring a virtuosic performance from the first measure to the final bar line.
+
+From managing sprawling sheet music libraries to coordinating digital distribution, AllanaCrusis is the indispensable toolset for modern orchestra and band librarians. Experience the power of comprehensive musical preparation with AllanaCrusis.
 
 ## 🎵 Overview
 

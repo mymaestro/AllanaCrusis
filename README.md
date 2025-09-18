@@ -8,14 +8,12 @@ As the backbone of any successful ensemble performance, orchestra and band libra
 
 AllanaCrusis provides librarians with a centralized hub to manage their entire sheet music library - from maintaining digital catalogs and inventories to seamlessly distributing parts to performers. With powerful organizational tools and automated workflows, Allanacrusis ensures that every score, every part, and every logistical detail is ready to go before the first rehearsal.
 
-By taking the pain out of pre-performance prep, Allanacrusis empowers librarians to be true "Alla" - or "before the anacrusis" - maestros, freeing them up to focus on supporting the ensemble's artistic vision. With Allanacrusis as their ally, librarians can confidently lead their organizations from the proverbial backstage, ensuring a virtuosic performance from the first measure to the final bar line.
-
 From managing sprawling sheet music libraries to coordinating digital distribution, AllanaCrusis is the indispensable toolset for modern orchestra and band librarians. Experience the power of comprehensive musical preparation with AllanaCrusis.
 
 ## 🎵 Overview
 
 
-The musicLibraryDB is a sophisticated music library management system that helps music organizations:
+The AllanaCrusis is a sophisticated music library management system that helps music organizations:
 
 ### Features You Will Love
 - **No more spreadsheets:** Catalog your entire music library, including compositions, parts, concerts, and recordings, in one organized, searchable system.
@@ -35,7 +33,7 @@ The musicLibraryDB is a sophisticated music library management system that helps
 - **Generate reports** about your music collection
 - **Control access** with user roles and permissions
 
-Whether you're managing a small community band library or a large institutional collection, musicLibraryDB scales to meet your needs.
+Whether you're managing a small community band library or a large institutional collection, AllanaCrusis scales to meet your needs.
 
 ## 🏗️ System Architecture
 
@@ -80,8 +78,8 @@ Whether you're managing a small community band library or a large institutional 
 ```bash
 # Clone to your web server's document root
 cd /var/www/html
-git clone https://github.com/mymaestro/musicLibraryDB1.git
-cd musicLibraryDB1
+git clone https://github.com/mymaestro/AllanaCrusis.git
+cd AllanaCrusis
 
 # Set proper permissions
 chmod 755 .
@@ -94,20 +92,20 @@ chmod -R 777 public/files/  # For file uploads
 Create your database and user:
 
 ```sql
-CREATE DATABASE musicLibraryDB CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'musicLibraryDB'@'localhost' IDENTIFIED BY 'your_secure_password';
-GRANT ALL PRIVILEGES ON musicLibraryDB.* TO 'musicLibraryDB'@'localhost';
+CREATE DATABASE allanaCrusis CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER 'allanaCrusis'@'localhost' IDENTIFIED BY 'your_secure_password';
+GRANT ALL PRIVILEGES ON allanaCrusis.* TO 'allanaCrusis'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
 Choose and import one of the SQL setup files from the `setup/` directory:
 
-- **musicLibraryDB-core.sql** - Minimal setup with empty tables
-- **musicLibraryDB-demo.sql** - Full demo with sample compositions and recordings
+- **allanaCrusis-core.sql** - Minimal setup with empty tables
+- **allanaCrusis-demo.sql** - Full demo with sample compositions and recordings
 
 ```sql
-USE musicLibraryDB;
-SOURCE src/setup/musicLibraryDB-demo.sql;
+USE allanaCrusis;
+SOURCE src/setup/allanaCrusis-demo.sql;
 ```
 
 ### Step 3: Configuration
@@ -145,9 +143,9 @@ chown -R www-data:www-data public/files/  # Use your web server user
 
 ### Step 5: First Login
 
-1. Navigate to your installation URL: `https://yourdomain.com/musicLibraryDB/`
+1. Navigate to your installation URL: `https://yourdomain.com/allanaCrusis/`
 2. Click the login icon (🔒) in the navigation bar
-3. Use one of the demo user accounts (available if you imported `musicLibraryDB-demo.sql`):
+3. Use one of the demo user accounts (available if you imported `allanaCrusis-demo.sql`):
 
 | Username | Password | Role | Description |
 |----------|----------|------|-------------|
@@ -301,7 +299,7 @@ max_execution_time = 300
 ### Backup Procedures
 ```bash
 # Database backup
-mysqldump -u musicLibraryDB -p musicLibraryDB > backup_$(date +%Y%m%d).sql
+mysqldump -u allanaCrusis -p allanaCrusis > backup_$(date +%Y%m%d).sql
 
 # File backup  
 tar -czf files_backup_$(date +%Y%m%d).tar.gz files/
@@ -374,7 +372,7 @@ We welcome contributions! Please:
 define('DEBUG', 1);
 
 # Use a separate development database
-define('DB_NAME', 'musicLibraryDB_dev');
+define('DB_NAME', 'allanaCrusis_dev');
 ```
 
 ## 📝 License
@@ -417,7 +415,7 @@ Future enhancements may include:
 
 ---
 
-*The musicLibraryDB system was designed by and for musicians who understand the unique challenges of managing large music libraries. Whether you're running a community band, school ensemble, or professional organization, this system provides the tools you need to keep your music organized and accessible.*
+*The allanaCrusis system was designed by and for musicians who understand the unique challenges of managing large music libraries. Whether you're running a community band, school ensemble, or professional organization, this system provides the tools you need to keep your music organized and accessible.*
 
 ---
 
@@ -434,7 +432,7 @@ If you are upgrading from the original `musicLibraryDB`, review the new routing 
 cd /path/to/your/local/repo
 
 # Update the remote origin
-git remote set-url origin https://github.com/mymaestro/Allanacrusis.git
+git remote set-url origin https://github.com/mymaestro/AllanaCrusis.git
 
 # Push your existing code to the new repository
 git push -u origin main

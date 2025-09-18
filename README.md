@@ -434,7 +434,7 @@ If you are upgrading from the original `musicLibraryDB`, review the new routing 
 cd /path/to/your/local/repo
 
 # Update the remote origin
-git remote set-url origin https://github.com/your-username/Allanacrusis.git
+git remote set-url origin https://github.com/mymaestro/Allanacrusis.git
 
 # Push your existing code to the new repository
 git push -u origin main

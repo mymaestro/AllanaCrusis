@@ -87,7 +87,7 @@ function updatePartPDFMetadata($partFilePath, $partData) {
 }
 
 // Settings
-$maxFileSize = 20 * 1024 * 1024; // 20 MB
+$maxFileSize = 40 * 1024 * 1024; // 20 MB
 // You might need to adjust these settings in your php.ini file as well
 //ini_set('upload_max_filesize', '20M');
 //ini_set('post_max_size', '20M');
@@ -467,3 +467,4 @@ if(!empty($_POST)) {
 }
 
 ?>
+

@@ -5,6 +5,32 @@ define('PAGE_NAME', 'Insert parts');
 require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
+// Helper function to convert size strings to bytes
+function return_bytes($size_str) {
+    switch (substr($size_str, -1)) {
+        case 'M': case 'm': return (int)$size_str * 1048576;
+        case 'K': case 'k': return (int)$size_str * 1024;
+        case 'G': case 'g': return (int)$size_str * 1073741824;
+        default: return $size_str;
+    }
+}
+
+// Check if POST data might have been truncated due to large file upload
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) && empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0) {
+    $uploadMax = ini_get('upload_max_filesize');
+    $postMax = ini_get('post_max_size');
+    $postMaxBytes = return_bytes($postMax);
+    $uploadMaxBytes = return_bytes($uploadMax);
+    ferror_log("Error: The uploaded data exceeds the server's maximum allowed size. " . 
+        "POST max size: $postMax, Upload max size: $uploadMax. " .
+        "Received: " . number_format($_SERVER['CONTENT_LENGTH']) . " bytes. " .
+        "Please reduce the file size and try again.");
+    die("Error: The uploaded data exceeds the server's maximum allowed size. " . 
+        "POST max size: $postMax, Upload max size: $uploadMax. " .
+        "Received: " . number_format($_SERVER['CONTENT_LENGTH']) . " bytes. " .
+        "Please reduce the file size and try again.");
+}
+
 // Include PHPdfer for PDF metadata handling
 $phpdfer_available = false;
 
@@ -69,6 +95,15 @@ $maxFileSize = 20 * 1024 * 1024; // 20 MB
 $uploadMax = ini_get('upload_max_filesize');
 $postMax = ini_get('post_max_size');
 
+// Check if POST data might have been truncated due to large file upload
+if (empty($_POST) && empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0) {
+    $postMaxBytes = return_bytes($postMax);
+    $uploadMaxBytes = return_bytes($uploadMax);
+    die("Error: The uploaded data exceeds the server's maximum allowed size. " . 
+        "POST max size: $postMax, Upload max size: $uploadMax. " .
+        "Please reduce the file size and try again.");
+}
+
 if(!empty($_POST)) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     ferror_log("------------------------------------------------");
@@ -113,11 +148,40 @@ if(!empty($_POST)) {
     }
 
     // Handle file upload
-    if (isset($_FILES['image_path']) && $_FILES['image_path']['error'] === UPLOAD_ERR_OK) {
-        $fileTmpPath = $_FILES['image_path']['tmp_name'];
-        $fileName = $_FILES['image_path']['name'];
-        $fileSize = $_FILES['image_path']['size'];
-        $fileType = $_FILES['image_path']['type'];
+    if (isset($_FILES['image_path'])) {
+        $uploadError = $_FILES['image_path']['error'];
+        
+        // Check for upload errors first
+        switch ($uploadError) {
+            case UPLOAD_ERR_OK:
+                // No error, proceed with upload
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+                die("Error: The uploaded file exceeds the upload_max_filesize directive (" . ini_get('upload_max_filesize') . ") in php.ini.");
+            case UPLOAD_ERR_FORM_SIZE:
+                die("Error: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.");
+            case UPLOAD_ERR_PARTIAL:
+                die("Error: The uploaded file was only partially uploaded.");
+            case UPLOAD_ERR_NO_FILE:
+                // No file uploaded, this is okay - we'll just skip file processing
+                ferror_log("No file uploaded.");
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+                die("Error: Missing a temporary folder for file upload.");
+            case UPLOAD_ERR_CANT_WRITE:
+                die("Error: Failed to write file to disk.");
+            case UPLOAD_ERR_EXTENSION:
+                die("Error: File upload stopped by PHP extension.");
+            default:
+                die("Error: Unknown upload error occurred.");
+        }
+        
+        // Only process the file if upload was successful
+        if ($uploadError === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['image_path']['tmp_name'];
+            $fileName = $_FILES['image_path']['name'];
+            $fileSize = $_FILES['image_path']['size'];
+            $fileType = $_FILES['image_path']['type'];
 
         // Check if the file is a valid PDF or image file
         $allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png'];
@@ -153,6 +217,7 @@ if(!empty($_POST)) {
             'application/pdf' => 'pdf'
         ];
         if (!array_key_exists($mime, $allowedMimes)) {
+            ferror_log("Only PDF files allowed. Invalid MIME type: " . $mime);
             die("Only PDF files are allowed. Detected: $mime");
         }
 
@@ -255,8 +320,9 @@ if(!empty($_POST)) {
             // Update the image_path variable to store the file name
             $image_path = $safeName;
         }
+        } // End of UPLOAD_ERR_OK processing
     } else {
-        ferror_log("No file uploaded or upload error occurred.");
+        ferror_log("No file upload field found.");
     }
 
     if($_POST["update"] == "update") {
@@ -279,6 +345,7 @@ if(!empty($_POST)) {
         
         $update_stmt = mysqli_prepare($f_link, $update_sql);
         if (!$update_stmt) {
+            ferror_log("Prepare failed: " . mysqli_error($f_link));
             die("Prepare failed: " . mysqli_error($f_link));
         }
         
@@ -360,6 +427,7 @@ if(!empty($_POST)) {
         
         $insert_stmt = mysqli_prepare($f_link, $insert_sql);
         if (!$insert_stmt) {
+            ferror_log("Prepare failed: " . mysqli_error($f_link));
             die("Prepare failed: " . mysqli_error($f_link));
         }
 

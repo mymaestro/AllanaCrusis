@@ -250,8 +250,12 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
                         </div><!-- container-fluid -->
                     </div><!-- modal-body -->
                     <div class="modal-footer">
+                        <p id="parteditmessage" class="text-start"></p>
                         <input type="hidden" name="update" id="update" value="0" />
-                        <input type="submit" name="insert" id="insert" value="Insert" class="btn btn-success" />
+                        <button type="submit" name="insert" id="insert" class="btn btn-success">
+                            <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                            <span id="insert-text">Insert</span>
+                        </button>
                         </form>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div><!-- modal-footer -->
@@ -463,6 +467,13 @@ $(document).ready(function() {
         $("html, body").animate({ scrollTop: 0 }, "fast");
     });
 
+    // Reset button state when modal is hidden/dismissed
+    $('#editModal').on('hidden.bs.modal', function () {
+        $('#insert .spinner-border').addClass('d-none');
+        $('#insert-text').text("Insert");
+        $('#insert').prop('disabled', false);
+    });
+
     let catalog_number = null;
     let id_part_type = null;
 
@@ -558,7 +569,7 @@ $(document).ready(function() {
         });
     });
     $(document).on('click', '.add_data', function() {
-        $('#insert').val("Add");
+        $('#insert-text').text("Insert");
         $('#update').val("add");
         $('#insert_form')[0].reset();
 
@@ -600,10 +611,10 @@ $(document).ready(function() {
             },
             dataType: "json",
             success: function(result) {
-                console.log("Part data result: ", result);
+                console.log("Edit part data result: ", result);
                 try {
                     const data = JSON.parse(result);
-                    console.log("Parsed part data: ", data);
+                    console.log("Edit modal parsed part data: ", data);
                     data.u_librarian = window.u_librarian; // Ensure template gets correct role
 
                     if (!data || !data.part ) {
@@ -616,7 +627,7 @@ $(document).ready(function() {
                     var inst_options = data.instruments;
                     var selectitems = '';
 
-                    console.log("Part data: ", part);
+                    console.log("Edit modal part data: ", part);
                     console.log("Instrument options: ", inst_options);
 
                     $.each(instrumentdataArray, function(key, value) {
@@ -655,7 +666,7 @@ $(document).ready(function() {
                     $('#originals_count').val(part.originals_count);
                     $('#copies_count').val(part.copies_count);
                     $('#image_path_display').text(part.image_path);
-                    $('#insert').val("Update");
+                    $('#insert-text').text("Update");
                     $('#update').val("update");
                     $('#editModal').modal('show');
                 } catch(e) {
@@ -805,9 +816,17 @@ $(document).ready(function() {
                 contentType: false,
                 processData: false,
                 beforeSend: function() {
-                    $('#insert').val("Inserting");
+                    // Show spinner and disable button
+                    $('#insert .spinner-border').removeClass('d-none');
+                    $('#insert-text').text($('#update').val() === "update" ? "Updating..." : "Inserting...");
+                    $('#insert').prop('disabled', true);
                 },
                     success: function(data) {
+                        // Reset button state
+                        $('#insert .spinner-border').addClass('d-none');
+                        $('#insert-text').text("Insert");
+                        $('#insert').prop('disabled', false);
+                        
                         $('#insert_form')[0].reset();
                         $('#editModal').modal('hide');
                         $.ajax({
@@ -825,6 +844,14 @@ $(document).ready(function() {
                                 $('#composition_header').text(catno_name);
                             }
                         });
+                    },
+                    error: function(xhr, status, error) {
+                        // Reset button state on error
+                        $('#insert .spinner-border').addClass('d-none');
+                        $('#insert-text').text("Insert");
+                        $('#insert').prop('disabled', false);
+                        
+                        alert("Error uploading part: " + error);
                     }
             });
         }

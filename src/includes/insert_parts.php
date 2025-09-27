@@ -5,6 +5,15 @@ define('PAGE_NAME', 'Insert parts');
 require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
+// Settings
+$maxFileSize = 40 * 1024 * 1024; // 40 MB
+// You might need to adjust these settings in your php.ini file as well
+//ini_set('upload_max_filesize', '40M');
+//ini_set('post_max_size', '40M');
+
+$uploadMax = ini_get('upload_max_filesize');
+$postMax = ini_get('post_max_size');
+
 // Helper function to convert size strings to bytes
 function return_bytes($size_str) {
     switch (substr($size_str, -1)) {
@@ -84,24 +93,6 @@ function updatePartPDFMetadata($partFilePath, $partData) {
         error_log("Failed to update PDF metadata: " . $e->getMessage());
         throw $e;
     }
-}
-
-// Settings
-$maxFileSize = 40 * 1024 * 1024; // 20 MB
-// You might need to adjust these settings in your php.ini file as well
-//ini_set('upload_max_filesize', '20M');
-//ini_set('post_max_size', '20M');
-
-$uploadMax = ini_get('upload_max_filesize');
-$postMax = ini_get('post_max_size');
-
-// Check if POST data might have been truncated due to large file upload
-if (empty($_POST) && empty($_FILES) && $_SERVER['CONTENT_LENGTH'] > 0) {
-    $postMaxBytes = return_bytes($postMax);
-    $uploadMaxBytes = return_bytes($uploadMax);
-    die("Error: The uploaded data exceeds the server's maximum allowed size. " . 
-        "POST max size: $postMax, Upload max size: $uploadMax. " .
-        "Please reduce the file size and try again.");
 }
 
 if(!empty($_POST)) {

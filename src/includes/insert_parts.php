@@ -6,7 +6,7 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 // Settings
-$maxFileSize = 40 * 1024 * 1024; // 40 MB
+$maxFileSize = 10 * 1024 * 1024; // 40 MB
 // You might need to adjust these settings in your php.ini file as well
 //ini_set('upload_max_filesize', '40M');
 //ini_set('post_max_size', '40M');
@@ -30,14 +30,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) && empty($_FILES) && 
     $postMax = ini_get('post_max_size');
     $postMaxBytes = return_bytes($postMax);
     $uploadMaxBytes = return_bytes($uploadMax);
-    ferror_log("Error: The uploaded data exceeds the server's maximum allowed size. " . 
+    $errorMsg = "The uploaded data exceeds the server's maximum allowed size. " . 
         "POST max size: $postMax, Upload max size: $uploadMax. " .
         "Received: " . number_format($_SERVER['CONTENT_LENGTH']) . " bytes. " .
-        "Please reduce the file size and try again.");
-    die("Error: The uploaded data exceeds the server's maximum allowed size. " . 
-        "POST max size: $postMax, Upload max size: $uploadMax. " .
-        "Received: " . number_format($_SERVER['CONTENT_LENGTH']) . " bytes. " .
-        "Please reduce the file size and try again.");
+        "Please reduce the file size and try again.";
+    ferror_log("Error: " . $errorMsg);
+    
+    header('Content-Type: application/json');
+    echo json_encode(['success' => false, 'error' => $errorMsg]);
+    exit;
 }
 
 // Include PHPdfer for PDF metadata handling
@@ -148,23 +149,51 @@ if(!empty($_POST)) {
                 // No error, proceed with upload
                 break;
             case UPLOAD_ERR_INI_SIZE:
-                die("Error: The uploaded file exceeds the upload_max_filesize directive (" . ini_get('upload_max_filesize') . ") in php.ini.");
+                $errorMsg = "The uploaded file exceeds the upload_max_filesize directive (" . ini_get('upload_max_filesize') . ") in php.ini.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             case UPLOAD_ERR_FORM_SIZE:
-                die("Error: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.");
+                $errorMsg = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             case UPLOAD_ERR_PARTIAL:
-                die("Error: The uploaded file was only partially uploaded.");
+                $errorMsg = "The uploaded file was only partially uploaded.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             case UPLOAD_ERR_NO_FILE:
                 // No file uploaded, this is okay - we'll just skip file processing
                 ferror_log("No file uploaded.");
                 break;
             case UPLOAD_ERR_NO_TMP_DIR:
-                die("Error: Missing a temporary folder for file upload.");
+                $errorMsg = "Missing a temporary folder for file upload.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             case UPLOAD_ERR_CANT_WRITE:
-                die("Error: Failed to write file to disk.");
+                $errorMsg = "Failed to write file to disk.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             case UPLOAD_ERR_EXTENSION:
-                die("Error: File upload stopped by PHP extension.");
+                $errorMsg = "File upload stopped by PHP extension.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             default:
-                die("Error: Unknown upload error occurred.");
+                $errorMsg = "Unknown upload error occurred.";
+                ferror_log("Error: " . $errorMsg);
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
         }
         
         // Only process the file if upload was successful
@@ -177,8 +206,11 @@ if(!empty($_POST)) {
         // Check if the file is a valid PDF or image file
         $allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png'];
         if (!in_array($fileType, $allowedFileTypes)) {
+            $errorMsg = "Invalid file type. Only JPEG, PNG, and PDF files are allowed.";
             ferror_log("Invalid file type: " . $fileType);
-            die("Invalid file type. Only JPEG, PNG, and PDF files are allowed.");
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $errorMsg]);
+            exit;
         }
 
         $uploadDir = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
@@ -187,8 +219,11 @@ if(!empty($_POST)) {
         // Create the uploads directory if it doesn't exist
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0755, true)) {
+                $errorMsg = "Unable to create uploads directory. Please check permissions for: $uploadDir";
                 ferror_log("Failed to create uploads directory: " . $uploadDir);
-                die("Error: Unable to create uploads directory. Please check permissions for: $uploadDir");
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             } else {
                 ferror_log("Uploads directory created: " . $uploadDir);
             }
@@ -198,7 +233,11 @@ if(!empty($_POST)) {
 
         // Check file size
         if ($fileSize > $maxFileSize) {
-            die("File is too large. Max allowed size is 40MB.");
+            $errorMsg = "File is too large. Max allowed size is 40MB.";
+            ferror_log("File too large: " . $fileSize . " bytes (max: " . $maxFileSize . ")");
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $errorMsg]);
+            exit;
         }
 
         // Check MIME type
@@ -208,8 +247,11 @@ if(!empty($_POST)) {
             'application/pdf' => 'pdf'
         ];
         if (!array_key_exists($mime, $allowedMimes)) {
+            $errorMsg = "Only PDF files are allowed. Detected: $mime";
             ferror_log("Only PDF files allowed. Invalid MIME type: " . $mime);
-            die("Only PDF files are allowed. Detected: $mime");
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $errorMsg]);
+            exit;
         }
 
         // Get the part type name from the database using prepared statement
@@ -280,8 +322,11 @@ if(!empty($_POST)) {
                 ferror_log("Copying PHPdfer output to destination: " . $destination);
                 
                 if (!copy($newFileName, $destination)) {
+                    $errorMsg = "Failed to save the processed PDF file.";
                     ferror_log("Failed to copy PHPdfer output to destination: " . $destination);
-                    die("Failed to save the processed PDF file.");
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => $errorMsg]);
+                    exit;
                 }
                 
                 // Clean up the PHPdfer temporary file
@@ -296,15 +341,21 @@ if(!empty($_POST)) {
                 $image_path = $safeName;
                 
             } catch (Exception $e) {
+                $errorMsg = "Failed to update PDF metadata: " . $e->getMessage();
                 ferror_log("Failed to update PDF metadata: " . $e->getMessage());
-                die("Failed to update PDF metadata: " . $e->getMessage());
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             }
         } else {
             // For non-PDF files, use the original upload process
             ferror_log("Attempting to move uploaded file from: " . $fileTmpPath . " to: " . $destination);
             if (!move_uploaded_file($fileTmpPath, $destination)) {
+                $errorMsg = "Failed to save the uploaded file.";
                 ferror_log("Failed to move uploaded file to destination: " . $destination);
-                die("Failed to save the uploaded file.");
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $errorMsg]);
+                exit;
             }
             ferror_log("File uploaded successfully: " . $destination);
             
@@ -336,8 +387,11 @@ if(!empty($_POST)) {
         
         $update_stmt = mysqli_prepare($f_link, $update_sql);
         if (!$update_stmt) {
+            $errorMsg = "Database error: Failed to prepare update statement.";
             ferror_log("Prepare failed: " . mysqli_error($f_link));
-            die("Prepare failed: " . mysqli_error($f_link));
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $errorMsg]);
+            exit;
         }
         
         // If image_path is not set, but image_path_display is set, use that
@@ -391,12 +445,20 @@ if(!empty($_POST)) {
             } else {
                 ferror_log("No instruments to add to part_collections for catalog_number: " . $catalog_number . " and id_part_type: " . $id_part_type);
             }
+            
+            // Success response for update
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'message' => $output]);
 
         } else {
             $error_message = mysqli_stmt_error($update_stmt);
             $output = "Parts update failed with error = " . $error_message;
             ferror_log($output);
             mysqli_stmt_close($update_stmt);
+            
+            // Error response for update
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $output]);
         }
         
     } elseif($_POST["update"] == "add") {
@@ -418,8 +480,11 @@ if(!empty($_POST)) {
         
         $insert_stmt = mysqli_prepare($f_link, $insert_sql);
         if (!$insert_stmt) {
+            $errorMsg = "Database error: Failed to prepare insert statement.";
             ferror_log("Prepare failed: " . mysqli_error($f_link));
-            die("Prepare failed: " . mysqli_error($f_link));
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $errorMsg]);
+            exit;
         }
 
         // If image_path is not set, but image_path_display is set, use that
@@ -436,10 +501,14 @@ if(!empty($_POST)) {
         if(mysqli_stmt_execute($insert_stmt)) {
             $output = "Parts inserted successfully.";
             ferror_log($output);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'message' => $output]);
         } else {
             $error_message = mysqli_stmt_error($insert_stmt);
             $output = "Parts insert failed with error = " . $error_message;
             ferror_log($output);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $output]);
         }
         mysqli_stmt_close($insert_stmt);
     }

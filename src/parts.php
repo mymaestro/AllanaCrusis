@@ -472,6 +472,8 @@ $(document).ready(function() {
         $('#insert .spinner-border').addClass('d-none');
         $('#insert-text').text("Insert");
         $('#insert').prop('disabled', false);
+        // Clear any error messages
+        $('#parteditmessage').html('');
     });
 
     let catalog_number = null;
@@ -533,8 +535,6 @@ $(document).ready(function() {
             success: function(response) {
                 var data = JSON.parse(response);
                 data.u_librarian = window.u_librarian; // Ensure template gets correct role
-                console.log("Fetched parts data for catalog number: ", catalog_number);
-                console.log("Data received: ", data);
                 if (data.parts && Array.isArray(data.parts)) {
                     data.parts.forEach(function(part) {
                         part.u_librarian = data.u_librarian;
@@ -572,6 +572,8 @@ $(document).ready(function() {
         $('#insert-text').text("Insert");
         $('#update').val("add");
         $('#insert_form')[0].reset();
+        // Clear any previous error messages
+        $('#parteditmessage').html('');
 
         $('#catalog_number').val(catalog_number);
         $('#catalog_number_hold').val(catalog_number);
@@ -584,7 +586,6 @@ $(document).ready(function() {
         // Clear the selected instrument list
         $('#id_instrument').val('');
         selectitems = '';
-        console.log("Add a new part to " + catalog_number);
     });
     $(document).on('click', '.instrumentation_btn', function(){
         if(catalog_number != '')
@@ -611,10 +612,8 @@ $(document).ready(function() {
             },
             dataType: "json",
             success: function(result) {
-                console.log("Edit part data result: ", result);
                 try {
                     const data = JSON.parse(result);
-                    console.log("Edit modal parsed part data: ", data);
                     data.u_librarian = window.u_librarian; // Ensure template gets correct role
 
                     if (!data || !data.part ) {
@@ -626,9 +625,6 @@ $(document).ready(function() {
                     var part = data.part;
                     var inst_options = data.instruments;
                     var selectitems = '';
-
-                    console.log("Edit modal part data: ", part);
-                    console.log("Instrument options: ", inst_options);
 
                     $.each(instrumentdataArray, function(key, value) {
                         selectitems += '<option value=' + value.id + '>' + value.name + '</option>';
@@ -668,6 +664,8 @@ $(document).ready(function() {
                     $('#image_path_display').text(part.image_path);
                     $('#insert-text').text("Update");
                     $('#update').val("update");
+                    // Clear any previous error messages
+                    $('#parteditmessage').html('');
                     $('#editModal').modal('show');
                 } catch(e) {
                     console.error("JSON parsing error:", e);
@@ -686,7 +684,6 @@ $(document).ready(function() {
         // Collected from data-id attributes
         var part_id = catalog_number + '-' + id_part_type;
         var part_name = instrumentdata[id_part_type];
-        console.log("Delete this part modal: " + catalog_number + "-" + id_part_type + "-" + part_name);
 
         $('#deleteModal').modal('show');
         $('#confirm-delete').data('id', part_id);
@@ -696,7 +693,6 @@ $(document).ready(function() {
         catno_name = $('#composition_header').text();
         // The confirm delete button
         var part_id = $(this).data('id');
-        console.log("Delete this part confirm " + catalog_number + " " + id_part_type + " " + part_id);
         $.ajax({
             url: "index.php?action=delete_parts",
             method: "POST",
@@ -805,7 +801,6 @@ $(document).ready(function() {
             } else if ($('#image_path')[0].files.length > 0) {
                 // If a file is selected, it will be handled by FormData
                 $file_name = $('#image_path')[0].files[0].name;
-                console.log("File selected for upload: " + $file_name);
                 formData.append('image_path', $('#image_path')[0].files[0]);
             }
 
@@ -815,7 +810,10 @@ $(document).ready(function() {
                 data: formData,
                 contentType: false,
                 processData: false,
+                dataType: 'json',
                 beforeSend: function() {
+                    // Clear any previous error messages
+                    $('#parteditmessage').html('');
                     // Show spinner and disable button
                     $('#insert .spinner-border').removeClass('d-none');
                     $('#insert-text').text($('#update').val() === "update" ? "Updating..." : "Inserting...");
@@ -827,23 +825,37 @@ $(document).ready(function() {
                         $('#insert-text').text("Insert");
                         $('#insert').prop('disabled', false);
                         
-                        $('#insert_form')[0].reset();
-                        $('#editModal').modal('hide');
-                        $.ajax({
-                            url: "index.php?action=fetch_parts_data",
-                            method: "POST",
-                            data: {
-                                catalog_number: catalog_number
-                            },
-                            dataType: "text",
-                            success: function(response) {
-                                var data = JSON.parse(response);
-                                data.u_librarian = window.u_librarian; // Ensure template gets correct role
-                                var partsHtml = renderTemplate('parts-table-template', data);
-                                $('#parts_table').html(partsHtml);
-                                $('#composition_header').text(catno_name);
-                            }
-                        });
+                        if (data.success) {
+                            // Show success message briefly
+                            var action = $('#update').val() === "update" ? "updated" : "inserted";
+                            $('#parteditmessage').html('<span class="text-success"><strong>Success:</strong> Part ' + action + ' successfully!</span>');
+                            
+                            // Hide the success message and close modal after 1.5 seconds
+                            setTimeout(function() {
+                                $('#parteditmessage').html('');
+                                $('#editModal').modal('hide');
+                            }, 1500);
+                            
+                            $('#insert_form')[0].reset();
+                            $.ajax({
+                                url: "index.php?action=fetch_parts_data",
+                                method: "POST",
+                                data: {
+                                    catalog_number: catalog_number
+                                },
+                                dataType: "text",
+                                success: function(response) {
+                                    var data = JSON.parse(response);
+                                    data.u_librarian = window.u_librarian; // Ensure template gets correct role
+                                    var partsHtml = renderTemplate('parts-table-template', data);
+                                    $('#parts_table').html(partsHtml);
+                                    $('#composition_header').text(catno_name);
+                                }
+                            });
+                        } else {
+                            // Show error message (don't close modal)
+                            $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + (data.error || 'Unknown error occurred') + '</span>');
+                        }
                     },
                     error: function(xhr, status, error) {
                         // Reset button state on error
@@ -851,7 +863,26 @@ $(document).ready(function() {
                         $('#insert-text').text("Insert");
                         $('#insert').prop('disabled', false);
                         
-                        alert("Error uploading part: " + error);
+                        // Try to parse JSON error response first
+                        var errorMessage = "Error uploading part: " + error;
+                        if (xhr.responseText) {
+                            try {
+                                var errorResponse = JSON.parse(xhr.responseText);
+                                if (errorResponse.error) {
+                                    errorMessage = errorResponse.error;
+                                } else {
+                                    errorMessage = xhr.responseText;
+                                }
+                            } catch (e) {
+                                errorMessage = xhr.responseText;
+                            }
+                        }
+                        
+                        // Display error message in the modal
+                        $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + errorMessage + '</span>');
+                        
+                        // Scroll the modal to show the error message
+                        $('#editModal .modal-body').scrollTop(0);
                     }
             });
         }

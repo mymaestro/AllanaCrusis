@@ -6,10 +6,10 @@ require_once(__DIR__ . "/../../config/config.php");
 require_once(__DIR__ . "/functions.php");
 
 // Settings
-$maxFileSize = 40 * 1024 * 1024; // 40 MB
+$maxFileSize = 100 * 1024 * 1024; // 100 MB
 // You might need to adjust these settings in your php.ini file as well
-//ini_set('upload_max_filesize', '40M');
-//ini_set('post_max_size', '40M');
+//ini_set('upload_max_filesize', '100M');
+//ini_set('post_max_size', '100M');
 
 $uploadMax = ini_get('upload_max_filesize');
 $postMax = ini_get('post_max_size');

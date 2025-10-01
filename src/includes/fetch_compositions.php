@@ -95,7 +95,9 @@ if(isset($_POST["catalog_number"])) {
                 <!-- Filter Row -->
                 <tr class="filter-header" style="position: sticky; top: 40px; z-index: 2; background-color: #f8f9fa; height: 40px;">
                     <th style="width: 50px; border-top: none; padding: 0.5rem;">
-                        <small class="text-muted">Filters:</small>
+                        <a href="#" onclick="clearAllFilters(); return false;" class="text-muted" style="text-decoration: none; font-size: 0.875rem;" title="Click to clear all filters">
+                            <i class="fas fa-eraser"></i> Clear
+                        </a>
                     </th>
                     <th style="border-top: none; padding: 0.5rem;">
                         <input type="text" class="filter-input" data-column="catalog" placeholder="M001..." />

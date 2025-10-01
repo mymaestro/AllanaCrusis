@@ -436,6 +436,21 @@ $(document).ready(function() {
     // Declare global variable for selected catalog number
     let catalog_number = null;
     
+    // Check for edit parameter in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const editCatalog = urlParams.get('edit');
+    
+    if (editCatalog) {
+        // Set the global catalog_number
+        catalog_number = editCatalog;
+        console.log("Auto-selecting composition from URL: " + catalog_number);
+        
+        // Wait for table to load, then select the row and open edit modal
+        setTimeout(function() {
+            selectCompositionByNumber(editCatalog);
+        }, 1000);
+    }
+    
     // Scroll-to-top button
     let $upButton = $("#btn-back-to-top");
     // When the user scrolls down 20px from the top of the document, show the button
@@ -466,6 +481,39 @@ $(document).ready(function() {
             $('#composition_table').html(data);
         }
     });
+
+    // Function to select a composition by catalog number
+    function selectCompositionByNumber(catalogNumber) {
+        // Find the row with matching catalog number
+        const $targetRow = $('#composition_table tbody tr').filter(function() {
+            return $(this).data('id') === catalogNumber;
+        });
+        
+        if ($targetRow.length > 0) {
+            // Scroll to the row
+            $('html, body').animate({
+                scrollTop: $targetRow.offset().top - 100
+            }, 500);
+            
+            // Select the row
+            $targetRow.find('input[type="radio"]').prop('checked', true);
+            $targetRow.addClass('table-active');
+            
+            // Enable buttons
+            $('#view, #edit, #delete, #parts, #instrumentation').prop('disabled', false);
+            
+            // Set global catalog_number
+            catalog_number = catalogNumber;
+            
+            // Automatically open edit modal
+            setTimeout(function() {
+                $('.edit_data').trigger('click');
+            }, 500);
+        } else {
+            console.warn("Composition not found: " + catalogNumber);
+            alert("Composition " + catalogNumber + " not found in the current view.");
+        }
+    }
 
 
     // Enable the edit and delete buttons, and get the composition ID when a table row is clicked

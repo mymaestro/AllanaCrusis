@@ -434,6 +434,9 @@ require_once(__DIR__. "/includes/footer.php");
 ?>
 
 <script>
+    // User role variables
+    window.u_librarian = <?php echo $u_librarian ? 'true' : 'false'; ?>;
+    
     $(document).ready(function() {
         // Auto-search on page load with all compositions
         performSearch();
@@ -611,6 +614,12 @@ require_once(__DIR__. "/includes/footer.php");
                                 class="btn btn-outline-success view-parts-btn">
                                     <i class="fas fa-puzzle-piece"></i> ${partsText}
                                 </button>
+                                ${window.u_librarian ? `
+                                <button type="button" data-catalog="${comp.catalog_number}"
+                                    class="btn btn-outline-warning edit-composition-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                ` : ''}
                             </div>
                         </div>
                     </div>
@@ -697,6 +706,12 @@ require_once(__DIR__. "/includes/footer.php");
                                    class="btn btn-outline-success btn-sm flex-md-fill view-parts-btn">
                                     <i class="fas fa-puzzle-piece"></i> ${partsText}
                                 </button>
+                                ${window.u_librarian ? `
+                                <button type="button" data-catalog="${comp.catalog_number}"
+                                   class="btn btn-outline-warning btn-sm flex-md-fill edit-composition-btn">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                ` : ''}
                             </div>
                         </div>
                     </div>
@@ -779,6 +794,17 @@ require_once(__DIR__. "/includes/footer.php");
                     $('#instrumentation_detail').html('<div class="modal-header"><h3 class="modal-title">Error</h3><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="text-center text-danger py-4"><i class="fas fa-exclamation-triangle fa-3x mb-3"></i><h5>Error loading parts</h5><p>Unable to load parts information. Please try again.</p></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>');
                 }
             });
+        });
+
+        // Edit composition button handler
+        $(document).on('click', '.edit-composition-btn', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const catalogNumber = $(this).data('catalog');
+            
+            // Redirect to compositions page with catalog number selected
+            window.location.href = '/compositions?edit=' + encodeURIComponent(catalogNumber);
         });
     });
 </script>

@@ -479,8 +479,135 @@ $(document).ready(function() {
         data: <?php echo json_encode($data); ?>,
         success:function(data){
             $('#composition_table').html(data);
+            // Initialize filtering after table loads
+            setTimeout(initializeFiltering, 100);
         }
     });
+
+    // Store all composition data for filtering
+    let compositionsData = [];
+    let filteredData = [];
+
+    // Initialize filtering functionality
+    function initializeFiltering() {
+        // Store all row data
+        compositionsData = [];
+        $('#compositions-tbody tr').each(function() {
+            const row = $(this);
+            if (row.find('td').length > 0) { // Skip empty rows
+                compositionsData.push({
+                    element: row,
+                    catalog: row.find('td:eq(1)').text().trim(),
+                    name: row.find('td:eq(2) strong a').text().trim() || row.find('td:eq(2)').text().trim(),
+                    composer: row.find('td:eq(3)').text().trim(),
+                    arranger: row.find('td:eq(4)').text().trim(),
+                    grade: row.find('td:eq(5)').text().trim(),
+                    genre: row.find('td:eq(6)').text().trim(),
+                    ensemble: row.find('td:eq(7)').text().trim(),
+                    enabled: row.find('td:eq(8)').text().trim(),
+                    parts: parseInt(row.find('td:eq(9)').text().trim()) || 0
+                });
+            }
+        });
+        
+        filteredData = [...compositionsData];
+        
+        // Add filter event listeners
+        $('.filter-input, .filter-select').on('input change', debounce(applyFilters, 300));
+        
+        // Prevent filter inputs from triggering column sorting
+        $('.filter-input, .filter-select').on('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        console.log('Column filtering initialized with ' + compositionsData.length + ' compositions');
+    }
+
+    // Debounce function for performance
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Apply all active filters
+    function applyFilters() {
+        let filtered = [...compositionsData];
+        
+        // Get all active filters
+        const filters = {};
+        $('.filter-input, .filter-select').each(function() {
+            const value = $(this).val().trim().toLowerCase();
+            if (value) {
+                filters[$(this).data('column')] = value;
+            }
+        });
+        
+        // Apply each filter
+        filtered = filtered.filter(composition => {
+            for (const [column, filterValue] of Object.entries(filters)) {
+                const cellValue = String(composition[column]).toLowerCase();
+                
+                if (column === 'parts') {
+                    // Numeric filter - greater than or equal
+                    if (composition.parts < parseInt(filterValue)) {
+                        return false;
+                    }
+                } else if (column === 'grade' || column === 'enabled') {
+                    // Exact match for dropdowns
+                    if (cellValue !== filterValue) {
+                        return false;
+                    }
+                } else {
+                    // Text contains filter
+                    if (!cellValue.includes(filterValue)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        });
+        
+        // Update display
+        filteredData = filtered;
+        updateTableDisplay();
+    }
+
+    // Update table display based on filtered data
+    function updateTableDisplay() {
+        // Hide all rows first
+        $('#compositions-tbody tr').hide();
+        
+        // Show filtered rows
+        filteredData.forEach(item => {
+            item.element.show();
+        });
+        
+        // Show/hide no results message
+        if (filteredData.length === 0 && compositionsData.length > 0) {
+            $('#no-results').show();
+        } else {
+            $('#no-results').hide();
+        }
+    }
+
+    // Clear all filters
+    function clearAllFilters() {
+        $('.filter-input, .filter-select').val('');
+        if (compositionsData.length > 0) {
+            filteredData = [...compositionsData];
+            updateTableDisplay();
+        }
+    }
+
+    // Make clearAllFilters globally available for the no-results button
+    window.clearAllFilters = clearAllFilters;
 
     // Function to select a composition by catalog number
     function selectCompositionByNumber(catalogNumber) {
@@ -691,6 +818,8 @@ $(document).ready(function() {
                         data: <?php echo json_encode($data); ?>,
                         success:function(data){
                             $('#composition_table').html(data);
+                            // Re-initialize filtering after table reload
+                            setTimeout(initializeFiltering, 100);
                         }
                     });
                 } else {
@@ -743,6 +872,8 @@ $(document).ready(function() {
                         data: <?php echo json_encode($data); ?>,
                         success:function(data){
                             $('#composition_table').html(data);
+                            // Re-initialize filtering after table reload
+                            setTimeout(initializeFiltering, 100);
                         }
                     });
                 }

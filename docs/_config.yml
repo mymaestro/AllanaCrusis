@@ -19,6 +19,15 @@ plugins:
 header_pages:
   - index.md
   - user-guide.md
+  - getting-started.md
+  - getting-access.md
+  - supporting-data.md
+  - compositions.md
+  - parts.md
+  - concerts-recordings.md
+  - distribution.md
+  - admin-guide.md
+  - troubleshooting.md
   - api-docs.md
 
 # Collections

@@ -5,6 +5,90 @@ title: "User Guide"
 
 # AllanaCrusis Music Library User Guide
 
+Welcome to the comprehensive AllanaCrusis user guide. This documentation is organized into focused sections to help you find the information you need quickly.
+
+## User Guide Sections
+
+### 📚 Core User Functions
+
+1. **[Getting Started](getting-started.html)** - Home, About, Search
+   - System overview and navigation
+   - Basic search functionality
+   - Understanding the interface
+
+2. **[Getting Access](getting-access.html)** - User Registration, Roles, Password Reset
+   - Creating an account
+   - Understanding user roles and permissions
+   - Password management and email verification
+
+3. **[Supporting Data](supporting-data.html)** - Instruments, Ensembles, Genres, Paper Sizes, Part Types
+   - Managing reference data
+   - Setting up organizational structure
+   - Configuring system options
+
+### 🎵 Music Library Management
+
+4. **[Compositions](compositions.html)** - Entering and Editing Compositions
+   - Adding new compositions
+   - Managing metadata and composer information
+   - Search and organization features
+
+5. **[Parts Management](parts.html)** - Entering and Editing Parts
+   - Individual part tracking
+   - File management and uploads
+   - Instrumentation assignment
+
+6. **[Concerts and Recordings](concerts-recordings.html)** - Playgrams, Concert Data, and Recordings
+   - Event management
+   - Performance tracking
+   - Audio and recording management
+
+7. **[Part Distribution](distribution.html)** - Distributing Parts
+   - Digital distribution systems
+   - Access control and permissions
+   - Download tracking
+
+### 🔧 Advanced Topics
+
+8. **[Administrator Functions](admin-guide.html)** - System Administration
+   - User management
+   - System configuration
+   - Reports and analytics
+
+9. **[Troubleshooting](troubleshooting.html)** - Common Issues and Solutions
+   - Login problems
+   - Performance issues
+   - Error resolution
+
+---
+
+## Quick Reference
+
+### Common Tasks
+- **Add a new composition**: [Compositions Guide](compositions.html#adding-compositions)
+- **Upload part files**: [Parts Guide](parts.html#file-uploads)
+- **Create user accounts**: [Admin Guide](admin-guide.html#user-management)
+- **Reset password**: [Getting Access](getting-access.html#password-reset)
+
+### User Roles
+- **Guest**: Browse and search public content
+- **Member**: Access downloads and member features
+- **Librarian**: Full composition and parts management
+- **Manager**: Complete administrative control
+
+### Support
+- **Documentation Issues**: Check the [Troubleshooting Guide](troubleshooting.html)
+- **Technical Support**: Contact your system administrator
+- **Feature Requests**: Submit through your organization's process
+
+---
+
+*Each section includes step-by-step instructions, screenshots, and examples specific to that topic area.*lt
+title: "User Guide"
+---
+
+# AllanaCrusis Music Library User Guide
+
 ## Table of Contents
 1. [Getting Started](#getting-started)
 2. [User Roles and Permissions](#user-roles-and-permissions)

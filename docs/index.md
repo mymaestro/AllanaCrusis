@@ -9,9 +9,10 @@ Welcome to the AllanaCrusis documentation site. This comprehensive guide will he
 
 ## Quick Start
 
-- **New Users**: Start with the [User Guide](user-guide.html) to learn the basics
-- **Librarians**: Jump to the [Librarian Instructions](user-guide.html#librarian-instructions)
-- **Administrators**: Review [User Management](user-guide.html#user-management) and system settings
+- **New Users**: Start with the [Getting Started Guide](getting-started.html) to learn the basics
+- **Getting Access**: Learn about [User Registration and Roles](getting-access.html)
+- **Librarians**: Jump to [Composition Management](compositions.html) or [Parts Management](parts.html)
+- **Administrators**: Review [Admin Functions](admin-guide.html) and [User Management](admin-guide.html#user-management)
 
 ## What is AllanaCrusis?
 

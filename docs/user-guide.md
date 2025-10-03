@@ -39,6 +39,9 @@ The AllanaCrusis interface uses a clean, responsive design with:
 - **Action Buttons**: Color-coded buttons for different functions (blue for edit, green for add, red for delete)
 - **Tables**: Sortable, filterable data displays with sticky headers
 
+![AllanaCrusis main interface showing navigation and search features](images/screenshots/main-interface.png)
+*Figure 1: Main AllanaCrusis interface with highlighted navigation elements*
+
 ---
 
 ## User Roles and Permissions
@@ -103,6 +106,10 @@ The AllanaCrusis interface uses a clean, responsive design with:
    - **Catalog Number**: Unique identifier (format: C###, M###, or X###)
    - **Title**: Full composition title
    - **Composer**: Use "Last, First" format
+
+![Composition editing form with required fields highlighted](images/screenshots/add-composition-form.png)
+*Figure 2: New composition form showing required fields*
+
 4. Optional fields:
    - **Arranger**: If applicable
    - **Publisher**: Publishing company

@@ -136,9 +136,11 @@ Edit `config.php` with your settings. Key options include:
 Ensure the web server can write to upload directories:
 
 ```bash
-mkdir -p public/files/recordings public/files/parts public/files/distributions
+mkdir -p public/files/recordings /files/parts /files/distributions
 chmod -R 755 public/files/
+chmod -R 755 files/
 chown -R www-data:www-data public/files/  # Use your web server user
+chown -R www-data:www-data files/
 ```
 
 ### Step 5: First Login
@@ -432,7 +434,7 @@ If you are upgrading from the original `musicLibraryDB`, review the new routing 
 cd /path/to/your/local/repo
 
 # Update the remote origin
-git remote set-url origin https://github.com/mymaestro/AllanaCrusis.git
+git remote set-url origin https://github.com/username/AllanaCrusis.git
 
 # Push your existing code to the new repository
 git push -u origin main

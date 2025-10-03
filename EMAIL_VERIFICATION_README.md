@@ -1,35 +1,6 @@
 # Email Verification System for User Registration
 
-This system implements email verification for new user registrations by extending the existing password reset functionality. Instead of creating a separate table, it reuses the existing `password_reset` table with additional columns.
-
-## Files Added/Modified
-
-### New Files Created:
-1. `setup/email_verification_table.sql` - Database modifications (adds columns to existing table)
-2. `includes/email_verification.php` - Handles verification email sending
-3. `verify_email.php` - Email verification landing page
-4. `cleanup_verification.php` - Enhanced cleanup script for both password reset and email verification tokens
-5. `admin_verifications.php` - Admin page to view both pending verifications and password resets
-
-### Files Modified:
-1. `register.php` - Updated to use email verification workflow
-
-## Database Changes
-
-The system extends the existing `password_reset` table instead of creating a new one. Run the SQL in `setup/email_verification_table.sql`:
-
-```sql
--- Modify existing password_reset table to support email verification
-ALTER TABLE `password_reset` 
-ADD COLUMN `username` varchar(128) DEFAULT NULL COMMENT 'Username for email verification requests',
-ADD COLUMN `name` varchar(255) DEFAULT NULL COMMENT 'Full name for email verification requests',
-ADD COLUMN `password_hash` varchar(128) DEFAULT NULL COMMENT 'Hashed password for email verification requests',
-ADD COLUMN `request_type` enum('password_reset', 'email_verification') DEFAULT 'password_reset' COMMENT 'Type of request';
-
--- Add index for better performance
-ALTER TABLE `password_reset` 
-ADD INDEX `idx_request_type` (`request_type`);
-```
+This system implements email verification for new user registrations by extending the previous password reset functionality. 
 
 ## How It Works
 

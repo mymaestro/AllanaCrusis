@@ -3,6 +3,8 @@ layout: default
 title: "AllanaCrusis Documentation"
 ---
 
+![AllanaCrusis logo](images/images/logo.png)
+
 # AllanaCrusis Music Library System
 
 Welcome to the AllanaCrusis documentation site. This comprehensive guide will help you get the most out of your music library management system.

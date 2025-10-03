@@ -17,9 +17,13 @@ function normalizeComposerName(name) {
         // "John Philip Sousa" -> "Sousa, John Philip"
         /^([A-Z][a-z]+(?:\s[A-Z][a-z]+)*)\s([A-Z][a-z]+)$/,
         // "J. P. Sousa" -> "Sousa, J. P."
-        /^([A-Z]\.?\s*[A-Z]\.?)\s([A-Z][a-z]+)$/,
+        /^([A-Z]\.?\s*[A-Z]\.?(?:\s*[A-Z]\.?)*)\s([A-Z][a-z]+)$/,
         // "J P Sousa" -> "Sousa, J P"
-        /^([A-Z]\s[A-Z])\s([A-Z][a-z]+)$/
+        /^([A-Z]\s[A-Z](?:\s[A-Z])*)\s([A-Z][a-z]+)$/,
+        // "Wolfgang Amadeus Mozart" -> "Mozart, Wolfgang Amadeus"
+        /^([A-Z][a-z]+(?:\s[A-Z][a-z]+)+)\s([A-Z][a-z]+)$/,
+        // "Johann Sebastian Bach" -> "Bach, Johann Sebastian"
+        /^([A-Z][a-z]+\s[A-Z][a-z]+(?:\s[A-Z][a-z]+)*)\s([A-Z][a-z]+)$/
     ];
     
     for (let pattern of patterns) {
@@ -58,11 +62,19 @@ async function suggestComposerNames(query, limit = 10) {
 
 // Autocomplete setup for composer field
 function setupComposerAutocomplete() {
-    const composerInput = document.getElementById('composer');
-    if (!composerInput) return;
+    // Setup for composer field
+    setupAutocompleteForField('composer');
+    // Setup for arranger field
+    setupAutocompleteForField('arranger');
+}
+
+// Generic function to setup autocomplete for any field
+function setupAutocompleteForField(fieldId) {
+    const input = document.getElementById(fieldId);
+    if (!input) return;
     
     let suggestionsDiv = document.createElement('div');
-    suggestionsDiv.className = 'composer-suggestions';
+    suggestionsDiv.className = `${fieldId}-suggestions`;
     suggestionsDiv.style.cssText = `
         position: absolute;
         background: white;
@@ -73,13 +85,14 @@ function setupComposerAutocomplete() {
         width: 100%;
         z-index: 1000;
         display: none;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     `;
     
-    composerInput.parentNode.style.position = 'relative';
-    composerInput.parentNode.appendChild(suggestionsDiv);
+    input.parentNode.style.position = 'relative';
+    input.parentNode.appendChild(suggestionsDiv);
     
     let timeout;
-    composerInput.addEventListener('input', function() {
+    input.addEventListener('input', function() {
         clearTimeout(timeout);
         const query = this.value.trim();
         
@@ -90,12 +103,12 @@ function setupComposerAutocomplete() {
         
         timeout = setTimeout(async () => {
             const suggestions = await suggestComposerNames(query);
-            displaySuggestions(suggestions, suggestionsDiv, composerInput);
+            displaySuggestions(suggestions, suggestionsDiv, input);
         }, 300);
     });
     
     // Normalize on blur
-    composerInput.addEventListener('blur', function() {
+    input.addEventListener('blur', function() {
         setTimeout(() => {
             if (this.value.trim()) {
                 this.value = normalizeComposerName(this.value.trim());

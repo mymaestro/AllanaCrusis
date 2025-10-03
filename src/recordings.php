@@ -176,6 +176,7 @@
 <?php require_once(__DIR__. "/includes/footer.php");?>
 <!-- script to sort and filter table views -->
 <script src="js/auto-tables.js"></script>
+<script src="js/composer_normalization.js"></script>
 <!-- Reference concerts data -->
 <?php
 // Build the reference concerts as a JSON array for JavaScript

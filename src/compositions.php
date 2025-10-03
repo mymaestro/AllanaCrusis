@@ -430,6 +430,7 @@ ferror_log("RUNNING compositions.php");
 </main>
 <?php require_once(__DIR__. "/includes/footer.php"); ?>
 <script src="js/auto-tables.js"></script>
+<script src="js/composer_normalization.js"></script>
 <!-- jquery function to add/update database records -->
 <script>
 $(document).ready(function() {

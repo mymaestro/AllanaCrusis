@@ -38,11 +38,11 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
 <main role="main" class="container">
     <!-- left panel -->
     <aside class="left-panel">
-        <h6 class="p-3 border-bottom m-0">Choose a composition</h6>
+        <div class="p-3 border-bottom">
+            <input type="text" class="form-control" id="composition-search" placeholder="Search compositions..." autocomplete="off" />
+        </div>
         <div class="left-menu-scroll" id="compositions_list">
-            <ul class="list-group list-group-flush">
-                <p class="lead">All compositions</p><!-- populated by JavaScript with compositions -->
-            </ul>
+            <!-- populated by JavaScript with compositions -->
         </div>
     </aside>
     <!-- right panel -->
@@ -478,6 +478,7 @@ $(document).ready(function() {
 
     let catalog_number = null;
     let id_part_type = null;
+    let allCompositions = []; // Store all compositions for filtering
 
     // Load compositions data into the left-hand list
     $.ajax({
@@ -489,13 +490,13 @@ $(document).ready(function() {
             try {
                 var data = JSON.parse(response);
                 data.u_librarian = window.u_librarian; // Ensure template gets correct role
-                var compositionsHtml = '';
-                data.compositions.forEach(function(comp) {
-                    comp.hasparts = comp.parts > 0;
-                    comp.u_librarian = data.u_librarian;
-                    compositionsHtml += renderTemplate('composition-list-template', comp);
-                });
-                $('#compositions_list').html('<ul class="list-group list-group-flush">' + compositionsHtml + '</ul>');
+                
+                // Store compositions data for filtering
+                allCompositions = data.compositions;
+                
+                // Render all compositions initially
+                renderCompositionsList(allCompositions);
+                
             } catch(e) {
                 console.error('JSON parsing error:', e);
                 console.log('Response was:', response);
@@ -512,6 +513,56 @@ $(document).ready(function() {
             console.log('Response text:', xhr.responseText);
         }
     });
+
+    // Function to render compositions list
+    function renderCompositionsList(compositions) {
+        var compositionsHtml = '';
+        compositions.forEach(function(comp) {
+            comp.hasparts = comp.parts > 0;
+            comp.u_librarian = window.u_librarian;
+            compositionsHtml += renderTemplate('composition-list-template', comp);
+        });
+        $('#compositions_list').html('<ul class="list-group list-group-flush">' + compositionsHtml + '</ul>');
+    }
+
+    // Debounce function for search input
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Filter compositions based on search input
+    function filterCompositions() {
+        const searchTerm = $('#composition-search').val().toLowerCase().trim();
+        
+        if (!searchTerm) {
+            // Show all compositions if search is empty
+            renderCompositionsList(allCompositions);
+            return;
+        }
+        
+        // Filter compositions based on multiple fields
+        const filteredCompositions = allCompositions.filter(function(comp) {
+            return (
+                comp.catalog_number.toLowerCase().includes(searchTerm) ||
+                comp.title.toLowerCase().includes(searchTerm) ||
+                comp.composer.toLowerCase().includes(searchTerm) ||
+                (comp.arranger && comp.arranger.toLowerCase().includes(searchTerm))
+            );
+        });
+        
+        renderCompositionsList(filteredCompositions);
+    }
+
+    // Add search event listener with debouncing
+    $('#composition-search').on('input', debounce(filterCompositions, 300));
     // Handle click on composition list items, Load parts for the selected composition
     $(document).on('click','.list-group-item-action',function(e) {
         // Highlight the selected item

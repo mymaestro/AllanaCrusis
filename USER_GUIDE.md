@@ -101,7 +101,7 @@ For technical support or questions about this user guide, contact your system ad
 6. [Search and Filtering](#search-and-filtering)
 7. [User Management](#user-management)
 8. [Reports and Analytics](#reports-and-analytics)
-9. [Austin Civic Wind Ensemble Specific Instructions](#austin-civic-wind-ensemble-specific-instructions)
+9. [Librarian Instructions](#librarian-instructions)
 10. [Troubleshooting](#troubleshooting)
 
 ---
@@ -293,7 +293,7 @@ The system includes composer normalization features:
 
 ---
 
-## Librarian Editing Instructions
+## Librarian Instructions
 Part 1: Music Information
     1. Sign in to the library at https://allanacrusis.net Confirm that you have librarian access.
     2. Select MATERIALS → Compositions to enter the Compositions page.
@@ -313,7 +313,7 @@ On the edit screen:
             v. Pop/Show Tunes (as appropriate)—for band versions of popular or Broadway/movie songs
             vi. Solo with band accompaniment—for solos
 If it’s not clear what genre is appropriate, go with Wind Ensemble.
-        g. Confirm that the Ensemble box says Austin Civic Wind Ensemble. You should not encounter any exceptions to this.
+        g. Confirm that the Ensemble box says Forth Wind Wind Ensemble. You should not encounter any exceptions to this.
         h. Consult the piece’s score to see if it lists Grade level (sometimes called difficult, should be a number between 1 and 7) or Duration. If neither is listed in the score, check the Wind Repertory Project site (https://www.windrep.org) for the information. You can also use the Wind Repertory Project link button at the bottom of the Edit screen. In either case, please confirm that you are looking at the correct edition for the piece. Check the arranger’s name and/or publisher if necessary. Enter the grade and duration in the correct fields. If neither is available, leave blank.
 
         i. Select the Paper Size from the drop-down menu. Most band music is printed on Folio paper (9x12), but some are on Letter (8.5x11) or Marching band paper.

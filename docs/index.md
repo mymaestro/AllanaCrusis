@@ -10,7 +10,7 @@ Welcome to the AllanaCrusis documentation site. This comprehensive guide will he
 ## Quick Start
 
 - **New Users**: Start with the [User Guide](user-guide.html) to learn the basics
-- **Librarians**: Jump to the [Austin Civic Wind Ensemble Instructions](user-guide.html#austin-civic-wind-ensemble-specific-instructions)
+- **Librarians**: Jump to the [Librarian Instructions](user-guide.html#librarian-instructions)
 - **Administrators**: Review [User Management](user-guide.html#user-management) and system settings
 
 ## What is AllanaCrusis?

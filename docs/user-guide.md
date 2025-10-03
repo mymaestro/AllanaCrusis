@@ -242,7 +242,7 @@ f. Select the Genre from the drop-down menu. For most pieces, you will use one o
 
 If it's not clear what genre is appropriate, go with Wind Ensemble.
 
-g. Confirm that the Ensemble box says Austin Civic Wind Ensemble. You should not encounter any exceptions to this.
+g. Confirm that the Ensemble box says Fourth Wind Wind Ensemble. You should not encounter any exceptions to this.
 
 h. Consult the piece's score to see if it lists Grade level (sometimes called difficult, should be a number between 1 and 7) or Duration. If neither is listed in the score, check the Wind Repertory Project site (https://www.windrep.org) for the information. You can also use the Wind Repertory Project link button at the bottom of the Edit screen. In either case, please confirm that you are looking at the correct edition for the piece. Check the arranger's name and/or publisher if necessary. Enter the grade and duration in the correct fields. If neither is available, leave blank.
 

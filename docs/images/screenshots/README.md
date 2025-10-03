@@ -33,6 +33,7 @@ This directory contains screenshot examples. Replace these placeholders with act
 ### Login and Authentication
 - [ ] `login-screen.png` - Login form
 - [ ] `email-verification.png` - Email verification prompt
+- [ ] `register.png` - First time registration
 - [ ] `password-reset.png` - Password reset form
 
 ## Screenshot Guidelines:

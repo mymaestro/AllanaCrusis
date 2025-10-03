@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/admin-guide.html</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/AllanaCrusis/api-docs.html</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/compositions.html</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/concerts-recordings.html</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/distribution.html</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/AllanaCrusis/getting-access.html</loc>
@@ -13,7 +25,13 @@
 <loc>http://0.0.0.0:4000/AllanaCrusis/</loc>
 </url>
 <url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/parts.html</loc>
+</url>
+<url>
 <loc>http://0.0.0.0:4000/AllanaCrusis/supporting-data.html</loc>
+</url>
+<url>
+<loc>http://0.0.0.0:4000/AllanaCrusis/troubleshooting.html</loc>
 </url>
 <url>
 <loc>http://0.0.0.0:4000/AllanaCrusis/user-guide.html</loc>

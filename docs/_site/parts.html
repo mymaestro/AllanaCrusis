@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Parts Management | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Parts Management" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/parts.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/parts.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Parts Management" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"Parts Management","url":"http://0.0.0.0:4000/AllanaCrusis/parts.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="parts-management">Parts Management</h1>
+
+<p>This section covers managing individual instrument parts, including adding instrumentation, editing part details, file uploads, and organizing physical and digital materials.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+  <li><a href="#understanding-parts">Understanding Parts</a></li>
+  <li><a href="#instrumentation-setup">Instrumentation Setup</a></li>
+  <li><a href="#individual-part-management">Individual Part Management</a></li>
+  <li><a href="#file-management">File Management</a></li>
+  <li><a href="#physical-inventory">Physical Inventory</a></li>
+  <li><a href="#part-collections">Part Collections</a></li>
+  <li><a href="#quality-control">Quality Control</a></li>
+</ul>
+
+<hr />
+
+<h2 id="understanding-parts">Understanding Parts</h2>
+
+<h3 id="what-are-parts">What are Parts?</h3>
+<p>Parts are individual instrument components of a musical composition:</p>
+<ul>
+  <li><strong>Individual instrument parts</strong>: Flute 1, Trumpet 2, Percussion, etc.</li>
+  <li><strong>Physical tracking</strong>: Count of original printed parts</li>
+  <li><strong>Digital files</strong>: PDF or other electronic formats</li>
+  <li><strong>Metadata</strong>: Page counts, paper sizes, descriptions</li>
+</ul>
+
+<h3 id="parts-vs-compositions">Parts vs. Compositions</h3>
+<ul>
+  <li><strong>Composition</strong>: The overall musical work</li>
+  <li><strong>Parts</strong>: Individual components needed for performance</li>
+  <li><strong>Relationship</strong>: One composition has many parts</li>
+</ul>
+
+<p><img src="images/screenshots/parts-overview.png" alt="Parts relationship diagram" />
+<em>Figure 1: How parts relate to compositions and instruments</em></p>
+
+<h3 id="types-of-parts">Types of Parts</h3>
+<ul>
+  <li><strong>Individual instruments</strong>: Specific to one instrument</li>
+  <li><strong>Condensed parts</strong>: Multiple instruments on one part (Flute 1&amp;2)</li>
+  <li><strong>Rhythm section</strong>: Special parts for jazz or contemporary music</li>
+  <li><strong>Conductor materials</strong>: Scores, piano reductions</li>
+  <li><strong>Auxiliary materials</strong>: Program notes, technical requirements</li>
+</ul>
+
+<hr />
+
+<h2 id="instrumentation-setup">Instrumentation Setup</h2>
+
+<h3 id="adding-instrumentation-to-a-composition">Adding Instrumentation to a Composition</h3>
+<p>Before managing individual parts, you need to set up the instrumentation for a composition.</p>
+
+<h4 id="step-1-access-instrumentation">Step 1: Access Instrumentation</h4>
+<ol>
+  <li><strong>Find your composition</strong> in the compositions list</li>
+  <li><strong>Click “Instrumentation”</strong> button or link</li>
+  <li><strong>Review existing instrumentation</strong> (if any)</li>
+</ol>
+
+<h4 id="step-2-set-basic-information">Step 2: Set Basic Information</h4>
+<ul>
+  <li><strong>Confirm composition details</strong>: Title, catalog number, paper size</li>
+  <li><strong>Set average page count</strong>: Estimate for most parts in the piece</li>
+  <li><strong>Choose default paper size</strong>: Usually Folio (9x12) for band music</li>
+</ul>
+
+<p><img src="images/screenshots/instrumentation-setup.png" alt="Instrumentation setup form" />
+<em>Figure 2: Initial instrumentation setup for a composition</em></p>
+
+<h4 id="step-3-select-required-instruments">Step 3: Select Required Instruments</h4>
+<ol>
+  <li><strong>Review available instruments</strong> in the selection list</li>
+  <li><strong>Select all parts present in the composition</strong>:
+    <ul>
+      <li>Check the score for complete instrumentation</li>
+      <li>Look through physical parts if available</li>
+      <li>Use file copies set if one exists</li>
+    </ul>
+  </li>
+  <li><strong>Multi-select techniques</strong>:
+    <ul>
+      <li>Hold Ctrl (Windows) or Cmd (Mac) while clicking</li>
+      <li>Select multiple instruments at once</li>
+      <li>Be thorough - missing parts cause problems later</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="images/screenshots/instrument-selection.png" alt="Instrument selection interface" />
+<em>Figure 3: Selecting instruments for composition instrumentation</em></p>
+
+<h4 id="step-4-add-parts-to-composition">Step 4: Add Parts to Composition</h4>
+<ol>
+  <li><strong>Review selected instruments</strong></li>
+  <li><strong>Click “Add Parts”</strong></li>
+  <li><strong>System creates individual part records</strong></li>
+  <li><strong>Confirmation of parts created</strong></li>
+</ol>
+
+<h3 id="finding-instrumentation-information">Finding Instrumentation Information</h3>
+<p><strong>Sources for instrumentation:</strong></p>
+<ul>
+  <li><strong>Front of score</strong>: Many pieces list instrumentation</li>
+  <li><strong>Physical part folders</strong>: Check what parts exist</li>
+  <li><strong>Publisher websites</strong>: Often list complete instrumentation</li>
+  <li><strong>Wind Repertory Project</strong>: Detailed instrumentation data</li>
+  <li><strong>File copies sets</strong>: Pre-organized part collections</li>
+</ul>
+
+<hr />
+
+<h2 id="individual-part-management">Individual Part Management</h2>
+
+<h3 id="accessing-parts-list">Accessing Parts List</h3>
+<ol>
+  <li><strong>Go to MATERIALS &gt; Parts</strong></li>
+  <li><strong>Find your composition</strong> (sorted by catalog number)</li>
+  <li><strong>Click composition title</strong> to see parts list</li>
+  <li><strong>Each part has an “Edit” button</strong></li>
+</ol>
+
+<p><img src="images/screenshots/parts-list.png" alt="Parts list for a composition" />
+<em>Figure 4: List of parts for a specific composition</em></p>
+
+<h3 id="editing-individual-parts">Editing Individual Parts</h3>
+<p>Click the <strong>blue “Edit” button</strong> for any part to access detailed management:</p>
+
+<h4 id="basic-part-information">Basic Part Information</h4>
+<ul>
+  <li><strong>Part name</strong>: Usually set automatically from instrument</li>
+  <li><strong>Paper size</strong>: Specific to this part (may differ from composition default)</li>
+  <li><strong>Page count</strong>: Actual pages for this specific part</li>
+  <li><strong>Part type</strong>: Individual part, condensed score, etc.</li>
+</ul>
+
+<h4 id="physical-inventory-tracking">Physical Inventory Tracking</h4>
+<p><strong>Originals Count</strong></p>
+<ul>
+  <li><strong>Enter “1”</strong> for each part you actually have in the folder</li>
+  <li><strong>Enter “0”</strong> for missing parts that should be there</li>
+  <li><strong>Default is usually “1”</strong> but verify against physical materials</li>
+</ul>
+
+<p><strong>Part Condition</strong></p>
+<ul>
+  <li><strong>Description field</strong>: Note condition of physical parts</li>
+  <li><strong>Common notes</strong>: “Pencil markings”, “Torn pages”, “Deckle-edged”</li>
+  <li><strong>Missing pages</strong>: Note specific page issues</li>
+  <li><strong>Quality concerns</strong>: Anything affecting usability</li>
+</ul>
+
+<p><img src="images/screenshots/edit-part.png" alt="Individual part editing form" />
+<em>Figure 5: Editing form for an individual part</em></p>
+
+<h4 id="instrument-assignment">Instrument Assignment</h4>
+<p><strong>Primary Instrument</strong></p>
+<ul>
+  <li><strong>Default assignment</strong>: Usually correct based on part name</li>
+  <li><strong>Verify accuracy</strong>: Especially for percussion and special parts</li>
+  <li><strong>Marked with asterisk</strong>: Shows the primary assignment</li>
+</ul>
+
+<p><strong>Multiple Instruments on One Part</strong>
+Common for percussion parts labeled:</p>
+<ul>
+  <li>“Percussion 1”, “Mallet Percussion”, “Auxiliary Percussion”</li>
+</ul>
+
+<p><strong>Process for multi-instrument parts:</strong></p>
+<ol>
+  <li><strong>Add all instruments</strong> that appear on the part</li>
+  <li><strong>Hold Ctrl/Cmd</strong> to select multiple instruments</li>
+  <li><strong>Be specific</strong>: Include all instruments actually used</li>
+  <li><strong>Optional description</strong>: List instruments in description field</li>
+</ol>
+
+<p><img src="images/screenshots/multi-instrument-part.png" alt="Multi-instrument part assignment" />
+<em>Figure 6: Assigning multiple instruments to a single part</em></p>
+
+<h4 id="special-part-handling">Special Part Handling</h4>
+<p><strong>Doubled Parts (e.g., Flute 1 &amp; 2)</strong></p>
+<ul>
+  <li><strong>Add same instrument twice</strong> to the instruments list</li>
+  <li><strong>Shows two instances</strong> of the same instrument</li>
+  <li><strong>Reflects actual part content</strong></li>
+</ul>
+
+<p><strong>Percussion Parts</strong></p>
+<ul>
+  <li><strong>Most complex assignments</strong>: Often include many instruments</li>
+  <li><strong>Check throughout the part</strong>: Instruments may appear in different movements</li>
+  <li><strong>Common instruments</strong>: Snare drum, bass drum, crash cymbals, triangle, etc.</li>
+  <li><strong>Ask for help</strong>: Consult percussionists or experienced librarians</li>
+</ul>
+
+<p><strong>Condensed Parts</strong></p>
+<ul>
+  <li><strong>Multiple instruments on one part</strong>: Common in older or simplified arrangements</li>
+  <li><strong>Assign all relevant instruments</strong></li>
+  <li><strong>Note in description</strong>: “Condensed part for Clarinet 1 &amp; 2”</li>
+</ul>
+
+<hr />
+
+<h2 id="file-management">File Management</h2>
+
+<h3 id="digital-file-types">Digital File Types</h3>
+<p>AllanaCrusis typically handles:</p>
+<ul>
+  <li><strong>PDF files</strong>: Most common for sheet music</li>
+  <li><strong>Image files</strong>: Scanned parts (JPEG, PNG)</li>
+  <li><strong>Audio files</strong>: Reference recordings (MP3, WAV)</li>
+  <li><strong>Other formats</strong>: As supported by your system</li>
+</ul>
+
+<h3 id="uploading-files">Uploading Files</h3>
+<ol>
+  <li><strong>Access part editing form</strong></li>
+  <li><strong>Look for file upload section</strong></li>
+  <li><strong>Choose file from computer</strong></li>
+  <li><strong>Add file description</strong> (optional but helpful)</li>
+  <li><strong>Set access permissions</strong> (who can download)</li>
+  <li><strong>Upload file</strong></li>
+</ol>
+
+<p><img src="images/screenshots/file-upload.png" alt="File upload interface" />
+<em>Figure 7: Uploading digital files for parts</em></p>
+
+<h3 id="file-organization-best-practices">File Organization Best Practices</h3>
+<p><strong>Naming Conventions</strong></p>
+<ul>
+  <li><strong>Descriptive names</strong>: Include composition and instrument</li>
+  <li><strong>Consistent format</strong>: “Composer-Title-Instrument.pdf”</li>
+  <li><strong>Version control</strong>: Include edition or version info if relevant</li>
+</ul>
+
+<p><strong>Quality Standards</strong></p>
+<ul>
+  <li><strong>Resolution</strong>: High enough for clear reading (300 DPI minimum)</li>
+  <li><strong>File size</strong>: Balance quality with download speed</li>
+  <li><strong>Completeness</strong>: Ensure all pages are included</li>
+  <li><strong>Orientation</strong>: Consistent page orientation</li>
+</ul>
+
+<h3 id="access-control">Access Control</h3>
+<p><strong>Permission Levels</strong></p>
+<ul>
+  <li><strong>Public</strong>: Anyone can download</li>
+  <li><strong>Members only</strong>: Requires login</li>
+  <li><strong>Restricted</strong>: Specific users or roles only</li>
+  <li><strong>Internal only</strong>: Staff and librarians only</li>
+</ul>
+
+<p><strong>Distribution Tracking</strong></p>
+<ul>
+  <li><strong>Download logs</strong>: Track who downloads what files</li>
+  <li><strong>Usage statistics</strong>: Monitor popular materials</li>
+  <li><strong>Access reports</strong>: Understand user patterns</li>
+</ul>
+
+<hr />
+
+<h2 id="physical-inventory">Physical Inventory</h2>
+
+<h3 id="inventory-management">Inventory Management</h3>
+<p>Tracking physical parts is crucial for:</p>
+<ul>
+  <li><strong>Performance preparation</strong>: Know what parts are available</li>
+  <li><strong>Copying needs</strong>: Identify missing parts requiring copies</li>
+  <li><strong>Storage planning</strong>: Organize physical storage efficiently</li>
+  <li><strong>Loss prevention</strong>: Track materials checked out or missing</li>
+</ul>
+
+<h3 id="inventory-process">Inventory Process</h3>
+<ol>
+  <li><strong>Count actual parts</strong> in each composition folder</li>
+  <li><strong>Update originals count</strong> for each part</li>
+  <li><strong>Note condition issues</strong> in descriptions</li>
+  <li><strong>Flag missing parts</strong> for copying or acquisition</li>
+</ol>
+
+<p><img src="images/screenshots/physical-inventory.png" alt="Physical inventory tracking" />
+<em>Figure 8: Tracking physical inventory of parts</em></p>
+
+<h3 id="common-inventory-issues">Common Inventory Issues</h3>
+<p><strong>Missing Parts</strong></p>
+<ul>
+  <li><strong>Note in system</strong>: Set originals count to “0”</li>
+  <li><strong>Prioritize for copying</strong>: Popular pieces first</li>
+  <li><strong>Check other locations</strong>: Parts may be misfiled</li>
+  <li><strong>Order replacements</strong>: From publisher if available</li>
+</ul>
+
+<p><strong>Damaged Parts</strong></p>
+<ul>
+  <li><strong>Document condition</strong>: Note in description field</li>
+  <li><strong>Assess usability</strong>: Can it still be used for performance?</li>
+  <li><strong>Plan replacement</strong>: Copy or order new parts</li>
+  <li><strong>Preserve originals</strong>: Even if damaged, keep for reference</li>
+</ul>
+
+<p><strong>Extra Parts</strong></p>
+<ul>
+  <li><strong>Verify accuracy</strong>: Make sure they belong to this composition</li>
+  <li><strong>Update count</strong>: Reflect actual quantity</li>
+  <li><strong>Check for duplicates</strong>: May indicate filing errors</li>
+  <li><strong>Note variations</strong>: Different editions or arrangements</li>
+</ul>
+
+<hr />
+
+<h2 id="part-collections">Part Collections</h2>
+
+<h3 id="understanding-part-collections">Understanding Part Collections</h3>
+<p>Part collections are pre-organized sets of parts for specific purposes:</p>
+<ul>
+  <li><strong>File copies</strong>: Working copies for regular use</li>
+  <li><strong>Performance sets</strong>: Parts organized for specific concerts</li>
+  <li><strong>Rental sets</strong>: Complete sets prepared for lending</li>
+  <li><strong>Student sets</strong>: Educational or simplified versions</li>
+</ul>
+
+<h3 id="creating-part-collections">Creating Part Collections</h3>
+<ol>
+  <li><strong>Identify need</strong>: Performance, education, rental, etc.</li>
+  <li><strong>Select parts</strong>: Choose which instruments to include</li>
+  <li><strong>Organize physically</strong>: Group parts appropriately</li>
+  <li><strong>Update system</strong>: Note collection exists</li>
+  <li><strong>Maintain separately</strong>: Track collection-specific inventory</li>
+</ol>
+
+<p><img src="images/screenshots/part-collections.png" alt="Part collections management" />
+<em>Figure 9: Managing different types of part collections</em></p>
+
+<h3 id="collection-benefits">Collection Benefits</h3>
+<ul>
+  <li><strong>Faster setup</strong>: Pre-organized for common uses</li>
+  <li><strong>Preservation</strong>: Protects originals from wear</li>
+  <li><strong>Efficiency</strong>: Reduces time for performance preparation</li>
+  <li><strong>Flexibility</strong>: Multiple sets for different purposes</li>
+</ul>
+
+<hr />
+
+<h2 id="quality-control">Quality Control</h2>
+
+<h3 id="regular-maintenance-tasks">Regular Maintenance Tasks</h3>
+<p><strong>Accuracy Verification</strong></p>
+<ul>
+  <li><strong>Cross-check instrumentation</strong>: Verify against score</li>
+  <li><strong>Validate part counts</strong>: Ensure physical inventory matches system</li>
+  <li><strong>Review descriptions</strong>: Update condition notes as needed</li>
+  <li><strong>Check file links</strong>: Ensure digital files are accessible</li>
+</ul>
+
+<p><strong>Data Consistency</strong></p>
+<ul>
+  <li><strong>Standardize naming</strong>: Use consistent part naming conventions</li>
+  <li><strong>Uniform formatting</strong>: Paper sizes, page counts, descriptions</li>
+  <li><strong>Complete information</strong>: Fill in missing data when possible</li>
+  <li><strong>Error correction</strong>: Fix mistakes found during use</li>
+</ul>
+
+<h3 id="common-quality-issues">Common Quality Issues</h3>
+<p><strong>Instrumentation Errors</strong></p>
+<ul>
+  <li><strong>Missing instruments</strong>: Parts exist but not listed in system</li>
+  <li><strong>Extra instruments</strong>: System shows parts that don’t exist</li>
+  <li><strong>Wrong assignments</strong>: Instruments assigned to wrong parts</li>
+  <li><strong>Incomplete lists</strong>: Partial instrumentation setup</li>
+</ul>
+
+<p><strong>Inventory Discrepancies</strong></p>
+<ul>
+  <li><strong>Count mismatches</strong>: System count doesn’t match physical reality</li>
+  <li><strong>Location confusion</strong>: Parts filed in wrong places</li>
+  <li><strong>Condition changes</strong>: Physical condition not updated in system</li>
+  <li><strong>Missing updates</strong>: Recent changes not reflected in database</li>
+</ul>
+
+<p><img src="images/screenshots/quality-control.png" alt="Quality control checklist" />
+<em>Figure 10: Quality control checklist for parts management</em></p>
+
+<h3 id="best-practices">Best Practices</h3>
+<p><strong>Regular Reviews</strong></p>
+<ul>
+  <li><strong>Monthly audits</strong>: Check high-use compositions</li>
+  <li><strong>Annual inventory</strong>: Complete physical verification</li>
+  <li><strong>Condition assessments</strong>: Monitor wear and damage</li>
+  <li><strong>System updates</strong>: Keep digital records current</li>
+</ul>
+
+<p><strong>Training and Documentation</strong></p>
+<ul>
+  <li><strong>Staff training</strong>: Ensure consistent data entry practices</li>
+  <li><strong>Process documentation</strong>: Written procedures for complex tasks</li>
+  <li><strong>Error reporting</strong>: System for identifying and fixing problems</li>
+  <li><strong>Continuous improvement</strong>: Update procedures based on experience</li>
+</ul>
+
+<hr />
+
+<h2 id="workflow-integration">Workflow Integration</h2>
+
+<h3 id="connection-to-other-functions">Connection to Other Functions</h3>
+<p><strong>Performance Planning</strong></p>
+<ul>
+  <li><strong>Parts availability</strong>: Check what’s ready for performance</li>
+  <li><strong>Copying needs</strong>: Identify missing parts for upcoming concerts</li>
+  <li><strong>Set preparation</strong>: Organize parts for specific performances</li>
+</ul>
+
+<p><strong>Distribution Management</strong></p>
+<ul>
+  <li><strong>Digital access</strong>: Link files to distribution system</li>
+  <li><strong>Permission management</strong>: Control who can access what files</li>
+  <li><strong>Usage tracking</strong>: Monitor downloads and access patterns</li>
+</ul>
+
+<p><strong>Reporting and Analysis</strong></p>
+<ul>
+  <li><strong>Inventory reports</strong>: Status of physical and digital materials</li>
+  <li><strong>Usage statistics</strong>: Most popular parts and compositions</li>
+  <li><strong>Maintenance needs</strong>: Parts requiring attention or replacement</li>
+</ul>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-problems-and-solutions">Common Problems and Solutions</h3>
+
+<p><strong>Parts Not Appearing in Lists</strong></p>
+<ul>
+  <li><strong>Check instrumentation setup</strong>: May not be added to composition</li>
+  <li><strong>Verify part creation</strong>: Instrumentation process may not be complete</li>
+  <li><strong>Review filters</strong>: Search/filter settings may be hiding parts</li>
+</ul>
+
+<p><strong>File Upload Issues</strong></p>
+<ul>
+  <li><strong>Check file size</strong>: May exceed system limits</li>
+  <li><strong>Verify file format</strong>: Ensure supported file type</li>
+  <li><strong>Permission problems</strong>: May not have upload rights for this item</li>
+</ul>
+
+<p><strong>Inventory Confusion</strong></p>
+<ul>
+  <li><strong>Physical verification</strong>: Count actual parts in folder</li>
+  <li><strong>System reconciliation</strong>: Update database to match reality</li>
+  <li><strong>Documentation</strong>: Note discrepancies and their resolution</li>
+</ul>
+
+<p><img src="images/screenshots/parts-troubleshooting.png" alt="Troubleshooting guide for parts management" />
+<em>Figure 11: Common parts management issues and solutions</em></p>
+
+<hr />
+
+<h2 id="advanced-features">Advanced Features</h2>
+
+<h3 id="bulk-operations">Bulk Operations</h3>
+<ul>
+  <li><strong>Mass updates</strong>: Change multiple parts at once</li>
+  <li><strong>Import functions</strong>: Add parts data from external sources</li>
+  <li><strong>Export capabilities</strong>: Generate reports and data extracts</li>
+</ul>
+
+<h3 id="integration-tools">Integration Tools</h3>
+<ul>
+  <li><strong>Scanner integration</strong>: Direct scanning to part records</li>
+  <li><strong>File management</strong>: Automated file organization and naming</li>
+  <li><strong>Workflow automation</strong>: Streamlined processes for common tasks</li>
+</ul>
+
+<h3 id="reporting-tools">Reporting Tools</h3>
+<ul>
+  <li><strong>Inventory reports</strong>: Complete status of all parts</li>
+  <li><strong>Missing parts lists</strong>: Prioritize copying and acquisition</li>
+  <li><strong>Usage analytics</strong>: Understand access patterns and needs</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>With parts properly managed:</p>
+
+<ol>
+  <li><strong><a href="concerts-recordings.html">Learn Concert Management</a></strong> - Track performances and recordings</li>
+  <li><strong><a href="distribution.html">Explore Distribution</a></strong> - Share parts with users</li>
+  <li><strong><a href="admin-guide.html">Review Admin Functions</a></strong> - Advanced management tools</li>
+</ol>
+
+<hr />
+
+<p><em>Continue to the next section: <a href="concerts-recordings.html">Concerts and Recordings</a> to learn about tracking performances and managing recordings.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

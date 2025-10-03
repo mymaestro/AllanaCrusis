@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Compositions | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Compositions" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/compositions.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/compositions.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Compositions" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"Compositions","url":"http://0.0.0.0:4000/AllanaCrusis/compositions.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="composition-management">Composition Management</h1>
+
+<p>This section covers how to add, edit, and manage musical compositions in AllanaCrusis. Compositions are the core organizational unit of your music library.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+  <li><a href="#understanding-compositions">Understanding Compositions</a></li>
+  <li><a href="#viewing-compositions">Viewing Compositions</a></li>
+  <li><a href="#adding-new-compositions">Adding New Compositions</a></li>
+  <li><a href="#editing-existing-compositions">Editing Existing Compositions</a></li>
+  <li><a href="#composer-name-management">Composer Name Management</a></li>
+  <li><a href="#metadata-best-practices">Metadata Best Practices</a></li>
+  <li><a href="#bulk-operations">Bulk Operations</a></li>
+</ul>
+
+<hr />
+
+<h2 id="understanding-compositions">Understanding Compositions</h2>
+
+<h3 id="what-is-a-composition">What is a Composition?</h3>
+<p>A composition in AllanaCrusis represents a complete musical work, including:</p>
+<ul>
+  <li><strong>Basic information</strong>: Title, composer, arranger</li>
+  <li><strong>Publishing details</strong>: Publisher, catalog number</li>
+  <li><strong>Performance data</strong>: Grade level, duration, instrumentation</li>
+  <li><strong>Organization</strong>: Genre, ensemble assignment</li>
+  <li><strong>Physical details</strong>: Paper size, page counts</li>
+</ul>
+
+<h3 id="composition-vs-parts">Composition vs. Parts</h3>
+<ul>
+  <li><strong>Composition</strong>: The overall musical work and its metadata</li>
+  <li><strong>Parts</strong>: Individual instrument parts that belong to the composition</li>
+  <li><strong>Relationship</strong>: One composition can have many parts</li>
+</ul>
+
+<p><img src="images/screenshots/composition-overview.png" alt="Composition overview showing relationship to parts" />
+<em>Figure 1: How compositions relate to their individual parts</em></p>
+
+<hr />
+
+<h2 id="viewing-compositions">Viewing Compositions</h2>
+
+<h3 id="accessing-the-compositions-list">Accessing the Compositions List</h3>
+<ol>
+  <li><strong>Navigate to MATERIALS &gt; Compositions</strong></li>
+  <li><strong>View the complete library</strong> of compositions</li>
+  <li><strong>Use filters and search</strong> to find specific works</li>
+  <li><strong>Sort by different criteria</strong> (title, composer, date added, etc.)</li>
+</ol>
+
+<h3 id="compositions-table-features">Compositions Table Features</h3>
+<ul>
+  <li><strong>Real-time filtering</strong>: Type in filter boxes to narrow results</li>
+  <li><strong>Sortable columns</strong>: Click headers to sort by that field</li>
+  <li><strong>Sticky headers</strong>: Column headers stay visible while scrolling</li>
+  <li><strong>Action buttons</strong>: Quick access to edit, view, or manage each composition</li>
+</ul>
+
+<p><img src="images/screenshots/compositions-list.png" alt="Compositions list with filtering and sorting options" />
+<em>Figure 2: Main compositions list with search and filter capabilities</em></p>
+
+<h3 id="composition-details-view">Composition Details View</h3>
+<p>Click on any composition title to see:</p>
+<ul>
+  <li><strong>Complete metadata</strong></li>
+  <li><strong>List of associated parts</strong></li>
+  <li><strong>Performance history</strong> (if tracked)</li>
+  <li><strong>Download links</strong> (for authorized users)</li>
+  <li><strong>Quick action buttons</strong></li>
+</ul>
+
+<p><img src="images/screenshots/composition-details.png" alt="Detailed view of a single composition" />
+<em>Figure 3: Detailed composition view showing all metadata and parts</em></p>
+
+<hr />
+
+<h2 id="adding-new-compositions">Adding New Compositions</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+  <li><strong>Librarian or Manager role</strong> required</li>
+  <li><strong>Supporting data configured</strong>: Genres, ensembles, publishers</li>
+  <li><strong>Catalog numbering system</strong> understood</li>
+</ul>
+
+<h3 id="step-by-step-process">Step-by-Step Process</h3>
+
+<h4 id="1-start-the-add-process">1. Start the Add Process</h4>
+<ol>
+  <li><strong>Go to MATERIALS &gt; Compositions</strong></li>
+  <li><strong>Click “Add New Composition”</strong></li>
+  <li><strong>The composition form opens</strong></li>
+</ol>
+
+<h4 id="2-required-fields">2. Required Fields</h4>
+<p>Fill in the essential information:</p>
+
+<p><strong>Catalog Number</strong></p>
+<ul>
+  <li>Format: Letter + 3 digits (C###, M###, X###)</li>
+  <li>Must be unique in the system</li>
+  <li>Use organizational numbering scheme</li>
+</ul>
+
+<p><strong>Title</strong></p>
+<ul>
+  <li>Complete composition title</li>
+  <li>Articles at the end: “Liberty Bell, The”</li>
+  <li>Include subtitles if relevant</li>
+</ul>
+
+<p><strong>Composer</strong></p>
+<ul>
+  <li>Use “Last, First” format: “Beethoven, Ludwig van”</li>
+  <li>Autocomplete will suggest existing composers</li>
+  <li>Required field - use “Traditional” or “(n/a)” if unknown</li>
+</ul>
+
+<p><img src="images/screenshots/add-composition-form.png" alt="Add composition form showing required fields" />
+<em>Figure 4: New composition form with required fields highlighted</em></p>
+
+<h4 id="3-optional-but-important-fields">3. Optional but Important Fields</h4>
+
+<p><strong>Arranger/Editor</strong></p>
+<ul>
+  <li>Use same “Last, First” format as composer</li>
+  <li>Leave blank if not applicable</li>
+  <li>Autocomplete available</li>
+</ul>
+
+<p><strong>Publisher</strong></p>
+<ul>
+  <li>Choose from existing list or add new</li>
+  <li>Abbreviate common words: “Hal Leonard” not “Hal Leonard Corporation”</li>
+</ul>
+
+<p><strong>Genre</strong></p>
+<ul>
+  <li>Select most appropriate category</li>
+  <li>Default to “Wind Ensemble” if uncertain</li>
+  <li>Affects search and organization</li>
+</ul>
+
+<p><strong>Ensemble</strong></p>
+<ul>
+  <li>Primary performing group for this composition</li>
+  <li>Usually set by your organization</li>
+</ul>
+
+<p><img src="images/screenshots/composition-optional-fields.png" alt="Composition form showing optional fields" />
+<em>Figure 5: Optional fields section of the composition form</em></p>
+
+<h4 id="4-performance-information">4. Performance Information</h4>
+
+<p><strong>Grade Level</strong></p>
+<ul>
+  <li>Difficulty rating (1-7 scale typically)</li>
+  <li>Check score or Wind Repertory Project for guidance</li>
+  <li>Leave blank if unknown</li>
+</ul>
+
+<p><strong>Duration</strong></p>
+<ul>
+  <li>Performance time in minutes</li>
+  <li>Can be approximate</li>
+  <li>Helpful for concert planning</li>
+</ul>
+
+<p><strong>Paper Size</strong></p>
+<ul>
+  <li>Most band music: Folio (9x12)</li>
+  <li>Some music: Letter (8.5x11)</li>
+  <li>Marching band: Often special sizes</li>
+</ul>
+
+<h4 id="5-save-the-composition">5. Save the Composition</h4>
+<ol>
+  <li><strong>Review all information</strong> for accuracy</li>
+  <li><strong>Click “Add Composition”</strong></li>
+  <li><strong>Confirmation message</strong> appears</li>
+  <li><strong>Composition is now in the system</strong></li>
+</ol>
+
+<hr />
+
+<h2 id="editing-existing-compositions">Editing Existing Compositions</h2>
+
+<h3 id="when-to-edit-compositions">When to Edit Compositions</h3>
+<ul>
+  <li><strong>Correcting errors</strong> in metadata</li>
+  <li><strong>Adding missing information</strong> (grade level, duration)</li>
+  <li><strong>Updating publisher information</strong></li>
+  <li><strong>Changing organizational assignments</strong></li>
+</ul>
+
+<h3 id="editing-process">Editing Process</h3>
+<ol>
+  <li><strong>Find the composition</strong> using search or browse</li>
+  <li><strong>Click the blue “Edit” button</strong></li>
+  <li><strong>Make necessary changes</strong></li>
+  <li><strong>Click “Update”</strong> to save changes</li>
+</ol>
+
+<p><img src="images/screenshots/edit-composition.png" alt="Edit composition form with existing data" />
+<em>Figure 6: Editing an existing composition with pre-filled data</em></p>
+
+<h3 id="common-edits">Common Edits</h3>
+<ul>
+  <li><strong>Title corrections</strong>: Fix spelling or formatting</li>
+  <li><strong>Composer standardization</strong>: Ensure consistent naming</li>
+  <li><strong>Missing metadata</strong>: Add grade level or duration</li>
+  <li><strong>Genre reclassification</strong>: Move to more appropriate category</li>
+</ul>
+
+<hr />
+
+<h2 id="composer-name-management">Composer Name Management</h2>
+
+<h3 id="importance-of-consistent-naming">Importance of Consistent Naming</h3>
+<ul>
+  <li><strong>Search effectiveness</strong>: Users can find all works by a composer</li>
+  <li><strong>Reporting accuracy</strong>: Statistics and analysis work properly</li>
+  <li><strong>Professional appearance</strong>: Library looks organized and authoritative</li>
+</ul>
+
+<h3 id="composer-normalization-features">Composer Normalization Features</h3>
+<p>AllanaCrusis includes tools to help maintain consistent composer names:</p>
+
+<h4 id="autocomplete-system">Autocomplete System</h4>
+<ul>
+  <li><strong>Start typing</strong> a composer name</li>
+  <li><strong>Suggestions appear</strong> based on existing entries</li>
+  <li><strong>Select from list</strong> to ensure consistency</li>
+  <li><strong>Automatic formatting</strong> to “Last, First” format</li>
+</ul>
+
+<p><img src="images/screenshots/composer-autocomplete.png" alt="Composer autocomplete showing suggestions" />
+<em>Figure 7: Composer autocomplete suggesting existing entries</em></p>
+
+<h4 id="name-formatting-rules">Name Formatting Rules</h4>
+<ul>
+  <li><strong>Standard format</strong>: “Last, First Middle”</li>
+  <li><strong>Multiple names</strong>: “Beethoven, Ludwig van”</li>
+  <li><strong>Titles and suffixes</strong>: “Bach, Johann Sebastian”</li>
+  <li><strong>Single names</strong>: “Palestrina” (historical figures)</li>
+</ul>
+
+<h4 id="special-cases">Special Cases</h4>
+<ul>
+  <li><strong>Traditional works</strong>: Use “Traditional”</li>
+  <li><strong>Unknown composer</strong>: Use “(n/a)”</li>
+  <li><strong>Multiple composers</strong>: List primary composer, note others in arranger field</li>
+  <li><strong>Pseudonyms</strong>: Use most recognized form, note real name in description</li>
+</ul>
+
+<h3 id="bulk-composer-updates">Bulk Composer Updates</h3>
+<p>For managers, tools may be available to:</p>
+<ul>
+  <li><strong>Standardize existing names</strong> across the library</li>
+  <li><strong>Merge duplicate entries</strong> with slight variations</li>
+  <li><strong>Apply formatting rules</strong> to all composer names</li>
+  <li><strong>Generate reports</strong> on naming inconsistencies</li>
+</ul>
+
+<hr />
+
+<h2 id="metadata-best-practices">Metadata Best Practices</h2>
+
+<h3 id="title-guidelines">Title Guidelines</h3>
+<ul>
+  <li><strong>Complete titles</strong>: Include full title and subtitle</li>
+  <li><strong>Article placement</strong>: Move articles to end with comma</li>
+  <li><strong>Capitalization</strong>: Follow standard title case rules</li>
+  <li><strong>Punctuation</strong>: Be consistent with periods, commas</li>
+</ul>
+
+<h3 id="publisher-information">Publisher Information</h3>
+<ul>
+  <li><strong>Standard abbreviations</strong>: Use consistent shortened forms</li>
+  <li><strong>Current publishers</strong>: Update if companies merge or change</li>
+  <li><strong>Historical accuracy</strong>: Keep original publisher for historical works</li>
+  <li><strong>Multiple editions</strong>: Note which edition you have</li>
+</ul>
+
+<h3 id="genre-classification">Genre Classification</h3>
+<ul>
+  <li><strong>Primary purpose</strong>: Choose based on intended use</li>
+  <li><strong>Consistent categories</strong>: Use established genre list</li>
+  <li><strong>Special collections</strong>: Create genres for unique organizational needs</li>
+  <li><strong>Regular review</strong>: Update genres as collection evolves</li>
+</ul>
+
+<p><img src="images/screenshots/metadata-checklist.png" alt="Metadata best practices checklist" />
+<em>Figure 8: Checklist for ensuring quality metadata entry</em></p>
+
+<hr />
+
+<h2 id="bulk-operations">Bulk Operations</h2>
+
+<h3 id="when-to-use-bulk-operations">When to Use Bulk Operations</h3>
+<ul>
+  <li><strong>Large imports</strong> from other systems</li>
+  <li><strong>Systematic corrections</strong> across multiple compositions</li>
+  <li><strong>Organizational changes</strong> (ensemble reassignments, genre updates)</li>
+  <li><strong>Publisher updates</strong> due to mergers or acquisitions</li>
+</ul>
+
+<h3 id="available-bulk-functions">Available Bulk Functions</h3>
+<p>Depending on your role and system configuration:</p>
+
+<h4 id="export-functions">Export Functions</h4>
+<ul>
+  <li><strong>CSV export</strong> of composition data</li>
+  <li><strong>Filtered exports</strong> based on search criteria</li>
+  <li><strong>Custom field selection</strong> for specific reports</li>
+</ul>
+
+<h4 id="import-functions">Import Functions</h4>
+<ul>
+  <li><strong>CSV import</strong> of new compositions</li>
+  <li><strong>Update existing</strong> compositions via import</li>
+  <li><strong>Validation tools</strong> to check data before import</li>
+</ul>
+
+<h4 id="batch-updates">Batch Updates</h4>
+<ul>
+  <li><strong>Genre reassignment</strong> for multiple works</li>
+  <li><strong>Publisher standardization</strong> across collections</li>
+  <li><strong>Composer name normalization</strong> in bulk</li>
+</ul>
+
+<p><img src="images/screenshots/bulk-operations.png" alt="Bulk operations interface" />
+<em>Figure 9: Bulk operations tools for managing multiple compositions</em></p>
+
+<h3 id="import-guidelines">Import Guidelines</h3>
+<p>When importing composition data:</p>
+<ol>
+  <li><strong>Prepare clean data</strong> in required format</li>
+  <li><strong>Test with small batch</strong> first</li>
+  <li><strong>Validate required fields</strong> are present</li>
+  <li><strong>Check for duplicates</strong> before importing</li>
+  <li><strong>Review results</strong> after import completion</li>
+</ol>
+
+<hr />
+
+<h2 id="search-and-discovery">Search and Discovery</h2>
+
+<h3 id="making-compositions-findable">Making Compositions Findable</h3>
+<p>Good metadata entry ensures users can find compositions through:</p>
+
+<h4 id="search-methods">Search Methods</h4>
+<ul>
+  <li><strong>Title searches</strong>: Partial or complete titles</li>
+  <li><strong>Composer searches</strong>: Various name formats</li>
+  <li><strong>Catalog number lookup</strong>: Direct access via number</li>
+  <li><strong>Genre browsing</strong>: Category-based discovery</li>
+  <li><strong>Advanced filtering</strong>: Multiple criteria combined</li>
+</ul>
+
+<h4 id="search-optimization-tips">Search Optimization Tips</h4>
+<ul>
+  <li><strong>Complete information</strong>: Fill in all available fields</li>
+  <li><strong>Standard terminology</strong>: Use consistent language</li>
+  <li><strong>Alternative names</strong>: Note variations in description fields</li>
+  <li><strong>Tags and keywords</strong>: Use description for searchable terms</li>
+</ul>
+
+<p><img src="images/screenshots/search-results.png" alt="Search results showing well-organized compositions" />
+<em>Figure 10: Search results demonstrating effective metadata organization</em></p>
+
+<hr />
+
+<h2 id="quality-control">Quality Control</h2>
+
+<h3 id="regular-maintenance-tasks">Regular Maintenance Tasks</h3>
+<ul>
+  <li><strong>Review new entries</strong> for completeness and accuracy</li>
+  <li><strong>Standardize naming</strong> across the collection</li>
+  <li><strong>Update missing information</strong> as it becomes available</li>
+  <li><strong>Clean up duplicates</strong> or near-duplicates</li>
+</ul>
+
+<h3 id="validation-checks">Validation Checks</h3>
+<ul>
+  <li><strong>Required fields</strong>: Ensure all essential data is present</li>
+  <li><strong>Format consistency</strong>: Check catalog numbers, names, titles</li>
+  <li><strong>Logical relationships</strong>: Verify ensemble assignments make sense</li>
+  <li><strong>External verification</strong>: Cross-check with authoritative sources</li>
+</ul>
+
+<h3 id="collaboration-tools">Collaboration Tools</h3>
+<ul>
+  <li><strong>Review queues</strong>: Flag compositions needing attention</li>
+  <li><strong>Change logging</strong>: Track who made what changes when</li>
+  <li><strong>Discussion notes</strong>: Communicate about questionable entries</li>
+  <li><strong>Approval workflows</strong>: Require review for certain changes</li>
+</ul>
+
+<hr />
+
+<h2 id="integration-with-other-functions">Integration with Other Functions</h2>
+
+<h3 id="connection-to-parts-management">Connection to Parts Management</h3>
+<ul>
+  <li><strong>Automatic relationships</strong>: Parts link to their composition</li>
+  <li><strong>Inherited metadata</strong>: Parts get information from composition</li>
+  <li><strong>Instrumentation tracking</strong>: Composition shows what parts exist</li>
+</ul>
+
+<h3 id="performance-tracking">Performance Tracking</h3>
+<ul>
+  <li><strong>Concert programming</strong>: Link compositions to performances</li>
+  <li><strong>Usage statistics</strong>: Track which works are performed most</li>
+  <li><strong>Planning tools</strong>: Use metadata for concert planning</li>
+</ul>
+
+<h3 id="reporting-and-analysis">Reporting and Analysis</h3>
+<ul>
+  <li><strong>Collection statistics</strong>: Analyze by composer, genre, grade level</li>
+  <li><strong>Acquisition planning</strong>: Identify gaps in collection</li>
+  <li><strong>Usage reports</strong>: See which compositions are accessed most</li>
+</ul>
+
+<hr />
+
+<h2 id="troubleshooting-common-issues">Troubleshooting Common Issues</h2>
+
+<h3 id="duplicate-compositions">Duplicate Compositions</h3>
+<p><strong>Problem</strong>: Same composition entered multiple times
+<strong>Solution</strong>:</p>
+<ul>
+  <li>Use search before adding new compositions</li>
+  <li>Check alternate titles and spellings</li>
+  <li>Merge or remove duplicates as appropriate</li>
+</ul>
+
+<h3 id="missing-information">Missing Information</h3>
+<p><strong>Problem</strong>: Incomplete metadata affecting usefulness
+<strong>Solution</strong>:</p>
+<ul>
+  <li>Research using Wind Repertory Project or other sources</li>
+  <li>Check physical scores for missing information</li>
+  <li>Flag for later completion if information unavailable</li>
+</ul>
+
+<h3 id="naming-inconsistencies">Naming Inconsistencies</h3>
+<p><strong>Problem</strong>: Same composer with different name formats
+<strong>Solution</strong>:</p>
+<ul>
+  <li>Use autocomplete to maintain consistency</li>
+  <li>Run periodic reports to identify variations</li>
+  <li>Standardize using bulk update tools</li>
+</ul>
+
+<p><img src="images/screenshots/composition-troubleshooting.png" alt="Troubleshooting guide for common composition issues" />
+<em>Figure 11: Common issues and their solutions</em></p>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>With compositions properly managed:</p>
+
+<ol>
+  <li><strong><a href="parts.html">Learn Parts Management</a></strong> - Handle individual instrument parts</li>
+  <li><strong><a href="concerts-recordings.html">Explore Concert Tracking</a></strong> - Connect compositions to performances</li>
+  <li><strong><a href="distribution.html">Set up Distribution</a></strong> - Share compositions with users</li>
+</ol>
+
+<hr />
+
+<p><em>Continue to the next section: <a href="parts.html">Parts Management</a> to learn about managing individual instrument parts and files.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

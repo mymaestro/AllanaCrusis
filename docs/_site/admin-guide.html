@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Administrator Guide | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Administrator Guide" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/admin-guide.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/admin-guide.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Administrator Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"Administrator Guide","url":"http://0.0.0.0:4000/AllanaCrusis/admin-guide.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="administrator-guide">Administrator Guide</h1>
+
+<p>This section covers advanced system administration functions available to Manager-level users. These tools are for system configuration, user management, and maintaining the overall health of your AllanaCrusis installation.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+  <li><a href="#administrator-responsibilities">Administrator Responsibilities</a></li>
+  <li><a href="#user-management">User Management</a></li>
+  <li><a href="#system-configuration">System Configuration</a></li>
+  <li><a href="#data-management">Data Management</a></li>
+  <li><a href="#security-and-access-control">Security and Access Control</a></li>
+  <li><a href="#reporting-and-analytics">Reporting and Analytics</a></li>
+  <li><a href="#maintenance-and-troubleshooting">Maintenance and Troubleshooting</a></li>
+  <li><a href="#backup-and-recovery">Backup and Recovery</a></li>
+</ul>
+
+<hr />
+
+<h2 id="administrator-responsibilities">Administrator Responsibilities</h2>
+
+<h3 id="role-of-system-administrators">Role of System Administrators</h3>
+<p>AllanaCrusis administrators (Manager role) are responsible for:</p>
+<ul>
+  <li><strong>User account management</strong>: Creating, modifying, and deactivating user accounts</li>
+  <li><strong>System configuration</strong>: Setting up organizational preferences and policies</li>
+  <li><strong>Data integrity</strong>: Ensuring accuracy and consistency of library data</li>
+  <li><strong>Security management</strong>: Controlling access and protecting sensitive information</li>
+  <li><strong>Performance monitoring</strong>: Maintaining system efficiency and reliability</li>
+  <li><strong>Training and support</strong>: Helping users understand and use the system effectively</li>
+</ul>
+
+<h3 id="access-level-requirements">Access Level Requirements</h3>
+<p>Administrator functions require <strong>Manager</strong> role permissions:</p>
+<ul>
+  <li><strong>Full system access</strong>: All features and configurations</li>
+  <li><strong>User management</strong>: Create, edit, and delete user accounts</li>
+  <li><strong>System settings</strong>: Modify global configuration options</li>
+  <li><strong>Data management</strong>: Bulk operations and maintenance tools</li>
+  <li><strong>Security controls</strong>: Access to logs, permissions, and security settings</li>
+</ul>
+
+<p><img src="images/screenshots/admin-dashboard.png" alt="Administrator dashboard overview" />
+<em>Figure 1: Administrator dashboard showing key management functions</em></p>
+
+<hr />
+
+<h2 id="user-management">User Management</h2>
+
+<h3 id="user-account-administration">User Account Administration</h3>
+<p><strong>Accessing User Management:</strong></p>
+<ol>
+  <li><strong>Navigate to ADMIN &gt; Users</strong></li>
+  <li><strong>View complete user list</strong></li>
+  <li><strong>Search and filter</strong> users as needed</li>
+  <li><strong>Access individual user records</strong></li>
+</ol>
+
+<h3 id="creating-new-user-accounts">Creating New User Accounts</h3>
+<p><strong>Step-by-Step Process:</strong></p>
+<ol>
+  <li><strong>Click “Add New User”</strong></li>
+  <li><strong>Fill in required information</strong>:
+    <ul>
+      <li><strong>Username</strong>: Unique identifier</li>
+      <li><strong>Email address</strong>: Must be valid and unique</li>
+      <li><strong>Full name</strong>: First and last name</li>
+      <li><strong>Initial password</strong>: Temporary password for first login</li>
+      <li><strong>Role assignment</strong>: Guest, Member, Librarian, or Manager</li>
+      <li><strong>Ensemble assignment</strong>: Which group(s) user belongs to</li>
+    </ul>
+  </li>
+  <li><strong>Set account options</strong>:
+    <ul>
+      <li><strong>Account status</strong>: Active, inactive, pending verification</li>
+      <li><strong>Email verification</strong>: Required or optional</li>
+      <li><strong>Password requirements</strong>: Force change on first login</li>
+      <li><strong>Expiration date</strong>: If account has time limit</li>
+    </ul>
+  </li>
+  <li><strong>Save new account</strong></li>
+  <li><strong>Notify user</strong> of account creation and login information</li>
+</ol>
+
+<p><img src="images/screenshots/create-user.png" alt="New user creation form" />
+<em>Figure 2: Form for creating new user accounts</em></p>
+
+<h3 id="managing-existing-users">Managing Existing Users</h3>
+<p><strong>User Account Modifications:</strong></p>
+<ul>
+  <li><strong>Role changes</strong>: Promote or demote user permissions</li>
+  <li><strong>Contact updates</strong>: Change email, name, or other details</li>
+  <li><strong>Password resets</strong>: Generate new passwords for locked accounts</li>
+  <li><strong>Account status</strong>: Activate, deactivate, or suspend accounts</li>
+  <li><strong>Ensemble assignments</strong>: Add or remove from groups</li>
+</ul>
+
+<p><strong>Bulk Operations:</strong></p>
+<ul>
+  <li><strong>Mass role changes</strong>: Update multiple users simultaneously</li>
+  <li><strong>Ensemble transfers</strong>: Move groups of users between ensembles</li>
+  <li><strong>Account cleanup</strong>: Deactivate multiple inactive accounts</li>
+  <li><strong>Communication</strong>: Send messages to groups of users</li>
+</ul>
+
+<p><img src="images/screenshots/user-management.png" alt="User management interface" />
+<em>Figure 3: Interface for managing existing user accounts</em></p>
+
+<h3 id="user-roles-and-permissions">User Roles and Permissions</h3>
+<p><strong>Role Hierarchy:</strong></p>
+<ol>
+  <li><strong>Guest</strong>: Public access only, no login required</li>
+  <li><strong>Member</strong>: Basic authenticated access</li>
+  <li><strong>Librarian</strong>: Content management capabilities</li>
+  <li><strong>Manager</strong>: Full administrative control</li>
+</ol>
+
+<p><strong>Permission Matrix:</strong></p>
+<ul>
+  <li><strong>Content viewing</strong>: All roles can view public content</li>
+  <li><strong>File downloads</strong>: Members and above (if configured)</li>
+  <li><strong>Content editing</strong>: Librarians and Managers only</li>
+  <li><strong>User management</strong>: Managers only</li>
+  <li><strong>System configuration</strong>: Managers only</li>
+</ul>
+
+<p><strong>Role Assignment Best Practices:</strong></p>
+<ul>
+  <li><strong>Principle of least privilege</strong>: Give users minimum necessary access</li>
+  <li><strong>Regular review</strong>: Audit user roles periodically</li>
+  <li><strong>Documentation</strong>: Maintain records of why users have specific roles</li>
+  <li><strong>Change management</strong>: Process for requesting role changes</li>
+</ul>
+
+<hr />
+
+<h2 id="system-configuration">System Configuration</h2>
+
+<h3 id="global-settings">Global Settings</h3>
+<p><strong>Organization Information:</strong></p>
+<ul>
+  <li><strong>Library name</strong>: Display name for your organization</li>
+  <li><strong>Contact information</strong>: Administrative contact details</li>
+  <li><strong>Time zone</strong>: Default timezone for dates and times</li>
+  <li><strong>Language settings</strong>: Default language and localization</li>
+  <li><strong>Logo and branding</strong>: Customize appearance</li>
+</ul>
+
+<p><strong>System Behavior:</strong></p>
+<ul>
+  <li><strong>Default permissions</strong>: New user and content defaults</li>
+  <li><strong>Email settings</strong>: SMTP configuration for system emails</li>
+  <li><strong>File upload limits</strong>: Maximum file sizes and formats</li>
+  <li><strong>Search configuration</strong>: Default search behavior and limits</li>
+</ul>
+
+<p><img src="images/screenshots/system-config.png" alt="System configuration interface" />
+<em>Figure 4: System configuration options and settings</em></p>
+
+<h3 id="email-configuration">Email Configuration</h3>
+<p><strong>SMTP Settings:</strong></p>
+<ul>
+  <li><strong>Mail server</strong>: Host and port configuration</li>
+  <li><strong>Authentication</strong>: Username and password for mail server</li>
+  <li><strong>Security</strong>: SSL/TLS encryption settings</li>
+  <li><strong>From address</strong>: Default sender for system emails</li>
+</ul>
+
+<p><strong>Email Templates:</strong></p>
+<ul>
+  <li><strong>Welcome messages</strong>: New user account notifications</li>
+  <li><strong>Password resets</strong>: Automated password recovery</li>
+  <li><strong>Verification emails</strong>: Account activation messages</li>
+  <li><strong>System notifications</strong>: Updates and announcements</li>
+</ul>
+
+<p><strong>Testing and Validation:</strong></p>
+<ul>
+  <li><strong>Test email functionality</strong>: Send test messages</li>
+  <li><strong>Monitor delivery</strong>: Check for bounced or failed emails</li>
+  <li><strong>Spam prevention</strong>: Configure to avoid spam filters</li>
+  <li><strong>Backup communication</strong>: Alternative contact methods</li>
+</ul>
+
+<h3 id="integration-settings">Integration Settings</h3>
+<p><strong>External Systems:</strong></p>
+<ul>
+  <li><strong>Authentication integration</strong>: LDAP, Active Directory, SSO</li>
+  <li><strong>Calendar systems</strong>: Performance and event scheduling</li>
+  <li><strong>Website integration</strong>: Embedding AllanaCrusis content</li>
+  <li><strong>Third-party tools</strong>: Music software, databases, etc.</li>
+</ul>
+
+<p><strong>API Configuration:</strong></p>
+<ul>
+  <li><strong>API access keys</strong>: For external system integration</li>
+  <li><strong>Rate limiting</strong>: Control API usage and prevent abuse</li>
+  <li><strong>Logging</strong>: Track API usage and troubleshoot issues</li>
+  <li><strong>Security</strong>: Authentication and authorization for API access</li>
+</ul>
+
+<p><img src="images/screenshots/integration-config.png" alt="Integration configuration panel" />
+<em>Figure 5: Configuration panel for external system integrations</em></p>
+
+<hr />
+
+<h2 id="data-management">Data Management</h2>
+
+<h3 id="data-quality-and-consistency">Data Quality and Consistency</h3>
+<p><strong>Regular Maintenance Tasks:</strong></p>
+<ul>
+  <li><strong>Duplicate detection</strong>: Find and merge duplicate records</li>
+  <li><strong>Data validation</strong>: Check for missing or incorrect information</li>
+  <li><strong>Consistency checks</strong>: Ensure related records match properly</li>
+  <li><strong>Standardization</strong>: Apply naming and formatting conventions</li>
+</ul>
+
+<p><strong>Bulk Data Operations:</strong></p>
+<ul>
+  <li><strong>Mass updates</strong>: Change multiple records simultaneously</li>
+  <li><strong>Data cleanup</strong>: Fix widespread data quality issues</li>
+  <li><strong>Migration tasks</strong>: Import data from other systems</li>
+  <li><strong>Archive management</strong>: Handle old or unused records</li>
+</ul>
+
+<h3 id="import-and-export-functions">Import and Export Functions</h3>
+<p><strong>Data Import:</strong></p>
+<ul>
+  <li><strong>CSV import</strong>: Bulk addition of compositions, parts, users</li>
+  <li><strong>Validation tools</strong>: Check data before importing</li>
+  <li><strong>Error reporting</strong>: Identify and fix import problems</li>
+  <li><strong>Progress tracking</strong>: Monitor large import operations</li>
+</ul>
+
+<p><strong>Data Export:</strong></p>
+<ul>
+  <li><strong>Full database exports</strong>: Complete system backup</li>
+  <li><strong>Selective exports</strong>: Specific data sets or filtered results</li>
+  <li><strong>Report generation</strong>: Formatted outputs for analysis</li>
+  <li><strong>Scheduled exports</strong>: Automated regular backups</li>
+</ul>
+
+<p><img src="images/screenshots/data-management.png" alt="Data management tools interface" />
+<em>Figure 6: Tools for managing and maintaining data quality</em></p>
+
+<h3 id="database-maintenance">Database Maintenance</h3>
+<p><strong>Performance Optimization:</strong></p>
+<ul>
+  <li><strong>Index management</strong>: Ensure efficient database queries</li>
+  <li><strong>Cache configuration</strong>: Speed up frequently accessed data</li>
+  <li><strong>Query optimization</strong>: Improve slow operations</li>
+  <li><strong>Storage management</strong>: Monitor disk usage and clean up</li>
+</ul>
+
+<p><strong>Integrity Checks:</strong></p>
+<ul>
+  <li><strong>Referential integrity</strong>: Ensure related records connect properly</li>
+  <li><strong>Data validation</strong>: Check for corrupt or invalid data</li>
+  <li><strong>Backup verification</strong>: Confirm backups are working</li>
+  <li><strong>Recovery testing</strong>: Periodically test restoration procedures</li>
+</ul>
+
+<hr />
+
+<h2 id="security-and-access-control">Security and Access Control</h2>
+
+<h3 id="security-policies">Security Policies</h3>
+<p><strong>Access Management:</strong></p>
+<ul>
+  <li><strong>Password policies</strong>: Requirements for user passwords</li>
+  <li><strong>Account lockout</strong>: Protection against brute force attacks</li>
+  <li><strong>Session management</strong>: Control how long users stay logged in</li>
+  <li><strong>Two-factor authentication</strong>: Additional security for sensitive accounts</li>
+</ul>
+
+<p><strong>Content Protection:</strong></p>
+<ul>
+  <li><strong>Copyright compliance</strong>: Ensure proper licensing and permissions</li>
+  <li><strong>File access controls</strong>: Restrict access to authorized users</li>
+  <li><strong>Download monitoring</strong>: Track and limit file downloads</li>
+  <li><strong>Usage auditing</strong>: Monitor how materials are being used</li>
+</ul>
+
+<p><img src="images/screenshots/security-config.png" alt="Security configuration interface" />
+<em>Figure 7: Security and access control configuration options</em></p>
+
+<h3 id="monitoring-and-logging">Monitoring and Logging</h3>
+<p><strong>System Logs:</strong></p>
+<ul>
+  <li><strong>User activity</strong>: Login attempts, downloads, changes</li>
+  <li><strong>System events</strong>: Errors, performance issues, maintenance</li>
+  <li><strong>Security incidents</strong>: Unauthorized access attempts</li>
+  <li><strong>Data changes</strong>: Track modifications to important records</li>
+</ul>
+
+<p><strong>Log Analysis:</strong></p>
+<ul>
+  <li><strong>Regular review</strong>: Check logs for unusual activity</li>
+  <li><strong>Automated alerts</strong>: Notification of security events</li>
+  <li><strong>Trend analysis</strong>: Identify patterns and potential issues</li>
+  <li><strong>Report generation</strong>: Summarize activity for management</li>
+</ul>
+
+<h3 id="backup-and-security">Backup and Security</h3>
+<p><strong>Data Protection:</strong></p>
+<ul>
+  <li><strong>Regular backups</strong>: Automated daily/weekly backups</li>
+  <li><strong>Offsite storage</strong>: Protect against local disasters</li>
+  <li><strong>Encryption</strong>: Secure backup files and transmissions</li>
+  <li><strong>Access controls</strong>: Limit who can access backup systems</li>
+</ul>
+
+<p><strong>Incident Response:</strong></p>
+<ul>
+  <li><strong>Response procedures</strong>: Steps to take when problems occur</li>
+  <li><strong>Contact information</strong>: Who to notify in emergencies</li>
+  <li><strong>Recovery plans</strong>: How to restore service after problems</li>
+  <li><strong>Documentation</strong>: Record incidents and responses</li>
+</ul>
+
+<hr />
+
+<h2 id="reporting-and-analytics">Reporting and Analytics</h2>
+
+<h3 id="standard-reports">Standard Reports</h3>
+<p><strong>System Usage:</strong></p>
+<ul>
+  <li><strong>User activity reports</strong>: Login frequency, feature usage</li>
+  <li><strong>Content access</strong>: Most popular compositions and parts</li>
+  <li><strong>Download statistics</strong>: File access patterns and trends</li>
+  <li><strong>Performance metrics</strong>: System speed and reliability</li>
+</ul>
+
+<p><strong>Library Analytics:</strong></p>
+<ul>
+  <li><strong>Collection statistics</strong>: Size, growth, and composition of library</li>
+  <li><strong>Usage patterns</strong>: How different types of content are used</li>
+  <li><strong>User demographics</strong>: Analysis of user base and needs</li>
+  <li><strong>Trend analysis</strong>: Changes in usage over time</li>
+</ul>
+
+<p><img src="images/screenshots/reporting-dashboard.png" alt="Reporting dashboard" />
+<em>Figure 8: Comprehensive reporting and analytics dashboard</em></p>
+
+<h3 id="custom-reports">Custom Reports</h3>
+<p><strong>Report Builder:</strong></p>
+<ul>
+  <li><strong>Field selection</strong>: Choose what data to include</li>
+  <li><strong>Filter criteria</strong>: Limit results to specific subsets</li>
+  <li><strong>Sorting options</strong>: Organize results meaningfully</li>
+  <li><strong>Output formats</strong>: PDF, CSV, web display options</li>
+</ul>
+
+<p><strong>Scheduled Reports:</strong></p>
+<ul>
+  <li><strong>Automated generation</strong>: Regular reports without manual intervention</li>
+  <li><strong>Email delivery</strong>: Send reports to stakeholders automatically</li>
+  <li><strong>Archive management</strong>: Store historical reports for comparison</li>
+  <li><strong>Alert systems</strong>: Notify when metrics exceed thresholds</li>
+</ul>
+
+<h3 id="data-analysis-tools">Data Analysis Tools</h3>
+<p><strong>Trend Analysis:</strong></p>
+<ul>
+  <li><strong>Historical comparisons</strong>: How metrics change over time</li>
+  <li><strong>Seasonal patterns</strong>: Identify cyclical usage patterns</li>
+  <li><strong>Growth projections</strong>: Predict future needs and usage</li>
+  <li><strong>Performance benchmarks</strong>: Compare against organizational goals</li>
+</ul>
+
+<p><strong>User Behavior Analysis:</strong></p>
+<ul>
+  <li><strong>Navigation patterns</strong>: How users move through the system</li>
+  <li><strong>Feature utilization</strong>: Which capabilities are used most</li>
+  <li><strong>Problem identification</strong>: Where users encounter difficulties</li>
+  <li><strong>Optimization opportunities</strong>: Ways to improve user experience</li>
+</ul>
+
+<hr />
+
+<h2 id="maintenance-and-troubleshooting">Maintenance and Troubleshooting</h2>
+
+<h3 id="system-maintenance">System Maintenance</h3>
+<p><strong>Regular Tasks:</strong></p>
+<ul>
+  <li><strong>Software updates</strong>: Keep AllanaCrusis current with latest version</li>
+  <li><strong>Database optimization</strong>: Maintain performance and reliability</li>
+  <li><strong>File cleanup</strong>: Remove temporary and unnecessary files</li>
+  <li><strong>Security updates</strong>: Apply patches and security fixes</li>
+</ul>
+
+<p><strong>Scheduled Maintenance:</strong></p>
+<ul>
+  <li><strong>Maintenance windows</strong>: Plan downtime for updates</li>
+  <li><strong>User notification</strong>: Inform users of scheduled maintenance</li>
+  <li><strong>Backup procedures</strong>: Ensure data protection during maintenance</li>
+  <li><strong>Testing protocols</strong>: Verify system functionality after maintenance</li>
+</ul>
+
+<p><img src="images/screenshots/maintenance-schedule.png" alt="Maintenance scheduling interface" />
+<em>Figure 9: Interface for scheduling and managing system maintenance</em></p>
+
+<h3 id="performance-monitoring">Performance Monitoring</h3>
+<p><strong>System Metrics:</strong></p>
+<ul>
+  <li><strong>Response times</strong>: How quickly pages and features load</li>
+  <li><strong>Database performance</strong>: Query execution times and efficiency</li>
+  <li><strong>File download speeds</strong>: Network and storage performance</li>
+  <li><strong>Error rates</strong>: Frequency and types of system errors</li>
+</ul>
+
+<p><strong>Capacity Planning:</strong></p>
+<ul>
+  <li><strong>Storage usage</strong>: Monitor disk space and plan expansion</li>
+  <li><strong>User load</strong>: Track concurrent users and system capacity</li>
+  <li><strong>Bandwidth utilization</strong>: Network usage and requirements</li>
+  <li><strong>Growth planning</strong>: Predict future hardware and software needs</li>
+</ul>
+
+<h3 id="troubleshooting-tools">Troubleshooting Tools</h3>
+<p><strong>Diagnostic Capabilities:</strong></p>
+<ul>
+  <li><strong>System logs</strong>: Detailed error and activity information</li>
+  <li><strong>Performance profiling</strong>: Identify bottlenecks and slow operations</li>
+  <li><strong>Database analysis</strong>: Query performance and optimization</li>
+  <li><strong>User session tracking</strong>: Follow user interactions for problem diagnosis</li>
+</ul>
+
+<p><strong>Problem Resolution:</strong></p>
+<ul>
+  <li><strong>Error documentation</strong>: Catalog common problems and solutions</li>
+  <li><strong>Escalation procedures</strong>: When and how to contact technical support</li>
+  <li><strong>Workaround strategies</strong>: Temporary solutions for ongoing issues</li>
+  <li><strong>Change management</strong>: Track fixes and their effectiveness</li>
+</ul>
+
+<hr />
+
+<h2 id="backup-and-recovery">Backup and Recovery</h2>
+
+<h3 id="backup-strategy">Backup Strategy</h3>
+<p><strong>Backup Types:</strong></p>
+<ul>
+  <li><strong>Full backups</strong>: Complete system and data backup</li>
+  <li><strong>Incremental backups</strong>: Only changes since last backup</li>
+  <li><strong>Database backups</strong>: Specific backup of database content</li>
+  <li><strong>File backups</strong>: Uploaded files and digital content</li>
+</ul>
+
+<p><strong>Backup Schedule:</strong></p>
+<ul>
+  <li><strong>Daily backups</strong>: Critical data backed up every day</li>
+  <li><strong>Weekly full backups</strong>: Complete system backup weekly</li>
+  <li><strong>Monthly archival</strong>: Long-term storage of complete backups</li>
+  <li><strong>Before updates</strong>: Special backups before system changes</li>
+</ul>
+
+<p><img src="images/screenshots/backup-management.png" alt="Backup management interface" />
+<em>Figure 10: Backup and recovery management interface</em></p>
+
+<h3 id="recovery-procedures">Recovery Procedures</h3>
+<p><strong>Recovery Planning:</strong></p>
+<ul>
+  <li><strong>Recovery time objectives</strong>: How quickly system must be restored</li>
+  <li><strong>Recovery point objectives</strong>: How much data loss is acceptable</li>
+  <li><strong>Communication plans</strong>: How to notify users during outages</li>
+  <li><strong>Alternative access</strong>: Temporary solutions during recovery</li>
+</ul>
+
+<p><strong>Testing and Validation:</strong></p>
+<ul>
+  <li><strong>Regular restore tests</strong>: Verify backups actually work</li>
+  <li><strong>Partial recovery</strong>: Test restoration of specific components</li>
+  <li><strong>Disaster scenarios</strong>: Plan for various types of failures</li>
+  <li><strong>Documentation</strong>: Maintain current recovery procedures</li>
+</ul>
+
+<h3 id="business-continuity">Business Continuity</h3>
+<p><strong>Contingency Planning:</strong></p>
+<ul>
+  <li><strong>Alternative systems</strong>: Backup methods for critical functions</li>
+  <li><strong>Manual procedures</strong>: How to operate without the system</li>
+  <li><strong>Communication methods</strong>: Keep users informed during outages</li>
+  <li><strong>Priority restoration</strong>: Which functions to restore first</li>
+</ul>
+
+<p><strong>Risk Management:</strong></p>
+<ul>
+  <li><strong>Risk assessment</strong>: Identify potential threats and vulnerabilities</li>
+  <li><strong>Mitigation strategies</strong>: Reduce likelihood and impact of problems</li>
+  <li><strong>Insurance considerations</strong>: Financial protection against major losses</li>
+  <li><strong>Vendor relationships</strong>: Support agreements and escalation procedures</li>
+</ul>
+
+<hr />
+
+<h2 id="best-practices-for-administrators">Best Practices for Administrators</h2>
+
+<h3 id="daily-operations">Daily Operations</h3>
+<p><strong>Routine Checks:</strong></p>
+<ul>
+  <li><strong>Monitor system performance</strong>: Check for slowdowns or errors</li>
+  <li><strong>Review user activity</strong>: Look for unusual patterns or problems</li>
+  <li><strong>Check backup status</strong>: Ensure backups completed successfully</li>
+  <li><strong>Respond to user requests</strong>: Handle support tickets and questions</li>
+</ul>
+
+<p><strong>Proactive Management:</strong></p>
+<ul>
+  <li><strong>User training</strong>: Ongoing education for effective system use</li>
+  <li><strong>Documentation maintenance</strong>: Keep procedures and policies current</li>
+  <li><strong>Security vigilance</strong>: Monitor for threats and vulnerabilities</li>
+  <li><strong>Continuous improvement</strong>: Regular evaluation and enhancement</li>
+</ul>
+
+<h3 id="long-term-strategy">Long-term Strategy</h3>
+<p><strong>Strategic Planning:</strong></p>
+<ul>
+  <li><strong>Capacity planning</strong>: Anticipate growth and resource needs</li>
+  <li><strong>Technology roadmap</strong>: Plan for updates and new features</li>
+  <li><strong>User feedback</strong>: Incorporate user suggestions and needs</li>
+  <li><strong>Integration opportunities</strong>: Connect with other organizational systems</li>
+</ul>
+
+<p><strong>Change Management:</strong></p>
+<ul>
+  <li><strong>Testing procedures</strong>: Validate changes before implementation</li>
+  <li><strong>User communication</strong>: Keep users informed of changes</li>
+  <li><strong>Training programs</strong>: Help users adapt to new features</li>
+  <li><strong>Rollback plans</strong>: Ability to reverse changes if problems occur</li>
+</ul>
+
+<p><img src="images/screenshots/admin-best-practices.png" alt="Administrator best practices checklist" />
+<em>Figure 11: Checklist of best practices for system administrators</em></p>
+
+<hr />
+
+<h2 id="getting-support">Getting Support</h2>
+
+<h3 id="internal-resources">Internal Resources</h3>
+<ul>
+  <li><strong>User documentation</strong>: Complete guides for all system functions</li>
+  <li><strong>Training materials</strong>: Videos, tutorials, and reference guides</li>
+  <li><strong>User community</strong>: Other administrators and experienced users</li>
+  <li><strong>Organizational policies</strong>: Local procedures and guidelines</li>
+</ul>
+
+<h3 id="external-support">External Support</h3>
+<ul>
+  <li><strong>Technical support</strong>: Developer or vendor assistance</li>
+  <li><strong>User forums</strong>: Community discussions and problem-solving</li>
+  <li><strong>Professional services</strong>: Consulting and implementation help</li>
+  <li><strong>Training providers</strong>: Formal education and certification</li>
+</ul>
+
+<h3 id="emergency-contacts">Emergency Contacts</h3>
+<ul>
+  <li><strong>System vendor</strong>: Primary technical support contact</li>
+  <li><strong>Hosting provider</strong>: Infrastructure and network support</li>
+  <li><strong>Internal IT</strong>: Organizational technical resources</li>
+  <li><strong>Management team</strong>: Escalation for business decisions</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>As a system administrator:</p>
+
+<ol>
+  <li><strong><a href="troubleshooting.html">Review Troubleshooting Guide</a></strong> - Prepare for common issues</li>
+  <li><strong>Establish regular maintenance routines</strong> - Keep system running smoothly</li>
+  <li><strong>Plan for growth and changes</strong> - Anticipate organizational needs</li>
+  <li><strong>Build user support systems</strong> - Help users succeed with the system</li>
+</ol>
+
+<hr />
+
+<p><em>Continue to the final section: <a href="troubleshooting.html">Troubleshooting</a> for comprehensive problem-solving guidance.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

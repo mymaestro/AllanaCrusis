@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Concerts and Recordings | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Concerts and Recordings" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/concerts-recordings.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/concerts-recordings.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Concerts and Recordings" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"Concerts and Recordings","url":"http://0.0.0.0:4000/AllanaCrusis/concerts-recordings.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="concerts-and-recordings">Concerts and Recordings</h1>
+
+<p>This section covers managing concert data, performance history, playgrams, and audio recordings in AllanaCrusis. These features help track your organization’s performance history and create valuable archives.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+  <li><a href="#understanding-performance-tracking">Understanding Performance Tracking</a></li>
+  <li><a href="#concert-management">Concert Management</a></li>
+  <li><a href="#playgrams">Playgrams</a></li>
+  <li><a href="#performance-history">Performance History</a></li>
+  <li><a href="#recordings-management">Recordings Management</a></li>
+  <li><a href="#integration-with-compositions">Integration with Compositions</a></li>
+  <li><a href="#reporting-and-analysis">Reporting and Analysis</a></li>
+</ul>
+
+<hr />
+
+<h2 id="understanding-performance-tracking">Understanding Performance Tracking</h2>
+
+<h3 id="what-is-performance-tracking">What is Performance Tracking?</h3>
+<p>Performance tracking in AllanaCrusis includes:</p>
+<ul>
+  <li><strong>Concerts</strong>: Individual performance events with dates, venues, and programs</li>
+  <li><strong>Playgrams</strong>: Detailed programs showing what was performed when</li>
+  <li><strong>Performance history</strong>: Complete record of when compositions have been performed</li>
+  <li><strong>Recordings</strong>: Audio/video files linked to performances or compositions</li>
+</ul>
+
+<h3 id="benefits-of-performance-tracking">Benefits of Performance Tracking</h3>
+<ul>
+  <li><strong>Historical record</strong>: Maintain complete performance archive</li>
+  <li><strong>Programming assistance</strong>: Avoid repeating recent performances</li>
+  <li><strong>Anniversary planning</strong>: Track when pieces were last performed</li>
+  <li><strong>Educational value</strong>: Show students performance tradition</li>
+  <li><strong>Grant reporting</strong>: Document organization activity</li>
+  <li><strong>Marketing materials</strong>: Showcase performance history</li>
+</ul>
+
+<p><img src="images/screenshots/performance-overview.png" alt="Performance tracking overview" />
+<em>Figure 1: Overview of performance tracking components in AllanaCrusis</em></p>
+
+<hr />
+
+<h2 id="concert-management">Concert Management</h2>
+
+<h3 id="creating-a-new-concert">Creating a New Concert</h3>
+<ol>
+  <li><strong>Navigate to concerts section</strong> (may be under Materials or Reports)</li>
+  <li><strong>Click “Add New Concert”</strong></li>
+  <li><strong>Fill in concert details</strong></li>
+</ol>
+
+<h4 id="basic-concert-information">Basic Concert Information</h4>
+<p><strong>Required Fields:</strong></p>
+<ul>
+  <li><strong>Concert title</strong>: “Spring Concert 2025”, “Holiday Performance”</li>
+  <li><strong>Date</strong>: Performance date and time</li>
+  <li><strong>Venue</strong>: Location of performance</li>
+  <li><strong>Ensemble</strong>: Performing group</li>
+</ul>
+
+<p><strong>Optional Fields:</strong></p>
+<ul>
+  <li><strong>Conductor</strong>: Person leading the performance</li>
+  <li><strong>Description</strong>: Special notes about the concert</li>
+  <li><strong>Season/Series</strong>: If part of a regular series</li>
+  <li><strong>Audience type</strong>: Public, private, educational, etc.</li>
+</ul>
+
+<p><img src="images/screenshots/add-concert.png" alt="New concert creation form" />
+<em>Figure 2: Form for creating a new concert event</em></p>
+
+<h4 id="concert-details">Concert Details</h4>
+<p><strong>Venue Information:</strong></p>
+<ul>
+  <li><strong>Name</strong>: Complete venue name</li>
+  <li><strong>Address</strong>: Full location details</li>
+  <li><strong>Type</strong>: Concert hall, outdoor venue, school, etc.</li>
+  <li><strong>Capacity</strong>: Number of seats (if relevant)</li>
+</ul>
+
+<p><strong>Performance Context:</strong></p>
+<ul>
+  <li><strong>Concert type</strong>: Regular concert, festival, competition, etc.</li>
+  <li><strong>Ticket information</strong>: Free, ticketed, fundraiser</li>
+  <li><strong>Special circumstances</strong>: Memorial concert, celebration, etc.</li>
+</ul>
+
+<h3 id="editing-concert-information">Editing Concert Information</h3>
+<ol>
+  <li><strong>Find the concert</strong> in the concerts list</li>
+  <li><strong>Click “Edit” button</strong></li>
+  <li><strong>Update information</strong> as needed</li>
+  <li><strong>Save changes</strong></li>
+</ol>
+
+<p>Common edits include:</p>
+<ul>
+  <li><strong>Date/time changes</strong>: Due to scheduling conflicts</li>
+  <li><strong>Venue updates</strong>: If location changes</li>
+  <li><strong>Program modifications</strong>: As repertoire is finalized</li>
+  <li><strong>Additional details</strong>: Notes added after the event</li>
+</ul>
+
+<p><img src="images/screenshots/edit-concert.png" alt="Concert editing interface" />
+<em>Figure 3: Editing existing concert information</em></p>
+
+<hr />
+
+<h2 id="playgrams">Playgrams</h2>
+
+<h3 id="what-are-playgrams">What are Playgrams?</h3>
+<p>Playgrams are detailed concert programs that show:</p>
+<ul>
+  <li><strong>Order of performance</strong>: Sequence of pieces in the concert</li>
+  <li><strong>Specific compositions</strong>: Which works were performed</li>
+  <li><strong>Program structure</strong>: Movements, intermissions, encores</li>
+  <li><strong>Additional information</strong>: Soloists, special notes</li>
+</ul>
+
+<h3 id="creating-playgrams">Creating Playgrams</h3>
+<h4 id="method-1-build-program-during-concert-creation">Method 1: Build Program During Concert Creation</h4>
+<ol>
+  <li><strong>While creating/editing a concert</strong></li>
+  <li><strong>Add compositions to the program</strong></li>
+  <li><strong>Set performance order</strong></li>
+  <li><strong>Add program notes</strong></li>
+</ol>
+
+<h4 id="method-2-playgram-builder-tool">Method 2: Playgram Builder Tool</h4>
+<ol>
+  <li><strong>Access Playgram Builder</strong> (separate tool)</li>
+  <li><strong>Select concert</strong> to build program for</li>
+  <li><strong>Search and add compositions</strong></li>
+  <li><strong>Arrange in performance order</strong></li>
+  <li><strong>Add intermissions and special elements</strong></li>
+</ol>
+
+<p><img src="images/screenshots/playgram-builder.png" alt="Playgram builder interface" />
+<em>Figure 4: Playgram builder showing program construction</em></p>
+
+<h3 id="program-elements">Program Elements</h3>
+<p><strong>Standard Elements:</strong></p>
+<ul>
+  <li><strong>Musical compositions</strong>: Main repertoire</li>
+  <li><strong>Intermissions</strong>: Breaks in the program</li>
+  <li><strong>Encores</strong>: Additional pieces performed</li>
+  <li><strong>Special features</strong>: Solos, guest performers, narration</li>
+</ul>
+
+<p><strong>Additional Information:</strong></p>
+<ul>
+  <li><strong>Program notes</strong>: Background on compositions</li>
+  <li><strong>Personnel</strong>: Soloists, guest conductors</li>
+  <li><strong>Acknowledgments</strong>: Sponsors, special thanks</li>
+  <li><strong>Technical notes</strong>: Special staging, equipment</li>
+</ul>
+
+<h3 id="playgram-management">Playgram Management</h3>
+<p><strong>Ordering and Organization:</strong></p>
+<ul>
+  <li><strong>Drag and drop</strong>: Rearrange program order</li>
+  <li><strong>Numbering</strong>: Automatic or manual sequence numbers</li>
+  <li><strong>Grouping</strong>: Sets, movements, multi-part works</li>
+  <li><strong>Timing</strong>: Estimated or actual performance durations</li>
+</ul>
+
+<p><strong>Program Validation:</strong></p>
+<ul>
+  <li><strong>Composition verification</strong>: Ensure pieces exist in library</li>
+  <li><strong>Timing calculations</strong>: Total program length</li>
+  <li><strong>Balance checking</strong>: Variety in programming</li>
+  <li><strong>Historical awareness</strong>: Recent performance checking</li>
+</ul>
+
+<p><img src="images/screenshots/program-organization.png" alt="Program organization tools" />
+<em>Figure 5: Tools for organizing and validating concert programs</em></p>
+
+<hr />
+
+<h2 id="performance-history">Performance History</h2>
+
+<h3 id="tracking-performance-history">Tracking Performance History</h3>
+<p>Every time a composition is included in a playgram, it creates a performance record showing:</p>
+<ul>
+  <li><strong>When</strong>: Date of performance</li>
+  <li><strong>Where</strong>: Venue and concert context</li>
+  <li><strong>Who</strong>: Ensemble and conductor</li>
+  <li><strong>Program context</strong>: What else was performed</li>
+</ul>
+
+<h3 id="viewing-performance-history">Viewing Performance History</h3>
+<p><strong>For Individual Compositions:</strong></p>
+<ol>
+  <li><strong>Go to composition details</strong></li>
+  <li><strong>Look for “Performance History” section</strong></li>
+  <li><strong>See chronological list</strong> of performances</li>
+</ol>
+
+<p><strong>For Ensembles:</strong></p>
+<ol>
+  <li><strong>Access ensemble performance history</strong></li>
+  <li><strong>Filter by date ranges</strong></li>
+  <li><strong>Sort by various criteria</strong></li>
+</ol>
+
+<p><img src="images/screenshots/performance-history.png" alt="Performance history display" />
+<em>Figure 6: Performance history showing when and where compositions were performed</em></p>
+
+<h3 id="using-performance-history">Using Performance History</h3>
+<p><strong>Programming Decisions:</strong></p>
+<ul>
+  <li><strong>Avoid repetition</strong>: See when pieces were last performed</li>
+  <li><strong>Anniversary programming</strong>: Commemorate significant performances</li>
+  <li><strong>Audience consideration</strong>: Balance familiar and new repertoire</li>
+  <li><strong>Educational planning</strong>: Show students performance tradition</li>
+</ul>
+
+<p><strong>Historical Research:</strong></p>
+<ul>
+  <li><strong>Repertoire analysis</strong>: What types of music are performed most</li>
+  <li><strong>Conductor preferences</strong>: Different conductors’ programming patterns</li>
+  <li><strong>Seasonal patterns</strong>: Holiday music, graduation pieces, etc.</li>
+  <li><strong>Venue considerations</strong>: What works well in different spaces</li>
+</ul>
+
+<hr />
+
+<h2 id="recordings-management">Recordings Management</h2>
+
+<h3 id="types-of-recordings">Types of Recordings</h3>
+<p>AllanaCrusis can manage various recording types:</p>
+<ul>
+  <li><strong>Live concert recordings</strong>: Full or partial concert audio/video</li>
+  <li><strong>Studio recordings</strong>: Professional recording sessions</li>
+  <li><strong>Reference recordings</strong>: Examples for rehearsal or study</li>
+  <li><strong>Archival recordings</strong>: Historical performances</li>
+</ul>
+
+<h3 id="adding-recordings">Adding Recordings</h3>
+<h4 id="upload-process">Upload Process</h4>
+<ol>
+  <li><strong>Access recordings section</strong></li>
+  <li><strong>Click “Add Recording”</strong></li>
+  <li><strong>Upload audio/video file</strong> or link to external source</li>
+  <li><strong>Add recording metadata</strong></li>
+</ol>
+
+<h4 id="recording-information">Recording Information</h4>
+<p><strong>Basic Details:</strong></p>
+<ul>
+  <li><strong>Title</strong>: Recording description</li>
+  <li><strong>Date</strong>: When recording was made</li>
+  <li><strong>Performers</strong>: Ensemble, conductor, soloists</li>
+  <li><strong>Recording quality</strong>: Professional, amateur, rehearsal, etc.</li>
+</ul>
+
+<p><strong>Technical Information:</strong></p>
+<ul>
+  <li><strong>File format</strong>: MP3, WAV, MP4, etc.</li>
+  <li><strong>Quality settings</strong>: Bitrate, resolution</li>
+  <li><strong>Duration</strong>: Length of recording</li>
+  <li><strong>File size</strong>: For storage planning</li>
+</ul>
+
+<p><img src="images/screenshots/add-recording.png" alt="Recording upload form" />
+<em>Figure 7: Form for adding new recordings with metadata</em></p>
+
+<h4 id="linking-to-performances">Linking to Performances</h4>
+<p><strong>Concert Recordings:</strong></p>
+<ul>
+  <li><strong>Link to specific concert</strong>: Connect recording to playgram</li>
+  <li><strong>Partial recordings</strong>: Note which pieces are included</li>
+  <li><strong>Multiple recordings</strong>: Different microphone positions, etc.</li>
+</ul>
+
+<p><strong>Composition Recordings:</strong></p>
+<ul>
+  <li><strong>Reference recordings</strong>: Examples of how piece should sound</li>
+  <li><strong>Multiple interpretations</strong>: Different performances of same work</li>
+  <li><strong>Educational use</strong>: Recordings for study and analysis</li>
+</ul>
+
+<h3 id="recording-organization">Recording Organization</h3>
+<p><strong>Categories and Tags:</strong></p>
+<ul>
+  <li><strong>Performance type</strong>: Concert, rehearsal, masterclass</li>
+  <li><strong>Quality level</strong>: Professional, educational, archival</li>
+  <li><strong>Usage permissions</strong>: Public, educational use only, restricted</li>
+  <li><strong>Format specifications</strong>: Audio vs. video, resolution, etc.</li>
+</ul>
+
+<p><strong>Access Control:</strong></p>
+<ul>
+  <li><strong>Public recordings</strong>: Available to all users</li>
+  <li><strong>Member only</strong>: Requires login to access</li>
+  <li><strong>Educational use</strong>: Restricted to specific purposes</li>
+  <li><strong>Archive only</strong>: For preservation, not general access</li>
+</ul>
+
+<p><img src="images/screenshots/recording-organization.png" alt="Recording organization interface" />
+<em>Figure 8: Interface for organizing and categorizing recordings</em></p>
+
+<hr />
+
+<h2 id="integration-with-compositions">Integration with Compositions</h2>
+
+<h3 id="linking-performances-to-compositions">Linking Performances to Compositions</h3>
+<p>When compositions are added to playgrams:</p>
+<ul>
+  <li><strong>Automatic linking</strong>: Performance history updates automatically</li>
+  <li><strong>Bidirectional connections</strong>: View from composition or concert perspective</li>
+  <li><strong>Statistical tracking</strong>: Usage counts and frequency analysis</li>
+</ul>
+
+<h3 id="enhanced-composition-information">Enhanced Composition Information</h3>
+<p>Performance tracking adds valuable context to compositions:</p>
+<ul>
+  <li><strong>Performance frequency</strong>: How often piece is performed</li>
+  <li><strong>Last performance</strong>: When it was most recently played</li>
+  <li><strong>Historical significance</strong>: Important or memorable performances</li>
+  <li><strong>Programming context</strong>: What pieces it’s commonly performed with</li>
+</ul>
+
+<h3 id="programming-analysis">Programming Analysis</h3>
+<p><strong>Repertoire Patterns:</strong></p>
+<ul>
+  <li><strong>Popular pieces</strong>: Most frequently performed works</li>
+  <li><strong>Forgotten repertoire</strong>: Pieces not performed recently</li>
+  <li><strong>Seasonal trends</strong>: Holiday music, graduation pieces</li>
+  <li><strong>Difficulty analysis</strong>: Grade level vs. performance frequency</li>
+</ul>
+
+<p><strong>Conductor Analysis:</strong></p>
+<ul>
+  <li><strong>Programming preferences</strong>: Different conductors’ repertoire choices</li>
+  <li><strong>Repertoire development</strong>: How programming evolves over time</li>
+  <li><strong>Guest conductor impact</strong>: Special repertoire for visiting conductors</li>
+</ul>
+
+<p><img src="images/screenshots/programming-analysis.png" alt="Programming analysis dashboard" />
+<em>Figure 9: Analysis tools showing programming patterns and trends</em></p>
+
+<hr />
+
+<h2 id="reporting-and-analysis">Reporting and Analysis</h2>
+
+<h3 id="performance-reports">Performance Reports</h3>
+<p><strong>Standard Reports:</strong></p>
+<ul>
+  <li><strong>Concert programs</strong>: Formatted programs for printing</li>
+  <li><strong>Performance history</strong>: Chronological lists by composition or date</li>
+  <li><strong>Repertoire analysis</strong>: Statistical breakdown of programming</li>
+  <li><strong>Anniversary reports</strong>: Significant dates and milestones</li>
+</ul>
+
+<p><strong>Custom Reports:</strong></p>
+<ul>
+  <li><strong>Date range analysis</strong>: Performance activity in specific periods</li>
+  <li><strong>Venue reports</strong>: What’s been performed where</li>
+  <li><strong>Conductor reports</strong>: Programming by different conductors</li>
+  <li><strong>Genre analysis</strong>: Balance of different musical styles</li>
+</ul>
+
+<h3 id="data-export-options">Data Export Options</h3>
+<p><strong>Format Options:</strong></p>
+<ul>
+  <li><strong>PDF programs</strong>: Print-ready concert programs</li>
+  <li><strong>CSV data</strong>: Raw data for external analysis</li>
+  <li><strong>Calendar exports</strong>: Performance dates for scheduling software</li>
+  <li><strong>Web formats</strong>: Online program displays</li>
+</ul>
+
+<p><strong>Integration Capabilities:</strong></p>
+<ul>
+  <li><strong>Website integration</strong>: Automatic program publishing</li>
+  <li><strong>Marketing materials</strong>: Performance history for promotion</li>
+  <li><strong>Grant reporting</strong>: Documentation of organizational activity</li>
+  <li><strong>Educational resources</strong>: Historical context for students</li>
+</ul>
+
+<p><img src="images/screenshots/report-generation.png" alt="Report generation interface" />
+<em>Figure 10: Interface for generating various types of performance reports</em></p>
+
+<h3 id="analytics-and-insights">Analytics and Insights</h3>
+<p><strong>Trend Analysis:</strong></p>
+<ul>
+  <li><strong>Programming trends</strong>: How repertoire choices change over time</li>
+  <li><strong>Audience preferences</strong>: Popular vs. less popular works</li>
+  <li><strong>Educational progression</strong>: How difficulty level changes seasonally</li>
+  <li><strong>Historical cycles</strong>: When pieces tend to be revived</li>
+</ul>
+
+<p><strong>Planning Tools:</strong></p>
+<ul>
+  <li><strong>Gap analysis</strong>: Repertoire not performed recently</li>
+  <li><strong>Balance checking</strong>: Variety in programming choices</li>
+  <li><strong>Anniversary tracking</strong>: Significant dates and commemorations</li>
+  <li><strong>Venue suitability</strong>: What works well in different spaces</li>
+</ul>
+
+<hr />
+
+<h2 id="best-practices">Best Practices</h2>
+
+<h3 id="data-quality">Data Quality</h3>
+<p><strong>Consistent Entry:</strong></p>
+<ul>
+  <li><strong>Standardize concert naming</strong>: Use consistent format for concert titles</li>
+  <li><strong>Accurate dates</strong>: Double-check performance dates and times</li>
+  <li><strong>Complete information</strong>: Fill in all available details</li>
+  <li><strong>Regular updates</strong>: Keep information current as plans change</li>
+</ul>
+
+<p><strong>Verification Process:</strong></p>
+<ul>
+  <li><strong>Cross-check programs</strong>: Verify against printed programs</li>
+  <li><strong>Confirm recordings</strong>: Ensure recordings match performance data</li>
+  <li><strong>Update after events</strong>: Add actual information after concerts</li>
+  <li><strong>Historical verification</strong>: Research accuracy of older entries</li>
+</ul>
+
+<h3 id="organization-strategy">Organization Strategy</h3>
+<p><strong>Systematic Approach:</strong></p>
+<ul>
+  <li><strong>Regular data entry</strong>: Update system consistently</li>
+  <li><strong>Batch processing</strong>: Handle multiple concerts efficiently</li>
+  <li><strong>Backup planning</strong>: Protect performance history data</li>
+  <li><strong>Access management</strong>: Control who can edit performance data</li>
+</ul>
+
+<p><strong>Long-term Planning:</strong></p>
+<ul>
+  <li><strong>Historical preservation</strong>: Maintain complete archives</li>
+  <li><strong>Migration planning</strong>: Ensure data survives system changes</li>
+  <li><strong>Integration goals</strong>: Connect with other organizational systems</li>
+  <li><strong>Educational value</strong>: Make archives useful for learning</li>
+</ul>
+
+<p><img src="images/screenshots/performance-best-practices.png" alt="Best practices checklist" />
+<em>Figure 11: Checklist for maintaining quality performance data</em></p>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues">Common Issues</h3>
+<p><strong>Missing Performance Data:</strong></p>
+<ul>
+  <li><strong>Incomplete playgrams</strong>: Some compositions not linked to performances</li>
+  <li><strong>Date errors</strong>: Incorrect or missing performance dates</li>
+  <li><strong>Venue confusion</strong>: Performance location not clearly identified</li>
+</ul>
+
+<p><strong>Recording Problems:</strong></p>
+<ul>
+  <li><strong>File access issues</strong>: Recordings not playing or downloading</li>
+  <li><strong>Quality concerns</strong>: Poor audio or video quality</li>
+  <li><strong>Storage limitations</strong>: Files too large for system capacity</li>
+  <li><strong>Permission problems</strong>: Access restrictions not working properly</li>
+</ul>
+
+<p><strong>Integration Difficulties:</strong></p>
+<ul>
+  <li><strong>Composition linking</strong>: Performances not connecting to correct compositions</li>
+  <li><strong>Duplicate entries</strong>: Same performance entered multiple times</li>
+  <li><strong>Data inconsistency</strong>: Information conflicts between different records</li>
+</ul>
+
+<h3 id="solutions-and-workarounds">Solutions and Workarounds</h3>
+<p><strong>Data Correction:</strong></p>
+<ul>
+  <li><strong>Systematic review</strong>: Regular audits of performance data</li>
+  <li><strong>Correction procedures</strong>: Standard process for fixing errors</li>
+  <li><strong>Verification sources</strong>: Use programs, recordings, and other documents</li>
+  <li><strong>Change documentation</strong>: Track what corrections were made and why</li>
+</ul>
+
+<p><strong>System Optimization:</strong></p>
+<ul>
+  <li><strong>File management</strong>: Organize recordings efficiently</li>
+  <li><strong>Performance tuning</strong>: Optimize database for performance queries</li>
+  <li><strong>User training</strong>: Ensure consistent data entry practices</li>
+  <li><strong>Backup procedures</strong>: Protect against data loss</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<p>With performance tracking properly set up:</p>
+
+<ol>
+  <li><strong><a href="distribution.html">Learn Distribution</a></strong> - Share materials with performers and audiences</li>
+  <li><strong><a href="admin-guide.html">Explore Admin Functions</a></strong> - Advanced management and reporting tools</li>
+  <li><strong><a href="troubleshooting.html">Review Troubleshooting</a></strong> - Handle common issues and problems</li>
+</ol>
+
+<hr />
+
+<p><em>Continue to the next section: <a href="distribution.html">Part Distribution</a> to learn about sharing musical materials with users.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

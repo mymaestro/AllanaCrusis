@@ -1,0 +1,64 @@
+# Jekyll configuration for AllanaCrusis Documentation
+title: "AllanaCrusis Documentation"
+description: "User guide and documentation for AllanaCrusis Music Library System"
+baseurl: "/AllanaCrusis" # Replace with your repository name if different
+url: "https://mymaestro.github.io" # Replace with your GitHub username
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - index.md
+  - user-guide.md
+  - api-docs.md
+
+# Collections
+collections:
+  guides:
+    output: true
+    permalink: /:collection/:name/
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Site settings
+author:
+  name: "AllanaCrusis Team"
+  email: "admin@allanacrusis.net"
+
+# Social links (optional)
+github_username: mymaestro
+
+# Google Analytics (optional)
+# google_analytics: UA-XXXXXXXX-X
+
+# SEO settings
+lang: en_US
+timezone: America/Chicago
+
+# Markdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false

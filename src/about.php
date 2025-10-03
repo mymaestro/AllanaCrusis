@@ -25,6 +25,61 @@
       </div>
     </div>
 
+    <!-- What's New Section -->
+    <div class="row pt-3">
+      <div class="col-12">
+        <div class="accordion" id="whatsNewAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingWhatsNew">
+              <button class="accordion-button collapsed fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWhatsNew" aria-expanded="false" aria-controls="collapseWhatsNew">
+                <i class="fas fa-star"></i> &nbsp; What's new
+              </button>
+            </h2>
+            <div id="collapseWhatsNew" class="accordion-collapse collapse" aria-labelledby="headingWhatsNew" data-bs-parent="#whatsNewAccordion">
+              <div class="accordion-body">
+                
+                <h5>October 2025</h5>
+                <ul>
+                  <li><strong>Table filtering:</strong> Filter compositions by any column in real-time</li>
+                  <li><strong>Composition search:</strong> Quick search in parts management</li>
+                  <li><strong>Composer autocomplete:</strong> Smart suggestions and name formatting</li>
+                  <li><strong>Enhanced error handling:</strong> Better user feedback throughout</li>
+                  <li><strong>Edit buttons:</strong> Quick access from search results</li>
+                </ul>
+
+                <h5>September 2025</h5>
+                <ul>
+                  <li><strong>Increased upload limits:</strong> Now supports up to 100MB file uploads</li>
+                  <li><strong>Spinner buttons:</strong> Visual feedback during file operations</li>
+                  <li><strong>Configuration improvements:</strong> Better config file management</li>
+                  <li><strong>Project rename:</strong> Rebranded to AllanaCrusis</li>
+                </ul>
+
+                <h5>August 2025</h5>
+                <ul>
+                  <li><strong>Part distribution system:</strong> Token-based secure part delivery</li>
+                  <li><strong>Email delivery:</strong> Send parts directly to musicians via email</li>
+                  <li><strong>Token management:</strong> Better tracking and reporting for part access</li>
+                  <li><strong>Routing improvements:</strong> Modernized URL structure and navigation</li>
+                  <li><strong>Section management:</strong> Enhanced instrument organization</li>
+                </ul>
+
+                <h5>Earlier 2025</h5>
+                <ul>
+                  <li><strong>Security enhancements:</strong> Role-based access control improvements</li>
+                  <li><strong>File path fixes:</strong> Better handling of recordings and part files</li>
+                  <li><strong>Email system:</strong> User registration and password reset functionality</li>
+                  <li><strong>Core modernization:</strong> Updated architecture and error handling</li>
+                </ul>
+
+                <p><small class="text-muted">Last updated: October 2025</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row pt-3">
       <div class="col-md-12">
         <h2><i class="fas fa-compass"></i> Navigation</h2>

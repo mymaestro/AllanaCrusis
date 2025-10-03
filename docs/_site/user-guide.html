@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>User Guide | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="User Guide" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/user-guide.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/user-guide.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="User Guide" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"User Guide","url":"http://0.0.0.0:4000/AllanaCrusis/user-guide.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="allanacrusis-music-library-user-guide">AllanaCrusis Music Library User Guide</h1>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+  <li><a href="#getting-started">Getting Started</a></li>
+  <li><a href="#user-roles-and-permissions">User Roles and Permissions</a></li>
+  <li><a href="#navigation-and-interface">Navigation and Interface</a></li>
+  <li><a href="#composition-management">Composition Management</a></li>
+  <li><a href="#parts-management">Parts Management</a></li>
+  <li><a href="#search-and-filtering">Search and Filtering</a></li>
+  <li><a href="#user-management">User Management</a></li>
+  <li><a href="#reports-and-analytics">Reports and Analytics</a></li>
+  <li><a href="#austin-civic-wind-ensemble-specific-instructions">Austin Civic Wind Ensemble Specific Instructions</a></li>
+  <li><a href="#troubleshooting">Troubleshooting</a></li>
+</ol>
+
+<hr />
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="system-requirements">System Requirements</h3>
+<ul>
+  <li>Web browser (Chrome, Firefox, Safari, Edge)</li>
+  <li>Internet connection</li>
+  <li>Login credentials provided by your library administrator</li>
+</ul>
+
+<h3 id="first-login">First Login</h3>
+<ol>
+  <li>Navigate to your library’s URL (typically https://yourdomain.com)</li>
+  <li>Click “Login” in the top navigation</li>
+  <li>Enter your username and password</li>
+  <li>If this is your first login, you may be prompted to verify your email address</li>
+</ol>
+
+<h3 id="interface-overview">Interface Overview</h3>
+<p>The AllanaCrusis interface uses a clean, responsive design with:</p>
+<ul>
+  <li><strong>Top Navigation</strong>: Quick access to main sections (Materials, Reports, Users, etc.)</li>
+  <li><strong>Search Bar</strong>: Global search functionality with real-time filtering</li>
+  <li><strong>Action Buttons</strong>: Color-coded buttons for different functions (blue for edit, green for add, red for delete)</li>
+  <li><strong>Tables</strong>: Sortable, filterable data displays with sticky headers</li>
+</ul>
+
+<hr />
+
+<h2 id="user-roles-and-permissions">User Roles and Permissions</h2>
+
+<h3 id="guest-user">Guest User</h3>
+<ul>
+  <li>View public compositions and recordings</li>
+  <li>Use search functionality</li>
+  <li>No editing capabilities</li>
+</ul>
+
+<h3 id="member">Member</h3>
+<ul>
+  <li>Full guest permissions</li>
+  <li>Access to part downloads (if enabled)</li>
+  <li>View contact information</li>
+</ul>
+
+<h3 id="librarian">Librarian</h3>
+<ul>
+  <li>Full member permissions</li>
+  <li>Add, edit, and delete compositions</li>
+  <li>Manage instrumentation and parts</li>
+  <li>Access to all management functions except user administration</li>
+</ul>
+
+<h3 id="manager">Manager</h3>
+<ul>
+  <li>Full librarian permissions</li>
+  <li>User management (add, edit, delete users)</li>
+  <li>System configuration access</li>
+  <li>Full administrative control</li>
+</ul>
+
+<hr />
+
+<h2 id="navigation-and-interface">Navigation and Interface</h2>
+
+<h3 id="main-menu-sections">Main Menu Sections</h3>
+
+<h4 id="materials">MATERIALS</h4>
+<ul>
+  <li><strong>Compositions</strong>: Manage musical compositions, metadata, and basic information</li>
+  <li><strong>Parts</strong>: Individual part management, file uploads, and distribution</li>
+  <li><strong>Instruments</strong>: Instrument definitions and categories</li>
+  <li><strong>Genres</strong>: Musical genre classifications</li>
+  <li><strong>Ensembles</strong>: Ensemble definitions and assignments</li>
+</ul>
+
+<h4 id="reports">REPORTS</h4>
+<ul>
+  <li><strong>Search</strong>: Advanced search with multiple filters</li>
+  <li><strong>Reports</strong>: Usage statistics and analytics</li>
+</ul>
+
+<h4 id="admin-manager-only">ADMIN (Manager only)</h4>
+<ul>
+  <li><strong>Users</strong>: User account management</li>
+  <li><strong>System Settings</strong>: Configuration options</li>
+</ul>
+
+<h3 id="search-and-filter-features">Search and Filter Features</h3>
+<ul>
+  <li><strong>Real-time filtering</strong>: Tables update as you type</li>
+  <li><strong>Composer autocomplete</strong>: Automatic suggestions with “Last, First” formatting</li>
+  <li><strong>Advanced search</strong>: Multiple criteria including composer, title, genre, instrumentation</li>
+  <li><strong>Sticky headers</strong>: Column headers remain visible while scrolling</li>
+</ul>
+
+<hr />
+
+<h2 id="composition-management">Composition Management</h2>
+
+<h3 id="adding-a-new-composition">Adding a New Composition</h3>
+<ol>
+  <li>Navigate to <strong>MATERIALS &gt; Compositions</strong></li>
+  <li>Click the <strong>Add New Composition</strong> button</li>
+  <li>Fill in required fields:
+    <ul>
+      <li><strong>Catalog Number</strong>: Unique identifier (format: C###, M###, or X###)</li>
+      <li><strong>Title</strong>: Full composition title</li>
+      <li><strong>Composer</strong>: Use “Last, First” format</li>
+    </ul>
+  </li>
+  <li>Optional fields:
+    <ul>
+      <li><strong>Arranger</strong>: If applicable</li>
+      <li><strong>Publisher</strong>: Publishing company</li>
+      <li><strong>Genre</strong>: Select from predefined categories</li>
+      <li><strong>Grade Level</strong>: Difficulty rating (1-7)</li>
+      <li><strong>Duration</strong>: Performance time in minutes</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="editing-existing-compositions">Editing Existing Compositions</h3>
+<ol>
+  <li>Find the composition using search or browse</li>
+  <li>Click the blue <strong>Edit</strong> button</li>
+  <li>Update any necessary fields</li>
+  <li>Click <strong>Update</strong> to save changes</li>
+</ol>
+
+<h3 id="composer-name-formatting">Composer Name Formatting</h3>
+<p>The system includes composer normalization features:</p>
+<ul>
+  <li>Use “Last, First” format (e.g., “Beethoven, Ludwig van”)</li>
+  <li>Autocomplete suggestions help maintain consistency</li>
+  <li>The system automatically formats names for display</li>
+</ul>
+
+<hr />
+
+<h2 id="parts-management">Parts Management</h2>
+
+<h3 id="adding-parts-to-a-composition">Adding Parts to a Composition</h3>
+<ol>
+  <li>Navigate to the composition’s <strong>Instrumentation</strong> page</li>
+  <li>Select instruments from the <strong>Instrument Parts</strong> list</li>
+  <li>Hold Ctrl/Cmd to select multiple instruments</li>
+  <li>Click <strong>Add Parts</strong></li>
+</ol>
+
+<h3 id="managing-individual-parts">Managing Individual Parts</h3>
+<ol>
+  <li>Go to <strong>MATERIALS &gt; Parts</strong></li>
+  <li>Find your composition and click the title</li>
+  <li>For each part, click the blue <strong>Edit</strong> button to:
+    <ul>
+      <li>Set page count and paper size</li>
+      <li>Update originals count (how many physical copies exist)</li>
+      <li>Add descriptions or notes</li>
+      <li>Assign specific instruments</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="file-management">File Management</h3>
+<ul>
+  <li>Upload PDF files for digital distribution</li>
+  <li>Set access permissions for downloads</li>
+  <li>Track file versions and updates</li>
+</ul>
+
+<hr />
+
+<h2 id="search-and-filtering">Search and Filtering</h2>
+
+<h3 id="quick-search">Quick Search</h3>
+<ul>
+  <li>Use the search bar in the top navigation for global searches</li>
+  <li>Searches across titles, composers, arrangers, and catalog numbers</li>
+</ul>
+
+<h3 id="advanced-search">Advanced Search</h3>
+<ol>
+  <li>Navigate to <strong>REPORTS &gt; Search</strong></li>
+  <li>Use multiple filter criteria:
+    <ul>
+      <li><strong>Title</strong>: Partial or full title matching</li>
+      <li><strong>Composer</strong>: With autocomplete assistance</li>
+      <li><strong>Genre</strong>: Select from dropdown</li>
+      <li><strong>Instrumentation</strong>: Filter by required instruments</li>
+      <li><strong>Grade Level</strong>: Difficulty range</li>
+      <li><strong>Duration</strong>: Time range</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="table-filtering">Table Filtering</h3>
+<ul>
+  <li>Most data tables include real-time filter boxes</li>
+  <li>Type to filter results instantly</li>
+  <li>Combine with sorting by clicking column headers</li>
+</ul>
+
+<hr />
+
+<h2 id="user-management">User Management</h2>
+<p><em>(Manager access required)</em></p>
+
+<h3 id="adding-new-users">Adding New Users</h3>
+<ol>
+  <li>Navigate to <strong>ADMIN &gt; Users</strong></li>
+  <li>Click <strong>Add New User</strong></li>
+  <li>Fill in user information:
+    <ul>
+      <li>Username and email</li>
+      <li>Password (temporary)</li>
+      <li>Role assignment</li>
+      <li>Ensemble assignment</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="managing-existing-users">Managing Existing Users</h3>
+<ul>
+  <li>Edit user details and permissions</li>
+  <li>Reset passwords</li>
+  <li>Enable/disable accounts</li>
+  <li>Assign to different ensembles</li>
+</ul>
+
+<hr />
+
+<h2 id="reports-and-analytics">Reports and Analytics</h2>
+
+<h3 id="available-reports">Available Reports</h3>
+<ul>
+  <li><strong>Composition Statistics</strong>: Counts by genre, composer, etc.</li>
+  <li><strong>Usage Reports</strong>: Download and access statistics</li>
+  <li><strong>Missing Parts</strong>: Identify incomplete instrumentation</li>
+</ul>
+
+<h3 id="generating-reports">Generating Reports</h3>
+<ol>
+  <li>Navigate to <strong>REPORTS</strong></li>
+  <li>Select the desired report type</li>
+  <li>Set date ranges and filters as needed</li>
+  <li>Export results if available</li>
+</ol>
+
+<hr />
+
+<h2 id="austin-civic-wind-ensemble-specific-instructions">Austin Civic Wind Ensemble Specific Instructions</h2>
+
+<h3 id="librarian-editing-instructions">Librarian Editing Instructions</h3>
+
+<h4 id="part-1-music-information">Part 1: Music Information</h4>
+<ol>
+  <li>Sign in to the library at https://allanacrusis.net Confirm that you have librarian access.</li>
+  <li>Select MATERIALS → Compositions to enter the Compositions page.</li>
+  <li>Enter all or part of the title, composer, or arranger of your piece in the search field, and choose Search to find your piece in the library list. Choose the blue EDIT button.</li>
+</ol>
+
+<p><strong>On the edit screen:</strong></p>
+
+<p>a. Confirm that the catalog number matches what appears on the folder. The number in the catalog should be a letter followed by three numbers (C###, M###, or X###) even if the folder has fewer numbers. If necessary, add zeroes to the front of the number to make it three digits.</p>
+
+<p>b. Confirm that Enabled is selected, so that the piece appears in searches and selections.</p>
+
+<p>c. Confirm the Title of the piece, including the spelling. Articles should follow the title, separated by a comma; e.g. Liberty Bell, The. This is true for both English articles (a, an, the) and non-English articles (la, le, les, los, die, der, etc.).</p>
+
+<p>d. Confirm the Composer, Arranger, and Editor names are correct. Family names should be listed first, followed by given names. If names or parts of names are missing, please add them. NOTE: Composer is a required field. If no composer is listed on a piece, enter Traditional or (n/a), whichever seems more accurate. Arranger and Editor fields can be left blank if the piece does not have them.</p>
+
+<p>e. Confirm or add the Publisher. You can generally drop words like Inc, Publisher, Company, and such. For example, Hal Leonard Corporation can be listed just as Hal Leonard.</p>
+
+<p>f. Select the Genre from the drop-down menu. For most pieces, you will use one of the following:</p>
+<ul>
+  <li>Wind Ensemble—for most general band pieces</li>
+  <li>Symphonic Transcription—for pieces originally written for orchestra</li>
+  <li>March—for marches</li>
+  <li>Christmas—for holiday music</li>
+  <li>Pop/Show Tunes (as appropriate)—for band versions of popular or Broadway/movie songs</li>
+  <li>Solo with band accompaniment—for solos</li>
+</ul>
+
+<p>If it’s not clear what genre is appropriate, go with Wind Ensemble.</p>
+
+<p>g. Confirm that the Ensemble box says Austin Civic Wind Ensemble. You should not encounter any exceptions to this.</p>
+
+<p>h. Consult the piece’s score to see if it lists Grade level (sometimes called difficult, should be a number between 1 and 7) or Duration. If neither is listed in the score, check the Wind Repertory Project site (https://www.windrep.org) for the information. You can also use the Wind Repertory Project link button at the bottom of the Edit screen. In either case, please confirm that you are looking at the correct edition for the piece. Check the arranger’s name and/or publisher if necessary. Enter the grade and duration in the correct fields. If neither is available, leave blank.</p>
+
+<p>i. Select the Paper Size from the drop-down menu. Most band music is printed on Folio paper (9x12), but some are on Letter (8.5x11) or Marching band paper.</p>
+
+<p>j. Choose Update to save your changes.</p>
+
+<h4 id="part-2-instrumentation">Part 2: Instrumentation</h4>
+<ol>
+  <li>On the search screen, find your piece again. This time, choose Instrumentation to access the Enter Instrumentation screen.</li>
+  <li>Confirm that the Catalog number, title, and paper size are correct.</li>
+  <li>In the Page count field, enter the average number of pages for each part in the piece. For example, if each part is only one page like most marches, enter 1. This does not have to be exact. Just take a look at a few parts and estimate the average. You can update the number of pages in individual parts later.</li>
+  <li>In the Instrument Parts box, select ALL of the parts that appear in the piece. There are a couple of ways to get this information:
+    <ul>
+      <li>Check the front of the score. Many pieces have the instrumentation listed there.</li>
+      <li>Go through the parts in the folder and enter all of the parts. Most pieces should have a set of file copies pulled together; if that is the case you can just use the file copies to get the instrumentation. If there isn’t a file copies set, you may have to look through the parts individually. (But feel free to pull together a file copies set while you’re doing that. Jarred is happy to give you tips on how to do that.)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>To select multiple parts at once, hold down the Control key as you click.
+Try to select parts from the list whose names match what’s on the music. If you have a part that does not appear in the list, let Jarred or Warren know and they will add it. This can be especially tricky with percussion parts.
+Once you have selected all parts, choose Add parts.</p>
+
+<ol>
+  <li>Choose MATERIALS &gt; Parts from the menu at the top of the page.</li>
+  <li>Find your piece in the list (they are listed in catalog number order) and choose the title to see the list of parts. Check the list to be sure it is correct.</li>
+  <li>
+    <p>For each part in the list, choose the blue Edit button.</p>
+
+    <p>a. Check that the Pages and Paper size fields reflect the number and size of pages for that part.</p>
+
+    <p>b. For every part you actually have in the folder, enter 1 in the Originals Count field. If any part is supposed to be there but is missing, enter 0 in that field. [The 1 should be in place by default, but check the parts to be sure.]</p>
+
+    <p>c. Enter any name or description if needed. For example if the original has many annotations (pen/pencil marks), is deckle-edged or torn, or has pages missing, enter that in the description.</p>
+
+    <p>d. Add the instrument(s) on the part to the instruments list. Usually, the default (noted with an asterisk) is already added, and correct. For parts—most likely percussion—that include multiple instruments not reflected in the part name, [This is most common for parts labeled Percussion 1, Mallet Percussion, Auxiliary Percussion, or the like.] add all the instruments that appear on the part to the instruments list. If a part has two of the same instrument (for example Flute 1 &amp; 2), add the same instrument to the list, so that it appears on the list twice. To select multiple instruments at once, hold down the Control key as you click.</p>
+  </li>
+</ol>
+
+<p>Optionally, in the Description field, enter the instruments that appear on the part (snare drum, bass drum, crash cymbals, etc.). Sometimes these parts will be listed at the top of the part with the Percussion label. Sometimes you’ll have to look through the part to find the instruments. If you have any questions, ask Jarred, Warren, or a percussionist.</p>
+
+<ol>
+  <li>Choose Update to save your changes.</li>
+</ol>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues-and-solutions">Common Issues and Solutions</h3>
+
+<h4 id="login-problems">Login Problems</h4>
+<ul>
+  <li><strong>Forgot password</strong>: Use the “Reset Password” link on the login page</li>
+  <li><strong>Email not verified</strong>: Check your email for verification message</li>
+  <li><strong>Account locked</strong>: Contact your system administrator</li>
+</ul>
+
+<h4 id="search-not-working">Search Not Working</h4>
+<ul>
+  <li><strong>No results found</strong>: Try broader search terms or check spelling</li>
+  <li><strong>Filters not responding</strong>: Clear browser cache and refresh page</li>
+  <li><strong>Autocomplete not working</strong>: Ensure JavaScript is enabled</li>
+</ul>
+
+<h4 id="file-upload-issues">File Upload Issues</h4>
+<ul>
+  <li><strong>PDF won’t upload</strong>: Check file size (max 10MB) and format</li>
+  <li><strong>Slow uploads</strong>: Ensure stable internet connection</li>
+  <li><strong>Access denied</strong>: Verify you have librarian or manager permissions</li>
+</ul>
+
+<h4 id="display-issues">Display Issues</h4>
+<ul>
+  <li><strong>Tables not loading</strong>: Refresh page or clear browser cache</li>
+  <li><strong>Mobile display problems</strong>: Try rotating device or using desktop browser</li>
+  <li><strong>Missing buttons</strong>: Check your user permissions level</li>
+</ul>
+
+<h3 id="getting-help">Getting Help</h3>
+<ul>
+  <li><strong>Documentation</strong>: This user guide and system help pages</li>
+  <li><strong>Technical Support</strong>: Contact your system administrator</li>
+  <li><strong>Training</strong>: Request additional training sessions if needed</li>
+</ul>
+
+<h3 id="browser-compatibility">Browser Compatibility</h3>
+<p>AllanaCrusis works best with:</p>
+<ul>
+  <li>Chrome (recommended)</li>
+  <li>Firefox</li>
+  <li>Safari</li>
+  <li>Edge</li>
+</ul>
+
+<p>For optimal performance:</p>
+<ul>
+  <li>Enable JavaScript</li>
+  <li>Allow cookies</li>
+  <li>Use the latest browser version</li>
+</ul>
+
+<hr />
+
+<h2 id="recent-updates-and-new-features">Recent Updates and New Features</h2>
+
+<h3 id="enhanced-search-and-filtering-october-2025">Enhanced Search and Filtering (October 2025)</h3>
+<ul>
+  <li>Real-time table filtering across all data views</li>
+  <li>Improved search performance and accuracy</li>
+  <li>Sticky table headers for better navigation</li>
+</ul>
+
+<h3 id="composer-normalization-october-2025">Composer Normalization (October 2025)</h3>
+<ul>
+  <li>Automatic “Last, First” name formatting</li>
+  <li>Autocomplete suggestions for consistent data entry</li>
+  <li>Bulk composer name standardization tools</li>
+</ul>
+
+<h3 id="user-interface-improvements-september-2025">User Interface Improvements (September 2025)</h3>
+<ul>
+  <li>Responsive design for mobile and tablet devices</li>
+  <li>Improved color coding and visual hierarchy</li>
+  <li>Enhanced accessibility features</li>
+</ul>
+
+<h3 id="system-performance-august-2025">System Performance (August 2025)</h3>
+<ul>
+  <li>Faster page loading times</li>
+  <li>Optimized database queries</li>
+  <li>Improved file handling and uploads</li>
+</ul>
+
+<hr />
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<h3 id="external-links">External Links</h3>
+<ul>
+  <li><a href="https://www.windrep.org">Wind Repertory Project</a> - Grade levels and performance information</li>
+  <li><a href="https://imslp.org">IMSLP</a> - Public domain scores and information</li>
+  <li><a href="https://www.bandmusicpdf.org">Band Music PDF Library</a> - Additional repertoire resources</li>
+</ul>
+
+<h3 id="best-practices">Best Practices</h3>
+<ul>
+  <li><strong>Data Entry</strong>: Use consistent formatting for composer names and titles</li>
+  <li><strong>File Naming</strong>: Use clear, descriptive names for uploaded files</li>
+  <li><strong>Regular Backups</strong>: Administrators should maintain regular data backups</li>
+  <li><strong>User Training</strong>: Ensure new users complete orientation before access</li>
+</ul>
+
+<h3 id="contact-information">Contact Information</h3>
+<p>For technical support or questions about this user guide, contact your system administrator or library manager.</p>
+
+<hr />
+
+<p><em>This user guide covers the core functionality of AllanaCrusis Music Library System. For the most current features and updates, check the “What’s New” section on the About page.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

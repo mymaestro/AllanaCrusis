@@ -24,27 +24,27 @@ AllanaCrusis is a comprehensive music library management system designed for:
 
 ## Key Features
 
-### 🎵 Composition Management
+### Composition Management
 - Comprehensive metadata tracking (composer, arranger, publisher, grade level)
 - Real-time search and filtering
 - Composer name normalization with autocomplete
 
-### 📄 Parts Management  
+### Parts Management  
 - Individual part tracking and file management
 - Digital distribution capabilities
 - Instrumentation assignment and verification
 
-### 👥 User Management
+### User Management
 - Role-based permissions (Guest, Member, Librarian, Manager)
 - Email verification system
 - Ensemble-based access control
 
-### 📊 Reports & Analytics
+### Reports & Analytics
 - Usage statistics and insights
 - Missing parts identification
 - Custom report generation
 
-### 🔍 Advanced Search
+### Advanced Search
 - Multi-criteria filtering
 - Real-time table updates
 - Sticky headers for large datasets

@@ -14,7 +14,7 @@ title: "User Guide"
 6. [Search and Filtering](#search-and-filtering)
 7. [User Management](#user-management)
 8. [Reports and Analytics](#reports-and-analytics)
-9. [Austin Civic Wind Ensemble Specific Instructions](#austin-civic-wind-ensemble-specific-instructions)
+9. [Librarian Instructions](#librarian-instructions)
 10. [Troubleshooting](#troubleshooting)
 
 ---
@@ -206,9 +206,7 @@ The system includes composer normalization features:
 
 ---
 
-## Austin Civic Wind Ensemble Specific Instructions
-
-### Librarian Editing Instructions
+## Librarian Instructions
 
 #### Part 1: Music Information
 1. Sign in to the library at https://allanacrusis.net Confirm that you have librarian access.

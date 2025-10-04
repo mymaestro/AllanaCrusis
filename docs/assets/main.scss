@@ -1,0 +1,15 @@
+---
+---
+
+@import "minima";
+
+/* Custom styles for better screenshot visibility in dark theme */
+img {
+  border: 1px solid #444 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  margin: 10px 0 !important;
+  background-color: #fff !important;
+  padding: 8px !important;
+  max-width: calc(100% - 18px) !important; /* Account for padding */
+}

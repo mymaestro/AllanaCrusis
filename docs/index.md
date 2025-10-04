@@ -39,33 +39,6 @@ Whether you're managing a small community band library or a large institutional 
 - **Librarians**: Jump to [Composition Management](compositions.html) or [Parts Management](parts.html)
 - **Administrators**: Review [Admin Functions](admin-guide.html) and [User Management](admin-guide.html#user-management)
 
-## Key Features
-
-### Composition Management
-- Comprehensive metadata tracking (composer, arranger, publisher, grade level)
-- Real-time search and filtering
-- Composer name normalization with autocomplete
-
-### Parts Management  
-- Individual part tracking and file management
-- Digital distribution capabilities
-- Instrumentation assignment and verification
-
-### User Management
-- Role-based permissions (Guest, Member, Librarian, Manager)
-- Email verification system
-- Ensemble-based access control
-
-### Reports & Analytics
-- Usage statistics and insights
-- Missing parts identification
-- Custom report generation
-
-### Advanced Search
-- Multi-criteria filtering
-- Real-time table updates
-- Sticky headers for large datasets
-
 ## Recent Updates (October 2025)
 
 - **Enhanced Search**: Real-time filtering across all data tables

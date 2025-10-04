@@ -35,30 +35,32 @@ AllanaCrusis works best with modern web browsers:
 - **Tablet**: Most features available
 - **Mobile**: Basic browsing and search
 
-![System requirements and browser compatibility](images/screenshots/browser-compatibility.png)
-*Figure 1: AllanaCrusis works across different devices and browsers*
-
 ---
 
 ## First Visit
 
 ### Accessing the System
-1. Open your web browser
-2. Navigate to your organization's AllanaCrusis URL
-3. You'll see the public homepage with basic information
+1. Open your web browser.
+2. Navigate to your organization's AllanaCrusis URL.
+3. You'll see the public welcom page with basic information and a randomly selected composition and recording.
+
+![Welcome to AllanaCrusis](images/screenshots/welcome.png)
+*Figure 1: Welcome page*
 
 ### What You Can Do Without Logging In
-- Browse public compositions
+- Browse public compositions, concerts, recordings, and some supporting data
 - Use basic search functionality
 - View general information about the library
 - Read about the system and organization
 
-![Public homepage showing available features for non-logged-in users](images/screenshots/public-homepage.png)
+![Public homepage showing available features for non-logged-in users](images/screenshots/about.png)
 *Figure 2: Public homepage view before logging in*
 
 ---
 
 ## Home Page Overview
+
+![The home page looks like this](images/screenshots/home.png)
 
 ### Welcome Section
 The homepage provides:

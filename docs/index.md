@@ -7,9 +7,9 @@ title: "AllanaCrusis Documentation"
 
 # AllanaCrusis Music Library System
 
-Welcome to the AllanaCrusis documentation site. This comprehensive guide will help you get the most out of your music library management system.
+Welcome to the AllanaCrusis documentation site. This guide will help you get the most out of your music library management system.
 
-The AllanaCrusis is a sophisticated music library management system that helps music organizations:
+The AllanaCrusis is a music library management system that helps music organizations:
 
 ### Features You Will Love
 - **No more spreadsheets:** Catalog your entire music library, including compositions, parts, concerts, and recordings, in one organized, searchable system.

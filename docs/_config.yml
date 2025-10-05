@@ -30,7 +30,6 @@ header_pages:
   - distribution.md
   - admin-guide.md
   - troubleshooting.md
-  - api-docs.md
 
 # Collections
 collections:

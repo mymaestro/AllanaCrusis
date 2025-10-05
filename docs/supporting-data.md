@@ -35,7 +35,7 @@ Supporting data consists of the reference lists and categories that organize you
 - **Reporting**: Enables meaningful statistics and analysis
 - **Workflow**: Streamlines the process of adding new compositions
 
-![Supporting data overview showing interconnected elements](images/screenshots/supporting-data-overview.png)
+![Supporting data overview showing interconnected elements](images/screenshots/database.png)
 *Figure 1: How supporting data elements work together in AllanaCrusis*
 
 ---
@@ -51,7 +51,7 @@ The instrument list defines all possible instruments that can be assigned to mus
 3. Use the search/filter to find specific instruments
 4. View instrument categories and groupings
 
-![Instruments list showing categories and search options](images/screenshots/instruments-list.png)
+![Instruments list showing categories and search options](images/screenshots/instruments.png)
 *Figure 2: Instrument management interface*
 
 ### Adding New Instruments
@@ -67,7 +67,7 @@ The instrument list defines all possible instruments that can be assigned to mus
 
 3. **Save the new instrument**
 
-![Add instrument form with required fields](images/screenshots/add-instrument-form.png)
+![Add instrument form with required fields](images/screenshots/instruments-add-edit.png)
 *Figure 3: Form for adding new instruments*
 
 ### Instrument Categories
@@ -110,7 +110,7 @@ Ensembles define which musical groups use your library. This helps organize comp
    - **Description**: Details about the group
    - **Active status**: Whether currently in use
 
-![Ensemble management interface](images/screenshots/ensemble-management.png)
+![Ensemble management interface](images/screenshots/ensembles.png)
 *Figure 4: Ensemble setup and configuration*
 
 ### Ensemble Assignment
@@ -152,7 +152,7 @@ Common genres include:
 3. **Add new genres** as needed for your collection
 4. **Organize by frequency of use**
 
-![Genre management showing categories and usage](images/screenshots/genre-management.png)
+![Genre management showing categories and usage](images/screenshots/genres.png)
 *Figure 5: Genre categories and their organization*
 
 ---

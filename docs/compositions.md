@@ -7,7 +7,7 @@ title: "Compositions"
 
 This section covers how to add, edit, and manage musical compositions in AllanaCrusis. Compositions are the core organizational unit of your music library.
 
-## Table of Contents
+## Table of contents
 - [Understanding Compositions](#understanding-compositions)
 - [Viewing Compositions](#viewing-compositions)
 - [Adding New Compositions](#adding-new-compositions)
@@ -18,9 +18,9 @@ This section covers how to add, edit, and manage musical compositions in AllanaC
 
 ---
 
-## Understanding Compositions
+## Understanding compositions
 
-### What is a Composition?
+### what is a Composition?
 A composition in AllanaCrusis represents a complete musical work, including:
 - **Basic information**: Title, composer, arranger
 - **Publishing details**: Publisher, catalog number
@@ -28,7 +28,7 @@ A composition in AllanaCrusis represents a complete musical work, including:
 - **Organization**: Genre, ensemble assignment
 - **Physical details**: Paper size, page counts
 
-### Composition vs. Parts
+### composition vs. Parts
 - **Composition**: The overall musical work and its metadata
 - **Parts**: Individual instrument parts that belong to the composition
 - **Relationship**: One composition can have many parts
@@ -38,15 +38,15 @@ A composition in AllanaCrusis represents a complete musical work, including:
 
 ---
 
-## Viewing Compositions
+## Viewing compositions
 
-### Accessing the Compositions List
+### accessing the Compositions List
 1. **Navigate to MATERIALS > Compositions**
 2. **View the complete library** of compositions
 3. **Use filters and search** to find specific works
 4. **Sort by different criteria** (title, composer, date added, etc.)
 
-### Compositions Table Features
+### compositions Table Features
 - **Real-time filtering**: Type in filter boxes to narrow results
 - **Sortable columns**: Click headers to sort by that field
 - **Sticky headers**: Column headers stay visible while scrolling
@@ -55,7 +55,7 @@ A composition in AllanaCrusis represents a complete musical work, including:
 ![Compositions list with filtering and sorting options](images/screenshots/compositions.png)
 *Figure 2: Main compositions list with search and filter capabilities*
 
-### Composition Details View
+### composition Details View
 Click on any composition title to see:
 - **Complete metadata**
 - **List of associated parts**
@@ -68,14 +68,14 @@ Click on any composition title to see:
 
 ---
 
-## Adding New Compositions
+## Adding new compositions
 
-### Prerequisites
+### prerequisites
 - **Librarian or Manager role** required
 - **Supporting data configured**: Genres, ensembles, publishers
 - **Catalog numbering system** understood
 
-### Step-by-Step Process
+### step-by-Step Process
 
 #### 1. Start the Add Process
 1. **Go to MATERIALS > Compositions**
@@ -151,15 +151,15 @@ Fill in the essential information:
 
 ---
 
-## Editing Existing Compositions
+## Editing existing compositions
 
-### When to Edit Compositions
+### when to Edit Compositions
 - **Correcting errors** in metadata
 - **Adding missing information** (grade level, duration)
 - **Updating publisher information**
 - **Changing organizational assignments**
 
-### Editing Process
+### editing Process
 1. **Find the composition** using search or browse
 2. **Click the blue "Edit" button**
 3. **Make necessary changes**
@@ -168,7 +168,7 @@ Fill in the essential information:
 ![Edit composition form with existing data](images/screenshots/compositions-add-edit.png)
 *Figure 6: Editing an existing composition with pre-filled data*
 
-### Common Edits
+### common Edits
 - **Title corrections**: Fix spelling or formatting
 - **Composer standardization**: Ensure consistent naming
 - **Missing metadata**: Add grade level or duration
@@ -176,14 +176,14 @@ Fill in the essential information:
 
 ---
 
-## Composer Name Management
+## Composer name management
 
-### Importance of Consistent Naming
+### importance of Consistent Naming
 - **Search effectiveness**: Users can find all works by a composer
 - **Reporting accuracy**: Statistics and analysis work properly
 - **Professional appearance**: Library looks organized and authoritative
 
-### Composer Normalization Features
+### composer Normalization Features
 AllanaCrusis includes tools to help maintain consistent composer names:
 
 #### Autocomplete System
@@ -207,7 +207,7 @@ AllanaCrusis includes tools to help maintain consistent composer names:
 - **Multiple composers**: List primary composer, note others in arranger field
 - **Pseudonyms**: Use most recognized form, note real name in description
 
-### Bulk Composer Updates
+### bulk Composer Updates
 For managers, tools may be available to:
 - **Standardize existing names** across the library
 - **Merge duplicate entries** with slight variations
@@ -216,21 +216,21 @@ For managers, tools may be available to:
 
 ---
 
-## Metadata Best Practices
+## Metadata best practices
 
-### Title Guidelines
+### title Guidelines
 - **Complete titles**: Include full title and subtitle
 - **Article placement**: Move articles to end with comma
 - **Capitalization**: Follow standard title case rules
 - **Punctuation**: Be consistent with periods, commas
 
-### Publisher Information
+### publisher Information
 - **Standard abbreviations**: Use consistent shortened forms
 - **Current publishers**: Update if companies merge or change
 - **Historical accuracy**: Keep original publisher for historical works
 - **Multiple editions**: Note which edition you have
 
-### Genre Classification
+### genre Classification
 - **Primary purpose**: Choose based on intended use
 - **Consistent categories**: Use established genre list
 - **Special collections**: Create genres for unique organizational needs
@@ -241,15 +241,15 @@ For managers, tools may be available to:
 
 ---
 
-## Bulk Operations
+## Bulk operations
 
-### When to Use Bulk Operations
+### when to Use Bulk Operations
 - **Large imports** from other systems
 - **Systematic corrections** across multiple compositions
 - **Organizational changes** (ensemble reassignments, genre updates)
 - **Publisher updates** due to mergers or acquisitions
 
-### Available Bulk Functions
+### available Bulk Functions
 Depending on your role and system configuration:
 
 #### Export Functions
@@ -270,7 +270,7 @@ Depending on your role and system configuration:
 ![Bulk operations interface](images/screenshots/bulk-operations.png)
 *Figure 9: Bulk operations tools for managing multiple compositions*
 
-### Import Guidelines
+### import Guidelines
 When importing composition data:
 1. **Prepare clean data** in required format
 2. **Test with small batch** first
@@ -280,9 +280,9 @@ When importing composition data:
 
 ---
 
-## Search and Discovery
+## Search and discovery
 
-### Making Compositions Findable
+### making Compositions Findable
 Good metadata entry ensures users can find compositions through:
 
 #### Search Methods
@@ -303,21 +303,21 @@ Good metadata entry ensures users can find compositions through:
 
 ---
 
-## Quality Control
+## Quality control
 
-### Regular Maintenance Tasks
+### regular Maintenance Tasks
 - **Review new entries** for completeness and accuracy
 - **Standardize naming** across the collection
 - **Update missing information** as it becomes available
 - **Clean up duplicates** or near-duplicates
 
-### Validation Checks
+### validation Checks
 - **Required fields**: Ensure all essential data is present
 - **Format consistency**: Check catalog numbers, names, titles
 - **Logical relationships**: Verify ensemble assignments make sense
 - **External verification**: Cross-check with authoritative sources
 
-### Collaboration Tools
+### collaboration Tools
 - **Review queues**: Flag compositions needing attention
 - **Change logging**: Track who made what changes when
 - **Discussion notes**: Communicate about questionable entries
@@ -325,42 +325,42 @@ Good metadata entry ensures users can find compositions through:
 
 ---
 
-## Integration with Other Functions
+## Integration with other functions
 
-### Connection to Parts Management
+### connection to Parts Management
 - **Automatic relationships**: Parts link to their composition
 - **Inherited metadata**: Parts get information from composition
 - **Instrumentation tracking**: Composition shows what parts exist
 
-### Performance Tracking
+### performance Tracking
 - **Concert programming**: Link compositions to performances
 - **Usage statistics**: Track which works are performed most
 - **Planning tools**: Use metadata for concert planning
 
-### Reporting and Analysis
+### reporting and Analysis
 - **Collection statistics**: Analyze by composer, genre, grade level
 - **Acquisition planning**: Identify gaps in collection
 - **Usage reports**: See which compositions are accessed most
 
 ---
 
-## Troubleshooting Common Issues
+## Troubleshooting common issues
 
-### Duplicate Compositions
+### duplicate Compositions
 **Problem**: Same composition entered multiple times
 **Solution**: 
 - Use search before adding new compositions
 - Check alternate titles and spellings
 - Merge or remove duplicates as appropriate
 
-### Missing Information
+### missing Information
 **Problem**: Incomplete metadata affecting usefulness
 **Solution**:
 - Research using Wind Repertory Project or other sources
 - Check physical scores for missing information
 - Flag for later completion if information unavailable
 
-### Naming Inconsistencies
+### naming Inconsistencies
 **Problem**: Same composer with different name formats
 **Solution**:
 - Use autocomplete to maintain consistency
@@ -372,7 +372,7 @@ Good metadata entry ensures users can find compositions through:
 
 ---
 
-## Next Steps
+## Next steps
 
 With compositions properly managed:
 

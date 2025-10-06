@@ -7,7 +7,7 @@ title: "Administrator Guide"
 
 This section covers advanced system administration functions available to Manager-level users. These tools are for system configuration, user management, and maintaining the overall health of your AllanaCrusis installation.
 
-## Table of Contents
+## Table of contents
 - [Administrator Responsibilities](#administrator-responsibilities)
 - [User Management](#user-management)
 - [System Configuration](#system-configuration)
@@ -19,9 +19,9 @@ This section covers advanced system administration functions available to Manage
 
 ---
 
-## Administrator Responsibilities
+## Administrator responsibilities
 
-### Role of System Administrators
+### role of System Administrators
 AllanaCrusis administrators (Manager role) are responsible for:
 - **User account management**: Creating, modifying, and deactivating user accounts
 - **System configuration**: Setting up organizational preferences and policies
@@ -30,7 +30,7 @@ AllanaCrusis administrators (Manager role) are responsible for:
 - **Performance monitoring**: Maintaining system efficiency and reliability
 - **Training and support**: Helping users understand and use the system effectively
 
-### Access Level Requirements
+### access Level Requirements
 Administrator functions require **Manager** role permissions:
 - **Full system access**: All features and configurations
 - **User management**: Create, edit, and delete user accounts
@@ -43,16 +43,16 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## User Management
+## User management
 
-### User Account Administration
+### user Account Administration
 **Accessing User Management:**
 1. **Navigate to ADMIN > Users**
 2. **View complete user list**
 3. **Search and filter** users as needed
 4. **Access individual user records**
 
-### Creating New User Accounts
+### creating New User Accounts
 **Step-by-Step Process:**
 1. **Click "Add New User"**
 2. **Fill in required information**:
@@ -75,7 +75,7 @@ Administrator functions require **Manager** role permissions:
 ![New user creation form](images/screenshots/users-add-edit.png)
 *Figure 2: Form for creating new user accounts*
 
-### Managing Existing Users
+### managing Existing Users
 **User Account Modifications:**
 - **Role changes**: Promote or demote user permissions
 - **Contact updates**: Change email, name, or other details
@@ -92,7 +92,7 @@ Administrator functions require **Manager** role permissions:
 ![User management interface](images/screenshots/users.png)
 *Figure 3: Interface for managing existing user accounts*
 
-### User Roles and Permissions
+### user Roles and Permissions
 **Role Hierarchy:**
 1. **Guest**: Public access only, no login required
 2. **Member**: Basic authenticated access
@@ -114,9 +114,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## System Configuration
+## System configuration
 
-### Global Settings
+### global Settings
 **Organization Information:**
 - **Library name**: Display name for your organization
 - **Contact information**: Administrative contact details
@@ -133,7 +133,7 @@ Administrator functions require **Manager** role permissions:
 ![System configuration interface](images/screenshots/enable-disable-manager.png)
 *Figure 4: System configuration options and settings*
 
-### Email Configuration
+### email Configuration
 **SMTP Settings:**
 - **Mail server**: Host and port configuration
 - **Authentication**: Username and password for mail server
@@ -152,7 +152,7 @@ Administrator functions require **Manager** role permissions:
 - **Spam prevention**: Configure to avoid spam filters
 - **Backup communication**: Alternative contact methods
 
-### Integration Settings
+### integration Settings
 **External Systems:**
 - **Authentication integration**: LDAP, Active Directory, SSO
 - **Calendar systems**: Performance and event scheduling
@@ -170,9 +170,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Data Management
+## Data management
 
-### Data Quality and Consistency
+### data Quality and Consistency
 **Regular Maintenance Tasks:**
 - **Duplicate detection**: Find and merge duplicate records
 - **Data validation**: Check for missing or incorrect information
@@ -185,7 +185,7 @@ Administrator functions require **Manager** role permissions:
 - **Migration tasks**: Import data from other systems
 - **Archive management**: Handle old or unused records
 
-### Import and Export Functions
+### import and Export Functions
 **Data Import:**
 - **CSV import**: Bulk addition of compositions, parts, users
 - **Validation tools**: Check data before importing
@@ -201,7 +201,7 @@ Administrator functions require **Manager** role permissions:
 ![Data management tools interface](images/screenshots/compositions.png)
 *Figure 6: Tools for managing and maintaining data quality*
 
-### Database Maintenance
+### database Maintenance
 **Performance Optimization:**
 - **Index management**: Ensure efficient database queries
 - **Cache configuration**: Speed up frequently accessed data
@@ -216,9 +216,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Security and Access Control
+## Security and access control
 
-### Security Policies
+### security Policies
 **Access Management:**
 - **Password policies**: Requirements for user passwords
 - **Account lockout**: Protection against brute force attacks
@@ -234,7 +234,7 @@ Administrator functions require **Manager** role permissions:
 ![Security configuration interface](images/screenshots/password-reset.png)
 *Figure 7: Security and access control configuration options*
 
-### Monitoring and Logging
+### monitoring and Logging
 **System Logs:**
 - **User activity**: Login attempts, downloads, changes
 - **System events**: Errors, performance issues, maintenance
@@ -247,7 +247,7 @@ Administrator functions require **Manager** role permissions:
 - **Trend analysis**: Identify patterns and potential issues
 - **Report generation**: Summarize activity for management
 
-### Backup and Security
+### backup and Security
 **Data Protection:**
 - **Regular backups**: Automated daily/weekly backups
 - **Offsite storage**: Protect against local disasters
@@ -262,9 +262,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Reporting and Analytics
+## Reporting and analytics
 
-### Standard Reports
+### standard Reports
 **System Usage:**
 - **User activity reports**: Login frequency, feature usage
 - **Content access**: Most popular compositions and parts
@@ -280,7 +280,7 @@ Administrator functions require **Manager** role permissions:
 ![Reporting dashboard](images/screenshots/reports.png)
 *Figure 8: Comprehensive reporting and analytics dashboard*
 
-### Custom Reports
+### custom Reports
 **Report Builder:**
 - **Field selection**: Choose what data to include
 - **Filter criteria**: Limit results to specific subsets
@@ -293,7 +293,7 @@ Administrator functions require **Manager** role permissions:
 - **Archive management**: Store historical reports for comparison
 - **Alert systems**: Notify when metrics exceed thresholds
 
-### Data Analysis Tools
+### data Analysis Tools
 **Trend Analysis:**
 - **Historical comparisons**: How metrics change over time
 - **Seasonal patterns**: Identify cyclical usage patterns
@@ -308,9 +308,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Maintenance and Troubleshooting
+## Maintenance and troubleshooting
 
-### System Maintenance
+### system Maintenance
 **Regular Tasks:**
 - **Software updates**: Keep AllanaCrusis current with latest version
 - **Database optimization**: Maintain performance and reliability
@@ -326,7 +326,7 @@ Administrator functions require **Manager** role permissions:
 ![Maintenance scheduling interface](images/screenshots/reports-parts-detail.png)
 *Figure 9: Interface for scheduling and managing system maintenance*
 
-### Performance Monitoring
+### performance Monitoring
 **System Metrics:**
 - **Response times**: How quickly pages and features load
 - **Database performance**: Query execution times and efficiency
@@ -339,7 +339,7 @@ Administrator functions require **Manager** role permissions:
 - **Bandwidth utilization**: Network usage and requirements
 - **Growth planning**: Predict future hardware and software needs
 
-### Troubleshooting Tools
+### troubleshooting Tools
 **Diagnostic Capabilities:**
 - **System logs**: Detailed error and activity information
 - **Performance profiling**: Identify bottlenecks and slow operations
@@ -354,9 +354,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Backup and Recovery
+## Backup and recovery
 
-### Backup Strategy
+### backup Strategy
 **Backup Types:**
 - **Full backups**: Complete system and data backup
 - **Incremental backups**: Only changes since last backup
@@ -372,7 +372,7 @@ Administrator functions require **Manager** role permissions:
 ![Backup management interface](images/screenshots/reports-download-tokens.png)
 *Figure 10: Backup and recovery management interface*
 
-### Recovery Procedures
+### recovery Procedures
 **Recovery Planning:**
 - **Recovery time objectives**: How quickly system must be restored
 - **Recovery point objectives**: How much data loss is acceptable
@@ -385,7 +385,7 @@ Administrator functions require **Manager** role permissions:
 - **Disaster scenarios**: Plan for various types of failures
 - **Documentation**: Maintain current recovery procedures
 
-### Business Continuity
+### business Continuity
 **Contingency Planning:**
 - **Alternative systems**: Backup methods for critical functions
 - **Manual procedures**: How to operate without the system
@@ -400,9 +400,9 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Best Practices for Administrators
+## Best practices for administrators
 
-### Daily Operations
+### daily Operations
 **Routine Checks:**
 - **Monitor system performance**: Check for slowdowns or errors
 - **Review user activity**: Look for unusual patterns or problems
@@ -415,7 +415,7 @@ Administrator functions require **Manager** role permissions:
 - **Security vigilance**: Monitor for threats and vulnerabilities
 - **Continuous improvement**: Regular evaluation and enhancement
 
-### Long-term Strategy
+### long-term Strategy
 **Strategic Planning:**
 - **Capacity planning**: Anticipate growth and resource needs
 - **Technology roadmap**: Plan for updates and new features
@@ -433,21 +433,21 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Getting Support
+## Getting support
 
-### Internal Resources
+### internal Resources
 - **User documentation**: Complete guides for all system functions
 - **Training materials**: Videos, tutorials, and reference guides
 - **User community**: Other administrators and experienced users
 - **Organizational policies**: Local procedures and guidelines
 
-### External Support
+### external Support
 - **Technical support**: Developer or vendor assistance
 - **User forums**: Community discussions and problem-solving
 - **Professional services**: Consulting and implementation help
 - **Training providers**: Formal education and certification
 
-### Emergency Contacts
+### emergency Contacts
 - **System vendor**: Primary technical support contact
 - **Hosting provider**: Infrastructure and network support
 - **Internal IT**: Organizational technical resources
@@ -455,7 +455,7 @@ Administrator functions require **Manager** role permissions:
 
 ---
 
-## Next Steps
+## Next steps
 
 As a system administrator:
 

@@ -7,7 +7,7 @@ title: "Part Distribution"
 
 This section covers how to share musical parts with performers, students, and other users through AllanaCrusis's distribution systems. Learn about digital downloads, access control, and managing the distribution process.
 
-## Table of Contents
+## Table of contents
 - [Understanding Distribution](#understanding-distribution)
 - [Digital File Distribution](#digital-file-distribution)
 - [Access Control and Permissions](#access-control-and-permissions)
@@ -18,16 +18,16 @@ This section covers how to share musical parts with performers, students, and ot
 
 ---
 
-## Understanding Distribution
+## Understanding distribution
 
-### What is Part Distribution?
+### what is Part Distribution?
 Part distribution in AllanaCrusis includes:
 - **Digital downloads**: PDF and other file formats accessible online
 - **Access control**: Managing who can download what materials
 - **Physical tracking**: Monitoring physical parts checked out to users
 - **Usage analytics**: Understanding how materials are being used
 
-### Distribution Methods
+### distribution Methods
 **Digital Distribution:**
 - **Direct downloads**: Users download files directly from AllanaCrusis
 - **Email distribution**: Send files via email to specific users
@@ -43,7 +43,7 @@ Part distribution in AllanaCrusis includes:
 ![Distribution overview showing digital and physical methods](images/screenshots/home.png)
 *Figure 1: Overview of distribution methods in AllanaCrusis*
 
-### Benefits of Organized Distribution
+### benefits of Organized Distribution
 - **Efficiency**: Streamlined process for getting music to performers
 - **Security**: Control access to copyrighted materials
 - **Tracking**: Know who has what materials and when
@@ -53,9 +53,9 @@ Part distribution in AllanaCrusis includes:
 
 ---
 
-## Digital File Distribution
+## Digital file distribution
 
-### Setting Up Digital Files
+### setting Up Digital Files
 Before distribution, ensure files are properly prepared:
 
 #### File Preparation
@@ -80,7 +80,7 @@ Before distribution, ensure files are properly prepared:
 ![File preparation interface](images/screenshots/compositions-add-edit.png)
 *Figure 2: Interface for preparing files for distribution*
 
-### Distribution Interfaces
+### distribution Interfaces
 **User-Facing Download Pages:**
 - **Composition overview**: Shows all available parts
 - **Individual part pages**: Detailed information and download links
@@ -94,7 +94,7 @@ Before distribution, ensure files are properly prepared:
 4. **File downloads** directly to user's device
 5. **Usage logged** for tracking and analytics
 
-### Batch Distribution
+### batch Distribution
 **Complete Part Sets:**
 - **Zip file creation**: Bundle all parts for a composition
 - **Organized folders**: Parts grouped by instrument family
@@ -112,9 +112,9 @@ Before distribution, ensure files are properly prepared:
 
 ---
 
-## Access Control and Permissions
+## Access control and permissions
 
-### Permission Levels
+### permission Levels
 AllanaCrusis typically offers several access levels:
 
 #### Public Access
@@ -144,7 +144,7 @@ AllanaCrusis typically offers several access levels:
 ![Access control configuration](images/screenshots/enable-disable-manager.png)
 *Figure 4: Configuration interface for setting access permissions*
 
-### Copyright and Legal Considerations
+### copyright and Legal Considerations
 **Copyright Compliance:**
 - **Publisher permissions**: Verify rights to distribute digitally
 - **Fair use guidelines**: Educational and organizational use limitations
@@ -157,7 +157,7 @@ AllanaCrusis typically offers several access levels:
 - **Organizational licenses**: Permissions specific to your group
 - **Digital rights**: Separate permissions for electronic distribution
 
-### Setting Permissions
+### setting Permissions
 **For Individual Files:**
 1. **Edit part record**
 2. **Locate file permissions section**
@@ -176,9 +176,9 @@ AllanaCrusis typically offers several access levels:
 
 ---
 
-## Download Management
+## Download management
 
-### Download Tracking
+### download Tracking
 AllanaCrusis automatically tracks download activity:
 - **Who**: User account downloading
 - **What**: Specific file or composition
@@ -186,7 +186,7 @@ AllanaCrusis automatically tracks download activity:
 - **How many**: Number of downloads per user/file
 - **From where**: IP address and location (if available)
 
-### Download Controls
+### download Controls
 **Rate Limiting:**
 - **Prevent abuse**: Limit downloads per user per time period
 - **Bandwidth management**: Control server load
@@ -202,7 +202,7 @@ AllanaCrusis automatically tracks download activity:
 ![Download management dashboard](images/screenshots/reports-download-tokens.png)
 *Figure 6: Dashboard showing download activity and controls*
 
-### User Download Experience
+### user Download Experience
 **Simple Process:**
 1. **Search for composition** or browse library
 2. **View available parts** for the piece
@@ -216,7 +216,7 @@ AllanaCrusis automatically tracks download activity:
 - **Collection building**: Gather parts for specific performances
 - **Mobile access**: Download directly to phones/tablets
 
-### Troubleshooting Downloads
+### troubleshooting Downloads
 **Common Issues:**
 - **File won't download**: Check permissions and file existence
 - **Slow downloads**: Monitor file sizes and server performance
@@ -231,9 +231,9 @@ AllanaCrusis automatically tracks download activity:
 
 ---
 
-## Physical Distribution Tracking
+## Physical distribution tracking
 
-### Check-Out System
+### check-Out System
 While AllanaCrusis primarily focuses on digital distribution, it can also track physical materials:
 
 #### Physical Part Management
@@ -266,7 +266,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Maintenance scheduling**: Regular cleaning and organization
 - **Replacement planning**: Update sets as materials wear out
 
-### Integration with Digital
+### integration with Digital
 **Hybrid Distribution:**
 - **Digital + physical options**: Users choose preferred format
 - **Backup systems**: Physical parts when digital isn't available
@@ -275,9 +275,9 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ---
 
-## User Experience
+## User experience
 
-### User Interface Design
+### user Interface Design
 **Intuitive Access:**
 - **Clear navigation**: Easy to find desired compositions
 - **Search functionality**: Multiple ways to locate materials
@@ -293,7 +293,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 ![User-friendly download interface](images/screenshots/signed-in-welcome.png)
 *Figure 8: User-friendly interface for accessing and downloading parts*
 
-### User Support
+### user Support
 **Self-Service Options:**
 - **FAQ section**: Common questions and answers
 - **Video tutorials**: Visual guides for using the system
@@ -306,7 +306,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Feedback mechanism**: Users can report problems or suggestions
 - **Training sessions**: Group instruction for new users
 
-### Accessibility Features
+### accessibility Features
 **Universal Design:**
 - **Screen reader compatibility**: Works with assistive technology
 - **Keyboard navigation**: Full functionality without mouse
@@ -321,9 +321,9 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ---
 
-## Monitoring and Analytics
+## Monitoring and analytics
 
-### Usage Statistics
+### usage Statistics
 **Download Analytics:**
 - **Popular materials**: Most frequently downloaded compositions
 - **User patterns**: When and how people access materials
@@ -339,7 +339,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 ![Analytics dashboard showing usage patterns](images/screenshots/reports.png)
 *Figure 9: Analytics dashboard displaying distribution statistics*
 
-### Reporting Capabilities
+### reporting Capabilities
 **Standard Reports:**
 - **Usage summaries**: Overall activity and trends
 - **User activity**: Individual user download history
@@ -352,7 +352,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Material-specific**: Detailed analysis for particular compositions
 - **Comparative studies**: Usage patterns over time
 
-### Data-Driven Decisions
+### data-Driven Decisions
 **Collection Development:**
 - **Popular vs. unused**: Identify materials to prioritize or retire
 - **Format preferences**: Digital vs. physical usage patterns
@@ -367,9 +367,9 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ---
 
-## Best Practices
+## Best practices
 
-### Distribution Strategy
+### distribution Strategy
 **Organized Approach:**
 - **Clear policies**: Establish rules for access and usage
 - **Consistent processes**: Standardize distribution procedures
@@ -382,7 +382,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **User feedback**: Listen to user experiences and suggestions
 - **System testing**: Regular verification that everything works
 
-### Security and Compliance
+### security and Compliance
 **Copyright Protection:**
 - **Access controls**: Restrict distribution to authorized users
 - **Usage monitoring**: Track how materials are being used
@@ -402,7 +402,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ## Troubleshooting
 
-### Common Distribution Problems
+### common Distribution Problems
 **Technical Issues:**
 - **Files won't download**: Check permissions, file integrity, server status
 - **Slow performance**: Monitor bandwidth usage and server load
@@ -415,7 +415,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Mobile difficulties**: Optimize mobile experience
 - **Quality complaints**: Review file preparation standards
 
-### Solutions and Improvements
+### solutions and Improvements
 **System Optimization:**
 - **Performance tuning**: Improve download speeds and reliability
 - **Interface refinement**: Make navigation more intuitive
@@ -430,7 +430,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ---
 
-## Next Steps
+## Next steps
 
 With distribution properly configured:
 

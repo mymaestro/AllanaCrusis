@@ -44,17 +44,17 @@ This directory contains screenshot examples. Replace these placeholders with act
 5. Save as PNG for best quality
 
 ---
-## Available Screenshots
+## Available Screenshots (48 Total)
 
 ### Main Interface and Navigation
 - ![About Page](about.png) - About page view
 - ![Home Dashboard](home.png) - Main dashboard/homepage
-- ![Main Interface](main-interface.png) - Primary interface overview
 - ![Navigation Menu](navigation-menu.png) - Standard navigation menu
 - ![Admin Navigation](navigation-menu-admin.png) - Administrator navigation menu
 - ![Librarian Navigation](navigation-menu-librarian.png) - Librarian navigation menu
 - ![Search Interface](search.png) - Search interface overview
 - ![Search Bar Example](search-bar-example.png) - Search functionality in action
+- ![Welcome Screen](welcome.png) - General welcome/landing page
 
 ### User Management and Authentication
 - ![User Management](users.png) - User listing and management
@@ -62,7 +62,8 @@ This directory contains screenshot examples. Replace these placeholders with act
 - ![Sign In](signin.png) - Login screen
 - ![Registration](register.png) - New user registration form
 - ![Password Request](passwords-request.png) - Password reset interface
-- ![Welcome Screen](signed-in-welcome.png) - Post-login welcome screen
+- ![Password Reset](password-reset.png) - Password reset form
+- ![Signed In Welcome](signed-in-welcome.png) - Post-login welcome screen
 
 ### Composition Management
 - ![Compositions List](compositions.png) - Main compositions listing

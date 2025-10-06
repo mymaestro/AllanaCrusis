@@ -7,7 +7,7 @@ title: "Concerts and Recordings"
 
 This section covers managing concert data, performance history, playgrams, and audio recordings in AllanaCrusis. These features help track your organization's performance history and create valuable archives.
 
-## Table of Contents
+## Table of contents
 - [Understanding Performance Tracking](#understanding-performance-tracking)
 - [Concert Management](#concert-management)
 - [Playgrams](#playgrams)
@@ -18,16 +18,16 @@ This section covers managing concert data, performance history, playgrams, and a
 
 ---
 
-## Understanding Performance Tracking
+## Understanding performance tracking
 
-### What is Performance Tracking?
+### what is Performance Tracking?
 Performance tracking in AllanaCrusis includes:
 - **Concerts**: Individual performance events with dates, venues, and programs
 - **Playgrams**: Detailed programs showing what was performed when
 - **Performance history**: Complete record of when compositions have been performed
 - **Recordings**: Audio/video files linked to performances or compositions
 
-### Benefits of Performance Tracking
+### benefits of Performance Tracking
 - **Historical record**: Maintain complete performance archive
 - **Programming assistance**: Avoid repeating recent performances
 - **Anniversary planning**: Track when pieces were last performed
@@ -40,9 +40,9 @@ Performance tracking in AllanaCrusis includes:
 
 ---
 
-## Concert Management
+## Concert management
 
-### Creating a New Concert
+### creating a New Concert
 1. **Navigate to concerts section** (may be under Materials or Reports)
 2. **Click "Add New Concert"**
 3. **Fill in concert details**
@@ -75,7 +75,7 @@ Performance tracking in AllanaCrusis includes:
 - **Ticket information**: Free, ticketed, fundraiser
 - **Special circumstances**: Memorial concert, celebration, etc.
 
-### Editing Concert Information
+### editing Concert Information
 1. **Find the concert** in the concerts list
 2. **Click "Edit" button**
 3. **Update information** as needed
@@ -94,14 +94,14 @@ Common edits include:
 
 ## Playgrams
 
-### What are Playgrams?
+### what are Playgrams?
 Playgrams are detailed concert programs that show:
 - **Order of performance**: Sequence of pieces in the concert
 - **Specific compositions**: Which works were performed
 - **Program structure**: Movements, intermissions, encores
 - **Additional information**: Soloists, special notes
 
-### Creating Playgrams
+### creating Playgrams
 #### Method 1: Build Program During Concert Creation
 1. **While creating/editing a concert**
 2. **Add compositions to the program**
@@ -118,7 +118,7 @@ Playgrams are detailed concert programs that show:
 ![Playgram builder interface](images/screenshots/playgrams.png)
 *Figure 4: Playgram builder showing program construction*
 
-### Program Elements
+### program Elements
 **Standard Elements:**
 - **Musical compositions**: Main repertoire
 - **Intermissions**: Breaks in the program
@@ -131,7 +131,7 @@ Playgrams are detailed concert programs that show:
 - **Acknowledgments**: Sponsors, special thanks
 - **Technical notes**: Special staging, equipment
 
-### Playgram Management
+### playgram Management
 **Ordering and Organization:**
 - **Drag and drop**: Rearrange program order
 - **Numbering**: Automatic or manual sequence numbers
@@ -149,16 +149,16 @@ Playgrams are detailed concert programs that show:
 
 ---
 
-## Performance History
+## Performance history
 
-### Tracking Performance History
+### tracking Performance History
 Every time a composition is included in a playgram, it creates a performance record showing:
 - **When**: Date of performance
 - **Where**: Venue and concert context
 - **Who**: Ensemble and conductor
 - **Program context**: What else was performed
 
-### Viewing Performance History
+### viewing Performance History
 **For Individual Compositions:**
 1. **Go to composition details**
 2. **Look for "Performance History" section**
@@ -172,7 +172,7 @@ Every time a composition is included in a playgram, it creates a performance rec
 ![Performance history display](images/screenshots/performance-history.png)
 *Figure 6: Performance history showing when and where compositions were performed*
 
-### Using Performance History
+### using Performance History
 **Programming Decisions:**
 - **Avoid repetition**: See when pieces were last performed
 - **Anniversary programming**: Commemorate significant performances
@@ -187,16 +187,16 @@ Every time a composition is included in a playgram, it creates a performance rec
 
 ---
 
-## Recordings Management
+## Recordings management
 
-### Types of Recordings
+### types of Recordings
 AllanaCrusis can manage various recording types:
 - **Live concert recordings**: Full or partial concert audio/video
 - **Studio recordings**: Professional recording sessions
 - **Reference recordings**: Examples for rehearsal or study
 - **Archival recordings**: Historical performances
 
-### Adding Recordings
+### adding Recordings
 #### Upload Process
 1. **Access recordings section**
 2. **Click "Add Recording"**
@@ -230,7 +230,7 @@ AllanaCrusis can manage various recording types:
 - **Multiple interpretations**: Different performances of same work
 - **Educational use**: Recordings for study and analysis
 
-### Recording Organization
+### recording Organization
 **Categories and Tags:**
 - **Performance type**: Concert, rehearsal, masterclass
 - **Quality level**: Professional, educational, archival
@@ -248,22 +248,22 @@ AllanaCrusis can manage various recording types:
 
 ---
 
-## Integration with Compositions
+## Integration with compositions
 
-### Linking Performances to Compositions
+### linking Performances to Compositions
 When compositions are added to playgrams:
 - **Automatic linking**: Performance history updates automatically
 - **Bidirectional connections**: View from composition or concert perspective
 - **Statistical tracking**: Usage counts and frequency analysis
 
-### Enhanced Composition Information
+### enhanced Composition Information
 Performance tracking adds valuable context to compositions:
 - **Performance frequency**: How often piece is performed
 - **Last performance**: When it was most recently played
 - **Historical significance**: Important or memorable performances
 - **Programming context**: What pieces it's commonly performed with
 
-### Programming Analysis
+### programming Analysis
 **Repertoire Patterns:**
 - **Popular pieces**: Most frequently performed works
 - **Forgotten repertoire**: Pieces not performed recently
@@ -280,9 +280,9 @@ Performance tracking adds valuable context to compositions:
 
 ---
 
-## Reporting and Analysis
+## Reporting and analysis
 
-### Performance Reports
+### performance Reports
 **Standard Reports:**
 - **Concert programs**: Formatted programs for printing
 - **Performance history**: Chronological lists by composition or date
@@ -295,7 +295,7 @@ Performance tracking adds valuable context to compositions:
 - **Conductor reports**: Programming by different conductors
 - **Genre analysis**: Balance of different musical styles
 
-### Data Export Options
+### data Export Options
 **Format Options:**
 - **PDF programs**: Print-ready concert programs
 - **CSV data**: Raw data for external analysis
@@ -311,7 +311,7 @@ Performance tracking adds valuable context to compositions:
 ![Report generation interface](images/screenshots/report-generation.png)
 *Figure 10: Interface for generating various types of performance reports*
 
-### Analytics and Insights
+### analytics and Insights
 **Trend Analysis:**
 - **Programming trends**: How repertoire choices change over time
 - **Audience preferences**: Popular vs. less popular works
@@ -326,9 +326,9 @@ Performance tracking adds valuable context to compositions:
 
 ---
 
-## Best Practices
+## Best practices
 
-### Data Quality
+### data Quality
 **Consistent Entry:**
 - **Standardize concert naming**: Use consistent format for concert titles
 - **Accurate dates**: Double-check performance dates and times
@@ -341,7 +341,7 @@ Performance tracking adds valuable context to compositions:
 - **Update after events**: Add actual information after concerts
 - **Historical verification**: Research accuracy of older entries
 
-### Organization Strategy
+### organization Strategy
 **Systematic Approach:**
 - **Regular data entry**: Update system consistently
 - **Batch processing**: Handle multiple concerts efficiently
@@ -361,7 +361,7 @@ Performance tracking adds valuable context to compositions:
 
 ## Troubleshooting
 
-### Common Issues
+### common Issues
 **Missing Performance Data:**
 - **Incomplete playgrams**: Some compositions not linked to performances
 - **Date errors**: Incorrect or missing performance dates
@@ -378,7 +378,7 @@ Performance tracking adds valuable context to compositions:
 - **Duplicate entries**: Same performance entered multiple times
 - **Data inconsistency**: Information conflicts between different records
 
-### Solutions and Workarounds
+### solutions and Workarounds
 **Data Correction:**
 - **Systematic review**: Regular audits of performance data
 - **Correction procedures**: Standard process for fixing errors
@@ -393,7 +393,7 @@ Performance tracking adds valuable context to compositions:
 
 ---
 
-## Next Steps
+## Next steps
 
 With performance tracking properly set up:
 

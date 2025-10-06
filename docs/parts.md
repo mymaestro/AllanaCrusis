@@ -7,7 +7,7 @@ title: "Parts Management"
 
 This section covers managing individual instrument parts, including adding instrumentation, editing part details, file uploads, and organizing physical and digital materials.
 
-## Table of Contents
+## Table of contents
 - [Understanding Parts](#understanding-parts)
 - [Instrumentation Setup](#instrumentation-setup)
 - [Individual Part Management](#individual-part-management)
@@ -18,16 +18,16 @@ This section covers managing individual instrument parts, including adding instr
 
 ---
 
-## Understanding Parts
+## Understanding parts
 
-### What are Parts?
+### what are Parts?
 Parts are individual instrument components of a musical composition:
 - **Individual instrument parts**: Flute 1, Trumpet 2, Percussion, etc.
 - **Physical tracking**: Count of original printed parts
 - **Digital files**: PDF or other electronic formats
 - **Metadata**: Page counts, paper sizes, descriptions
 
-### Parts vs. Compositions
+### parts vs. Compositions
 - **Composition**: The overall musical work
 - **Parts**: Individual components needed for performance
 - **Relationship**: One composition has many parts
@@ -35,7 +35,7 @@ Parts are individual instrument components of a musical composition:
 ![Parts relationship diagram](images/screenshots/part-types.png)
 *Figure 1: How parts relate to compositions and instruments*
 
-### Types of Parts
+### types of Parts
 - **Individual instruments**: Specific to one instrument
 - **Condensed parts**: Multiple instruments on one part (Flute 1&2)
 - **Rhythm section**: Special parts for jazz or contemporary music
@@ -44,9 +44,9 @@ Parts are individual instrument components of a musical composition:
 
 ---
 
-## Instrumentation Setup
+## Instrumentation setup
 
-### Adding Instrumentation to a Composition
+### adding Instrumentation to a Composition
 Before managing individual parts, you need to set up the instrumentation for a composition.
 
 #### Step 1: Access Instrumentation
@@ -83,7 +83,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
 3. **System creates individual part records**
 4. **Confirmation of parts created**
 
-### Finding Instrumentation Information
+### finding Instrumentation Information
 **Sources for instrumentation:**
 - **Front of score**: Many pieces list instrumentation
 - **Physical part folders**: Check what parts exist
@@ -93,9 +93,9 @@ Before managing individual parts, you need to set up the instrumentation for a c
 
 ---
 
-## Individual Part Management
+## Individual part management
 
-### Accessing Parts List
+### accessing Parts List
 1. **Go to MATERIALS > Parts**
 2. **Find your composition** (sorted by catalog number)
 3. **Click composition title** to see parts list
@@ -104,7 +104,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
 ![Parts list for a composition](images/screenshots/part-collections.png)
 *Figure 4: List of parts for a specific composition*
 
-### Editing Individual Parts
+### editing Individual Parts
 Click the **blue "Edit" button** for any part to access detailed management:
 
 #### Basic Part Information
@@ -166,16 +166,16 @@ Common for percussion parts labeled:
 
 ---
 
-## File Management
+## File management
 
-### Digital File Types
+### digital File Types
 AllanaCrusis typically handles:
 - **PDF files**: Most common for sheet music
 - **Image files**: Scanned parts (JPEG, PNG)
 - **Audio files**: Reference recordings (MP3, WAV)
 - **Other formats**: As supported by your system
 
-### Uploading Files
+### uploading Files
 1. **Access part editing form**
 2. **Look for file upload section**
 3. **Choose file from computer**
@@ -186,7 +186,7 @@ AllanaCrusis typically handles:
 ![File upload interface](images/screenshots/compositions-add-edit.png)
 *Figure 7: Uploading digital files for parts*
 
-### File Organization Best Practices
+### file Organization Best Practices
 **Naming Conventions**
 - **Descriptive names**: Include composition and instrument
 - **Consistent format**: "Composer-Title-Instrument.pdf"
@@ -198,7 +198,7 @@ AllanaCrusis typically handles:
 - **Completeness**: Ensure all pages are included
 - **Orientation**: Consistent page orientation
 
-### Access Control
+### access Control
 **Permission Levels**
 - **Public**: Anyone can download
 - **Members only**: Requires login
@@ -212,16 +212,16 @@ AllanaCrusis typically handles:
 
 ---
 
-## Physical Inventory
+## Physical inventory
 
-### Inventory Management
+### inventory Management
 Tracking physical parts is crucial for:
 - **Performance preparation**: Know what parts are available
 - **Copying needs**: Identify missing parts requiring copies
 - **Storage planning**: Organize physical storage efficiently
 - **Loss prevention**: Track materials checked out or missing
 
-### Inventory Process
+### inventory Process
 1. **Count actual parts** in each composition folder
 2. **Update originals count** for each part
 3. **Note condition issues** in descriptions
@@ -230,7 +230,7 @@ Tracking physical parts is crucial for:
 ![Physical inventory tracking](images/screenshots/paper-sizes.png)
 *Figure 8: Tracking physical inventory of parts*
 
-### Common Inventory Issues
+### common Inventory Issues
 **Missing Parts**
 - **Note in system**: Set originals count to "0"
 - **Prioritize for copying**: Popular pieces first
@@ -251,16 +251,16 @@ Tracking physical parts is crucial for:
 
 ---
 
-## Part Collections
+## Part collections
 
-### Understanding Part Collections
+### understanding Part Collections
 Part collections are pre-organized sets of parts for specific purposes:
 - **File copies**: Working copies for regular use
 - **Performance sets**: Parts organized for specific concerts
 - **Rental sets**: Complete sets prepared for lending
 - **Student sets**: Educational or simplified versions
 
-### Creating Part Collections
+### creating Part Collections
 1. **Identify need**: Performance, education, rental, etc.
 2. **Select parts**: Choose which instruments to include
 3. **Organize physically**: Group parts appropriately
@@ -270,7 +270,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 ![Part collections management](images/screenshots/part-collections.png)
 *Figure 9: Managing different types of part collections*
 
-### Collection Benefits
+### collection Benefits
 - **Faster setup**: Pre-organized for common uses
 - **Preservation**: Protects originals from wear
 - **Efficiency**: Reduces time for performance preparation
@@ -278,9 +278,9 @@ Part collections are pre-organized sets of parts for specific purposes:
 
 ---
 
-## Quality Control
+## Quality control
 
-### Regular Maintenance Tasks
+### regular Maintenance Tasks
 **Accuracy Verification**
 - **Cross-check instrumentation**: Verify against score
 - **Validate part counts**: Ensure physical inventory matches system
@@ -293,7 +293,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 - **Complete information**: Fill in missing data when possible
 - **Error correction**: Fix mistakes found during use
 
-### Common Quality Issues
+### common Quality Issues
 **Instrumentation Errors**
 - **Missing instruments**: Parts exist but not listed in system
 - **Extra instruments**: System shows parts that don't exist
@@ -309,7 +309,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 ![Quality control checklist](images/screenshots/part-types-score-order.png)
 *Figure 10: Quality control checklist for parts management*
 
-### Best Practices
+### best Practices
 **Regular Reviews**
 - **Monthly audits**: Check high-use compositions
 - **Annual inventory**: Complete physical verification
@@ -324,9 +324,9 @@ Part collections are pre-organized sets of parts for specific purposes:
 
 ---
 
-## Workflow Integration
+## Workflow integration
 
-### Connection to Other Functions
+### connection to Other Functions
 **Performance Planning**
 - **Parts availability**: Check what's ready for performance
 - **Copying needs**: Identify missing parts for upcoming concerts
@@ -346,7 +346,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 
 ## Troubleshooting
 
-### Common Problems and Solutions
+### common Problems and Solutions
 
 **Parts Not Appearing in Lists**
 - **Check instrumentation setup**: May not be added to composition
@@ -368,26 +368,26 @@ Part collections are pre-organized sets of parts for specific purposes:
 
 ---
 
-## Advanced Features
+## Advanced features
 
-### Bulk Operations
+### bulk Operations
 - **Mass updates**: Change multiple parts at once
 - **Import functions**: Add parts data from external sources
 - **Export capabilities**: Generate reports and data extracts
 
-### Integration Tools
+### integration Tools
 - **Scanner integration**: Direct scanning to part records
 - **File management**: Automated file organization and naming
 - **Workflow automation**: Streamlined processes for common tasks
 
-### Reporting Tools
+### reporting Tools
 - **Inventory reports**: Complete status of all parts
 - **Missing parts lists**: Prioritize copying and acquisition
 - **Usage analytics**: Understand access patterns and needs
 
 ---
 
-## Next Steps
+## Next steps
 
 With parts properly managed:
 

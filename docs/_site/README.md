@@ -2,7 +2,7 @@
 
 This directory contains the GitHub Pages documentation site for AllanaCrusis Music Library System.
 
-## Setup Instructions
+## Setup instructions
 
 ### 1. Enable GitHub Pages
 1. Go to your repository settings on GitHub
@@ -24,7 +24,7 @@ If you want to use a custom domain:
 2. Configure DNS settings with your domain provider
 3. Update the `url` in `_config.yml` to your custom domain
 
-## Local Development
+## Local development
 
 To run the site locally for testing:
 
@@ -41,7 +41,7 @@ bundle exec jekyll serve
 # Open http://localhost:4000 in your browser
 ```
 
-## File Structure
+## File structure
 
 ```
 docs/
@@ -53,9 +53,9 @@ docs/
 └── README.md            # This file
 ```
 
-## Updating Documentation
+## Updating documentation
 
-### Adding New Pages
+### adding New Pages
 1. Create a new `.md` file in the `/docs` directory
 2. Add front matter at the top:
    ```yaml
@@ -66,12 +66,12 @@ docs/
    ```
 3. Add the page to navigation in `_config.yml` if needed
 
-### Editing Existing Content
+### editing Existing Content
 - Edit the `.md` files directly
 - Changes will be automatically deployed when pushed to GitHub
 - For local testing, run `bundle exec jekyll serve`
 
-## Themes and Customization
+## Themes and customization
 
 The site uses the "minima" theme by default. To customize:
 
@@ -87,13 +87,13 @@ Popular Jekyll themes for documentation:
 
 ## Maintenance
 
-### Regular Updates
+### regular Updates
 - Keep user guide synchronized with application changes
 - Update version information and feature lists
 - Review and update external links
 - Add new troubleshooting information as needed
 
-### Monitoring
+### monitoring
 - Check GitHub Pages build status in repository settings
 - Monitor site analytics if configured
 - Review user feedback and update documentation accordingly

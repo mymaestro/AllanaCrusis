@@ -1,0 +1,307 @@
+<svg viewBox="0 0 1400 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .table-box {
+        fill: #f8f9fa;
+        stroke: #333;
+        stroke-width: 2;
+        rx: 8;
+      }
+      .supporting-data {
+        fill: #e3f2fd;
+        stroke: #1976d2;
+      }
+      .core-content {
+        fill: #fff3e0;
+        stroke: #f57c00;
+      }
+      .performance {
+        fill: #f3e5f5;
+        stroke: #7b1fa2;
+      }
+      .system {
+        fill: #e8f5e8;
+        stroke: #388e3c;
+      }
+      .table-title {
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        fill: #333;
+        text-anchor: middle;
+      }
+      .field-text {
+        font-family: 'Arial', sans-serif;
+        font-size: 11px;
+        fill: #555;
+      }
+      .pk-field {
+        font-weight: bold;
+        fill: #d32f2f;
+      }
+      .fk-field {
+        fill: #1976d2;
+        font-style: italic;
+      }
+      .relationship-line {
+        stroke: #666;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+      .relationship-line-many {
+        stroke: #999;
+        stroke-width: 1.5;
+        fill: none;
+        stroke-dasharray: 5,5;
+      }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="700" y="30" class="table-title" style="font-size: 18px;">AllanaCrusis Database Schema - Entity Relationship Diagram</text>
+
+  <!-- LAYER 1: Relationship Lines (Behind everything) -->
+  <!-- Compositions to Supporting Data -->
+  <line x1="160" y1="120" x2="400" y2="345" class="relationship-line"/>
+  <line x1="160" y1="260" x2="400" y2="360" class="relationship-line"/>
+  <line x1="160" y1="410" x2="400" y2="405" class="relationship-line"/>
+
+  <!-- Parts relationships -->
+  <line x1="560" y1="320" x2="620" y2="280" class="relationship-line"/>
+  <line x1="340" y1="300" x2="620" y2="255" class="relationship-line"/>
+  <line x1="160" y1="410" x2="620" y2="315" class="relationship-line"/>
+
+  <!-- Part Collections relationships -->
+  <line x1="780" y1="320" x2="780" y2="420" class="relationship-line"/>
+  <line x1="340" y1="350" x2="630" y2="450" class="relationship-line"/>
+  <line x1="340" y1="130" x2="630" y2="450" class="relationship-line"/>
+
+  <!-- Playgram relationships -->
+  <line x1="560" y1="280" x2="820" y2="270" class="relationship-line"/>
+  <line x1="900" y1="180" x2="900" y2="200" class="relationship-line"/>
+  <line x1="900" y1="320" x2="900" y2="340" class="relationship-line"/>
+
+  <!-- Recordings relationships -->
+  <line x1="560" y1="260" x2="1020" y2="255" class="relationship-line"/>
+  <line x1="980" y1="400" x2="1020" y2="270" class="relationship-line"/>
+  <line x1="160" y1="280" x2="1020" y2="315" class="relationship-line"/>
+
+  <!-- User relationships -->
+  <line x1="470" y1="180" x2="270" y2="500" class="relationship-line"/>
+  <line x1="540" y1="140" x2="1030" y2="525" class="relationship-line"/>
+
+  <!-- Download token relationships -->
+  <line x1="980" y1="120" x2="1030" y2="465" class="relationship-line"/>
+  <line x1="340" y1="460" x2="1030" y2="480" class="relationship-line"/>
+
+  <!-- Section Part Types relationships -->
+  <line x1="340" y1="460" x2="410" y2="540" class="relationship-line"/>
+  <line x1="340" y1="300" x2="410" y2="555" class="relationship-line"/>
+
+  <!-- Instruments to Part Types -->
+  <line x1="340" y1="130" x2="210" y2="335" class="relationship-line"/>
+
+  <!-- LAYER 2: Table Boxes and Content (On top of lines) -->
+  <!-- Supporting Data Tables (Blue) -->
+  <!-- Genres -->
+  <rect x="20" y="60" width="140" height="120" class="table-box supporting-data"/>
+  <text x="90" y="80" class="table-title">genres</text>
+  <text x="30" y="100" class="field-text pk-field">id_genre (PK)</text>
+  <text x="30" y="115" class="field-text">name</text>
+  <text x="30" y="130" class="field-text">description</text>
+  <text x="30" y="145" class="field-text">enabled</text>
+
+  <!-- Ensembles -->
+  <rect x="20" y="200" width="140" height="120" class="table-box supporting-data"/>
+  <text x="90" y="220" class="table-title">ensembles</text>
+  <text x="30" y="240" class="field-text pk-field">id_ensemble (PK)</text>
+  <text x="30" y="255" class="field-text">name</text>
+  <text x="30" y="270" class="field-text">description</text>
+  <text x="30" y="285" class="field-text">link</text>
+  <text x="30" y="300" class="field-text">enabled</text>
+
+  <!-- Paper Sizes -->
+  <rect x="20" y="340" width="140" height="140" class="table-box supporting-data"/>
+  <text x="90" y="360" class="table-title">paper_sizes</text>
+  <text x="30" y="380" class="field-text pk-field">id_paper_size (PK)</text>
+  <text x="30" y="395" class="field-text">name</text>
+  <text x="30" y="410" class="field-text">description</text>
+  <text x="30" y="425" class="field-text">vertical</text>
+  <text x="30" y="440" class="field-text">horizontal</text>
+  <text x="30" y="455" class="field-text">enabled</text>
+
+  <!-- Instruments -->
+  <rect x="200" y="60" width="140" height="140" class="table-box supporting-data"/>
+  <text x="270" y="80" class="table-title">instruments</text>
+  <text x="210" y="100" class="field-text pk-field">id_instrument (PK)</text>
+  <text x="210" y="115" class="field-text">collation</text>
+  <text x="210" y="130" class="field-text">name</text>
+  <text x="210" y="145" class="field-text">description</text>
+  <text x="210" y="160" class="field-text">family</text>
+  <text x="210" y="175" class="field-text">enabled</text>
+
+  <!-- Part Types -->
+  <rect x="200" y="220" width="140" height="160" class="table-box supporting-data"/>
+  <text x="270" y="240" class="table-title">part_types</text>
+  <text x="210" y="260" class="field-text pk-field">id_part_type (PK)</text>
+  <text x="210" y="275" class="field-text">collation</text>
+  <text x="210" y="290" class="field-text">name</text>
+  <text x="210" y="305" class="field-text">description</text>
+  <text x="210" y="320" class="field-text">family</text>
+  <text x="210" y="335" class="field-text fk-field">default_instrument (FK)</text>
+  <text x="210" y="350" class="field-text">is_part_collection</text>
+  <text x="210" y="365" class="field-text">enabled</text>
+
+  <!-- Sections -->
+  <rect x="200" y="400" width="140" height="120" class="table-box supporting-data"/>
+  <text x="270" y="420" class="table-title">sections</text>
+  <text x="210" y="440" class="field-text pk-field">id_section (PK)</text>
+  <text x="210" y="455" class="field-text">name</text>
+  <text x="210" y="470" class="field-text">description</text>
+  <text x="210" y="485" class="field-text">enabled</text>
+  <text x="210" y="500" class="field-text fk-field">section_leader (FK)</text>
+
+  <!-- Core Content Tables (Orange) -->
+  <!-- Compositions (Central table) -->
+  <rect x="400" y="200" width="160" height="240" class="table-box core-content"/>
+  <text x="480" y="220" class="table-title">compositions</text>
+  <text x="410" y="240" class="field-text pk-field">catalog_number (PK)</text>
+  <text x="410" y="255" class="field-text">name</text>
+  <text x="410" y="270" class="field-text">description</text>
+  <text x="410" y="285" class="field-text">composer</text>
+  <text x="410" y="300" class="field-text">arranger</text>
+  <text x="410" y="315" class="field-text">editor</text>
+  <text x="410" y="330" class="field-text">publisher</text>
+  <text x="410" y="345" class="field-text fk-field">genre (FK)</text>
+  <text x="410" y="360" class="field-text fk-field">ensemble (FK)</text>
+  <text x="410" y="375" class="field-text">grade</text>
+  <text x="410" y="390" class="field-text">duration</text>
+  <text x="410" y="405" class="field-text fk-field">paper_size (FK)</text>
+  <text x="410" y="420" class="field-text">...other fields</text>
+
+  <!-- Parts -->
+  <rect x="620" y="200" width="160" height="160" class="table-box core-content"/>
+  <text x="700" y="220" class="table-title">parts</text>
+  <text x="630" y="240" class="field-text pk-field">catalog_number (PK)</text>
+  <text x="630" y="255" class="field-text pk-field">id_part_type (PK)</text>
+  <text x="630" y="270" class="field-text">name</text>
+  <text x="630" y="285" class="field-text">description</text>
+  <text x="630" y="300" class="field-text">is_part_collection</text>
+  <text x="630" y="315" class="field-text fk-field">paper_size (FK)</text>
+  <text x="630" y="330" class="field-text">page_count</text>
+  <text x="630" y="345" class="field-text">image_path</text>
+
+  <!-- Part Collections -->
+  <rect x="620" y="380" width="160" height="140" class="table-box core-content"/>
+  <text x="700" y="400" class="table-title">part_collections</text>
+  <text x="630" y="420" class="field-text fk-field">catalog_number_key (FK)</text>
+  <text x="630" y="435" class="field-text fk-field">id_part_type_key (FK)</text>
+  <text x="630" y="450" class="field-text fk-field">id_instrument_key (FK)</text>
+  <text x="630" y="465" class="field-text">name</text>
+  <text x="630" y="480" class="field-text">description</text>
+  <text x="630" y="495" class="field-text">last_update</text>
+
+  <!-- Performance Tables (Purple) -->
+  <!-- Playgrams -->
+  <rect x="820" y="60" width="160" height="120" class="table-box performance"/>
+  <text x="900" y="80" class="table-title">playgrams</text>
+  <text x="830" y="100" class="field-text pk-field">id_playgram (PK)</text>
+  <text x="830" y="115" class="field-text">name</text>
+  <text x="830" y="130" class="field-text">description</text>
+  <text x="830" y="145" class="field-text">performance_date</text>
+  <text x="830" y="160" class="field-text">enabled</text>
+
+  <!-- Playgram Items -->
+  <rect x="820" y="200" width="160" height="120" class="table-box performance"/>
+  <text x="900" y="220" class="table-title">playgram_items</text>
+  <text x="830" y="240" class="field-text pk-field">id_playgram_item (PK)</text>
+  <text x="830" y="255" class="field-text fk-field">id_playgram (FK)</text>
+  <text x="830" y="270" class="field-text fk-field">catalog_number (FK)</text>
+  <text x="830" y="285" class="field-text">comp_order</text>
+
+  <!-- Concerts -->
+  <rect x="820" y="340" width="160" height="120" class="table-box performance"/>
+  <text x="900" y="360" class="table-title">concerts</text>
+  <text x="830" y="380" class="field-text pk-field">id_concert (PK)</text>
+  <text x="830" y="395" class="field-text fk-field">id_playgram (FK)</text>
+  <text x="830" y="410" class="field-text">performance_date</text>
+  <text x="830" y="425" class="field-text">venue</text>
+  <text x="830" y="440" class="field-text">conductor</text>
+
+  <!-- Recordings -->
+  <rect x="1020" y="200" width="160" height="160" class="table-box performance"/>
+  <text x="1100" y="220" class="table-title">recordings</text>
+  <text x="1030" y="240" class="field-text pk-field">id_recording (PK)</text>
+  <text x="1030" y="255" class="field-text fk-field">catalog_number (FK)</text>
+  <text x="1030" y="270" class="field-text fk-field">id_concert (FK)</text>
+  <text x="1030" y="285" class="field-text">name</text>
+  <text x="1030" y="300" class="field-text">ensemble</text>
+  <text x="1030" y="315" class="field-text fk-field">id_ensemble (FK)</text>
+  <text x="1030" y="330" class="field-text">link</text>
+  <text x="1030" y="345" class="field-text">notes</text>
+
+  <!-- System Tables (Green) -->
+  <!-- Users -->
+  <rect x="400" y="60" width="140" height="120" class="table-box system"/>
+  <text x="470" y="80" class="table-title">users</text>
+  <text x="410" y="100" class="field-text pk-field">id_users (PK)</text>
+  <text x="410" y="115" class="field-text">username</text>
+  <text x="410" y="130" class="field-text">password</text>
+  <text x="410" y="145" class="field-text">name</text>
+  <text x="410" y="160" class="field-text">address</text>
+  <text x="410" y="175" class="field-text">roles</text>
+
+  <!-- Download Tokens -->
+  <rect x="1020" y="380" width="160" height="160" class="table-box system"/>
+  <text x="1100" y="400" class="table-title">download_tokens</text>
+  <text x="1030" y="420" class="field-text pk-field">id_download_token (PK)</text>
+  <text x="1030" y="435" class="field-text">token</text>
+  <text x="1030" y="450" class="field-text">email</text>
+  <text x="1030" y="465" class="field-text fk-field">id_playgram (FK)</text>
+  <text x="1030" y="480" class="field-text fk-field">id_section (FK)</text>
+  <text x="1030" y="495" class="field-text">zip_filename</text>
+  <text x="1030" y="510" class="field-text">expires_at</text>
+  <text x="1030" y="525" class="field-text fk-field">id_user (FK)</text>
+
+  <!-- Section Part Types (Junction Table) -->
+  <rect x="400" y="500" width="160" height="80" class="table-box supporting-data"/>
+  <text x="480" y="520" class="table-title">section_part_types</text>
+  <text x="410" y="540" class="field-text pk-field fk-field">id_section (PK/FK)</text>
+  <text x="410" y="555" class="field-text pk-field fk-field">id_part_type (PK/FK)</text>
+
+  <!-- Password Reset -->
+  <rect x="600" y="60" width="160" height="120" class="table-box system"/>
+  <text x="680" y="80" class="table-title">password_reset</text>
+  <text x="610" y="100" class="field-text pk-field">password_reset_id (PK)</text>
+  <text x="610" y="115" class="field-text">password_reset_email</text>
+  <text x="610" y="130" class="field-text">password_reset_selector</text>
+  <text x="610" y="145" class="field-text">password_reset_token</text>
+  <text x="610" y="160" class="field-text">request_type</text>
+
+  <!-- LAYER 3: Legend (On top of everything) -->
+  <rect x="1220" y="60" width="150" height="200" fill="#f8f9fa" stroke="#333" stroke-width="1" rx="4"/>
+  <text x="1295" y="85" class="table-title">Legend</text>
+  
+  <rect x="1230" y="100" width="15" height="15" class="table-box supporting-data"/>
+  <text x="1250" y="112" class="field-text">Supporting Data</text>
+  
+  <rect x="1230" y="125" width="15" height="15" class="table-box core-content"/>
+  <text x="1250" y="137" class="field-text">Core Content</text>
+  
+  <rect x="1230" y="150" width="15" height="15" class="table-box performance"/>
+  <text x="1250" y="162" class="field-text">Performance</text>
+  
+  <rect x="1230" y="175" width="15" height="15" class="table-box system"/>
+  <text x="1250" y="187" class="field-text">System/Users</text>
+
+  <text x="1230" y="210" class="field-text pk-field">PK = Primary Key</text>
+  <text x="1230" y="225" class="field-text fk-field">FK = Foreign Key</text>
+  <line x1="1230" y1="235" x2="1270" y2="235" class="relationship-line"/>
+  <text x="1275" y="240" class="field-text">Relationship</text>
+
+</svg>

@@ -5,52 +5,53 @@ title: "User Guide"
 
 # AllanaCrusis Music Library User Guide
 
-Welcome to the comprehensive AllanaCrusis user guide. This documentation is organized into focused sections to help you find the information you need quickly.
+Welcome to the comprehensive AllanaCrusis User Guide. This documentation is organized into focused sections to help you find the information you need quickly.
 
-## User Guide Sections
+## Core user functions
 
-### 📚 Core User Functions
-
-1. **[Getting Started](getting-started.html)** - Home, About, Search
+1. **[Getting started](getting-started.html)** - Home, About, Search
    - System overview and navigation
    - Basic search functionality
    - Understanding the interface
 
-2. **[Getting Access](getting-access.html)** - User Registration, Roles, Password Reset
+2. **[Getting access](getting-access.html)** - User registration, Roles, Password reset
    - Creating an account
    - Understanding user roles and permissions
    - Password management and email verification
+   - Resetting your password
 
-3. **[Supporting Data](supporting-data.html)** - Instruments, Ensembles, Genres, Paper Sizes, Part Types
+## Music Library management
+
+3. **[Supporting data](supporting-data.html)** - Ensembles, Genres, Paper sizes, Instruments, Sections, Part types
    - Managing reference data
-   - Setting up organizational structure
-   - Configuring system options
+   - Organizational structure (why it matters)
+   - Sections
 
-### 🎵 Music Library Management
-
-4. **[Compositions](compositions.html)** - Entering and Editing Compositions
+4. **[Compositions](compositions.html)** - Entering and editing compositions
+   - Search and organization features
    - Adding new compositions
    - Managing metadata and composer information
-   - Search and organization features
 
-5. **[Parts Management](parts.html)** - Entering and Editing Parts
+5. **[Parts management](parts.html)** - Entering and editing parts
+   - Assigning instrumentation quickly
    - Individual part tracking
    - File management and uploads
-   - Instrumentation assignment
 
-6. **[Concerts and Recordings](concerts-recordings.html)** - Playgrams, Concert Data, and Recordings
+6. **[Playlists, concerts and recordings](concerts-recordings.html)** - Playgrams, Concert data, and Recordings
+   - Building playgrams (concert playlists)
    - Event management
    - Performance tracking
    - Audio and recording management
 
-7. **[Part Distribution](distribution.html)** - Distributing Parts
+7. **[Parts distribution](distribution.html)** - Distributing parts
    - Digital distribution systems
+   - Parts by section
    - Access control and permissions
    - Download tracking
 
-### 🔧 Advanced Topics
+## Advanced topics
 
-8. **[Administrator Functions](admin-guide.html)** - System Administration
+8. **[Administrator functions](admin-guide.html)** - System Administration
    - User management
    - System configuration
    - Reports and analytics
@@ -62,34 +63,32 @@ Welcome to the comprehensive AllanaCrusis user guide. This documentation is orga
 
 ---
 
-## Quick Reference
+## Quick reference
 
-### Common Tasks
+### Common tasks
 - **Add a new composition**: [Compositions Guide](compositions.html#adding-compositions)
 - **Upload part files**: [Parts Guide](parts.html#file-uploads)
 - **Create user accounts**: [Admin Guide](admin-guide.html#user-management)
 - **Reset password**: [Getting Access](getting-access.html#password-reset)
 
-### User Roles
+### user roles
 - **Guest**: Browse and search public content
 - **Member**: Access downloads and member features
 - **Librarian**: Full composition and parts management
 - **Manager**: Complete administrative control
 
-### Support
+### support
 - **Documentation Issues**: Check the [Troubleshooting Guide](troubleshooting.html)
 - **Technical Support**: Contact your system administrator
 - **Feature Requests**: Submit through your organization's process
 
 ---
 
-*Each section includes step-by-step instructions, screenshots, and examples specific to that topic area.*lt
-title: "User Guide"
----
+*Each section includes step-by-step instructions, screenshots, and examples specific to that topic area.*
 
 # AllanaCrusis Music Library User Guide
 
-## Table of Contents
+## Table of contents
 1. [Getting Started](#getting-started)
 2. [User Roles and Permissions](#user-roles-and-permissions)
 3. [Navigation and Interface](#navigation-and-interface)
@@ -103,34 +102,34 @@ title: "User Guide"
 
 ---
 
-## Getting Started
+## Getting started
 
-### System Requirements
+### System requirements
 - Web browser (Chrome, Firefox, Safari, Edge)
 - Internet connection
 - Login credentials provided by your library administrator
 
-### First Login
+### First login
 1. Navigate to your library's URL (typically https://yourdomain.com)
 2. Click "Login" in the top navigation
 3. Enter your username and password
 4. If this is your first login, you may be prompted to verify your email address
 
-### Interface Overview
+### Interface overview
 The AllanaCrusis interface uses a clean, responsive design with:
 - **Top Navigation**: Quick access to main sections (Materials, Reports, Users, etc.)
 - **Search Bar**: Global search functionality with real-time filtering
 - **Action Buttons**: Color-coded buttons for different functions (blue for edit, green for add, red for delete)
 - **Tables**: Sortable, filterable data displays with sticky headers
 
-![AllanaCrusis main interface showing navigation and search features](images/screenshots/main-interface.png)
+![AllanaCrusis main interface showing navigation and search features](images/screenshots/navigation-menu.png)
 *Figure 1: Main AllanaCrusis interface with highlighted navigation elements*
 
 ---
 
-## User Roles and Permissions
+## User roles and permissions
 
-### Guest User
+### Guest user
 - View public compositions and recordings
 - Use search functionality
 - No editing capabilities
@@ -154,9 +153,9 @@ The AllanaCrusis interface uses a clean, responsive design with:
 
 ---
 
-## Navigation and Interface
+## Navigation and interface
 
-### Main Menu Sections
+### main menu sections
 
 #### MATERIALS
 - **Compositions**: Manage musical compositions, metadata, and basic information
@@ -173,7 +172,7 @@ The AllanaCrusis interface uses a clean, responsive design with:
 - **Users**: User account management
 - **System Settings**: Configuration options
 
-### Search and Filter Features
+### search and filter features
 - **Real-time filtering**: Tables update as you type
 - **Composer autocomplete**: Automatic suggestions with "Last, First" formatting
 - **Advanced search**: Multiple criteria including composer, title, genre, instrumentation
@@ -181,9 +180,9 @@ The AllanaCrusis interface uses a clean, responsive design with:
 
 ---
 
-## Composition Management
+## Composition management
 
-### Adding a New Composition
+### Adding a new composition
 1. Navigate to **MATERIALS > Compositions**
 2. Click the **Add New Composition** button
 3. Fill in required fields:
@@ -191,7 +190,7 @@ The AllanaCrusis interface uses a clean, responsive design with:
    - **Title**: Full composition title
    - **Composer**: Use "Last, First" format
 
-![Composition editing form with required fields highlighted](images/screenshots/add-composition-form.png)
+![Composition editing form with required fields highlighted](images/screenshots/compositions-add-edit.png)
 *Figure 2: New composition form showing required fields*
 
 4. Optional fields:
@@ -201,13 +200,13 @@ The AllanaCrusis interface uses a clean, responsive design with:
    - **Grade Level**: Difficulty rating (1-7)
    - **Duration**: Performance time in minutes
 
-### Editing Existing Compositions
+### Editing existing compositions
 1. Find the composition using search or browse
 2. Click the blue **Edit** button
 3. Update any necessary fields
 4. Click **Update** to save changes
 
-### Composer Name Formatting
+### Composer name formatting
 The system includes composer normalization features:
 - Use "Last, First" format (e.g., "Beethoven, Ludwig van")
 - Autocomplete suggestions help maintain consistency
@@ -215,15 +214,15 @@ The system includes composer normalization features:
 
 ---
 
-## Parts Management
+## Parts management
 
-### Adding Parts to a Composition
+### adding parts to a composition
 1. Navigate to the composition's **Instrumentation** page
 2. Select instruments from the **Instrument Parts** list
 3. Hold Ctrl/Cmd to select multiple instruments
 4. Click **Add Parts**
 
-### Managing Individual Parts
+### Managing individual parts
 1. Go to **MATERIALS > Parts**
 2. Find your composition and click the title
 3. For each part, click the blue **Edit** button to:
@@ -232,20 +231,20 @@ The system includes composer normalization features:
    - Add descriptions or notes
    - Assign specific instruments
 
-### File Management
+### File management
 - Upload PDF files for digital distribution
 - Set access permissions for downloads
 - Track file versions and updates
 
 ---
 
-## Search and Filtering
+## Search and filtering
 
-### Quick Search
+### Quick search
 - Use the search bar in the top navigation for global searches
 - Searches across titles, composers, arrangers, and catalog numbers
 
-### Advanced Search
+### Advanced search
 1. Navigate to **REPORTS > Search**
 2. Use multiple filter criteria:
    - **Title**: Partial or full title matching
@@ -255,17 +254,17 @@ The system includes composer normalization features:
    - **Grade Level**: Difficulty range
    - **Duration**: Time range
 
-### Table Filtering
+### Table filtering
 - Most data tables include real-time filter boxes
 - Type to filter results instantly
 - Combine with sorting by clicking column headers
 
 ---
 
-## User Management
+## User management
 *(Manager access required)*
 
-### Adding New Users
+### adding new users
 1. Navigate to **ADMIN > Users**
 2. Click **Add New User**
 3. Fill in user information:
@@ -274,7 +273,7 @@ The system includes composer normalization features:
    - Role assignment
    - Ensemble assignment
 
-### Managing Existing Users
+### managing existing users
 - Edit user details and permissions
 - Reset passwords
 - Enable/disable accounts
@@ -282,14 +281,14 @@ The system includes composer normalization features:
 
 ---
 
-## Reports and Analytics
+## Reports and analytics
 
-### Available Reports
+### Available reports
 - **Composition Statistics**: Counts by genre, composer, etc.
 - **Usage Reports**: Download and access statistics
 - **Missing Parts**: Identify incomplete instrumentation
 
-### Generating Reports
+### Generating reports
 1. Navigate to **REPORTS**
 2. Select the desired report type
 3. Set date ranges and filters as needed
@@ -297,9 +296,9 @@ The system includes composer normalization features:
 
 ---
 
-## Librarian Instructions
+## Librarian instructions
 
-#### Part 1: Music Information
+#### Part 1: Music information
 1. Sign in to the library at https://allanacrusis.net Confirm that you have librarian access.
 2. Select MATERIALS → Compositions to enter the Compositions page.
 3. Enter all or part of the title, composer, or arranger of your piece in the search field, and choose Search to find your piece in the library list. Choose the blue EDIT button.
@@ -366,34 +365,34 @@ Optionally, in the Description field, enter the instruments that appear on the p
 
 ## Troubleshooting
 
-### Common Issues and Solutions
+### Common issues and solutions
 
-#### Login Problems
+#### Login problems
 - **Forgot password**: Use the "Reset Password" link on the login page
 - **Email not verified**: Check your email for verification message
 - **Account locked**: Contact your system administrator
 
-#### Search Not Working
+#### Search not working
 - **No results found**: Try broader search terms or check spelling
 - **Filters not responding**: Clear browser cache and refresh page
 - **Autocomplete not working**: Ensure JavaScript is enabled
 
-#### File Upload Issues
+#### File upload issues
 - **PDF won't upload**: Check file size (max 10MB) and format
 - **Slow uploads**: Ensure stable internet connection
 - **Access denied**: Verify you have librarian or manager permissions
 
-#### Display Issues
+#### Display issues
 - **Tables not loading**: Refresh page or clear browser cache
 - **Mobile display problems**: Try rotating device or using desktop browser
 - **Missing buttons**: Check your user permissions level
 
-### Getting Help
+### Getting help
 - **Documentation**: This user guide and system help pages
 - **Technical Support**: Contact your system administrator
 - **Training**: Request additional training sessions if needed
 
-### Browser Compatibility
+### browser compatibility
 AllanaCrusis works best with:
 - Chrome (recommended)
 - Firefox

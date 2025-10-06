@@ -7,7 +7,7 @@ title: "Troubleshooting"
 
 This comprehensive troubleshooting guide covers common issues users and administrators encounter with AllanaCrusis, along with step-by-step solutions and preventive measures.
 
-## Table of Contents
+## Table of contents
 - [Getting Help](#getting-help)
 - [Login and Access Issues](#login-and-access-issues)
 - [Search and Navigation Problems](#search-and-navigation-problems)
@@ -19,16 +19,16 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Getting Help
+## Getting help
 
-### Before You Start Troubleshooting
+### before You Start Troubleshooting
 1. **Note the specific error message** (if any)
 2. **Remember what you were trying to do** when the problem occurred
 3. **Check if the problem happens consistently** or just occasionally
 4. **Try the same action in a different browser** or on a different device
 5. **Check if other users are experiencing** the same issue
 
-### Support Resources
+### support Resources
 **Self-Help:**
 - **This troubleshooting guide**: Start here for common problems
 - **User guide sections**: Detailed instructions for specific features
@@ -46,9 +46,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Login and Access Issues
+## Login and access issues
 
-### Cannot Log In
+### cannot Log In
 **Symptoms:** Login form doesn't work, error messages, or redirected to login page repeatedly.
 
 #### Check Your Credentials
@@ -72,7 +72,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![Login troubleshooting flowchart](images/screenshots/signin.png)
 *Figure 2: Step-by-step login troubleshooting process*
 
-### Email Verification Problems
+### email Verification Problems
 **Symptoms:** Can't find verification email, verification link doesn't work.
 
 #### Email Delivery Issues
@@ -87,7 +87,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Check for line breaks**: Email may have broken the URL
 4. **Contact administrator**: Link may have expired
 
-### Permission Denied Errors
+### permission Denied Errors
 **Symptoms:** "Access denied," "insufficient permissions," or missing menu items.
 
 #### Role and Permission Issues
@@ -104,9 +104,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Search and Navigation Problems
+## Search and navigation problems
 
-### Search Not Working
+### search Not Working
 **Symptoms:** No results when you expect them, search seems slow, or error messages.
 
 #### Search Technique Issues
@@ -124,7 +124,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![Search troubleshooting diagram](images/screenshots/search.png)
 *Figure 3: Common search problems and solutions*
 
-### Page Loading Issues
+### page Loading Issues
 **Symptoms:** Pages load slowly, don't load completely, or show error messages.
 
 #### Browser Performance
@@ -139,7 +139,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Try incognito/private mode**: Bypass stored data and extensions
 4. **Update browser**: Ensure using current version
 
-### Navigation Menu Problems
+### navigation Menu Problems
 **Symptoms:** Menu items missing, menus don't work, or wrong options showing.
 
 #### Permission-Based Menu Issues
@@ -156,9 +156,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## File and Download Issues
+## File and download issues
 
-### Files Won't Download
+### files Won't Download
 **Symptoms:** Download doesn't start, files are corrupted, or permission errors.
 
 #### Permission Issues
@@ -176,7 +176,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![File download troubleshooting](images/screenshots/reports-download-tokens.png)
 *Figure 4: Diagnosing and fixing download problems*
 
-### File Quality Problems
+### file Quality Problems
 **Symptoms:** Files are blurry, pages missing, or text unreadable.
 
 #### File-Specific Issues
@@ -191,7 +191,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Check zoom level**: Zoom in for better text clarity
 4. **Adjust display settings**: Screen resolution and color settings affect readability
 
-### Upload Problems
+### upload Problems
 **Symptoms:** Can't upload files, upload fails partway through, or files rejected.
 
 #### File Format and Size Issues
@@ -208,9 +208,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Data Entry and Editing Problems
+## Data entry and editing problems
 
-### Forms Not Saving
+### forms Not Saving
 **Symptoms:** Changes don't save, form resets, or error messages when saving.
 
 #### Form Validation Issues
@@ -228,7 +228,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![Form troubleshooting guide](images/screenshots/compositions-add-edit.png)
 *Figure 5: Common form and data entry problems*
 
-### Autocomplete Not Working
+### autocomplete Not Working
 **Symptoms:** Composer names or other autocomplete fields don't suggest options.
 
 #### Browser and JavaScript Issues
@@ -243,7 +243,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Try alternate spellings**: Different name formats may work
 4. **Contact administrator**: Autocomplete data may need updating
 
-### Duplicate Detection Issues
+### duplicate Detection Issues
 **Symptoms:** System allows duplicate entries or flags valid entries as duplicates.
 
 #### Data Entry Technique
@@ -260,9 +260,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Performance and Display Issues
+## Performance and display issues
 
-### Slow System Performance
+### slow System Performance
 **Symptoms:** Pages load slowly, searches take long time, or system feels sluggish.
 
 #### User-Side Optimization
@@ -280,7 +280,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![Performance optimization tips](images/screenshots/home.png)
 *Figure 6: Tips for optimizing system performance*
 
-### Mobile Device Issues
+### mobile Device Issues
 **Symptoms:** Site doesn't work well on phone or tablet, display problems.
 
 #### Mobile Browser Issues
@@ -295,7 +295,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Use WiFi connection**: Mobile data may be slower
 4. **Close other mobile apps**: Free up device memory
 
-### Display and Layout Problems
+### display and Layout Problems
 **Symptoms:** Text overlaps, buttons missing, or layout looks wrong.
 
 #### Browser Compatibility
@@ -312,9 +312,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Administrator Issues
+## Administrator issues
 
-### User Management Problems
+### user Management Problems
 **Symptoms:** Can't create users, email notifications not working, or permission issues.
 
 #### Email Configuration Issues
@@ -332,7 +332,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 ![Administrator troubleshooting workflow](images/screenshots/users.png)
 *Figure 7: Troubleshooting workflow for administrator issues*
 
-### Data Import/Export Problems
+### data Import/Export Problems
 **Symptoms:** Import fails, exported data incomplete, or format errors.
 
 #### File Format Issues
@@ -347,7 +347,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Schedule during off-hours**: Reduce system load during import
 4. **Monitor system resources**: Check memory and disk space
 
-### Backup and Recovery Issues
+### backup and Recovery Issues
 **Symptoms:** Backups failing, restore procedures not working, or data inconsistencies.
 
 #### Backup Configuration
@@ -364,9 +364,9 @@ This comprehensive troubleshooting guide covers common issues users and administ
 
 ---
 
-## Browser and Compatibility Problems
+## Browser and compatibility problems
 
-### Browser-Specific Issues
+### browser-Specific Issues
 Different browsers may have different compatibility levels with AllanaCrusis.
 
 #### Recommended Browsers
@@ -384,7 +384,7 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 ![Browser compatibility matrix](images/screenshots/navigation-menu.png)
 *Figure 8: Browser compatibility and recommended settings*
 
-### Operating System Issues
+### operating System Issues
 **Symptoms:** Features don't work on specific operating systems.
 
 #### Windows Issues
@@ -405,7 +405,7 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 3. **Update mobile OS**: Ensure using supported version
 4. **Clear mobile browser data**: Remove cache and cookies regularly
 
-### Accessibility Issues
+### accessibility Issues
 **Symptoms:** System doesn't work with screen readers or other assistive technology.
 
 #### Screen Reader Compatibility
@@ -422,9 +422,9 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 
 ---
 
-## Preventive Measures
+## Preventive measures
 
-### Regular Maintenance
+### regular Maintenance
 **For Users:**
 - **Clear browser cache monthly**: Prevent accumulation of old data
 - **Keep browsers updated**: Ensure security and compatibility
@@ -437,7 +437,7 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 - **Update documentation**: Keep troubleshooting guides current
 - **Train users**: Prevent problems through education
 
-### Best Practices
+### best Practices
 **Data Entry:**
 - **Follow naming conventions**: Consistent formats prevent errors
 - **Double-check before saving**: Verify information accuracy
@@ -455,23 +455,23 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 
 ---
 
-## Emergency Procedures
+## Emergency procedures
 
-### System Outages
+### system Outages
 **If AllanaCrusis is completely unavailable:**
 1. **Check system status page**: Look for known outage information
 2. **Try different devices**: Verify problem isn't device-specific
 3. **Contact administrator**: Report outage if not already known
 4. **Use alternative access**: Mobile app or backup systems if available
 
-### Data Loss or Corruption
+### data Loss or Corruption
 **If data appears to be lost or corrupted:**
 1. **Don't panic**: Most data loss can be recovered
 2. **Document the problem**: Note what data is missing or incorrect
 3. **Contact administrator immediately**: Quick action improves recovery chances
 4. **Avoid making changes**: Don't try to fix problems yourself
 
-### Security Incidents
+### security Incidents
 **If you suspect unauthorized access:**
 1. **Change password immediately**: Secure your account
 2. **Log out from all devices**: End all active sessions
@@ -480,16 +480,16 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 
 ---
 
-## Getting Additional Help
+## Getting additional help
 
-### Escalation Procedures
+### escalation Procedures
 **When basic troubleshooting doesn't work:**
 1. **Document the problem**: Include error messages, steps taken, and results
 2. **Contact your local administrator**: First line of support
 3. **Provide detailed information**: Help support staff understand the issue
 4. **Be patient**: Complex problems may take time to resolve
 
-### Support Resources
+### support Resources
 **Internal Support:**
 - **System administrator**: First contact for most issues
 - **Librarian**: Content and process questions

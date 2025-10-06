@@ -32,7 +32,7 @@
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/getting-started.html">Getting Started</a><a class="page-link" href="/AllanaCrusis/getting-access.html">Getting Access</a><a class="page-link" href="/AllanaCrusis/supporting-data.html">Supporting Data</a><a class="page-link" href="/AllanaCrusis/compositions.html">Compositions</a><a class="page-link" href="/AllanaCrusis/parts.html">Parts Management</a><a class="page-link" href="/AllanaCrusis/concerts-recordings.html">Concerts and Recordings</a><a class="page-link" href="/AllanaCrusis/distribution.html">Part Distribution</a><a class="page-link" href="/AllanaCrusis/admin-guide.html">Administrator Guide</a><a class="page-link" href="/AllanaCrusis/troubleshooting.html">Troubleshooting</a><a class="page-link" href="/AllanaCrusis/api-docs.html">API Documentation</a></div>
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/getting-started.html">Getting Started</a><a class="page-link" href="/AllanaCrusis/getting-access.html">Getting Access</a><a class="page-link" href="/AllanaCrusis/supporting-data.html">Supporting Data</a><a class="page-link" href="/AllanaCrusis/compositions.html">Compositions</a><a class="page-link" href="/AllanaCrusis/parts.html">Parts Management</a><a class="page-link" href="/AllanaCrusis/concerts-recordings.html">Concerts and Recordings</a><a class="page-link" href="/AllanaCrusis/distribution.html">Part Distribution</a><a class="page-link" href="/AllanaCrusis/admin-guide.html">Administrator Guide</a><a class="page-link" href="/AllanaCrusis/troubleshooting.html">Troubleshooting</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -41,7 +41,7 @@
 
 <p>This section covers the foundational data that supports your music library: instruments, ensembles, genres, paper sizes, and part types. Understanding and properly managing this data is essential for effective library organization.</p>
 
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 id="table-of-contents">Table of contents</h2>
 <ul>
   <li><a href="#overview-of-supporting-data">Overview of Supporting Data</a></li>
   <li><a href="#instruments">Instruments</a></li>
@@ -54,9 +54,9 @@
 
 <hr />
 
-<h2 id="overview-of-supporting-data">Overview of Supporting Data</h2>
+<h2 id="overview-of-supporting-data">Overview of supporting data</h2>
 
-<h3 id="what-is-supporting-data">What is Supporting Data?</h3>
+<h3 id="what-is-supporting-data">what is Supporting Data?</h3>
 <p>Supporting data consists of the reference lists and categories that organize your music library:</p>
 
 <ul>
@@ -67,7 +67,7 @@
   <li><strong>Part Types</strong>: Classify different kinds of musical parts</li>
 </ul>
 
-<h3 id="why-supporting-data-matters">Why Supporting Data Matters</h3>
+<h3 id="why-supporting-data-matters">why Supporting Data Matters</h3>
 <ul>
   <li><strong>Consistency</strong>: Ensures uniform data entry across the library</li>
   <li><strong>Organization</strong>: Helps users find and filter content effectively</li>
@@ -75,17 +75,31 @@
   <li><strong>Workflow</strong>: Streamlines the process of adding new compositions</li>
 </ul>
 
-<p><img src="images/screenshots/database.png" alt="Supporting data overview showing interconnected elements" />
+<p><img src="/AllanaCrusis/images/screenshots/home.png" alt="Supporting data overview showing interconnected elements" />
 <em>Figure 1: How supporting data elements work together in AllanaCrusis</em></p>
+
+<h3 id="database-schema-overview">database Schema Overview</h3>
+<p>The following diagram shows how all the database tables relate to each other, helping you understand the complete data structure:</p>
+
+<p><img src="/AllanaCrusis/images/erd-diagram.svg" alt="AllanaCrusis Database Entity Relationship Diagram" />
+<em>Figure 2: Complete database schema showing relationships between all tables</em></p>
+
+<p><strong>Key Relationships:</strong></p>
+<ul>
+  <li><strong>Supporting Data</strong> (blue) provides reference lists for compositions</li>
+  <li><strong>Core Content</strong> (orange) contains the main musical library data</li>
+  <li><strong>Performance Data</strong> (purple) tracks concerts, programs, and recordings</li>
+  <li><strong>System Tables</strong> (green) manage users, security, and downloads</li>
+</ul>
 
 <hr />
 
 <h2 id="instruments">Instruments</h2>
 
-<h3 id="purpose-of-instrument-management">Purpose of Instrument Management</h3>
+<h3 id="purpose-of-instrument-management">purpose of Instrument Management</h3>
 <p>The instrument list defines all possible instruments that can be assigned to musical parts. This creates consistency in naming and enables effective searching and filtering.</p>
 
-<h3 id="viewing-instruments">Viewing Instruments</h3>
+<h3 id="viewing-instruments">viewing Instruments</h3>
 <ol>
   <li>Navigate to <strong>MATERIALS &gt; Instruments</strong></li>
   <li>Browse the complete list of available instruments</li>
@@ -96,7 +110,7 @@
 <p><img src="/AllanaCrusis/images/screenshots/instruments.png" alt="Instruments list showing categories and search options" />
 <em>Figure 2: Instrument management interface</em></p>
 
-<h3 id="adding-new-instruments">Adding New Instruments</h3>
+<h3 id="adding-new-instruments">adding New Instruments</h3>
 <p><strong>For Librarians and Managers:</strong></p>
 
 <ol>
@@ -113,10 +127,10 @@
   <li><strong>Save the new instrument</strong></li>
 </ol>
 
-<p><img src="images/screenshots/instruments-add-edit.png" alt="Add instrument form with required fields" />
+<p><img src="/AllanaCrusis/images/screenshots/instrument-add-edit.png" alt="Add instrument form with required fields" />
 <em>Figure 3: Form for adding new instruments</em></p>
 
-<h3 id="instrument-categories">Instrument Categories</h3>
+<h3 id="instrument-categories">instrument Categories</h3>
 <p>Common categories include:</p>
 <ul>
   <li><strong>Woodwinds</strong>: Flutes, clarinets, saxophones, oboes, bassoons</li>
@@ -126,7 +140,7 @@
   <li><strong>Other</strong>: Piano, harp, electronics, vocals</li>
 </ul>
 
-<h3 id="managing-instrument-names">Managing Instrument Names</h3>
+<h3 id="managing-instrument-names">managing Instrument Names</h3>
 <p><strong>Best Practices:</strong></p>
 <ul>
   <li>Use standard instrument names</li>
@@ -140,10 +154,10 @@
 
 <h2 id="ensembles">Ensembles</h2>
 
-<h3 id="purpose-of-ensemble-management">Purpose of Ensemble Management</h3>
+<h3 id="purpose-of-ensemble-management">purpose of Ensemble Management</h3>
 <p>Ensembles define which musical groups use your library. This helps organize compositions by intended performing group and manage access permissions.</p>
 
-<h3 id="common-ensemble-types">Common Ensemble Types</h3>
+<h3 id="common-ensemble-types">common Ensemble Types</h3>
 <ul>
   <li><strong>Wind Ensemble</strong>: Standard concert band instrumentation</li>
   <li><strong>Symphony Orchestra</strong>: Full orchestral forces</li>
@@ -153,7 +167,7 @@
   <li><strong>Choir</strong>: Vocal ensembles</li>
 </ul>
 
-<h3 id="adding-ensembles">Adding Ensembles</h3>
+<h3 id="adding-ensembles">adding Ensembles</h3>
 <ol>
   <li><strong>Navigate to MATERIALS &gt; Ensembles</strong></li>
   <li><strong>Click “Add Ensemble”</strong></li>
@@ -170,7 +184,7 @@
 <p><img src="/AllanaCrusis/images/screenshots/ensembles.png" alt="Ensemble management interface" />
 <em>Figure 4: Ensemble setup and configuration</em></p>
 
-<h3 id="ensemble-assignment">Ensemble Assignment</h3>
+<h3 id="ensemble-assignment">ensemble Assignment</h3>
 <ul>
   <li>Compositions are typically assigned to one primary ensemble</li>
   <li>Some pieces may be suitable for multiple ensembles</li>
@@ -182,10 +196,10 @@
 
 <h2 id="genres">Genres</h2>
 
-<h3 id="purpose-of-genre-classification">Purpose of Genre Classification</h3>
+<h3 id="purpose-of-genre-classification">purpose of Genre Classification</h3>
 <p>Genres help categorize musical styles and make it easier for users to find appropriate repertoire for their needs.</p>
 
-<h3 id="standard-genre-categories">Standard Genre Categories</h3>
+<h3 id="standard-genre-categories">standard Genre Categories</h3>
 <p>Common genres include:</p>
 
 <h4 id="concert-music">Concert Music</h4>
@@ -211,7 +225,7 @@
   <li><strong>Ceremonial</strong>: Processionals, hymns, patriotic music</li>
 </ul>
 
-<h3 id="managing-genres">Managing Genres</h3>
+<h3 id="managing-genres">managing Genres</h3>
 <ol>
   <li><strong>Go to MATERIALS &gt; Genres</strong></li>
   <li><strong>Review existing categories</strong></li>
@@ -224,12 +238,12 @@
 
 <hr />
 
-<h2 id="paper-sizes">Paper Sizes</h2>
+<h2 id="paper-sizes">Paper sizes</h2>
 
-<h3 id="purpose-of-paper-size-tracking">Purpose of Paper Size Tracking</h3>
+<h3 id="purpose-of-paper-size-tracking">purpose of Paper Size Tracking</h3>
 <p>Paper sizes help librarians manage physical storage, copying, and distribution of printed music.</p>
 
-<h3 id="common-paper-sizes">Common Paper Sizes</h3>
+<h3 id="common-paper-sizes">common Paper Sizes</h3>
 <ul>
   <li><strong>Folio (9” x 12”)</strong>: Most common for band and orchestral music</li>
   <li><strong>Letter (8.5” x 11”)</strong>: Standard copy paper size</li>
@@ -239,7 +253,7 @@
   <li><strong>Custom sizes</strong>: For special or historical materials</li>
 </ul>
 
-<h3 id="paper-size-management">Paper Size Management</h3>
+<h3 id="paper-size-management">paper Size Management</h3>
 <ol>
   <li><strong>Navigate to MATERIALS &gt; Paper Sizes</strong></li>
   <li><strong>View existing size definitions</strong></li>
@@ -250,7 +264,7 @@
 <p><img src="/AllanaCrusis/images/screenshots/paper-sizes.png" alt="Paper size configuration interface" />
 <em>Figure 6: Paper size definitions and settings</em></p>
 
-<h3 id="impact-on-library-management">Impact on Library Management</h3>
+<h3 id="impact-on-library-management">impact on Library Management</h3>
 <ul>
   <li><strong>Storage planning</strong>: Calculate shelf space requirements</li>
   <li><strong>Copying costs</strong>: Different sizes have different costs</li>
@@ -260,12 +274,12 @@
 
 <hr />
 
-<h2 id="part-types">Part Types</h2>
+<h2 id="part-types">Part types</h2>
 
-<h3 id="purpose-of-part-type-classification">Purpose of Part Type Classification</h3>
+<h3 id="purpose-of-part-type-classification">purpose of Part Type Classification</h3>
 <p>Part types categorize the different kinds of musical parts and materials in your library.</p>
 
-<h3 id="common-part-types">Common Part Types</h3>
+<h3 id="common-part-types">common Part Types</h3>
 <ul>
   <li><strong>Individual Parts</strong>: Single instrument parts</li>
   <li><strong>Condensed Score</strong>: Reduced score for conductor reference</li>
@@ -275,7 +289,7 @@
   <li><strong>Method Materials</strong>: Educational and exercise materials</li>
 </ul>
 
-<h3 id="managing-part-types">Managing Part Types</h3>
+<h3 id="managing-part-types">managing Part Types</h3>
 <ol>
   <li><strong>Go to MATERIALS &gt; Part Types</strong></li>
   <li><strong>Review current categories</strong></li>
@@ -286,7 +300,7 @@
 <p><img src="/AllanaCrusis/images/screenshots/part-types.png" alt="Part types management interface" />
 <em>Figure 7: Part type categories and configuration</em></p>
 
-<h3 id="part-type-applications">Part Type Applications</h3>
+<h3 id="part-type-applications">part Type Applications</h3>
 <ul>
   <li><strong>Inventory tracking</strong>: Know what materials you have</li>
   <li><strong>Distribution planning</strong>: Different types have different distribution needs</li>
@@ -296,9 +310,9 @@
 
 <hr />
 
-<h2 id="best-practices">Best Practices</h2>
+<h2 id="best-practices">Best practices</h2>
 
-<h3 id="data-consistency">Data Consistency</h3>
+<h3 id="data-consistency">data Consistency</h3>
 <ul>
   <li><strong>Standardize naming conventions</strong> across all supporting data</li>
   <li><strong>Use complete, descriptive names</strong> rather than abbreviations when possible</li>
@@ -306,7 +320,7 @@
   <li><strong>Consider future needs</strong> when creating categories</li>
 </ul>
 
-<h3 id="regular-maintenance">Regular Maintenance</h3>
+<h3 id="regular-maintenance">regular Maintenance</h3>
 <ul>
   <li><strong>Review supporting data periodically</strong> for accuracy and completeness</li>
   <li><strong>Remove unused categories</strong> to keep lists manageable</li>
@@ -314,7 +328,7 @@
   <li><strong>Document decisions</strong> about naming and categorization</li>
 </ul>
 
-<h3 id="user-training">User Training</h3>
+<h3 id="user-training">user Training</h3>
 <ul>
   <li><strong>Train all librarians</strong> on proper use of supporting data</li>
   <li><strong>Create quick reference guides</strong> for common categories</li>
@@ -322,7 +336,7 @@
   <li><strong>Share decisions</strong> with all users who enter data</li>
 </ul>
 
-<h3 id="integration-considerations">Integration Considerations</h3>
+<h3 id="integration-considerations">integration Considerations</h3>
 <ul>
   <li><strong>Plan for data imports</strong> from other systems</li>
   <li><strong>Consider export needs</strong> for reports and analysis</li>
@@ -335,9 +349,9 @@
 
 <hr />
 
-<h2 id="impact-on-library-operations">Impact on Library Operations</h2>
+<h2 id="impact-on-library-operations">Impact on library operations</h2>
 
-<h3 id="search-and-discovery">Search and Discovery</h3>
+<h3 id="search-and-discovery">search and Discovery</h3>
 <p>Well-organized supporting data enables:</p>
 <ul>
   <li><strong>Precise filtering</strong> by instrument, genre, or ensemble</li>
@@ -346,7 +360,7 @@
   <li><strong>Effective recommendation systems</strong></li>
 </ul>
 
-<h3 id="reporting-and-analysis">Reporting and Analysis</h3>
+<h3 id="reporting-and-analysis">reporting and Analysis</h3>
 <p>Good supporting data supports:</p>
 <ul>
   <li><strong>Usage statistics</strong> by category</li>
@@ -355,7 +369,7 @@
   <li><strong>Performance tracking</strong> by ensemble or genre</li>
 </ul>
 
-<h3 id="workflow-efficiency">Workflow Efficiency</h3>
+<h3 id="workflow-efficiency">workflow Efficiency</h3>
 <p>Proper setup enables:</p>
 <ul>
   <li><strong>Faster data entry</strong> with predictable choices</li>
@@ -366,9 +380,9 @@
 
 <hr />
 
-<h2 id="getting-help">Getting Help</h2>
+<h2 id="getting-help">Getting help</h2>
 
-<h3 id="common-questions">Common Questions</h3>
+<h3 id="common-questions">common Questions</h3>
 <ul>
   <li><strong>Missing instruments</strong>: Contact your librarian to add new instruments</li>
   <li><strong>Genre classifications</strong>: Discuss with other librarians for consistency</li>
@@ -376,7 +390,7 @@
   <li><strong>Part type confusion</strong>: Review examples and ask for clarification</li>
 </ul>
 
-<h3 id="who-to-ask">Who to Ask</h3>
+<h3 id="who-to-ask">who to Ask</h3>
 <ul>
   <li><strong>System setup</strong>: Managers and administrators</li>
   <li><strong>Music-specific questions</strong>: Experienced librarians</li>
@@ -386,7 +400,7 @@
 
 <hr />
 
-<h2 id="next-steps">Next Steps</h2>
+<h2 id="next-steps">Next steps</h2>
 
 <p>With supporting data properly configured:</p>
 

@@ -7,7 +7,7 @@ title: "Supporting Data"
 
 This section covers the foundational data that supports your music library: instruments, ensembles, genres, paper sizes, and part types. Understanding and properly managing this data is essential for effective library organization.
 
-## Table of Contents
+## Table of contents
 - [Overview of Supporting Data](#overview-of-supporting-data)
 - [Instruments](#instruments)
 - [Ensembles](#ensembles)
@@ -18,9 +18,9 @@ This section covers the foundational data that supports your music library: inst
 
 ---
 
-## Overview of Supporting Data
+## Overview of supporting data
 
-### What is Supporting Data?
+### what is Supporting Data?
 Supporting data consists of the reference lists and categories that organize your music library:
 
 - **Instruments**: Define what instruments are available for parts
@@ -29,7 +29,7 @@ Supporting data consists of the reference lists and categories that organize you
 - **Paper Sizes**: Track physical dimensions of printed music
 - **Part Types**: Classify different kinds of musical parts
 
-### Why Supporting Data Matters
+### why Supporting Data Matters
 - **Consistency**: Ensures uniform data entry across the library
 - **Organization**: Helps users find and filter content effectively
 - **Reporting**: Enables meaningful statistics and analysis
@@ -38,7 +38,7 @@ Supporting data consists of the reference lists and categories that organize you
 ![Supporting data overview showing interconnected elements](images/screenshots/home.png)
 *Figure 1: How supporting data elements work together in AllanaCrusis*
 
-### Database Schema Overview
+### database Schema Overview
 The following diagram shows how all the database tables relate to each other, helping you understand the complete data structure:
 
 ![AllanaCrusis Database Entity Relationship Diagram](images/erd-diagram.svg)
@@ -54,10 +54,10 @@ The following diagram shows how all the database tables relate to each other, he
 
 ## Instruments
 
-### Purpose of Instrument Management
+### purpose of Instrument Management
 The instrument list defines all possible instruments that can be assigned to musical parts. This creates consistency in naming and enables effective searching and filtering.
 
-### Viewing Instruments
+### viewing Instruments
 1. Navigate to **MATERIALS > Instruments**
 2. Browse the complete list of available instruments
 3. Use the search/filter to find specific instruments
@@ -66,7 +66,7 @@ The instrument list defines all possible instruments that can be assigned to mus
 ![Instruments list showing categories and search options](images/screenshots/instruments.png)
 *Figure 2: Instrument management interface*
 
-### Adding New Instruments
+### adding New Instruments
 **For Librarians and Managers:**
 
 1. **Click "Add Instrument"**
@@ -82,7 +82,7 @@ The instrument list defines all possible instruments that can be assigned to mus
 ![Add instrument form with required fields](images/screenshots/instrument-add-edit.png)
 *Figure 3: Form for adding new instruments*
 
-### Instrument Categories
+### instrument Categories
 Common categories include:
 - **Woodwinds**: Flutes, clarinets, saxophones, oboes, bassoons
 - **Brass**: Trumpets, horns, trombones, tubas
@@ -90,7 +90,7 @@ Common categories include:
 - **Strings**: Violin, viola, cello, bass (if applicable)
 - **Other**: Piano, harp, electronics, vocals
 
-### Managing Instrument Names
+### managing Instrument Names
 **Best Practices:**
 - Use standard instrument names
 - Include key/pitch designations (e.g., "Horn in F")
@@ -102,10 +102,10 @@ Common categories include:
 
 ## Ensembles
 
-### Purpose of Ensemble Management
+### purpose of Ensemble Management
 Ensembles define which musical groups use your library. This helps organize compositions by intended performing group and manage access permissions.
 
-### Common Ensemble Types
+### common Ensemble Types
 - **Wind Ensemble**: Standard concert band instrumentation
 - **Symphony Orchestra**: Full orchestral forces
 - **Chamber Groups**: Small ensembles (quintet, sextet, etc.)
@@ -113,7 +113,7 @@ Ensembles define which musical groups use your library. This helps organize comp
 - **Marching Band**: Field show and parade music
 - **Choir**: Vocal ensembles
 
-### Adding Ensembles
+### adding Ensembles
 1. **Navigate to MATERIALS > Ensembles**
 2. **Click "Add Ensemble"**
 3. **Enter ensemble information**:
@@ -125,7 +125,7 @@ Ensembles define which musical groups use your library. This helps organize comp
 ![Ensemble management interface](images/screenshots/ensembles.png)
 *Figure 4: Ensemble setup and configuration*
 
-### Ensemble Assignment
+### ensemble Assignment
 - Compositions are typically assigned to one primary ensemble
 - Some pieces may be suitable for multiple ensembles
 - Assignment affects search filtering and organization
@@ -135,10 +135,10 @@ Ensembles define which musical groups use your library. This helps organize comp
 
 ## Genres
 
-### Purpose of Genre Classification
+### purpose of Genre Classification
 Genres help categorize musical styles and make it easier for users to find appropriate repertoire for their needs.
 
-### Standard Genre Categories
+### standard Genre Categories
 Common genres include:
 
 #### Concert Music
@@ -158,7 +158,7 @@ Common genres include:
 - **Warm-up**: Exercises and technical studies
 - **Ceremonial**: Processionals, hymns, patriotic music
 
-### Managing Genres
+### managing Genres
 1. **Go to MATERIALS > Genres**
 2. **Review existing categories**
 3. **Add new genres** as needed for your collection
@@ -169,12 +169,12 @@ Common genres include:
 
 ---
 
-## Paper Sizes
+## Paper sizes
 
-### Purpose of Paper Size Tracking
+### purpose of Paper Size Tracking
 Paper sizes help librarians manage physical storage, copying, and distribution of printed music.
 
-### Common Paper Sizes
+### common Paper Sizes
 - **Folio (9" x 12")**: Most common for band and orchestral music
 - **Letter (8.5" x 11")**: Standard copy paper size
 - **Legal (8.5" x 14")**: Extended length for complex scores
@@ -182,7 +182,7 @@ Paper sizes help librarians manage physical storage, copying, and distribution o
 - **A4 (210mm x 297mm)**: International standard
 - **Custom sizes**: For special or historical materials
 
-### Paper Size Management
+### paper Size Management
 1. **Navigate to MATERIALS > Paper Sizes**
 2. **View existing size definitions**
 3. **Add custom sizes** if needed
@@ -191,7 +191,7 @@ Paper sizes help librarians manage physical storage, copying, and distribution o
 ![Paper size configuration interface](images/screenshots/paper-sizes.png)
 *Figure 6: Paper size definitions and settings*
 
-### Impact on Library Management
+### impact on Library Management
 - **Storage planning**: Calculate shelf space requirements
 - **Copying costs**: Different sizes have different costs
 - **Distribution**: Affects packaging and mailing
@@ -199,12 +199,12 @@ Paper sizes help librarians manage physical storage, copying, and distribution o
 
 ---
 
-## Part Types
+## Part types
 
-### Purpose of Part Type Classification
+### purpose of Part Type Classification
 Part types categorize the different kinds of musical parts and materials in your library.
 
-### Common Part Types
+### common Part Types
 - **Individual Parts**: Single instrument parts
 - **Condensed Score**: Reduced score for conductor reference
 - **Full Score**: Complete conductor's score
@@ -212,7 +212,7 @@ Part types categorize the different kinds of musical parts and materials in your
 - **Vocal Parts**: Choral or solo vocal lines
 - **Method Materials**: Educational and exercise materials
 
-### Managing Part Types
+### managing Part Types
 1. **Go to MATERIALS > Part Types**
 2. **Review current categories**
 3. **Add specialized types** for your collection
@@ -221,7 +221,7 @@ Part types categorize the different kinds of musical parts and materials in your
 ![Part types management interface](images/screenshots/part-types.png)
 *Figure 7: Part type categories and configuration*
 
-### Part Type Applications
+### part Type Applications
 - **Inventory tracking**: Know what materials you have
 - **Distribution planning**: Different types have different distribution needs
 - **Access control**: Some types may be restricted to certain users
@@ -229,27 +229,27 @@ Part types categorize the different kinds of musical parts and materials in your
 
 ---
 
-## Best Practices
+## Best practices
 
-### Data Consistency
+### data Consistency
 - **Standardize naming conventions** across all supporting data
 - **Use complete, descriptive names** rather than abbreviations when possible
 - **Be consistent with capitalization** and punctuation
 - **Consider future needs** when creating categories
 
-### Regular Maintenance
+### regular Maintenance
 - **Review supporting data periodically** for accuracy and completeness
 - **Remove unused categories** to keep lists manageable
 - **Update names and descriptions** as standards evolve
 - **Document decisions** about naming and categorization
 
-### User Training
+### user Training
 - **Train all librarians** on proper use of supporting data
 - **Create quick reference guides** for common categories
 - **Establish approval processes** for adding new categories
 - **Share decisions** with all users who enter data
 
-### Integration Considerations
+### integration Considerations
 - **Plan for data imports** from other systems
 - **Consider export needs** for reports and analysis
 - **Think about integration** with other music software
@@ -260,23 +260,23 @@ Part types categorize the different kinds of musical parts and materials in your
 
 ---
 
-## Impact on Library Operations
+## Impact on library operations
 
-### Search and Discovery
+### search and Discovery
 Well-organized supporting data enables:
 - **Precise filtering** by instrument, genre, or ensemble
 - **Consistent search results** across different users
 - **Predictable navigation** through the library
 - **Effective recommendation systems**
 
-### Reporting and Analysis
+### reporting and Analysis
 Good supporting data supports:
 - **Usage statistics** by category
 - **Collection analysis** and gap identification
 - **Planning reports** for acquisitions
 - **Performance tracking** by ensemble or genre
 
-### Workflow Efficiency
+### workflow Efficiency
 Proper setup enables:
 - **Faster data entry** with predictable choices
 - **Reduced errors** through standardized options
@@ -285,15 +285,15 @@ Proper setup enables:
 
 ---
 
-## Getting Help
+## Getting help
 
-### Common Questions
+### common Questions
 - **Missing instruments**: Contact your librarian to add new instruments
 - **Genre classifications**: Discuss with other librarians for consistency
 - **Paper size questions**: Check with administrators about standards
 - **Part type confusion**: Review examples and ask for clarification
 
-### Who to Ask
+### who to Ask
 - **System setup**: Managers and administrators
 - **Music-specific questions**: Experienced librarians
 - **Technical issues**: System administrators
@@ -301,7 +301,7 @@ Proper setup enables:
 
 ---
 
-## Next Steps
+## Next steps
 
 With supporting data properly configured:
 

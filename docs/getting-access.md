@@ -3,11 +3,11 @@ layout: default
 title: "Getting Access"
 ---
 
-# Getting Access to AllanaCrusis
+# Getting access to AllanaCrusis
 
 This section covers user registration, account management, and understanding the different user roles and permissions in AllanaCrusis.
 
-## Table of Contents
+## Table of contents
 - [User Registration](#user-registration)
 - [User Roles and Permissions](#user-roles-and-permissions)
 - [Login Process](#login-process)
@@ -17,15 +17,15 @@ This section covers user registration, account management, and understanding the
 
 ---
 
-## User Registration
+## User registration
 
-### How to Get an Account
+### how to get an account
 User accounts are typically created by:
 1. **System administrators** - for organizational members
 2. **Self-registration** - if enabled by your organization
 3. **Invitation system** - through email invitations
 
-### Registration Process
+### registration process
 If self-registration is available:
 
 1. **Click "Register"** on the login page
@@ -44,7 +44,7 @@ If self-registration is available:
 ![Registration form showing required fields](images/screenshots/register.png)
 *Figure 1: User registration form with required information*
 
-### Registration Requirements
+### registration Requirements
 - **Valid email address**: Must be accessible for verification
 - **Strong password**: Usually 8+ characters with mixed case and numbers
 - **Unique username**: Cannot duplicate existing users
@@ -52,11 +52,11 @@ If self-registration is available:
 
 ---
 
-## User Roles and Permissions
+## User roles and permissions
 
 AllanaCrusis uses a role-based permission system with four main user types:
 
-### Guest User (No Account Needed)
+### guest User (No Account Needed)
 **What Guests Can Do:**
 - View public compositions and information
 - Use basic search functionality
@@ -72,7 +72,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 ![Guest user interface showing public features](images/screenshots/welcome.png)
 *Figure 2: Interface view for guest users*
 
-### Member
+### member
 **Additional Permissions:**
 - Access to part downloads (if enabled)
 - View contact information
@@ -89,7 +89,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 ![Member interface showing additional features](images/screenshots/home.png)
 *Figure 3: Enhanced interface for logged-in members*
 
-### Librarian
+### librarian
 **Full Library Management:**
 - Add, edit, and delete compositions
 - Manage parts and instrumentation
@@ -111,7 +111,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 ![Librarian interface showing management tools](images/screenshots/navigation-menu-librarian.png)
 *Figure 4: Librarian interface with content management tools*
 
-### Manager
+### manager
 **Complete System Control:**
 - All librarian permissions
 - User management (add, edit, delete users)
@@ -131,15 +131,15 @@ AllanaCrusis uses a role-based permission system with four main user types:
 
 ---
 
-## Login Process
+## Login process
 
-### Standard Login
+### standard Login
 1. **Navigate to the login page**
 2. **Enter your username or email**
 3. **Enter your password**
 4. **Click "Login"**
 
-### Login Troubleshooting
+### login Troubleshooting
 **Common Issues:**
 - **Incorrect credentials**: Check username/email and password
 - **Account not verified**: Check email for verification link
@@ -149,7 +149,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 ![Login form with username and password fields](images/screenshots/signin.png)
 *Figure 6: Standard login form*
 
-### Session Management
+### session Management
 - **Automatic logout**: After period of inactivity
 - **Remember me**: Option to stay logged in longer
 - **Multiple devices**: Can be logged in on different devices
@@ -157,15 +157,15 @@ AllanaCrusis uses a role-based permission system with four main user types:
 
 ---
 
-## Email Verification
+## Email verification
 
-### Why Email Verification is Required
+### why Email Verification is Required
 - **Security**: Confirms you own the email address
 - **Communication**: Ensures you receive important notifications
 - **Password reset**: Enables secure password recovery
 - **Account recovery**: Helps with lost account access
 
-### Verification Process
+### verification Process
 1. **Register your account** or request verification
 2. **Check your email** (including spam/junk folders)
 3. **Click the verification link** in the email
@@ -175,7 +175,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 ![Email verification message example](images/screenshots/email-verification.png)
 *Figure 7: Email verification message and confirmation*
 
-### Troubleshooting Email Verification
+### troubleshooting Email Verification
 **If you don't receive the email:**
 - Check spam/junk folders
 - Verify email address is correct
@@ -190,9 +190,9 @@ AllanaCrusis uses a role-based permission system with four main user types:
 
 ---
 
-## Password Management
+## Password management
 
-### Password Requirements
+### password Requirements
 Most systems require:
 - **Minimum 8 characters**
 - **Mix of uppercase and lowercase letters**
@@ -200,7 +200,7 @@ Most systems require:
 - **Special characters** (optional but recommended)
 - **Not a common password** or dictionary word
 
-### Password Reset Process
+### password Reset Process
 **If you forget your password:**
 
 1. **Click "Forgot Password"** on the login page
@@ -214,7 +214,7 @@ Most systems require:
 ![Password reset form and process](images/screenshots/passwords-request.png)
 *Figure 8: Password reset request and new password form*
 
-### Changing Your Password
+### changing Your Password
 **To change your password while logged in:**
 
 1. **Go to Account Settings** (usually in user menu)
@@ -224,7 +224,7 @@ Most systems require:
 5. **Save changes**
 6. **Confirmation message** appears
 
-### Password Security Tips
+### password Security Tips
 - **Use unique passwords** for each system
 - **Consider a password manager**
 - **Don't share passwords** with others
@@ -233,9 +233,9 @@ Most systems require:
 
 ---
 
-## Account Settings
+## Account settings
 
-### Profile Information
+### profile Information
 You can typically update:
 - **Display name**
 - **Email address** (may require re-verification)
@@ -243,7 +243,7 @@ You can typically update:
 - **Notification preferences**
 - **Time zone and locale settings**
 
-### Notification Settings
+### notification Settings
 Control what emails you receive:
 - **System announcements**
 - **New composition notifications**
@@ -254,7 +254,7 @@ Control what emails you receive:
 ![Account settings page showing profile and preferences](images/screenshots/users-add-edit.png)
 *Figure 9: Account settings with profile and notification options*
 
-### Privacy Settings
+### privacy Settings
 Depending on your organization:
 - **Profile visibility** to other users
 - **Contact information sharing**
@@ -263,9 +263,9 @@ Depending on your organization:
 
 ---
 
-## Getting Help with Access Issues
+## Getting help with access issues
 
-### Common Problems and Solutions
+### common Problems and Solutions
 
 **Can't create an account:**
 - Check if registration is open to your organization
@@ -282,7 +282,7 @@ Depending on your organization:
 - Check with IT about email delivery issues
 - Verify your email system accepts external emails
 
-### Who to Contact
+### who to Contact
 - **Technical issues**: System administrator
 - **Account permissions**: Librarian or manager
 - **Organization policies**: Administrative staff
@@ -290,7 +290,7 @@ Depending on your organization:
 
 ---
 
-## Next Steps
+## Next steps
 
 Once you have access:
 

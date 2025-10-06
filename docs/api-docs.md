@@ -9,14 +9,14 @@ title: "API Documentation"
 
 AllanaCrusis API documentation will be available here for developers who want to integrate with the system or build custom tools.
 
-## Planned API Features
+## Planned API features
 
 - **REST API**: JSON endpoints for all major functions
 - **Authentication**: Token-based API access
 - **Webhooks**: Event notifications for system changes
 - **SDKs**: Client libraries for popular programming languages
 
-## Current Integration Options
+## Current integration options
 
 While the formal API is in development, you can:
 

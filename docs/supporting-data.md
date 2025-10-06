@@ -38,6 +38,18 @@ Supporting data consists of the reference lists and categories that organize you
 ![Supporting data overview showing interconnected elements](images/screenshots/home.png)
 *Figure 1: How supporting data elements work together in AllanaCrusis*
 
+### Database Schema Overview
+The following diagram shows how all the database tables relate to each other, helping you understand the complete data structure:
+
+![AllanaCrusis Database Entity Relationship Diagram](images/erd-diagram.svg)
+*Figure 2: Complete database schema showing relationships between all tables*
+
+**Key Relationships:**
+- **Supporting Data** (blue) provides reference lists for compositions
+- **Core Content** (orange) contains the main musical library data
+- **Performance Data** (purple) tracks concerts, programs, and recordings
+- **System Tables** (green) manage users, security, and downloads
+
 ---
 
 ## Instruments

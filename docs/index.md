@@ -36,6 +36,7 @@ Whether you're managing a small community band library or a large institutional 
 
 - **New Users**: Start with the [Getting Started Guide](getting-started.html) to learn the basics
 - **Getting Access**: Learn about [User Registration and Roles](getting-access.html)
+- **Database Overview**: See the [Database Schema Diagram](supporting-data.html#database-schema-overview) to understand data relationships
 - **Librarians**: Jump to [Composition Management](compositions.html) or [Parts Management](parts.html)
 - **Administrators**: Review [Admin Functions](admin-guide.html) and [User Management](admin-guide.html#user-management)
 

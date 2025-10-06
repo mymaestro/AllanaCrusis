@@ -43,6 +43,7 @@ Understanding the relationship between compositions and parts is fundamental to 
 2. **View the complete library** of compositions
 3. **Use filters and search** to find specific works
 4. **Sort by different criteria** (title, composer, date added, etc.)
+5. **Choose an action button** to manage composition details
 
 ### Compositions table features
 - **Select a composition**: Select a composition to edit or delete
@@ -56,15 +57,27 @@ Understanding the relationship between compositions and parts is fundamental to 
 *Figure 3: Main compositions list with search and filter capabilities*
 
 ### Composition details view
-Click on any composition title to see:
-- **Complete metadata**
-- **List of associated parts**
-- **Performance history** (if tracked)
-- **Download links** (for authorized users)
-- **Quick action buttons**
+Click on any composition title to see complete metadata:
 
-![Detailed view of a single composition](images/screenshots/compositions-instrumentation.png)
-*Figure 3: Detailed composition view showing all metadata and parts*
+- **Catalog**, for example, **M001**
+- **Composition**, for example, *Stars and Stripes Forever, The*
+- **Enabled**, Yes or No
+- **Description**, for example, *As performed by the President's Own United States Marine Band*
+- **Composer**, for example, "Sousa, John Philip"
+- **Arranger**
+- **Editor**, for example, "United States Marine Band"
+- **Publisher**, for example, "Public Domain"
+- **Genre**, for example, "Military march"
+- **Ensemble**, for example, "Fourth Wind Wind Ensemble"
+- **Grade**, for example, 4.0
+- **Last performed**
+- **Duration (secs)**, for example, 210
+- **Performance notes**, for example, "The U.S. Marine Band score contains extensive performance and historical notes."
+- **Listening link**
+- **Paper size**, for example, Folio
+- **Picture**
+- **windrep.org link**, for example, https://www.windrep.org/Stars_and_Stripes_Forever,_The_(1896)
+- **Record updated**, for example, 2020-07-04 10:05:27
 
 ---
 

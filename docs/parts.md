@@ -32,7 +32,7 @@ Parts are individual instrument components of a musical composition:
 - **Parts**: Individual components needed for performance
 - **Relationship**: One composition has many parts
 
-![Parts relationship diagram](images/screenshots/parts-overview.png)
+![Parts relationship diagram](images/screenshots/part-types.png)
 *Figure 1: How parts relate to compositions and instruments*
 
 ### Types of Parts
@@ -59,7 +59,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
 - **Set average page count**: Estimate for most parts in the piece
 - **Choose default paper size**: Usually Folio (9x12) for band music
 
-![Instrumentation setup form](images/screenshots/instrumentation-setup.png)
+![Instrumentation setup form](images/screenshots/compositions-instrumentation.png)
 *Figure 2: Initial instrumentation setup for a composition*
 
 #### Step 3: Select Required Instruments
@@ -74,7 +74,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
    - Select multiple instruments at once
    - Be thorough - missing parts cause problems later
 
-![Instrument selection interface](images/screenshots/instrument-selection.png)
+![Instrument selection interface](images/screenshots/sections-assign-instruments.png)
 *Figure 3: Selecting instruments for composition instrumentation*
 
 #### Step 4: Add Parts to Composition
@@ -101,7 +101,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
 3. **Click composition title** to see parts list
 4. **Each part has an "Edit" button**
 
-![Parts list for a composition](images/screenshots/parts-list.png)
+![Parts list for a composition](images/screenshots/part-collections.png)
 *Figure 4: List of parts for a specific composition*
 
 ### Editing Individual Parts
@@ -125,7 +125,7 @@ Click the **blue "Edit" button** for any part to access detailed management:
 - **Missing pages**: Note specific page issues
 - **Quality concerns**: Anything affecting usability
 
-![Individual part editing form](images/screenshots/edit-part.png)
+![Individual part editing form](images/screenshots/part-types-add-edit.png)
 *Figure 5: Editing form for an individual part*
 
 #### Instrument Assignment
@@ -144,7 +144,7 @@ Common for percussion parts labeled:
 3. **Be specific**: Include all instruments actually used
 4. **Optional description**: List instruments in description field
 
-![Multi-instrument part assignment](images/screenshots/multi-instrument-part.png)
+![Multi-instrument part assignment](images/screenshots/part-collections-expanded.png)
 *Figure 6: Assigning multiple instruments to a single part*
 
 #### Special Part Handling
@@ -183,7 +183,7 @@ AllanaCrusis typically handles:
 5. **Set access permissions** (who can download)
 6. **Upload file**
 
-![File upload interface](images/screenshots/file-upload.png)
+![File upload interface](images/screenshots/compositions-add-edit.png)
 *Figure 7: Uploading digital files for parts*
 
 ### File Organization Best Practices
@@ -227,7 +227,7 @@ Tracking physical parts is crucial for:
 3. **Note condition issues** in descriptions
 4. **Flag missing parts** for copying or acquisition
 
-![Physical inventory tracking](images/screenshots/physical-inventory.png)
+![Physical inventory tracking](images/screenshots/paper-sizes.png)
 *Figure 8: Tracking physical inventory of parts*
 
 ### Common Inventory Issues
@@ -306,7 +306,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 - **Condition changes**: Physical condition not updated in system
 - **Missing updates**: Recent changes not reflected in database
 
-![Quality control checklist](images/screenshots/quality-control.png)
+![Quality control checklist](images/screenshots/part-types-score-order.png)
 *Figure 10: Quality control checklist for parts management*
 
 ### Best Practices
@@ -363,7 +363,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 - **System reconciliation**: Update database to match reality
 - **Documentation**: Note discrepancies and their resolution
 
-![Troubleshooting guide for parts management](images/screenshots/parts-troubleshooting.png)
+![Troubleshooting guide for parts management](images/screenshots/reports.png)
 *Figure 11: Common parts management issues and solutions*
 
 ---

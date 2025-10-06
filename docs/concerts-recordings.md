@@ -35,7 +35,7 @@ Performance tracking in AllanaCrusis includes:
 - **Grant reporting**: Document organization activity
 - **Marketing materials**: Showcase performance history
 
-![Performance tracking overview](images/screenshots/performance-overview.png)
+![Performance tracking overview](images/screenshots/playgrams.png)
 *Figure 1: Overview of performance tracking components in AllanaCrusis*
 
 ---
@@ -60,7 +60,7 @@ Performance tracking in AllanaCrusis includes:
 - **Season/Series**: If part of a regular series
 - **Audience type**: Public, private, educational, etc.
 
-![New concert creation form](images/screenshots/add-concert.png)
+![New concert creation form](images/screenshots/concerts-add-edit.png)
 *Figure 2: Form for creating a new concert event*
 
 #### Concert Details
@@ -87,7 +87,7 @@ Common edits include:
 - **Program modifications**: As repertoire is finalized
 - **Additional details**: Notes added after the event
 
-![Concert editing interface](images/screenshots/edit-concert.png)
+![Concert editing interface](images/screenshots/concerts-add-edit.png)
 *Figure 3: Editing existing concert information*
 
 ---
@@ -115,7 +115,7 @@ Playgrams are detailed concert programs that show:
 4. **Arrange in performance order**
 5. **Add intermissions and special elements**
 
-![Playgram builder interface](images/screenshots/playgram-builder.png)
+![Playgram builder interface](images/screenshots/playgrams.png)
 *Figure 4: Playgram builder showing program construction*
 
 ### Program Elements
@@ -216,7 +216,7 @@ AllanaCrusis can manage various recording types:
 - **Duration**: Length of recording
 - **File size**: For storage planning
 
-![Recording upload form](images/screenshots/add-recording.png)
+![Recording upload form](images/screenshots/recordings-add-edit.png)
 *Figure 7: Form for adding new recordings with metadata*
 
 #### Linking to Performances
@@ -243,7 +243,7 @@ AllanaCrusis can manage various recording types:
 - **Educational use**: Restricted to specific purposes
 - **Archive only**: For preservation, not general access
 
-![Recording organization interface](images/screenshots/recording-organization.png)
+![Recording organization interface](images/screenshots/recordings.png)
 *Figure 8: Interface for organizing and categorizing recordings*
 
 ---

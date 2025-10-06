@@ -38,7 +38,7 @@ Administrator functions require **Manager** role permissions:
 - **Data management**: Bulk operations and maintenance tools
 - **Security controls**: Access to logs, permissions, and security settings
 
-![Administrator dashboard overview](images/screenshots/admin-dashboard.png)
+![Administrator dashboard overview](images/screenshots/navigation-menu-admin.png)
 *Figure 1: Administrator dashboard showing key management functions*
 
 ---
@@ -72,7 +72,7 @@ Administrator functions require **Manager** role permissions:
 4. **Save new account**
 5. **Notify user** of account creation and login information
 
-![New user creation form](images/screenshots/create-user.png)
+![New user creation form](images/screenshots/users-add-edit.png)
 *Figure 2: Form for creating new user accounts*
 
 ### Managing Existing Users
@@ -89,7 +89,7 @@ Administrator functions require **Manager** role permissions:
 - **Account cleanup**: Deactivate multiple inactive accounts
 - **Communication**: Send messages to groups of users
 
-![User management interface](images/screenshots/user-management.png)
+![User management interface](images/screenshots/users.png)
 *Figure 3: Interface for managing existing user accounts*
 
 ### User Roles and Permissions
@@ -130,7 +130,7 @@ Administrator functions require **Manager** role permissions:
 - **File upload limits**: Maximum file sizes and formats
 - **Search configuration**: Default search behavior and limits
 
-![System configuration interface](images/screenshots/system-config.png)
+![System configuration interface](images/screenshots/enable-disable-manager.png)
 *Figure 4: System configuration options and settings*
 
 ### Email Configuration
@@ -165,7 +165,7 @@ Administrator functions require **Manager** role permissions:
 - **Logging**: Track API usage and troubleshoot issues
 - **Security**: Authentication and authorization for API access
 
-![Integration configuration panel](images/screenshots/integration-config.png)
+![Integration configuration panel](images/screenshots/enable-disable-manager-select.png)
 *Figure 5: Configuration panel for external system integrations*
 
 ---
@@ -198,7 +198,7 @@ Administrator functions require **Manager** role permissions:
 - **Report generation**: Formatted outputs for analysis
 - **Scheduled exports**: Automated regular backups
 
-![Data management tools interface](images/screenshots/data-management.png)
+![Data management tools interface](images/screenshots/compositions.png)
 *Figure 6: Tools for managing and maintaining data quality*
 
 ### Database Maintenance
@@ -231,7 +231,7 @@ Administrator functions require **Manager** role permissions:
 - **Download monitoring**: Track and limit file downloads
 - **Usage auditing**: Monitor how materials are being used
 
-![Security configuration interface](images/screenshots/security-config.png)
+![Security configuration interface](images/screenshots/password-reset.png)
 *Figure 7: Security and access control configuration options*
 
 ### Monitoring and Logging
@@ -277,7 +277,7 @@ Administrator functions require **Manager** role permissions:
 - **User demographics**: Analysis of user base and needs
 - **Trend analysis**: Changes in usage over time
 
-![Reporting dashboard](images/screenshots/reporting-dashboard.png)
+![Reporting dashboard](images/screenshots/reports.png)
 *Figure 8: Comprehensive reporting and analytics dashboard*
 
 ### Custom Reports
@@ -323,7 +323,7 @@ Administrator functions require **Manager** role permissions:
 - **Backup procedures**: Ensure data protection during maintenance
 - **Testing protocols**: Verify system functionality after maintenance
 
-![Maintenance scheduling interface](images/screenshots/maintenance-schedule.png)
+![Maintenance scheduling interface](images/screenshots/reports-parts-detail.png)
 *Figure 9: Interface for scheduling and managing system maintenance*
 
 ### Performance Monitoring
@@ -369,7 +369,7 @@ Administrator functions require **Manager** role permissions:
 - **Monthly archival**: Long-term storage of complete backups
 - **Before updates**: Special backups before system changes
 
-![Backup management interface](images/screenshots/backup-management.png)
+![Backup management interface](images/screenshots/reports-download-tokens.png)
 *Figure 10: Backup and recovery management interface*
 
 ### Recovery Procedures
@@ -428,7 +428,7 @@ Administrator functions require **Manager** role permissions:
 - **Training programs**: Help users adapt to new features
 - **Rollback plans**: Ability to reverse changes if problems occur
 
-![Administrator best practices checklist](images/screenshots/admin-best-practices.png)
+![Administrator best practices checklist](images/screenshots/about.png)
 *Figure 11: Checklist of best practices for system administrators*
 
 ---

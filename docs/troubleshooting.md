@@ -41,7 +41,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 - **Help desk**: If your organization has dedicated support
 - **User community**: Other users who may have experienced similar issues
 
-![Help resources overview](images/screenshots/help-resources.png)
+![Help resources overview](images/screenshots/about.png)
 *Figure 1: Available support resources and how to access them*
 
 ---
@@ -69,7 +69,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Verify organization membership**: Access may be restricted to current members
 4. **Wait and retry**: Temporary lockout may expire automatically
 
-![Login troubleshooting flowchart](images/screenshots/login-troubleshooting.png)
+![Login troubleshooting flowchart](images/screenshots/signin.png)
 *Figure 2: Step-by-step login troubleshooting process*
 
 ### Email Verification Problems
@@ -121,7 +121,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Reset search form**: Start over with blank search
 4. **Try advanced search**: More specific options may help
 
-![Search troubleshooting diagram](images/screenshots/search-troubleshooting.png)
+![Search troubleshooting diagram](images/screenshots/search.png)
 *Figure 3: Common search problems and solutions*
 
 ### Page Loading Issues
@@ -173,7 +173,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Try right-click save**: Alternative download method
 4. **Clear download history**: Reset browser download settings
 
-![File download troubleshooting](images/screenshots/download-troubleshooting.png)
+![File download troubleshooting](images/screenshots/reports-download-tokens.png)
 *Figure 4: Diagnosing and fixing download problems*
 
 ### File Quality Problems
@@ -225,7 +225,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Log out and back in**: Refresh session and permissions
 4. **Try immediately after login**: Avoid session expiration issues
 
-![Form troubleshooting guide](images/screenshots/form-troubleshooting.png)
+![Form troubleshooting guide](images/screenshots/compositions-add-edit.png)
 *Figure 5: Common form and data entry problems*
 
 ### Autocomplete Not Working
@@ -277,7 +277,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Check system status**: Look for maintenance or known issues
 4. **Use alternative access**: Try mobile app or different interface if available
 
-![Performance optimization tips](images/screenshots/performance-tips.png)
+![Performance optimization tips](images/screenshots/home.png)
 *Figure 6: Tips for optimizing system performance*
 
 ### Mobile Device Issues
@@ -329,7 +329,7 @@ This comprehensive troubleshooting guide covers common issues users and administ
 3. **Test with different users**: Isolate whether problem is user-specific
 4. **Review audit logs**: Check what actions are being logged
 
-![Administrator troubleshooting workflow](images/screenshots/admin-troubleshooting.png)
+![Administrator troubleshooting workflow](images/screenshots/users.png)
 *Figure 7: Troubleshooting workflow for administrator issues*
 
 ### Data Import/Export Problems
@@ -381,7 +381,7 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 3. **Enable pop-ups**: May be needed for downloads and new windows
 4. **Update regularly**: Keep browser current for security and compatibility
 
-![Browser compatibility matrix](images/screenshots/browser-compatibility.png)
+![Browser compatibility matrix](images/screenshots/navigation-menu.png)
 *Figure 8: Browser compatibility and recommended settings*
 
 ### Operating System Issues
@@ -450,7 +450,7 @@ Different browsers may have different compatibility levels with AllanaCrusis.
 - **Keep contact information current**: Ensure you receive important notifications
 - **Participate in training**: Stay current with new features and best practices
 
-![Preventive maintenance checklist](images/screenshots/preventive-maintenance.png)
+![Preventive maintenance checklist](images/screenshots/reports.png)
 *Figure 9: Checklist for preventing common problems*
 
 ---

@@ -40,7 +40,7 @@ Part distribution in AllanaCrusis includes:
 - **Rental tracking**: Manage lending to external organizations
 - **Return management**: Monitor and enforce return of materials
 
-![Distribution overview showing digital and physical methods](images/screenshots/distribution-overview.png)
+![Distribution overview showing digital and physical methods](images/screenshots/home.png)
 *Figure 1: Overview of distribution methods in AllanaCrusis*
 
 ### Benefits of Organized Distribution
@@ -77,7 +77,7 @@ Before distribution, ensure files are properly prepared:
 - **Completeness**: All pages included and in correct order
 - **Format consistency**: Standardize on PDF for most parts
 
-![File preparation interface](images/screenshots/file-preparation.png)
+![File preparation interface](images/screenshots/compositions-add-edit.png)
 *Figure 2: Interface for preparing files for distribution*
 
 ### Distribution Interfaces
@@ -107,7 +107,7 @@ Before distribution, ensure files are properly prepared:
 - **Guest performers**: Specific parts for visiting musicians
 - **Educational use**: Student parts for classes
 
-![Batch distribution interface](images/screenshots/batch-distribution.png)
+![Batch distribution interface](images/screenshots/ensembles.png)
 *Figure 3: Interface for creating and managing batch distributions*
 
 ---
@@ -141,7 +141,7 @@ AllanaCrusis typically offers several access levels:
 - **Sensitive materials**: Restricted for legal or policy reasons
 - **Archive materials**: Preserved but not actively distributed
 
-![Access control configuration](images/screenshots/access-control.png)
+![Access control configuration](images/screenshots/enable-disable-manager.png)
 *Figure 4: Configuration interface for setting access permissions*
 
 ### Copyright and Legal Considerations
@@ -171,7 +171,7 @@ AllanaCrusis typically offers several access levels:
 3. **Apply permission changes** to all selected items
 4. **Review and confirm** changes
 
-![Permission setting interface](images/screenshots/set-permissions.png)
+![Permission setting interface](images/screenshots/users-add-edit.png)
 *Figure 5: Interface for setting and managing file permissions*
 
 ---
@@ -199,7 +199,7 @@ AllanaCrusis automatically tracks download activity:
 - **Event-specific access**: Access only during relevant time periods
 - **Emergency revocation**: Ability to immediately disable access
 
-![Download management dashboard](images/screenshots/download-management.png)
+![Download management dashboard](images/screenshots/reports-download-tokens.png)
 *Figure 6: Dashboard showing download activity and controls*
 
 ### User Download Experience
@@ -250,7 +250,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Overdue notifications**: Automatic reminders for late returns
 - **Replacement handling**: Process for lost or damaged parts
 
-![Physical distribution tracking](images/screenshots/physical-tracking.png)
+![Physical distribution tracking](images/screenshots/reports-parts-detail.png)
 *Figure 7: Interface for tracking physical part distribution*
 
 #### Part Sets and Collections
@@ -290,7 +290,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Error handling**: Clear messages when problems occur
 - **Help resources**: Guidance for using the system
 
-![User-friendly download interface](images/screenshots/user-interface.png)
+![User-friendly download interface](images/screenshots/signed-in-welcome.png)
 *Figure 8: User-friendly interface for accessing and downloading parts*
 
 ### User Support
@@ -336,7 +336,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **System performance**: Speed and reliability of downloads
 - **Support requests**: Types and frequency of user problems
 
-![Analytics dashboard showing usage patterns](images/screenshots/usage-analytics.png)
+![Analytics dashboard showing usage patterns](images/screenshots/reports.png)
 *Figure 9: Analytics dashboard displaying distribution statistics*
 
 ### Reporting Capabilities
@@ -395,7 +395,7 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 - **Access logging**: Monitor who accesses what materials
 - **Backup procedures**: Protect against data loss
 
-![Best practices checklist](images/screenshots/distribution-best-practices.png)
+![Best practices checklist](images/screenshots/about.png)
 *Figure 10: Checklist for maintaining effective distribution systems*
 
 ---

@@ -20,42 +20,42 @@ This section covers how to add, edit, and manage musical compositions in AllanaC
 
 ## Understanding compositions
 
-### what is a Composition?
-A composition in AllanaCrusis represents a complete musical work, including:
-- **Basic information**: Title, composer, arranger
-- **Publishing details**: Publisher, catalog number
-- **Performance data**: Grade level, duration, instrumentation
-- **Organization**: Genre, ensemble assignment
-- **Physical details**: Paper size, page counts
+### What is a Composition?
+A **composition** in AllanaCrusis represents a complete musical work that encompasses all the essential details needed for library management. This includes basic information such as the title, composer, and arranger, along with publishing details like the publisher and catalog number. Performance data is also captured, including grade level, duration, and instrumentation requirements. The system organizes compositions by genre and ensemble assignment, while also tracking physical details such as paper size and page counts for practical library management.
 
-### composition vs. Parts
-- **Composition**: The overall musical work and its metadata
-- **Parts**: Individual instrument parts that belong to the composition
-- **Relationship**: One composition can have many parts
 
-![Composition overview showing relationship to parts](images/screenshots/compositions.png)
-*Figure 1: How compositions relate to their individual parts*
+![Composition overview showing relationship to parts](images/images/composition-cover.png)
+*Figure 1: Stars and Stripes Forever composition*
+
+
+### Composition vs. parts
+Understanding the relationship between compositions and parts is fundamental to using AllanaCrusis effectively. A composition represents the overall musical work and contains all the metadata about the piece—everything from the composer and title to the grade level and performance duration. Parts, on the other hand, are the conductor's score, and individual instrument parts that belong to that composition, such as the first trumpet part, the clarinet parts, or the percussion parts. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.
+
+![Part overview showing relationship to parts](images/images/composition-part-score.png)
+*Figure 2: Stars and Stripes Forever score*
 
 ---
 
 ## Viewing compositions
 
-### accessing the Compositions List
+### Accessing the list of compositions
 1. **Navigate to MATERIALS > Compositions**
 2. **View the complete library** of compositions
 3. **Use filters and search** to find specific works
 4. **Sort by different criteria** (title, composer, date added, etc.)
 
-### compositions Table Features
+### Compositions table features
+- **Select a composition**: Select a composition to edit or delete
+- **Links to composition details**: Show details of a composition in the table
 - **Real-time filtering**: Type in filter boxes to narrow results
 - **Sortable columns**: Click headers to sort by that field
 - **Sticky headers**: Column headers stay visible while scrolling
 - **Action buttons**: Quick access to edit, view, or manage each composition
 
 ![Compositions list with filtering and sorting options](images/screenshots/compositions.png)
-*Figure 2: Main compositions list with search and filter capabilities*
+*Figure 3: Main compositions list with search and filter capabilities*
 
-### composition Details View
+### Composition details view
 Click on any composition title to see:
 - **Complete metadata**
 - **List of associated parts**
@@ -70,7 +70,7 @@ Click on any composition title to see:
 
 ## Adding new compositions
 
-### prerequisites
+### Perequisites
 - **Librarian or Manager role** required
 - **Supporting data configured**: Genres, ensembles, publishers
 - **Catalog numbering system** understood

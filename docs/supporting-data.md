@@ -35,7 +35,7 @@ Supporting data consists of the reference lists and categories that organize you
 - **Reporting**: Enables meaningful statistics and analysis
 - **Workflow**: Streamlines the process of adding new compositions
 
-![Supporting data overview showing interconnected elements](images/screenshots/database.png)
+![Supporting data overview showing interconnected elements](images/screenshots/home.png)
 *Figure 1: How supporting data elements work together in AllanaCrusis*
 
 ---
@@ -67,7 +67,7 @@ The instrument list defines all possible instruments that can be assigned to mus
 
 3. **Save the new instrument**
 
-![Add instrument form with required fields](images/screenshots/instruments-add-edit.png)
+![Add instrument form with required fields](images/screenshots/instrument-add-edit.png)
 *Figure 3: Form for adding new instruments*
 
 ### Instrument Categories

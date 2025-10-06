@@ -33,7 +33,7 @@ A composition in AllanaCrusis represents a complete musical work, including:
 - **Parts**: Individual instrument parts that belong to the composition
 - **Relationship**: One composition can have many parts
 
-![Composition overview showing relationship to parts](images/screenshots/composition-overview.png)
+![Composition overview showing relationship to parts](images/screenshots/compositions.png)
 *Figure 1: How compositions relate to their individual parts*
 
 ---
@@ -52,7 +52,7 @@ A composition in AllanaCrusis represents a complete musical work, including:
 - **Sticky headers**: Column headers stay visible while scrolling
 - **Action buttons**: Quick access to edit, view, or manage each composition
 
-![Compositions list with filtering and sorting options](images/screenshots/compositions-list.png)
+![Compositions list with filtering and sorting options](images/screenshots/compositions.png)
 *Figure 2: Main compositions list with search and filter capabilities*
 
 ### Composition Details View
@@ -63,7 +63,7 @@ Click on any composition title to see:
 - **Download links** (for authorized users)
 - **Quick action buttons**
 
-![Detailed view of a single composition](images/screenshots/composition-details.png)
+![Detailed view of a single composition](images/screenshots/compositions-instrumentation.png)
 *Figure 3: Detailed composition view showing all metadata and parts*
 
 ---
@@ -100,7 +100,7 @@ Fill in the essential information:
 - Autocomplete will suggest existing composers
 - Required field - use "Traditional" or "(n/a)" if unknown
 
-![Add composition form showing required fields](images/screenshots/add-composition-form.png)
+![Add composition form showing required fields](images/screenshots/compositions-add-edit.png)
 *Figure 4: New composition form with required fields highlighted*
 
 #### 3. Optional but Important Fields
@@ -123,7 +123,7 @@ Fill in the essential information:
 - Primary performing group for this composition
 - Usually set by your organization
 
-![Composition form showing optional fields](images/screenshots/composition-optional-fields.png)
+![Composition form showing optional fields](images/screenshots/compositions-add-edit-b.png)
 *Figure 5: Optional fields section of the composition form*
 
 #### 4. Performance Information
@@ -165,7 +165,7 @@ Fill in the essential information:
 3. **Make necessary changes**
 4. **Click "Update"** to save changes
 
-![Edit composition form with existing data](images/screenshots/edit-composition.png)
+![Edit composition form with existing data](images/screenshots/compositions-add-edit.png)
 *Figure 6: Editing an existing composition with pre-filled data*
 
 ### Common Edits
@@ -192,7 +192,7 @@ AllanaCrusis includes tools to help maintain consistent composer names:
 - **Select from list** to ensure consistency
 - **Automatic formatting** to "Last, First" format
 
-![Composer autocomplete showing suggestions](images/screenshots/composer-autocomplete.png)
+![Composer autocomplete showing suggestions](images/screenshots/compositions-add-edit.png)
 *Figure 7: Composer autocomplete suggesting existing entries*
 
 #### Name Formatting Rules

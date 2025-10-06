@@ -41,7 +41,7 @@ If self-registration is available:
 5. **Click the verification link**
 6. **Account is now active**
 
-![Registration form showing required fields](images/screenshots/registration-form.png)
+![Registration form showing required fields](images/screenshots/register.png)
 *Figure 1: User registration form with required information*
 
 ### Registration Requirements
@@ -69,7 +69,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 - Access member-only features
 - View private compositions
 
-![Guest user interface showing public features](images/screenshots/guest-interface.png)
+![Guest user interface showing public features](images/screenshots/welcome.png)
 *Figure 2: Interface view for guest users*
 
 ### Member
@@ -86,7 +86,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 - Community musicians
 - General library users
 
-![Member interface showing additional features](images/screenshots/member-interface.png)
+![Member interface showing additional features](images/screenshots/home.png)
 *Figure 3: Enhanced interface for logged-in members*
 
 ### Librarian
@@ -108,7 +108,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 - Ensemble managers
 - Content administrators
 
-![Librarian interface showing management tools](images/screenshots/librarian-interface.png)
+![Librarian interface showing management tools](images/screenshots/navigation-menu-librarian.png)
 *Figure 4: Librarian interface with content management tools*
 
 ### Manager
@@ -126,7 +126,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 - IT staff
 - Primary librarians
 
-![Manager interface showing administrative controls](images/screenshots/manager-interface.png)
+![Manager interface showing administrative controls](images/screenshots/navigation-menu-admin.png)
 *Figure 5: Manager interface with full administrative access*
 
 ---
@@ -146,7 +146,7 @@ AllanaCrusis uses a role-based permission system with four main user types:
 - **Account disabled**: Contact your administrator
 - **Forgotten password**: Use password reset feature
 
-![Login form with username and password fields](images/screenshots/login-form.png)
+![Login form with username and password fields](images/screenshots/signin.png)
 *Figure 6: Standard login form*
 
 ### Session Management
@@ -211,7 +211,7 @@ Most systems require:
 6. **Submit the form**
 7. **Login with your new password**
 
-![Password reset form and process](images/screenshots/password-reset.png)
+![Password reset form and process](images/screenshots/passwords-request.png)
 *Figure 8: Password reset request and new password form*
 
 ### Changing Your Password
@@ -251,7 +251,7 @@ Control what emails you receive:
 - **Password expiration warnings**
 - **Weekly/monthly summaries**
 
-![Account settings page showing profile and preferences](images/screenshots/account-settings.png)
+![Account settings page showing profile and preferences](images/screenshots/users-add-edit.png)
 *Figure 9: Account settings with profile and notification options*
 
 ### Privacy Settings

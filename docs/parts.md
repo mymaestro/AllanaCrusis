@@ -3,94 +3,39 @@ layout: default
 title: "Parts Management"
 ---
 
-# Parts Management
+# Individual Parts Management
 
-This section covers managing individual instrument parts, including adding instrumentation, editing part details, file uploads, and organizing physical and digital materials.
+This section covers managing individual instrument parts after instrumentation has been set up, including editing part details, file uploads, physical inventory, and organizing materials.
 
 ## Table of contents
-- [Understanding Parts](#understanding-parts)
-- [Instrumentation Setup](#instrumentation-setup)
-- [Individual Part Management](#individual-part-management)
-- [File Management](#file-management)
-- [Physical Inventory](#physical-inventory)
-- [Part Collections](#part-collections)
-- [Quality Control](#quality-control)
+- [Understanding individual parts](#understanding-individual-parts)
+- [Individual part management](#individual-part-management)
+- [File management](#file-management)
+- [Physical inventory](#physical-inventory)
+- [Part collections](#part-collections)
+- [Quality control](#quality-control)
+- [Workflow integration](#workflow-integration)
+- [Troubleshooting](#troubleshooting)
+- [Advanced features](#advanced-features)
 
 ---
 
-## Understanding parts
+## Understanding individual parts
 
-### what are Parts?
-Parts are individual instrument components of a musical composition:
-- **Individual instrument parts**: Flute 1, Trumpet 2, Percussion, etc.
+### What are individual parts?
+Individual parts are specific instrument components that have been created through instrumentation setup:
+- **Specific instruments**: Flute 1, Trumpet 2, Percussion, etc.
 - **Physical tracking**: Count of original printed parts
 - **Digital files**: PDF or other electronic formats
 - **Metadata**: Page counts, paper sizes, descriptions
 
-### parts vs. Compositions
-- **Composition**: The overall musical work
-- **Parts**: Individual components needed for performance
-- **Relationship**: One composition has many parts
+### Prerequisites
+Before managing individual parts, you must:
+- **Complete instrumentation setup**: Parts must be created first
+- **Have librarian access**: Required for editing part details
+- **Know your physical inventory**: Understand what parts actually exist
 
-![Parts relationship diagram](images/screenshots/part-types.png)
-*Figure 1: How parts relate to compositions and instruments*
-
-### types of Parts
-- **Individual instruments**: Specific to one instrument
-- **Condensed parts**: Multiple instruments on one part (Flute 1&2)
-- **Rhythm section**: Special parts for jazz or contemporary music
-- **Conductor materials**: Scores, piano reductions
-- **Auxiliary materials**: Program notes, technical requirements
-
----
-
-## Instrumentation setup
-
-### adding Instrumentation to a Composition
-Before managing individual parts, you need to set up the instrumentation for a composition.
-
-#### Step 1: Access Instrumentation
-1. **Find your composition** in the compositions list
-2. **Click "Instrumentation"** button or link
-3. **Review existing instrumentation** (if any)
-
-#### Step 2: Set Basic Information
-- **Confirm composition details**: Title, catalog number, paper size
-- **Set average page count**: Estimate for most parts in the piece
-- **Choose default paper size**: Usually Folio (9x12) for band music
-
-![Instrumentation setup form](images/screenshots/compositions-instrumentation.png)
-*Figure 2: Initial instrumentation setup for a composition*
-
-#### Step 3: Select Required Instruments
-1. **Review available instruments** in the selection list
-2. **Select all parts present in the composition**:
-   - Check the score for complete instrumentation
-   - Look through physical parts if available
-   - Use file copies set if one exists
-
-3. **Multi-select techniques**:
-   - Hold Ctrl (Windows) or Cmd (Mac) while clicking
-   - Select multiple instruments at once
-   - Be thorough - missing parts cause problems later
-
-![Instrument selection interface](images/screenshots/sections-assign-instruments.png)
-*Figure 3: Selecting instruments for composition instrumentation*
-
-#### Step 4: Add Parts to Composition
-1. **Review selected instruments**
-2. **Click "Add Parts"**
-3. **System creates individual part records**
-4. **Confirmation of parts created**
-
-### finding Instrumentation Information
-**Sources for instrumentation:**
-- **Front of score**: Many pieces list instrumentation
-- **Physical part folders**: Check what parts exist
-- **Publisher websites**: Often list complete instrumentation
-- **Wind Repertory Project**: Detailed instrumentation data
-- **File copies sets**: Pre-organized part collections
-
+*For instrumentation setup, see: [Instrumentation Management](instrumentation.html)*
 ---
 
 ## Individual part management
@@ -102,7 +47,7 @@ Before managing individual parts, you need to set up the instrumentation for a c
 4. **Each part has an "Edit" button**
 
 ![Parts list for a composition](images/screenshots/part-collections.png)
-*Figure 4: List of parts for a specific composition*
+*Figure 1: List of parts for a specific composition*
 
 ### editing Individual Parts
 Click the **blue "Edit" button** for any part to access detailed management:
@@ -126,7 +71,7 @@ Click the **blue "Edit" button** for any part to access detailed management:
 - **Quality concerns**: Anything affecting usability
 
 ![Individual part editing form](images/screenshots/part-types-add-edit.png)
-*Figure 5: Editing form for an individual part*
+*Figure 2: Editing form for an individual part*
 
 #### Instrument Assignment
 **Primary Instrument**
@@ -145,7 +90,7 @@ Common for percussion parts labeled:
 4. **Optional description**: List instruments in description field
 
 ![Multi-instrument part assignment](images/screenshots/part-collections-expanded.png)
-*Figure 6: Assigning multiple instruments to a single part*
+*Figure 3: Assigning multiple instruments to a single part*
 
 #### Special Part Handling
 **Doubled Parts (e.g., Flute 1 & 2)**
@@ -184,7 +129,7 @@ AllanaCrusis typically handles:
 6. **Upload file**
 
 ![File upload interface](images/screenshots/compositions-add-edit.png)
-*Figure 7: Uploading digital files for parts*
+*Figure 4: Uploading digital files for parts*
 
 ### file Organization Best Practices
 **Naming Conventions**
@@ -228,7 +173,7 @@ Tracking physical parts is crucial for:
 4. **Flag missing parts** for copying or acquisition
 
 ![Physical inventory tracking](images/screenshots/paper-sizes.png)
-*Figure 8: Tracking physical inventory of parts*
+*Figure 5: Tracking physical inventory of parts*
 
 ### common Inventory Issues
 **Missing Parts**
@@ -268,7 +213,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 5. **Maintain separately**: Track collection-specific inventory
 
 ![Part collections management](images/screenshots/part-collections.png)
-*Figure 9: Managing different types of part collections*
+*Figure 6: Managing different types of part collections*
 
 ### collection Benefits
 - **Faster setup**: Pre-organized for common uses
@@ -307,7 +252,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 - **Missing updates**: Recent changes not reflected in database
 
 ![Quality control checklist](images/screenshots/part-types-score-order.png)
-*Figure 10: Quality control checklist for parts management*
+*Figure 7: Quality control checklist for parts management*
 
 ### best Practices
 **Regular Reviews**
@@ -364,7 +309,7 @@ Part collections are pre-organized sets of parts for specific purposes:
 - **Documentation**: Note discrepancies and their resolution
 
 ![Troubleshooting guide for parts management](images/screenshots/reports.png)
-*Figure 11: Common parts management issues and solutions*
+*Figure 8: Common parts management issues and solutions*
 
 ---
 
@@ -389,12 +334,13 @@ Part collections are pre-organized sets of parts for specific purposes:
 
 ## Next steps
 
-With parts properly managed:
+With individual parts properly managed:
 
-1. **[Learn Concert Management](concerts-recordings.html)** - Track performances and recordings
-2. **[Explore Distribution](distribution.html)** - Share parts with users
-3. **[Review Admin Functions](admin-guide.html)** - Advanced management tools
+1. **[Set up Instrumentation](instrumentation.html)** - Learn how to set up instrumentation first
+2. **[Learn Concert Management](concerts-recordings.html)** - Track performances and recordings
+3. **[Explore Distribution](distribution.html)** - Share parts with users
+4. **[Review Admin Functions](admin-guide.html)** - Advanced management tools
 
 ---
 
-*Continue to the next section: [Concerts and Recordings](concerts-recordings.html) to learn about tracking performances and managing recordings.*
+*Previous section: [Instrumentation Management](instrumentation.html) | Next section: [Concerts and Recordings](concerts-recordings.html)*

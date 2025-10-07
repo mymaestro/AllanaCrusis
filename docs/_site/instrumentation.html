@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en_US"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Instrumentation | AllanaCrusis Documentation</title>
+<meta name="generator" content="Jekyll v3.9.3" />
+<meta property="og:title" content="Instrumentation" />
+<meta name="author" content="AllanaCrusis Team" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<meta property="og:description" content="User guide and documentation for AllanaCrusis Music Library System" />
+<link rel="canonical" href="http://0.0.0.0:4000/AllanaCrusis/instrumentation.html" />
+<meta property="og:url" content="http://0.0.0.0:4000/AllanaCrusis/instrumentation.html" />
+<meta property="og:site_name" content="AllanaCrusis Documentation" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Instrumentation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"AllanaCrusis Team"},"description":"User guide and documentation for AllanaCrusis Music Library System","headline":"Instrumentation","url":"http://0.0.0.0:4000/AllanaCrusis/instrumentation.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/AllanaCrusis/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://0.0.0.0:4000/AllanaCrusis/feed.xml" title="AllanaCrusis Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/AllanaCrusis/">AllanaCrusis Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/AllanaCrusis/">AllanaCrusis Documentation</a><a class="page-link" href="/AllanaCrusis/user-guide.html">User Guide</a><a class="page-link" href="/AllanaCrusis/getting-started.html">Getting Started</a><a class="page-link" href="/AllanaCrusis/getting-access.html">Getting Access</a><a class="page-link" href="/AllanaCrusis/supporting-data.html">Supporting Data</a><a class="page-link" href="/AllanaCrusis/compositions.html">Compositions</a><a class="page-link" href="/AllanaCrusis/parts.html">Parts Management</a><a class="page-link" href="/AllanaCrusis/concerts-recordings.html">Concerts and Recordings</a><a class="page-link" href="/AllanaCrusis/distribution.html">Part Distribution</a><a class="page-link" href="/AllanaCrusis/admin-guide.html">Administrator Guide</a><a class="page-link" href="/AllanaCrusis/troubleshooting.html">Troubleshooting</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <h1 id="instrumentation-management">Instrumentation Management</h1>
+
+<p>This section covers setting up instrumentation for compositions, which defines what instrument parts are needed for each musical work. Instrumentation setup is typically done once per composition and creates the foundation for individual part management.</p>
+
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+  <li><a href="#understanding-instrumentation">Understanding instrumentation</a></li>
+  <li><a href="#setting-up-instrumentation">Setting up instrumentation</a></li>
+  <li><a href="#finding-instrumentation-information">Finding instrumentation information</a></li>
+  <li><a href="#next-steps">Next steps</a></li>
+</ul>
+
+<hr />
+
+<h2 id="understanding-instrumentation">Understanding instrumentation</h2>
+
+<h3 id="what-is-instrumentation">What is instrumentation?</h3>
+<p>Instrumentation defines which instrument parts are required for a musical composition:</p>
+<ul>
+  <li><strong>Complete part list</strong>: All instruments needed for performance</li>
+  <li><strong>Part relationships</strong>: How individual parts relate to the composition</li>
+  <li><strong>Foundation for parts</strong>: Creates individual part records for management</li>
+</ul>
+
+<h3 id="instrumentation-vs-individual-parts">Instrumentation vs. individual parts</h3>
+<ul>
+  <li><strong>Instrumentation</strong>: The overall list of what instruments are needed</li>
+  <li><strong>Individual parts</strong>: Specific management of each part (files, inventory, etc.)</li>
+  <li><strong>Workflow</strong>: Set up instrumentation first, then manage individual parts</li>
+</ul>
+
+<p><img src="/AllanaCrusis/images/screenshots/part-types.png" alt="Parts relationship diagram" />
+<em>Figure 1: How instrumentation relates to compositions and individual parts</em></p>
+
+<h3 id="types-of-parts-in-instrumentation">Types of parts in instrumentation</h3>
+<ul>
+  <li><strong>Individual instruments</strong>: Specific to one instrument (Flute 1, Trumpet 2)</li>
+  <li><strong>Condensed parts</strong>: Multiple instruments on one part (Flute 1&amp;2)</li>
+  <li><strong>Rhythm section</strong>: Special parts for jazz or contemporary music</li>
+  <li><strong>Conductor materials</strong>: Scores, piano reductions</li>
+  <li><strong>Auxiliary materials</strong>: Program notes, technical requirements</li>
+</ul>
+
+<hr />
+
+<h2 id="setting-up-instrumentation">Setting up instrumentation</h2>
+
+<h3 id="adding-instrumentation-to-a-composition">Adding instrumentation to a composition</h3>
+<p>Before managing individual parts, you need to set up the instrumentation for a composition.</p>
+
+<h4 id="step-1-access-instrumentation">Step 1: Access instrumentation</h4>
+<ol>
+  <li><strong>Find your composition</strong> in the compositions list</li>
+  <li><strong>Click “Instrumentation”</strong> button or link</li>
+  <li><strong>Review existing instrumentation</strong> (if any)</li>
+</ol>
+
+<h4 id="step-2-set-basic-information">Step 2: Set basic information</h4>
+<ul>
+  <li><strong>Confirm composition details</strong>: Title, catalog number, paper size</li>
+  <li><strong>Set average page count</strong>: Estimate for most parts in the piece</li>
+  <li><strong>Choose default paper size</strong>: Usually Folio (9x12) for band music</li>
+</ul>
+
+<p><img src="/AllanaCrusis/images/screenshots/compositions-instrumentation.png" alt="Instrumentation setup form" />
+<em>Figure 2: Initial instrumentation setup for a composition</em></p>
+
+<h4 id="step-3-select-required-instruments">Step 3: Select required instruments</h4>
+<ol>
+  <li><strong>Review available instruments</strong> in the selection list</li>
+  <li><strong>Select all parts present in the composition</strong>:
+    <ul>
+      <li>Check the score for complete instrumentation</li>
+      <li>Look through physical parts if available</li>
+      <li>Use file copies set if one exists</li>
+    </ul>
+  </li>
+  <li><strong>Multi-select techniques</strong>:
+    <ul>
+      <li>Hold Ctrl (Windows) or Cmd (Mac) while clicking</li>
+      <li>Select multiple instruments at once</li>
+      <li>Be thorough - missing parts cause problems later</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="/AllanaCrusis/images/screenshots/sections-assign-instruments.png" alt="Instrument selection interface" />
+<em>Figure 3: Selecting instruments for composition instrumentation</em></p>
+
+<h4 id="step-4-add-parts-to-composition">Step 4: Add parts to composition</h4>
+<ol>
+  <li><strong>Review selected instruments</strong></li>
+  <li><strong>Click “Add Parts”</strong></li>
+  <li><strong>System creates individual part records</strong></li>
+  <li><strong>Confirmation of parts created</strong></li>
+</ol>
+
+<hr />
+
+<h2 id="finding-instrumentation-information">Finding instrumentation information</h2>
+
+<h3 id="sources-for-instrumentation">Sources for instrumentation</h3>
+<ul>
+  <li><strong>Front of score</strong>: Many pieces list instrumentation</li>
+  <li><strong>Physical part folders</strong>: Check what parts exist</li>
+  <li><strong>Publisher websites</strong>: Often list complete instrumentation</li>
+  <li><strong>Wind Repertory Project</strong>: Detailed instrumentation data</li>
+  <li><strong>File copies sets</strong>: Pre-organized part collections</li>
+</ul>
+
+<h3 id="common-instrumentation-challenges">Common instrumentation challenges</h3>
+<ul>
+  <li><strong>Missing information</strong>: Score may not list all parts</li>
+  <li><strong>Special instruments</strong>: Unusual or optional parts</li>
+  <li><strong>Multiple versions</strong>: Different editions may have different instrumentation</li>
+  <li><strong>Percussion complexity</strong>: Many instruments on percussion parts</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>With instrumentation properly set up:</p>
+
+<ol>
+  <li><strong><a href="parts.html">Learn Individual Parts Management</a></strong> - Manage files, inventory, and details</li>
+  <li><strong><a href="concerts-recordings.html">Explore Concert Management</a></strong> - Track performances</li>
+  <li><strong><a href="distribution.html">Review Distribution</a></strong> - Share parts with users</li>
+</ol>
+
+<hr />
+
+<p><em>Continue to the next section: <a href="parts.html">Parts Management</a> to learn about managing individual instrument parts and files.</em></p>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/AllanaCrusis/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">AllanaCrusis Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">{&quot;name&quot; =&gt; &quot;AllanaCrusis Team&quot;, &quot;email&quot; =&gt; &quot;admin@allanacrusis.net&quot;}</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/mymaestro"><svg class="svg-icon"><use xlink:href="/AllanaCrusis/assets/minima-social-icons.svg#github"></use></svg> <span class="username">mymaestro</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>User guide and documentation for AllanaCrusis Music Library System</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+<!-- Lightbox container -->
+    <div id="lightbox" class="lightbox">
+      <span class="close">&times;</span>
+      <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <style>
+    /* Lightbox styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      cursor: pointer;
+    }
+
+    .lightbox img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-width: 95% !important;
+      max-height: 95% !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+      border: 2px solid #fff !important;
+      cursor: default;
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    .lightbox .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    .lightbox .close:hover {
+      color: #ccc;
+    }
+
+    /* Make regular images clickable */
+    main img, .post-content img, article img {
+      cursor: pointer !important;
+      transition: transform 0.2s ease !important;
+    }
+
+    main img:hover, .post-content img:hover, article img:hover {
+      transform: scale(1.02) !important;
+    }
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all images in the content area
+      const images = document.querySelectorAll('main img, .post-content img, article img, .wrapper img');
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const closeBtn = document.querySelector('.lightbox .close');
+
+      // Add click event to each image
+      images.forEach(img => {
+        img.addEventListener('click', function() {
+          lightbox.style.display = 'block';
+          lightboxImg.src = this.src;
+          lightboxImg.alt = this.alt;
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+      });
+
+      // Close lightbox when clicking the X
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto'; // Restore scrolling
+        });
+      }
+
+      // Close lightbox when clicking outside the image
+      lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+      });
+
+      // Close lightbox with Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.style.display === 'block') {
+          lightbox.style.display = 'none';
+          document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+      });
+    });
+    </script>
+
+  </body>
+
+</html>

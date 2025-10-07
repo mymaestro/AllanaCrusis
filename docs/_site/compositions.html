@@ -43,13 +43,12 @@
 
 <h2 id="table-of-contents">Table of contents</h2>
 <ul>
-  <li><a href="#understanding-compositions">Understanding Compositions</a></li>
-  <li><a href="#viewing-compositions">Viewing Compositions</a></li>
-  <li><a href="#adding-new-compositions">Adding New Compositions</a></li>
-  <li><a href="#editing-existing-compositions">Editing Existing Compositions</a></li>
-  <li><a href="#composer-name-management">Composer Name Management</a></li>
-  <li><a href="#metadata-best-practices">Metadata Best Practices</a></li>
-  <li><a href="#bulk-operations">Bulk Operations</a></li>
+  <li><a href="#understanding-compositions">Understanding compositions</a></li>
+  <li><a href="#viewing-compositions">Viewing compositions</a></li>
+  <li><a href="#adding-or-editing-compositions">Adding or editing compositions</a></li>
+  <li><a href="#managing-title-composer-and-arranger-names">Managing title, composer, and arranger names</a></li>
+  <li><a href="#search-and-discovery">Search and discovery</a></li>
+  <li><a href="#next-steps">Next steps</a></li>
 </ul>
 
 <hr />
@@ -59,13 +58,13 @@
 <h3 id="what-is-a-composition">What is a Composition?</h3>
 <p>A <strong>composition</strong> in AllanaCrusis represents a complete musical work that encompasses all the essential details needed for library management. This includes basic information such as the title, composer, and arranger, along with publishing details like the publisher and catalog number. Performance data is also captured, including grade level, duration, and instrumentation requirements. The system organizes compositions by genre and ensemble assignment, while also tracking physical details such as paper size and page counts for practical library management.</p>
 
-<p><img src="images/images/composition-cover.png" alt="Composition overview showing relationship to parts" />
+<p><img src="/AllanaCrusis/images/images/composition-cover.png" alt="Composition overview showing relationship to parts" />
 <em>Figure 1: Stars and Stripes Forever composition</em></p>
 
 <h3 id="composition-vs-parts">Composition vs. parts</h3>
 <p>Understanding the relationship between compositions and parts is fundamental to using AllanaCrusis effectively. A composition represents the overall musical work and contains all the metadata about the piece. Everything from the composer and title to the grade level and performance duration is included. Parts, on the other hand, are the conductor’s score, and individual instrument parts that belong to that composition, such as the first trumpet part, the clarinet parts, or the percussion parts. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.</p>
 
-<p><img src="images/images/composition-part-score.png" alt="Part overview showing relationship to parts" />
+<p><img src="/AllanaCrusis/images/images/composition-part-score.png" alt="Part overview showing relationship to parts" />
 <em>Figure 2: Stars and Stripes Forever score</em></p>
 
 <hr />
@@ -93,7 +92,7 @@
 </ul>
 
 <h3 id="composition-details-view">Composition details view</h3>
-<p>Click on any composition title to see complete metadata:</p>
+<p>Click any composition title to see complete metadata:</p>
 
 <ul>
   <li><strong>Catalog</strong>, for example, <strong>M001</strong></li>
@@ -128,26 +127,40 @@
   <li>Your <strong>Catalog numbering system</strong> is understood</li>
 </ul>
 
+<p>Most of the information you need is provided in the composition’s score.</p>
+
 <h3 id="starting-the-process">Starting the process</h3>
 <p>To start the process, go to <strong>MATERIALS &gt; Compositions</strong>. You can also edit a composition by choosing one from the SEARCH page.</p>
 
-<h4 id="adding-compositions">Adding compositions</h4>
-<ol>
-  <li>Click <strong>Add</strong></li>
-  <li>The composition form opens</li>
-</ol>
+<div class="two-columns">
+  <div class="column column-left">
 
-<h4 id="editing-compositions">Editing compositions</h4>
-<ol>
-  <li>Choose a composition to edit. You can search by name or composer, or filter any column.</li>
-  <li>Click <strong>Edit</strong></li>
-  <li>The composition form opens</li>
-</ol>
+    <h3 id="adding-compositions">Adding compositions</h3>
+    <ol>
+      <li>Search the existing compositions to check that your piece is not already there.</li>
+      <li>Click <strong>Add</strong></li>
+      <li>The composition form opens</li>
+      <li>Complete the required fields, and click “Insert”</li>
+    </ol>
+
+  </div>
+  <div class="column column-right">
+
+    <h3 id="editing-compositions">Editing compositions</h3>
+    <ol>
+      <li>Choose a composition to edit. You can search by name or composer, or filter any column.</li>
+      <li>Click <strong>Edit</strong></li>
+      <li>The composition form opens</li>
+      <li>Complete the required fields, and click “Update”</li>
+    </ol>
+
+  </div>
+</div>
 
 <h3 id="composition-fields">Composition fields</h3>
 
-<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Composition form fields" />
-<em>Figure 4: New composition form with required fields highlighted</em></p>
+<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Composition form" />
+<em>Figure 4: Top of the composition form</em></p>
 
 <p>The following fields are available when adding or editing a composition, listed in the order they appear on the form:</p>
 
@@ -163,7 +176,7 @@
     <tr>
       <td>Catalog number</td>
       <td>✓</td>
-      <td>A unique identifier for the composition, following your organization’s numbering scheme. This field is required and must be unique within the system. Your organization determines how to format the catalog numbers. You can use letters or numbers, or combinations. For example, you can represent the genre and a number with a numbering system like “C001” for concert piece, “M001” for a march, and “X010” for a Christmas piece.</td>
+      <td>A unique identifier for the composition, following your organization’s numbering scheme. This field is required and must be unique within the system. Your organization determines how to format the catalog numbers. Follow the catalog number that appears on the music folder, if there is one. You can use letters or numbers, or combinations. For example, you can represent the genre and a number with a numbering system like “C001” for concert piece, “M001” for a march, and “X010” for a Christmas piece.</td>
     </tr>
     <tr>
       <td>Enabled</td>
@@ -186,11 +199,6 @@
       <td>The name of the original composer. Use “Last, First” format, for example “Sousa, John Philip”. This required field uses autocomplete to maintain consistency across the library. Use “Traditional” or “Unknown” if the composter is unknown.</td>
     </tr>
     <tr>
-      <td> </td>
-      <td> </td>
-      <td> </td>
-    </tr>
-    <tr>
       <td>Editor</td>
       <td> </td>
       <td>The name of the person who edited this particular edition or arrangement. The editor is useful for distinguishing between different versions of the same work.</td>
@@ -203,7 +211,7 @@
     <tr>
       <td>Publisher</td>
       <td> </td>
-      <td>The publishing company or organization that produced this edition.</td>
+      <td>The publishing company or organization that produced this edition. You can generally drop words like Inc, Publisher, Company, and such. For example, Hal Leonard Corporation can be listed just as Hal Leonard.</td>
     </tr>
     <tr>
       <td>Genre</td>
@@ -218,12 +226,12 @@
     <tr>
       <td>Grade level</td>
       <td> </td>
-      <td>The difficulty rating typically on a scale of 0-7. Grade level 0 indicates “unknown” and higher numbers represent increasing difficulty levels.</td>
+      <td>The difficulty rating typically on a scale of 0-7. Grade level 0 indicates “unknown” and higher numbers represent increasing difficulty levels. This information is usually provided with the composition’s score.</td>
     </tr>
     <tr>
       <td>Paper size</td>
       <td> </td>
-      <td>The physical paper dimensions of the parts. Paper size is important for storage and distribution planning. Choose from standard sizes like Folio or Letter.</td>
+      <td>The physical paper dimensions of the parts. Paper size is important for storage and distribution planning. Most band music is printed on Folio paper (9x12), but some are on Letter (8.5x11) or Marching band paper.</td>
     </tr>
     <tr>
       <td>Last performed</td>
@@ -293,314 +301,54 @@
   </tbody>
 </table>
 
-<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit-b.png" alt="Composition form showing optional fields" />
-<em>Figure 5: Optional fields section of the composition form</em></p>
-
-<h4 id="4-performance-information">4. Performance Information</h4>
-
-<p><strong>Grade Level</strong></p>
-<ul>
-  <li>Difficulty rating (1-7 scale typically)</li>
-  <li>Check score or Wind Repertory Project for guidance</li>
-  <li>Leave blank if unknown</li>
-</ul>
-
-<p><strong>Duration</strong></p>
-<ul>
-  <li>Performance time in minutes</li>
-  <li>Can be approximate</li>
-  <li>Helpful for concert planning</li>
-</ul>
-
-<p><strong>Paper Size</strong></p>
-<ul>
-  <li>Most band music: Folio (9x12)</li>
-  <li>Some music: Letter (8.5x11)</li>
-  <li>Marching band: Often special sizes</li>
-</ul>
-
-<h4 id="5-save-the-composition">5. Save the Composition</h4>
-<ol>
-  <li><strong>Review all information</strong> for accuracy</li>
-  <li><strong>Click “Add Composition”</strong></li>
-  <li><strong>Confirmation message</strong> appears</li>
-  <li><strong>Composition is now in the system</strong></li>
-</ol>
+<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit-b.png" alt="Composition form showing additional fields" />
+<em>Figure 5: Bottom of the composition form</em></p>
 
 <hr />
 
-<h2 id="editing-existing-compositions">Editing existing compositions</h2>
+<h2 id="managing-title-composer-and-arranger-names">Managing title, composer, and arranger names</h2>
 
-<h3 id="when-to-edit-compositions">when to Edit Compositions</h3>
-<ul>
-  <li><strong>Correcting errors</strong> in metadata</li>
-  <li><strong>Adding missing information</strong> (grade level, duration)</li>
-  <li><strong>Updating publisher information</strong></li>
-  <li><strong>Changing organizational assignments</strong></li>
-</ul>
+<h3 id="the-importance-of-consistent-naming">The importance of consistent naming</h3>
 
-<h3 id="editing-process">editing Process</h3>
-<ol>
-  <li><strong>Find the composition</strong> using search or browse</li>
-  <li><strong>Click the blue “Edit” button</strong></li>
-  <li><strong>Make necessary changes</strong></li>
-  <li><strong>Click “Update”</strong> to save changes</li>
-</ol>
+<p>Consistent naming conventions are critical for effective library management. When composer and arranger names are standardized and titles follow formatting rules, your library becomes more searchable and professional. Users can find all works by a composer regardless of who entered the data, while reports and statistics remain accurate and meaningful.</p>
 
-<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Edit composition form with existing data" />
-<em>Figure 6: Editing an existing composition with pre-filled data</em></p>
+<h3 id="how-allanacrusis-helps-with-name-normalization">How AllanaCrusis helps with name normalization</h3>
 
-<h3 id="common-edits">common Edits</h3>
-<ul>
-  <li><strong>Title corrections</strong>: Fix spelling or formatting</li>
-  <li><strong>Composer standardization</strong>: Ensure consistent naming</li>
-  <li><strong>Missing metadata</strong>: Add grade level or duration</li>
-  <li><strong>Genre reclassification</strong>: Move to more appropriate category</li>
-</ul>
+<p>AllanaCrusis includes built-in features to maintain consistent names across your library. The autocomplete system activates when you type in composer or arranger fields, presenting suggestions from existing entries to prevent duplicates with spelling variations. Selecting from these suggestions automatically applies “Last, First” formatting for consistency.</p>
 
-<hr />
+<h3 id="name-formatting-standards-and-best-practices">Name formatting standards and best practices</h3>
 
-<h2 id="composer-name-management">Composer name management</h2>
+<p>Use “Last, First Middle” format for composer names. Complex names like “Beethoven, Ludwig van” ensure surnames appear first for better sorting. Single names like “Palestrina” can be entered as-is.</p>
 
-<h3 id="importance-of-consistent-naming">importance of Consistent Naming</h3>
-<ul>
-  <li><strong>Search effectiveness</strong>: Users can find all works by a composer</li>
-  <li><strong>Reporting accuracy</strong>: Statistics and analysis work properly</li>
-  <li><strong>Professional appearance</strong>: Library looks organized and authoritative</li>
-</ul>
+<p>For composition titles, move articles to the end: “The Liberty Bell” becomes “Liberty Bell, The” and “A Lincoln Portrait” becomes “Lincoln Portrait, A.” Apply this to foreign articles too (la, le, les, los, die, der, etc.): “La Marseillaise” becomes “Marseillaise, La.” This prevents all “The” titles from clustering together and makes alphabetical browsing more logical.</p>
 
-<h3 id="composer-normalization-features">composer Normalization Features</h3>
-<p>AllanaCrusis includes tools to help maintain consistent composer names:</p>
+<h3 id="handling-special-cases-and-edge-situations">Handling special cases and edge situations</h3>
 
-<h4 id="autocomplete-system">Autocomplete System</h4>
-<ul>
-  <li><strong>Start typing</strong> a composer name</li>
-  <li><strong>Suggestions appear</strong> based on existing entries</li>
-  <li><strong>Select from list</strong> to ensure consistency</li>
-  <li><strong>Automatic formatting</strong> to “Last, First” format</li>
-</ul>
-
-<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Composer autocomplete showing suggestions" />
-<em>Figure 7: Composer autocomplete suggesting existing entries</em></p>
-
-<h4 id="name-formatting-rules">Name Formatting Rules</h4>
-<ul>
-  <li><strong>Standard format</strong>: “Last, First Middle”</li>
-  <li><strong>Multiple names</strong>: “Beethoven, Ludwig van”</li>
-  <li><strong>Titles and suffixes</strong>: “Bach, Johann Sebastian”</li>
-  <li><strong>Single names</strong>: “Palestrina” (historical figures)</li>
-</ul>
-
-<h4 id="special-cases">Special Cases</h4>
-<ul>
-  <li><strong>Traditional works</strong>: Use “Traditional”</li>
-  <li><strong>Unknown composer</strong>: Use “(n/a)”</li>
-  <li><strong>Multiple composers</strong>: List primary composer, note others in arranger field</li>
-  <li><strong>Pseudonyms</strong>: Use most recognized form, note real name in description</li>
-</ul>
-
-<h3 id="bulk-composer-updates">bulk Composer Updates</h3>
-<p>For managers, tools may be available to:</p>
-<ul>
-  <li><strong>Standardize existing names</strong> across the library</li>
-  <li><strong>Merge duplicate entries</strong> with slight variations</li>
-  <li><strong>Apply formatting rules</strong> to all composer names</li>
-  <li><strong>Generate reports</strong> on naming inconsistencies</li>
-</ul>
-
-<hr />
-
-<h2 id="metadata-best-practices">Metadata best practices</h2>
-
-<h3 id="title-guidelines">title Guidelines</h3>
-<ul>
-  <li><strong>Complete titles</strong>: Include full title and subtitle</li>
-  <li><strong>Article placement</strong>: Move articles to end with comma</li>
-  <li><strong>Capitalization</strong>: Follow standard title case rules</li>
-  <li><strong>Punctuation</strong>: Be consistent with periods, commas</li>
-</ul>
-
-<h3 id="publisher-information">publisher Information</h3>
-<ul>
-  <li><strong>Standard abbreviations</strong>: Use consistent shortened forms</li>
-  <li><strong>Current publishers</strong>: Update if companies merge or change</li>
-  <li><strong>Historical accuracy</strong>: Keep original publisher for historical works</li>
-  <li><strong>Multiple editions</strong>: Note which edition you have</li>
-</ul>
-
-<h3 id="genre-classification">genre Classification</h3>
-<ul>
-  <li><strong>Primary purpose</strong>: Choose based on intended use</li>
-  <li><strong>Consistent categories</strong>: Use established genre list</li>
-  <li><strong>Special collections</strong>: Create genres for unique organizational needs</li>
-  <li><strong>Regular review</strong>: Update genres as collection evolves</li>
-</ul>
-
-<p><img src="images/screenshots/metadata-checklist.png" alt="Metadata best practices checklist" />
-<em>Figure 8: Checklist for ensuring quality metadata entry</em></p>
-
-<hr />
-
-<h2 id="bulk-operations">Bulk operations</h2>
-
-<h3 id="when-to-use-bulk-operations">when to Use Bulk Operations</h3>
-<ul>
-  <li><strong>Large imports</strong> from other systems</li>
-  <li><strong>Systematic corrections</strong> across multiple compositions</li>
-  <li><strong>Organizational changes</strong> (ensemble reassignments, genre updates)</li>
-  <li><strong>Publisher updates</strong> due to mergers or acquisitions</li>
-</ul>
-
-<h3 id="available-bulk-functions">available Bulk Functions</h3>
-<p>Depending on your role and system configuration:</p>
-
-<h4 id="export-functions">Export Functions</h4>
-<ul>
-  <li><strong>CSV export</strong> of composition data</li>
-  <li><strong>Filtered exports</strong> based on search criteria</li>
-  <li><strong>Custom field selection</strong> for specific reports</li>
-</ul>
-
-<h4 id="import-functions">Import Functions</h4>
-<ul>
-  <li><strong>CSV import</strong> of new compositions</li>
-  <li><strong>Update existing</strong> compositions via import</li>
-  <li><strong>Validation tools</strong> to check data before import</li>
-</ul>
-
-<h4 id="batch-updates">Batch Updates</h4>
-<ul>
-  <li><strong>Genre reassignment</strong> for multiple works</li>
-  <li><strong>Publisher standardization</strong> across collections</li>
-  <li><strong>Composer name normalization</strong> in bulk</li>
-</ul>
-
-<p><img src="images/screenshots/bulk-operations.png" alt="Bulk operations interface" />
-<em>Figure 9: Bulk operations tools for managing multiple compositions</em></p>
-
-<h3 id="import-guidelines">import Guidelines</h3>
-<p>When importing composition data:</p>
-<ol>
-  <li><strong>Prepare clean data</strong> in required format</li>
-  <li><strong>Test with small batch</strong> first</li>
-  <li><strong>Validate required fields</strong> are present</li>
-  <li><strong>Check for duplicates</strong> before importing</li>
-  <li><strong>Review results</strong> after import completion</li>
-</ol>
+<p>Use “Traditional” for folk music or unknown authorship. Use “Unknown” when the composer is completely unidentified. For multiple composers, list the primary composer first and note others in the description. For pseudonyms, use the most recognized form and note the real name in the description field.</p>
 
 <hr />
 
 <h2 id="search-and-discovery">Search and discovery</h2>
 
-<h3 id="making-compositions-findable">making Compositions Findable</h3>
-<p>Good metadata entry ensures users can find compositions through:</p>
+<h3 id="making-compositions-easy-to-find">Making compositions easy to find</h3>
 
-<h4 id="search-methods">Search Methods</h4>
-<ul>
-  <li><strong>Title searches</strong>: Partial or complete titles</li>
-  <li><strong>Composer searches</strong>: Various name formats</li>
-  <li><strong>Catalog number lookup</strong>: Direct access via number</li>
-  <li><strong>Genre browsing</strong>: Category-based discovery</li>
-  <li><strong>Advanced filtering</strong>: Multiple criteria combined</li>
-</ul>
+<p>Complete the key fields that musicians use to search for music. Focus on titles, composers, arrangers, ensembles, and genres first, then add descriptions with alternate names or memorable details that help users locate specific pieces.</p>
 
-<h4 id="search-optimization-tips">Search Optimization Tips</h4>
-<ul>
-  <li><strong>Complete information</strong>: Fill in all available fields</li>
-  <li><strong>Standard terminology</strong>: Use consistent language</li>
-  <li><strong>Alternative names</strong>: Note variations in description fields</li>
-  <li><strong>Tags and keywords</strong>: Use description for searchable terms</li>
-</ul>
+<h3 id="essential-fields-for-searchability">Essential fields for searchability</h3>
 
-<p><img src="images/screenshots/search-results.png" alt="Search results showing well-organized compositions" />
-<em>Figure 10: Search results demonstrating effective metadata organization</em></p>
+<p>Focus on these core fields to maximize findability. The <strong>title</strong> field should include the complete title plus any common alternate names in the description. For <strong>composer</strong> names, consistent “Last, First” formatting ensures users find works whether they search “Sousa” or “John Philip Sousa.” The <strong>genre</strong> field helps users browse by style, while <strong>grade level</strong> enables filtering by difficulty. Don’t skip the <strong>description</strong> field - it’s searchable and perfect for alternate titles, movement names, or other terms users might remember.</p>
 
-<hr />
+<h3 id="practical-search-optimization-strategies">Practical search optimization strategies</h3>
 
-<h2 id="quality-control">Quality control</h2>
+<p>Include subtitle information, for example: “Nimrod” in the description for “Enigma Variations.” Add movement names for multi-movement works. Use the description field for memorable lyrics: add “O beautiful for spacious skies” to help users find “America the Beautiful.” Include instrumentation details for unusual scoring, and mention any special performance requirements that users might search for.</p>
 
-<h3 id="regular-maintenance-tasks">regular Maintenance Tasks</h3>
-<ul>
-  <li><strong>Review new entries</strong> for completeness and accuracy</li>
-  <li><strong>Standardize naming</strong> across the collection</li>
-  <li><strong>Update missing information</strong> as it becomes available</li>
-  <li><strong>Clean up duplicates</strong> or near-duplicates</li>
-</ul>
+<h3 id="common-search-scenarios-to-support">Common search scenarios to support</h3>
 
-<h3 id="validation-checks">validation Checks</h3>
-<ul>
-  <li><strong>Required fields</strong>: Ensure all essential data is present</li>
-  <li><strong>Format consistency</strong>: Check catalog numbers, names, titles</li>
-  <li><strong>Logical relationships</strong>: Verify ensemble assignments make sense</li>
-  <li><strong>External verification</strong>: Cross-check with authoritative sources</li>
-</ul>
+<p>Users typically search by composer when planning concerts around specific periods or styles. They search by title when they remember part of a name, by grade level when selecting appropriate repertoire, and by genre when building themed programs. Support partial searches by avoiding abbreviations in titles - write “Symphony” not “Sym.” and “Overture” not “Ov.” This makes your library work the way musicians think.</p>
 
-<h3 id="collaboration-tools">collaboration Tools</h3>
-<ul>
-  <li><strong>Review queues</strong>: Flag compositions needing attention</li>
-  <li><strong>Change logging</strong>: Track who made what changes when</li>
-  <li><strong>Discussion notes</strong>: Communicate about questionable entries</li>
-  <li><strong>Approval workflows</strong>: Require review for certain changes</li>
-</ul>
+<h3 id="grade-level-and-duration-for-program-planning">Grade level and duration for program planning</h3>
 
-<hr />
-
-<h2 id="integration-with-other-functions">Integration with other functions</h2>
-
-<h3 id="connection-to-parts-management">connection to Parts Management</h3>
-<ul>
-  <li><strong>Automatic relationships</strong>: Parts link to their composition</li>
-  <li><strong>Inherited metadata</strong>: Parts get information from composition</li>
-  <li><strong>Instrumentation tracking</strong>: Composition shows what parts exist</li>
-</ul>
-
-<h3 id="performance-tracking">performance Tracking</h3>
-<ul>
-  <li><strong>Concert programming</strong>: Link compositions to performances</li>
-  <li><strong>Usage statistics</strong>: Track which works are performed most</li>
-  <li><strong>Planning tools</strong>: Use metadata for concert planning</li>
-</ul>
-
-<h3 id="reporting-and-analysis">reporting and Analysis</h3>
-<ul>
-  <li><strong>Collection statistics</strong>: Analyze by composer, genre, grade level</li>
-  <li><strong>Acquisition planning</strong>: Identify gaps in collection</li>
-  <li><strong>Usage reports</strong>: See which compositions are accessed most</li>
-</ul>
-
-<hr />
-
-<h2 id="troubleshooting-common-issues">Troubleshooting common issues</h2>
-
-<h3 id="duplicate-compositions">duplicate Compositions</h3>
-<p><strong>Problem</strong>: Same composition entered multiple times
-<strong>Solution</strong>:</p>
-<ul>
-  <li>Use search before adding new compositions</li>
-  <li>Check alternate titles and spellings</li>
-  <li>Merge or remove duplicates as appropriate</li>
-</ul>
-
-<h3 id="missing-information">missing Information</h3>
-<p><strong>Problem</strong>: Incomplete metadata affecting usefulness
-<strong>Solution</strong>:</p>
-<ul>
-  <li>Research using Wind Repertory Project or other sources</li>
-  <li>Check physical scores for missing information</li>
-  <li>Flag for later completion if information unavailable</li>
-</ul>
-
-<h3 id="naming-inconsistencies">naming Inconsistencies</h3>
-<p><strong>Problem</strong>: Same composer with different name formats
-<strong>Solution</strong>:</p>
-<ul>
-  <li>Use autocomplete to maintain consistency</li>
-  <li>Run periodic reports to identify variations</li>
-  <li>Standardize using bulk update tools</li>
-</ul>
-
-<p><img src="images/screenshots/composition-troubleshooting.png" alt="Troubleshooting guide for common composition issues" />
-<em>Figure 11: Common issues and their solutions</em></p>
+<p>Accurate <strong>grade level</strong> and <strong>duration</strong> data helps you promote effective concert planning. Directors use grade levels to match repertoire difficulty to ensemble abilities, while duration information helps create properly timed programs. AllanaCrusis’s <strong>Playgram Builder</strong> page uses these fields along with other composition metadata to help musical directors build balanced concert programs automatically.</p>
 
 <hr />
 
@@ -609,6 +357,7 @@
 <p>With compositions properly managed:</p>
 
 <ol>
+  <li><strong><a href="instrumentation.html">Set up Instrumentation</a></strong> - Define what instrument parts are needed</li>
   <li><strong><a href="parts.html">Learn Parts Management</a></strong> - Handle individual instrument parts</li>
   <li><strong><a href="concerts-recordings.html">Explore Concert Tracking</a></strong> - Connect compositions to performances</li>
   <li><strong><a href="distribution.html">Set up Distribution</a></strong> - Share compositions with users</li>
@@ -616,7 +365,7 @@
 
 <hr />
 
-<p><em>Continue to the next section: <a href="parts.html">Parts Management</a> to learn about managing individual instrument parts and files.</em></p>
+<p><em>Continue to the next section: <a href="instrumentation.html">Instrumentation Management</a> to learn about setting up what instrument parts are needed for each composition.</em></p>
 
       </div>
     </main><footer class="site-footer h-card">

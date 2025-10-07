@@ -63,7 +63,7 @@
 <em>Figure 1: Stars and Stripes Forever composition</em></p>
 
 <h3 id="composition-vs-parts">Composition vs. parts</h3>
-<p>Understanding the relationship between compositions and parts is fundamental to using AllanaCrusis effectively. A composition represents the overall musical work and contains all the metadata about the piece—everything from the composer and title to the grade level and performance duration. Parts, on the other hand, are the conductor’s score, and individual instrument parts that belong to that composition, such as the first trumpet part, the clarinet parts, or the percussion parts. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.</p>
+<p>Understanding the relationship between compositions and parts is fundamental to using AllanaCrusis effectively. A composition represents the overall musical work and contains all the metadata about the piece. Everything from the composer and title to the grade level and performance duration is included. Parts, on the other hand, are the conductor’s score, and individual instrument parts that belong to that composition, such as the first trumpet part, the clarinet parts, or the percussion parts. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.</p>
 
 <p><img src="images/images/composition-part-score.png" alt="Part overview showing relationship to parts" />
 <em>Figure 2: Stars and Stripes Forever score</em></p>
@@ -73,26 +73,24 @@
 <h2 id="viewing-compositions">Viewing compositions</h2>
 
 <h3 id="accessing-the-list-of-compositions">Accessing the list of compositions</h3>
+
 <ol>
   <li><strong>Navigate to MATERIALS &gt; Compositions</strong></li>
   <li><strong>View the complete library</strong> of compositions</li>
-  <li><strong>Use filters and search</strong> to find specific works</li>
+  <li><strong>Use sort, filters and search</strong> to find specific works</li>
   <li><strong>Sort by different criteria</strong> (title, composer, date added, etc.)</li>
   <li><strong>Choose an action button</strong> to manage composition details</li>
 </ol>
+
+<p><img src="/AllanaCrusis/images/screenshots/compositions.png" alt="Compositions list with filtering and sorting options" />
+<em>Figure 3: Main compositions list with search and filter capabilities</em></p>
 
 <h3 id="compositions-table-features">Compositions table features</h3>
 <ul>
   <li><strong>Select a composition</strong>: Select a composition to edit or delete</li>
   <li><strong>Links to composition details</strong>: Show details of a composition in the table</li>
-  <li><strong>Real-time filtering</strong>: Type in filter boxes to narrow results</li>
-  <li><strong>Sortable columns</strong>: Click headers to sort by that field</li>
-  <li><strong>Sticky headers</strong>: Column headers stay visible while scrolling</li>
   <li><strong>Action buttons</strong>: Quick access to edit, view, or manage each composition</li>
 </ul>
-
-<p><img src="/AllanaCrusis/images/screenshots/compositions.png" alt="Compositions list with filtering and sorting options" />
-<em>Figure 3: Main compositions list with search and filter capabilities</em></p>
 
 <h3 id="composition-details-view">Composition details view</h3>
 <p>Click on any composition title to see complete metadata:</p>
@@ -121,78 +119,179 @@
 
 <hr />
 
-<h2 id="adding-new-compositions">Adding new compositions</h2>
+<h2 id="adding-or-editing-compositions">Adding or editing compositions</h2>
 
 <h3 id="perequisites">Perequisites</h3>
 <ul>
-  <li><strong>Librarian or Manager role</strong> required</li>
-  <li><strong>Supporting data configured</strong>: Genres, ensembles, publishers</li>
-  <li><strong>Catalog numbering system</strong> understood</li>
+  <li>The <strong>Librarian role</strong> is required</li>
+  <li><strong>Supporting data</strong> (genres, ensembles, paper sizes) should already be configured</li>
+  <li>Your <strong>Catalog numbering system</strong> is understood</li>
 </ul>
 
-<h3 id="step-by-step-process">step-by-Step Process</h3>
+<h3 id="starting-the-process">Starting the process</h3>
+<p>To start the process, go to <strong>MATERIALS &gt; Compositions</strong>. You can also edit a composition by choosing one from the SEARCH page.</p>
 
-<h4 id="1-start-the-add-process">1. Start the Add Process</h4>
+<h4 id="adding-compositions">Adding compositions</h4>
 <ol>
-  <li><strong>Go to MATERIALS &gt; Compositions</strong></li>
-  <li><strong>Click “Add New Composition”</strong></li>
-  <li><strong>The composition form opens</strong></li>
+  <li>Click <strong>Add</strong></li>
+  <li>The composition form opens</li>
 </ol>
 
-<h4 id="2-required-fields">2. Required Fields</h4>
-<p>Fill in the essential information:</p>
+<h4 id="editing-compositions">Editing compositions</h4>
+<ol>
+  <li>Choose a composition to edit. You can search by name or composer, or filter any column.</li>
+  <li>Click <strong>Edit</strong></li>
+  <li>The composition form opens</li>
+</ol>
 
-<p><strong>Catalog Number</strong></p>
-<ul>
-  <li>Format: Letter + 3 digits (C###, M###, X###)</li>
-  <li>Must be unique in the system</li>
-  <li>Use organizational numbering scheme</li>
-</ul>
+<h3 id="composition-fields">Composition fields</h3>
 
-<p><strong>Title</strong></p>
-<ul>
-  <li>Complete composition title</li>
-  <li>Articles at the end: “Liberty Bell, The”</li>
-  <li>Include subtitles if relevant</li>
-</ul>
-
-<p><strong>Composer</strong></p>
-<ul>
-  <li>Use “Last, First” format: “Beethoven, Ludwig van”</li>
-  <li>Autocomplete will suggest existing composers</li>
-  <li>Required field - use “Traditional” or “(n/a)” if unknown</li>
-</ul>
-
-<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Add composition form showing required fields" />
+<p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit.png" alt="Composition form fields" />
 <em>Figure 4: New composition form with required fields highlighted</em></p>
 
-<h4 id="3-optional-but-important-fields">3. Optional but Important Fields</h4>
+<p>The following fields are available when adding or editing a composition, listed in the order they appear on the form:</p>
 
-<p><strong>Arranger/Editor</strong></p>
-<ul>
-  <li>Use same “Last, First” format as composer</li>
-  <li>Leave blank if not applicable</li>
-  <li>Autocomplete available</li>
-</ul>
-
-<p><strong>Publisher</strong></p>
-<ul>
-  <li>Choose from existing list or add new</li>
-  <li>Abbreviate common words: “Hal Leonard” not “Hal Leonard Corporation”</li>
-</ul>
-
-<p><strong>Genre</strong></p>
-<ul>
-  <li>Select most appropriate category</li>
-  <li>Default to “Wind Ensemble” if uncertain</li>
-  <li>Affects search and organization</li>
-</ul>
-
-<p><strong>Ensemble</strong></p>
-<ul>
-  <li>Primary performing group for this composition</li>
-  <li>Usually set by your organization</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Required</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Catalog number</td>
+      <td>✓</td>
+      <td>A unique identifier for the composition, following your organization’s numbering scheme. This field is required and must be unique within the system. Your organization determines how to format the catalog numbers. You can use letters or numbers, or combinations. For example, you can represent the genre and a number with a numbering system like “C001” for concert piece, “M001” for a march, and “X010” for a Christmas piece.</td>
+    </tr>
+    <tr>
+      <td>Enabled</td>
+      <td>✓</td>
+      <td>Controls whether the composition appears in searches and is available to users. Compositions not marked Enabled remain in the database but are hidden from general use. The default is not enabled.</td>
+    </tr>
+    <tr>
+      <td>Title</td>
+      <td>✓</td>
+      <td>The complete title of the composition as it appears on the score. This field is required, and should include subtitles and follow standard capitalization rules. Put articles at the end, for example, “Liberty Bell, The”</td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td> </td>
+      <td>A publicly viewable description. The description provides additional context about the composition, arrangement details, or performance notes for users browsing the library.</td>
+    </tr>
+    <tr>
+      <td>Composer</td>
+      <td>✓</td>
+      <td>The name of the original composer. Use “Last, First” format, for example “Sousa, John Philip”. This required field uses autocomplete to maintain consistency across the library. Use “Traditional” or “Unknown” if the composter is unknown.</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Editor</td>
+      <td> </td>
+      <td>The name of the person who edited this particular edition or arrangement. The editor is useful for distinguishing between different versions of the same work.</td>
+    </tr>
+    <tr>
+      <td>Arranger</td>
+      <td> </td>
+      <td>The name of the arranger if this is an arrangement of an original work. The arranger name follows the same “Last, First” format as the composer field.</td>
+    </tr>
+    <tr>
+      <td>Publisher</td>
+      <td> </td>
+      <td>The publishing company or organization that produced this edition.</td>
+    </tr>
+    <tr>
+      <td>Genre</td>
+      <td> </td>
+      <td>The musical style or category selected from your organization’s genre list. The genre helps with organization and searching within the library.</td>
+    </tr>
+    <tr>
+      <td>Ensemble</td>
+      <td> </td>
+      <td>The intended primary performing group or ensemble of this composition. Choose from your organization’s ensemble definitions.</td>
+    </tr>
+    <tr>
+      <td>Grade level</td>
+      <td> </td>
+      <td>The difficulty rating typically on a scale of 0-7. Grade level 0 indicates “unknown” and higher numbers represent increasing difficulty levels.</td>
+    </tr>
+    <tr>
+      <td>Paper size</td>
+      <td> </td>
+      <td>The physical paper dimensions of the parts. Paper size is important for storage and distribution planning. Choose from standard sizes like Folio or Letter.</td>
+    </tr>
+    <tr>
+      <td>Last performed</td>
+      <td> </td>
+      <td>The most recent date this composition was performed by your organization. Last performed date is useful for tracking repertoire usage and planning future concerts.</td>
+    </tr>
+    <tr>
+      <td>Duration (seconds)</td>
+      <td> </td>
+      <td>The performance time entered in hours, minutes, and seconds format. Duration is helpful for concert planning and program timing. Composition durations are accumulated for concert programs planning.</td>
+    </tr>
+    <tr>
+      <td>Comments</td>
+      <td> </td>
+      <td>Internal library notes about the composition. Comments are not visible to the public; they are used for librarian communication and special handling instructions.</td>
+    </tr>
+    <tr>
+      <td>Performance notes</td>
+      <td> </td>
+      <td>Public-facing performance or “liner notes” that provide historical context, performance guidance, or interesting facts about the composition.</td>
+    </tr>
+    <tr>
+      <td>Storage location</td>
+      <td> </td>
+      <td>The physical location where the music can be found, such as building, filing cabinet, or drawer information for easy retrieval.</td>
+    </tr>
+    <tr>
+      <td>How acquired</td>
+      <td>✓</td>
+      <td>The method by which the composition was obtained (Purchased, Rented, Borrowed, or Donated). Acquisition method is important for tracking ownership and return obligations.</td>
+    </tr>
+    <tr>
+      <td>Date acquired</td>
+      <td> </td>
+      <td>When the composition was added to the library collection. Acquisition date is useful for inventory tracking and collection development analysis.</td>
+    </tr>
+    <tr>
+      <td>Cost</td>
+      <td> </td>
+      <td>The purchase price or replacement cost of the composition, valuable for insurance purposes and budget planning.</td>
+    </tr>
+    <tr>
+      <td>Listening example</td>
+      <td> </td>
+      <td>A URL or reference to where a recording of this specific arrangement can be found. Listening examples help users preview the music before performance.</td>
+    </tr>
+    <tr>
+      <td>Image path</td>
+      <td> </td>
+      <td>The location of an image file showing the first page of the score. An image provides visual reference for users browsing the library.</td>
+    </tr>
+    <tr>
+      <td>Wind Repertory Project link</td>
+      <td> </td>
+      <td>A direct link to this composition’s entry on the Wind Repertory Project website. You can use https://www.windrep.org/ for additional research and performance information. A <strong>Search</strong> button next to this field opens a new browser tab to windrep.org pre-populated with a search on the composition’s title.</td>
+    </tr>
+    <tr>
+      <td>Source, or holder</td>
+      <td> </td>
+      <td>Information about who holds the music if it’s borrowed or rented, or where it’s been loaned if your organization has lent it out.</td>
+    </tr>
+    <tr>
+      <td>Last inventory</td>
+      <td> </td>
+      <td>The date when someone last physically handled or verified the presence of this music. Last inventory date is important for collection maintenance and auditing.</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><img src="/AllanaCrusis/images/screenshots/compositions-add-edit-b.png" alt="Composition form showing optional fields" />
 <em>Figure 5: Optional fields section of the composition form</em></p>

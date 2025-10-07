@@ -1,16 +1,16 @@
 ---
 layout: default
-title: "Parts Management"
+title: "Parts"
 ---
 
-# Individual Parts Management
+# Managing individual parts
 
 This section covers managing individual instrument parts after instrumentation has been set up, including editing part details, file uploads, physical inventory, and organizing materials.
 
 ## Table of contents
-- [Understanding individual parts](#understanding-individual-parts)
-- [Individual part management](#individual-part-management)
-- [File management](#file-management)
+- [Describing individual parts](#describing-individual-parts)
+- [Managing parts](#managing-parts)
+- [Managing files](#managing-files)
 - [Physical inventory](#physical-inventory)
 - [Part collections](#part-collections)
 - [Quality control](#quality-control)
@@ -20,7 +20,7 @@ This section covers managing individual instrument parts after instrumentation h
 
 ---
 
-## Understanding individual parts
+## Describing individual parts
 
 ### What are individual parts?
 Individual parts are specific instrument components that have been created through instrumentation setup:
@@ -38,7 +38,7 @@ Before managing individual parts, you must:
 *For instrumentation setup, see: [Instrumentation Management](instrumentation.html)*
 ---
 
-## Individual part management
+## Managing parts
 
 ### accessing Parts List
 1. **Go to MATERIALS > Parts**
@@ -111,7 +111,7 @@ Common for percussion parts labeled:
 
 ---
 
-## File management
+## Managing files
 
 ### digital File Types
 AllanaCrusis typically handles:

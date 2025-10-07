@@ -3,21 +3,21 @@ layout: default
 title: "Compositions"
 ---
 
-# Composition Management
+# Managing compositions
 
 This section covers how to add, edit, and manage musical compositions in AllanaCrusis. Compositions are the core organizational unit of your music library.
 
 ## Table of contents
-- [Understanding compositions](#understanding-compositions)
+- [Describing compositions](#describing-compositions)
 - [Viewing compositions](#viewing-compositions)
 - [Adding or editing compositions](#adding-or-editing-compositions)
 - [Managing title, composer, and arranger names](#managing-title-composer-and-arranger-names)
-- [Search and discovery](#search-and-discovery)
+- [Searching and discovering](#searching-and-discovering)
 - [Next steps](#next-steps)
 
 ---
 
-## Understanding compositions
+## Describing compositions
 
 ### What is a Composition?
 A **composition** in AllanaCrusis represents a complete musical work that encompasses all the essential details needed for library management. This includes basic information such as the title, composer, and arranger, along with publishing details like the publisher and catalog number. Performance data is also captured, including grade level, duration, and instrumentation requirements. The system organizes compositions by genre and ensemble assignment, while also tracking physical details such as paper size and page counts for practical library management.
@@ -120,7 +120,7 @@ The following fields are available when adding or editing a composition, listed 
 
 | Field | Required | Description |
 |-------|----------|-------------|
-| Catalog number | ✓ | A unique identifier for the composition, following your organization's numbering scheme. This field is required and must be unique within the system. Your organization determines how to format the catalog numbers. Follow the catalog number that appears on the music folder, if there is one. You can use letters or numbers, or combinations. For example, you can represent the genre and a number with a numbering system like "C001" for concert piece, "M001" for a march, and "X010" for a Christmas piece. |
+| Catalog number | ✓ | A unique identifier for the composition, following your organization's numbering scheme. This field is required and must be unique within the system. Your organization determines how to format the catalog numbers. Follow the catalog number that appears on the music folder or envelope. You can use letters or numbers, or combinations. For example, you can represent the genre and a number with a numbering system like "C001" for concert piece, "M001" for a march, and "X010" for a Christmas piece. |
 | Enabled | ✓ | Controls whether the composition appears in searches and is available to users. Compositions not marked Enabled remain in the database but are hidden from general use. The default is not enabled. |
 | Title | ✓ | The complete title of the composition as it appears on the score. This field is required, and should include subtitles and follow standard capitalization rules. Put articles at the end, for example, "Liberty Bell, The" |
 | Description |  | A publicly viewable description. The description provides additional context about the composition, arrangement details, or performance notes for users browsing the library. |
@@ -173,7 +173,7 @@ Use "Traditional" for folk music or unknown authorship. Use "Unknown" when the c
 
 ---
 
-## Search and discovery
+## Searching and discovering
 
 ### Making compositions easy to find
 

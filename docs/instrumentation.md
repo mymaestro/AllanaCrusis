@@ -3,19 +3,19 @@ layout: default
 title: "Instrumentation"
 ---
 
-# Instrumentation Management
+# Managing instrumentation
 
 This section covers setting up instrumentation for compositions, which defines what instrument parts are needed for each musical work. Instrumentation setup is typically done once per composition and creates the foundation for individual part management.
 
 ## Table of contents
-- [Understanding instrumentation](#understanding-instrumentation)
+- [Describing instrumentation](#describing-instrumentation)
 - [Setting up instrumentation](#setting-up-instrumentation)
 - [Finding instrumentation information](#finding-instrumentation-information)
 - [Next steps](#next-steps)
 
 ---
 
-## Understanding instrumentation
+## Describing instrumentation
 
 ### What is instrumentation?
 Instrumentation defines which instrument parts are required for a musical composition:

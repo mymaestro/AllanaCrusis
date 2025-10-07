@@ -3,12 +3,12 @@ layout: default
 title: "Part Distribution"
 ---
 
-# Part Distribution
+# Distributing parts
 
 This section covers how to share musical parts with performers, students, and other users through AllanaCrusis's distribution systems. Learn about digital downloads, access control, and managing the distribution process.
 
 ## Table of contents
-- [Understanding Distribution](#understanding-distribution)
+- [Describing Distribution](#describing-distribution)
 - [Digital File Distribution](#digital-file-distribution)
 - [Access Control and Permissions](#access-control-and-permissions)
 - [Download Management](#download-management)
@@ -18,7 +18,7 @@ This section covers how to share musical parts with performers, students, and ot
 
 ---
 
-## Understanding distribution
+## Describing distribution
 
 ### what is Part Distribution?
 Part distribution in AllanaCrusis includes:

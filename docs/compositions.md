@@ -28,10 +28,12 @@ A **composition** in AllanaCrusis represents a complete musical work that encomp
 
 
 ### Composition vs. parts
-Understanding the relationship between compositions and parts is fundamental to using AllanaCrusis effectively. A composition represents the overall musical work and contains all the metadata about the piece. Everything from the composer and title to the grade level and performance duration is included. Parts, on the other hand, are the conductor's score, and individual instrument parts that belong to that composition, such as the first trumpet part, the clarinet parts, or the percussion parts. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.
+In AllanaCrusis, a composition represents the overall musical work and contains all the metadata about the piece. Everything from the composer and title to the grade level and performance duration is included. Parts, on the other hand, are the individual parts that belong to that composition, such as the first trumpet part, the clarinet parts, the percussion parts, or the conductor's score. This creates a one-to-many relationship where a single composition can have many different parts associated with it, each representing what a specific instrument or section would play during a performance.
 
 ![Part overview showing relationship to parts](images/images/composition-part-score.png)
 *Figure 2: Stars and Stripes Forever score*
+
+Most of the information you need to complete the Compositions page in AllanaCrusis is included in the full score of the publication you are cataloging. Most scores include the composer and arrangers' names, instrumentation, program notes, and a description of the piece. If you do not have the full score, or it does not include this information, you can find data about most wind band music on the [Wind Repertory Project](https://www.windrep.org/) web site. A search link is included in the AllanaCrusis compositions add/edit page.
 
 ---
 

@@ -8,9 +8,8 @@ title: "Instrumentation"
 In the next step, you set up instrumentation for compositions. Instrumentation defines what instrument parts are needed for each musical work. Instrumentation setup is typically done once per composition and creates the foundation for individual part management.
 
 ## Table of contents
-- [Describing instrumentation](#describing-instrumentation)
+- [Describing the instrumentation entry](#describing-the-instrumentation-entry)
 - [Setting up instrumentation](#setting-up-instrumentation)
-- [Finding instrumentation information](#finding-instrumentation-information)
 - [Next steps](#next-steps)
 
 ---
@@ -31,7 +30,7 @@ Before managing individual parts, you can set up the instrumentation for a compo
 
 The basic part information will be set for all the parts you select in the instrumentation page. Set the basic part information by peforming the following steps:
 1. **Confirm composition details**: Title, catalog number, paper size (use the paper size for parts, not the score)
-2. **Set average page count**: Choose the number of pages for most parts in the piece; you can adjust individual parts' page counts later.
+2. **Set default page count**: Choose the number of pages for most parts in the piece; you can adjust individual parts' page counts later.
 3. **Choose the paper size**: Usually Folio (9x12") for band music, but can be other sizes
 
 ![Instrumentation setup form](images/screenshots/compositions-instrumentation.png)
@@ -48,7 +47,14 @@ The basic part information will be set for all the parts you select in the instr
 1. **Review selected instruments**
 2. **Click "Synchronize Parts"**
 
-The system creates individual part records, and you can edit parts by choosing the **Edit parts** button.
+The system creates individual part records, and a new dialog opens. From the list of synchonized parts, you can edit individual parts by choosing the **Edit parts** button.
+
+#### Other links
+You can instead choose one of the links at the bottom of the page:
+- **Cancel** to clear the selections on the page and revert to the defaults. This is useful when you accidentally choose parts and want to start over.
+- **Back** to return to the previous page
+- **Compositions** to go to the Compositions page
+- **Parts** to go to the Parts page
 
 ---
 
@@ -56,10 +62,10 @@ The system creates individual part records, and you can edit parts by choosing t
 
 With instrumentation properly set up:
 
-1. **[Learn individual parts management](parts.html)** - Manage files, inventory, and details
-2. **[Explore Concert Management](concerts-recordings.html)** - Track performances
-3. **[Review Distribution](distribution.html)** - Share parts with users
+1. **[Learn individual parts management](parts.html)** - Manage files, inventory, and details for each part
+2. **[Explore concert tracking](concerts-recordings.html)** - Track performances and recordings
+3. **[Review distribution](distribution.html)** - Share parts with users
 
 ---
 
-*Continue to the next section: [Parts Management](parts.html) to learn about managing individual instrument parts and files.*
+*Continue to the next section: [Parts management](parts.html) to learn about managing individual instrument parts and files.*

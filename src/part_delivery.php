@@ -521,7 +521,8 @@ $(document).ready(function() {
                     .replace(/\{\{playgramName\}\}/g, playgramName)
                     .replace(/\{\{download_link\}\}/g, window.location.origin + link)
                     .replace(/\{\{contactName\}\}/g, contactName)
-                    .replace(/\{\{logoUrl\}\}/g, logoUrl);
+                    .replace(/\{\{logoUrl\}\}/g, logoUrl)
+                    .replace(/\{\{expiryDays\}\}/g, <?php echo DOWNLOAD_TOKEN_EXPIRY_DAYS; ?>);
 
                 // Generate plain text version by stripping tags and formatting
                 function htmlToPlainText(html) {

@@ -486,7 +486,7 @@ if (isset($_POST["report_type"])) {
             
             $output .= '<div class="alert alert-info mt-3">
                 <strong><i class="fas fa-info-circle"></i> About Download Tokens:</strong><br>
-                • Tokens are valid for 2 days after creation<br>
+                • Tokens are valid for ' . DOWNLOAD_TOKEN_EXPIRY_DAYS . ' days after creation<br>
                 • Each token can only be used once<br>
                 • ZIP files are served from the distribution directory<br>
                 • Tokens are automatically created when ZIP distributions are requested

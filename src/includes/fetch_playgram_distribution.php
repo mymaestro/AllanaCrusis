@@ -312,7 +312,7 @@ function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_fi
     };
     // Generate a secure token
     $token = bin2hex(random_bytes(16));
-    $expires_at = date('Y-m-d H:i:s', strtotime('+5 days'));
+    $expires_at = date('Y-m-d H:i:s', strtotime('+' . DOWNLOAD_TOKEN_EXPIRY_DAYS . ' days'));
     $id_user = null;
     if (isset($_SESSION['username'])) {
         $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");

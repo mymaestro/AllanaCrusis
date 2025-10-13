@@ -11,6 +11,9 @@ define('ORGDESC', 'Fourth Wind Wind Ensemble'); // Full organization name
 define('ORGLOGO', 'images/logo.png'); // Path to logo image
 define('ORGMAIL', 'librarian@musicLibraryDB.com'); // Contact email
 
+// Download token configuration
+define('DOWNLOAD_TOKEN_EXPIRY_DAYS', 5); // Number of days download tokens remain valid
+
 // Web root and public URLs (with trailing slash)
 define('ORGHOME', 'http://library.local/'); // Main site URL
 define('ORGRECORDINGS', 'http://library.local/files/recordings/'); // Public URL for recordings

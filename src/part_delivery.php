@@ -112,7 +112,7 @@ mysqli_close($f_link);
                                 <li><strong>Confirmation:</strong> After sending, you will see a confirmation message indicating that the email has been sent successfully. You can then choose <strong>Send ZIP</strong> again to generate a new token and send the email to a different recipient.</li>
                             </ol>
                             <div class="alert alert-warning mt-3">
-                                <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within 2 days, or it will expire.
+                                <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within <?php echo DOWNLOAD_TOKEN_EXPIRY_DAYS; ?> days, or it will expire.
                             </div>
                         </div>
                     </div>

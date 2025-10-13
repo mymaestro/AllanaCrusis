@@ -107,7 +107,7 @@ mysqli_close($f_link);
                                 <li><strong>Copy download link:</strong> Click <em>Copy link</em> to copy the download link for the ZIP file. You can send this link to a band member to download their parts.</li>
                             </ol>
                             <div class="alert alert-warning mt-3">
-                                <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within 2 days, or it will expire.
+                                <strong>Note:</strong> The link you create contains a one-time use download token that is invalidated after use. The token must be used within <?php echo DOWNLOAD_TOKEN_EXPIRY_DAYS; ?> days, or it will expire.
                             </div>
                         </div>
                     </div>

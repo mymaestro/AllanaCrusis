@@ -276,9 +276,10 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with compositions in the music library. This table holds the data about the music in the library including title, composer, arranger, and publish date.</p>
+                        <?php if(isset($_SESSION['username'])) { ?>
                         <a href="/compositions" class="btn btn-secondary">
                             <i class="fas fa-music"></i> Manage compositions
-                        </a>
+                        </a><?php } ?>
                     </div>
                 </div>
             </div>
@@ -300,9 +301,11 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with instrument parts for each composition. You find which parts are in a composition, and where they are located.</p>
+                        <?php if(isset($_SESSION['username'])) { ?>
                         <a href="/parts" class="btn btn-secondary">
                             <i class="fas fa-puzzle-piece"></i> Manage parts
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -325,9 +328,11 @@ mysqli_close($f_link);
                         </div>
                         <p>Work with "playgrams". Playgrams are program playlists, or lists of compositions to be performed, in order, at a concert.</p>
                         <div class="d-flex gap-2 flex-wrap">
+                            <?php if($u_librarian || $u_admin) { ?>
                             <a href="/playgrams" class="btn btn-secondary">
                                 <i class="fas fa-list-ol"></i> Manage playgrams
                             </a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -355,9 +360,11 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with concerts. Concerts are performances of playlists at a venue on a particular date.</p>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/concerts" class="btn btn-secondary">
                             <i class="fas fa-calendar-alt"></i> Manage concerts
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -380,9 +387,11 @@ mysqli_close($f_link);
                             </div>
                         </div>
                         <p>Work with recordings. Recordings are digital audio files that captured a concert performance of one composition at a concert.</p>
+                        <?php if(isset($_SESSION['username'])) { ?>
                         <a href="/recordings" class="btn btn-secondary">
                             <i class="fas fa-microphone"></i> Manage recordings
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -408,7 +417,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['instruments']); ?> items</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/instruments" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -423,7 +434,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['part_types']); ?> items</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/parttypes" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -438,7 +451,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['ensembles']); ?> items</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/ensembles" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -453,7 +468,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted"><?php echo number_format($stats['genres']); ?> items</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/genres" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -468,7 +485,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted">Collections</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/partcollections" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -483,7 +502,9 @@ mysqli_close($f_link);
                         <div class="mb-2">
                             <small class="text-muted">Page formats</small>
                         </div>
+                        <?php if($u_librarian || $u_admin) { ?>
                         <a href="/papersizes" class="btn btn-outline-secondary btn-sm">Manage</a>
+                        <?php } ?>
                     </div>
                 </div>
             </div>

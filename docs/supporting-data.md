@@ -18,37 +18,37 @@ This section covers the foundational data that supports your music library: inst
 
 ---
 
-## Overview of supporting data
+### Why supporting data matters
 
-### what is Supporting Data?
-Supporting data consists of the reference lists and categories that organize your music library:
+Supporting data forms the foundation of an effective music library management system. When properly configured, this foundational information ensures consistency across all data entry, creating uniform standards that make your library reliable and professional. This organization becomes particularly valuable when generating reports and statistics, as meaningful analysis depends on consistent categorization and standardized terminology. Perhaps most importantly, properly configured supporting data streamlines the workflow for adding new compositions, reducing the time and effort required while minimizing errors that can occur when librarians must create new categories or classifications on the fly.
 
-- **Instruments**: Define what instruments are available for parts
-- **Ensembles**: Specify which groups use the library
-- **Genres**: Categorize musical styles and types
-- **Paper Sizes**: Track physical dimensions of printed music
-- **Part Types**: Classify different kinds of musical parts
+## Describing supporting data
 
-### why Supporting Data Matters
-- **Consistency**: Ensures uniform data entry across the library
-- **Organization**: Helps users find and filter content effectively
-- **Reporting**: Enables meaningful statistics and analysis
-- **Workflow**: Streamlines the process of adding new compositions
+These are the settings that support all your other data entry. You typically set up these configurations once when first organizing your library, and they rarely need regular updates afterward. However, it's important to configure these properly before adding compositions and parts, as they provide the structure and organization for everything else in your system. For example, before you can enter information about a part, you must find a part type. Before you create a part type, you assign it to one or more instruments.
 
-![Supporting data overview showing interconnected elements](images/screenshots/home.png)
-*Figure 1: How supporting data elements work together in AllanaCrusis*
+- **Paper sizes**:
+    Track the physical dimensions of your sheet music using standard and custom paper size definitions from this page. You record measurements for proper inventory management and storage organization, ensuring you know exactly what size folders or storage systems you need for each piece, and potentially how much storage space your library requires.
+- **Ensembles**:
+    Define the different performing groups in your organization such as Concert Band, Wind Ensemble, Brass Quintet, or String Orchestra through this page. You use these ensemble categories to tag compositions, indicating which groups can perform specific pieces. This helps users find repertoire appropriate for their particular ensemble configuration.
+- **Instruments**:
+    Maintain the master list of all instruments available in your organization using this page. You can organize instruments by family groups and set their orchestral collation order to ensure consistent presentation throughout the system. This helps standardize how instruments appear in reports and part assignments.
+- **Part Types**:
+    Define the types of instrument parts used in your compositions through this page. You create entries like "Flute 1", "Trumpet 2", and "Percussion" while setting their orchestral order, assigning default instruments, and organizing them by family. This setup is crucial because you must have part types defined before you can add individual parts to any compositions in your library.
+- **Genres**:
+    Set up your music classification system using categories like March, Jazz, Transcription, Holiday, or Pop from this page. You assign genres to compositions to help organize and filter your collection by musical style, making it easier for users to find pieces that fit their programming needs.
+- **Sections**:
+    Group your part types into logical sections such as Brass, Woodwinds, Percussion, and Strings through this page. You can assign section leaders and organize large ensembles more effectively by creating these groupings, which helps with rehearsal planning and music distribution.
 
-### database Schema Overview
+### Database overview
 The following diagram shows how all the database tables relate to each other, helping you understand the complete data structure:
 
 ![AllanaCrusis Database Entity Relationship Diagram](images/erd-diagram.svg)
 *Figure 2: Complete database schema showing relationships between all tables*
 
 **Key Relationships:**
-- **Supporting Data** (blue) provides reference lists for compositions
-- **Core Content** (orange) contains the main musical library data
-- **Performance Data** (purple) tracks concerts, programs, and recordings
-- **System Tables** (green) manage users, security, and downloads
+- **Supporting data** (orange) contains the main musical library data
+- **Performance data** (purple) tracks concerts, programs, and recordings
+- **System tables** (green) manage users, security, and downloads
 
 ---
 

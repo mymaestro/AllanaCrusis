@@ -175,13 +175,13 @@
             <div id="collapseCore" class="accordion-collapse collapse show" aria-labelledby="headingCore" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>
-                  <dt><a href="/#"><i class="fa fa-hands"></i> Welcome</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/#"><?php } ?><i class="fa fa-hands"></i> Welcome<?php if(isset($_SESSION['username'])) { ?></a><?php } ?></dt>
                   <dd>You see the Welcome page first. You'll find an introduction to the library's features and a random selection of featured compositions and recordings.</dd>
 
-                  <dt><a href="/home"><i class="fa fa-home"></i> Home</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/home"><?php } ?><i class="fa fa-home"></i> Home<?php if(isset($_SESSION['username'])) { ?></a><?php } ?></dt>
                   <dd>Use this page to get quick insights and statistics about your music library. You see composition counts, grade distribution breakdowns, ensemble summaries, and recent activity. Everyone can access the basic dashboard, but you see additional features when you're logged in.</dd>
 
-                  <dt><a href="/search"><i class="fas fa-search"></i> Search</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/search"><?php } ?><i class="fas fa-search"></i> Search<?php if(isset($_SESSION['username'])) { ?></a><?php } ?></dt>
                   <dd>Browse and search through all library materials here. You can perform full-text searches, use filtering options to narrow results, and click on links to view detailed information about compositions, parts, and recordings. You don't need to log in to use this feature.</dd>
                 </dl>
               </div>
@@ -200,22 +200,22 @@
                 <p class="mb-3"><strong>These are the settings that support all your other data entry.</strong> You typically set up these configurations once when first organizing your library, and they rarely need regular updates afterward. However, it's important to configure these properly before adding compositions and parts, as they provide the structure and organization for everything else in your system.</p>
 
                 <dl>
-                  <dt><a href="/papersizes"><i class="fas fa-file"></i> Paper sizes</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/papersizes"><?php } ?><i class="fas fa-file"></i> Paper sizes<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Track the physical dimensions of your sheet music using standard and custom paper size definitions from this page. You record measurements for proper inventory management and storage organization, ensuring you know exactly what size folders or storage systems you need for each piece, and potentially how much storage space your library requires.</dd>
 
-                  <dt><a href="/ensembles"><i class="fas fa-users"></i> Ensembles</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/ensembles"><?php } ?><i class="fas fa-users"></i> Ensembles<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Define the different performing groups in your organization such as Concert Band, Wind Ensemble, Brass Quintet, or String Orchestra through this page. You use these ensemble categories to tag compositions, indicating which groups can perform specific pieces. This helps users find repertoire appropriate for their particular ensemble configuration.</dd>
 
-                  <dt><a href="/instruments"><i class="fas fa-drum"></i> Instruments</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/instruments"><?php } ?><i class="fas fa-drum"></i> Instruments<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Maintain the master list of all instruments available in your organization using this page. You can organize instruments by family groups and set their orchestral collation order to ensure consistent presentation throughout the system. This helps standardize how instruments appear in reports and part assignments.</dd>
 
-                  <dt><a href="/parttypes"><i class="fas fa-tags"></i> Part types</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/parttypes"><?php } ?><i class="fas fa-tags"></i> Part types<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Define the types of instrument parts used in your compositions through this page. You create entries like "Flute 1", "Trumpet 2", and "Percussion" while setting their orchestral order, assigning default instruments, and organizing them by family. This setup is crucial because you must have part types defined before you can add individual parts to any compositions in your library.</dd>
 
-                  <dt><a href="/genres"><i class="fas fa-th-list"></i> Genres</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/genres"><?php } ?><i class="fas fa-th-list"></i> Genres<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Set up your music classification system using categories like March, Jazz, Transcription, Holiday, or Pop from this page. You assign genres to compositions to help organize and filter your collection by musical style, making it easier for users to find pieces that fit their programming needs.</dd>
 
-                  <dt><a href="/sections"><i class="fas fa-layer-group"></i> Sections</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/sections"><?php } ?><i class="fas fa-layer-group"></i> Sections<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Group your part types into logical sections such as Brass, Woodwinds, Percussion, and Strings through this page. You can assign section leaders and organize large ensembles more effectively by creating these groupings, which helps with rehearsal planning and music distribution.</dd>
                 </dl>
               </div>
@@ -232,10 +232,10 @@
             <div id="collapseMusic" class="accordion-collapse collapse" aria-labelledby="headingMusic" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>
-                  <dt><a href="/compositions"><i class="fas fa-music"></i> Compositions</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/compositions"><?php } ?><i class="fas fa-music"></i> Compositions<?php if(isset($_SESSION['username'])) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Manage the main catalog of all musical works in your library here. You can add and edit compositions while tracking composer and arranger information, grade levels, performance notes, and storage locations. The system tracks catalog numbers, titles, composers, arrangers, publishers, genres, difficulty grades, and durations to help you organize your collection. Only librarians can edit this content.</dd>
 
-                  <dt><a href="/parts"><i class="fas fa-puzzle-piece"></i> Parts</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/parts"><?php } ?><i class="fas fa-puzzle-piece"></i> Parts<?php if(isset($_SESSION['username'])) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Use this page to manage individual instrument parts for each composition. You select a composition from the left panel, then manage its associated parts on the right side. The system tracks physical copies, page counts, and paper sizes to help with inventory management. If you are digitizing your library, you can upload a PDF file of each part here, and the system will automatically apply relevant metadata to the PDF file. Only librarians can edit parts information.</dd>
                 </dl>
               </div>
@@ -252,16 +252,16 @@
             <div id="collapseConcerts" class="accordion-collapse collapse" aria-labelledby="headingConcerts" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>
-                  <dt><a href="/playgrams"><i class="fas fa-list-ol"></i> Playgrams (concert programs)</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/playgrams"><?php } ?><i class="fas fa-list-ol"></i> Playgrams (concert programs)<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Librarian+</span><?php } ?></dt>
                   <dd>Create and manage concert programs and playlists through this page. You build ordered lists of compositions for performances by first creating a playgram, then adding compositions in the sequence they will be performed. This helps you organize your concert repertoire and plan performance timing. Only librarians can edit playgrams.</dd>
 
-                  <dt><a href="/part_distribution"><i class="fas fa-share-alt"></i> Part distribution</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/part_distribution"><?php } ?><i class="fas fa-share-alt"></i> Part distribution<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Librarian+</span><?php } ?></dt>
                   <dd>Generate lists of parts needed for concerts from this page. You can see which instrument parts are required for each playgram or concert, making it easy to prepare music folders and organize rehearsals efficiently. Parts are organized by section, so that you can download your section's parts as a ZIP file. Only librarians can access this feature.</dd>
 
-                  <dt><a href="/concerts"><i class="fas fa-music"></i> Concerts</a></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/concerts"><?php } ?><i class="fas fa-music"></i> Concerts<?php if($u_librarian || $u_admin) { ?></a><?php } else { ?> <span class="badge bg-warning">Librarian+</span><?php } ?></dt>
                   <dd>Schedule and track actual performance events using this page. You can link playgrams to specific performance dates and venues while tracking conductors and performance notes. The system records performance dates, venue information, conductor details, and connects everything to your prepared playgrams for complete concert documentation. Recordings reference the concert, so that you can easily find and manage them. Only librarians can manage concert information.</dd>
 
-                  <dt><a href="/recordings"><i class="fas fa-play-circle"></i> Recordings</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/recordings"><?php } ?><i class="fas fa-play-circle"></i> Recordings<?php if(isset($_SESSION['username'])) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Catalog and store audio recordings of performances through this page. You can upload MP3 files up to 40MB, link recordings to specific concerts and compositions, and the system automatically handles metadata tagging. The built-in audio player lets you listen to recordings directly, and ID3 tags are written automatically for proper organization. Only librarians and administrators can manage recordings.</dd>
                 </dl>
               </div>
@@ -278,7 +278,7 @@
             <div id="collapseReports" class="accordion-collapse collapse" aria-labelledby="headingReports" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>
-                  <dt><a href="/reports"><i class="fas fa-chart-line"></i> Reports</a></dt>
+                  <dt><?php if(isset($_SESSION['username'])) { ?><a href="/reports"><?php } ?><i class="fas fa-chart-line"></i> Reports<?php if(isset($_SESSION['username'])) { ?></a><?php } else { ?> <span class="badge bg-warning">Login Required</span><?php } ?></dt>
                   <dd>Generate comprehensive reports about your music library through this page. You can create composition lists, parts inventory reports, performance history summaries, and missing parts analysis to help manage your collection effectively. The system provides multiple export options, allowing you to save many reports in CSV or PDF formats for sharing with other staff members or for your own record-keeping purposes.</dd>
                 </dl>
               </div>
@@ -295,16 +295,16 @@
             <div id="collapseAdmin" class="accordion-collapse collapse" aria-labelledby="headingAdmin" data-bs-parent="#pageGuideAccordion">
               <div class="accordion-body">
                 <dl>                  
-                  <dt><a href="/enable_disable_manager"><i class="fas fa-toggle-on"></i> Enable/Disable Manager</a> <span class="badge bg-warning">Librarian+</span></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/enable_disable_manager"><?php } ?><i class="fas fa-toggle-on"></i> Enable/Disable Manager<?php if($u_librarian || $u_admin) { ?></a><?php } ?> <span class="badge bg-warning">Librarian+</span></dt>
                   <dd>Perform bulk enable and disable operations across all database tables using this management tool. You can quickly hide outdated or inactive entries without permanently deleting them, which is helpful when you want to clean up your interface while preserving historical data for future reference.</dd>
 
-                  <dt><a href="/partcollections"><i class="fas fa-layer-group"></i> Part Collections</a> <span class="badge bg-warning">Librarian+</span></dt>
+                  <dt><?php if($u_librarian || $u_admin) { ?><a href="/partcollections"><?php } ?><i class="fas fa-layer-group"></i> Part Collections<?php if($u_librarian || $u_admin) { ?></a><?php } ?> <span class="badge bg-warning">Librarian+</span></dt>
                   <dd>Manage collections of parts that are shared among multiple instruments, such as "Percussion 1" or "Flutes". For example, "Percussion 1" might contain "Snare Drum" and "Bass Drum". This page allows you to create and edit which instruments are found on one part, so that you can track which instruments are needed to perform a specific composition.</dd>
 
-                  <dt><a href="/users"><i class="fas fa-users-cog"></i> User Management</a> <span class="badge bg-danger">Admin Only</span></dt>
+                  <dt><?php if($u_admin) { ?><a href="/users"><?php } ?><i class="fas fa-users-cog"></i> User Management<?php if($u_admin) { ?></a><?php } ?> <span class="badge bg-danger">Admin Only</span></dt>
                   <dd>Manage all user accounts and permissions through this administrative interface. You can add new users, edit existing accounts, and assign roles such as Administrator, Librarian, or User to control access levels throughout the system. The page also provides security functions where you can change passwords and manage access levels to ensure proper system security.</dd>
 
-                  <dt><a href="/admin_verifications"><i class="fas fa-key"></i> Password Reset & Email Verification</a> <span class="badge bg-danger">Admin Only</span></dt>
+                  <dt><?php if($u_admin) { ?><a href="/admin_verifications"><?php } ?><i class="fas fa-key"></i> Password Reset & Email Verification<?php if($u_admin) { ?></a><?php } ?> <span class="badge bg-danger">Admin Only</span></dt>
                   <dd>Handle password reset requests and email verification processes from this administrative page. You can view all pending requests and manually verify user accounts when automatic email verification isn't working or when users need immediate access to the system.</dd>
 
                 </dl>

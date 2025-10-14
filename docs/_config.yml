@@ -23,6 +23,7 @@ header_pages:
   - user-guide.md
   - getting-started.md
   - getting-access.md
+  - search.md
   - supporting-data.md
   - compositions.md
   - instrumentation.md

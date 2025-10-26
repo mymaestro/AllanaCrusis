@@ -438,3 +438,34 @@ git remote set-url origin https://github.com/username/AllanaCrusis.git
 
 # Push your existing code to the new repository
 git push -u origin main
+
+---
+Additional Recommendations for Better Deliverability
+To further improve email deliverability, consider these server-level improvements:
+
+1. SPF Record
+Add this TXT record to your domain DNS:
+`v=spf1 a mx include:_spf.google.com ~all`
+
+2. DKIM Signing
+Set up DKIM keys on your mail server to digitally sign outgoing emails.
+
+3. DMARC Policy
+Add a DMARC record to your DNS:
+
+`v=DMARC1; p=quarantine; rua=mailto:librarian@musicLibraryDB.com`
+
+4. Reverse DNS (PTR Record)
+Ensure your server's IP has a proper reverse DNS record pointing to your domain.
+
+5. Consider Third-Party Email Service
+For maximum deliverability, consider using services like:
+
+SendGrid
+Mailgun
+Amazon SES
+Postmark
+
+These services have better reputation and deliverability rates than server-based PHP mail().
+
+The improvements I've made to sound.php will significantly reduce the chances of emails going to spam folders while maintaining security and preventing abuse.

@@ -658,7 +658,24 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                alert('Error sending email: ' + error);
+                let errorMessage = 'Error sending email: ' + error;
+                
+                // Try to parse JSON error response
+                if (xhr.responseText) {
+                    try {
+                        let response = JSON.parse(xhr.responseText);
+                        if (response.message) {
+                            errorMessage = 'Error: ' + response.message;
+                        }
+                    } catch (e) {
+                        // If JSON parsing fails, use the raw response text if available
+                        if (xhr.responseText.length < 200) {
+                            errorMessage = 'Error: ' + xhr.responseText;
+                        }
+                    }
+                }
+                
+                alert(errorMessage);
             },
             complete: function() {
                 $('#send_email').prop('disabled', false).val('Send');

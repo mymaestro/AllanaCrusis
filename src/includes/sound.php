@@ -5,23 +5,37 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 if (!isset($_SESSION['username'])) {
-    http_response_code(403);
-    echo json_encode(['success' => false, 'message' => 'Authentication required.']);
+    echo json_encode(['success' => false, 'message' => 'Authentication required. Please log in to send emails.']);
     exit;
 }
 
-// Rate limiting - max 5 emails per user per hour
+// Rate limiting - configurable daily limits based on user role
 $rateLimitKey = 'email_count_' . $_SESSION['username'];
-$currentHour = date('Y-m-d-H');
-$sessionKey = $rateLimitKey . '_' . $currentHour;
+$currentDay = date('Y-m-d');
+$sessionKey = $rateLimitKey . '_' . $currentDay;
+
+// Set rate limits based on user role (daily limits)
+$maxEmailsPerDay = 20; // Default for regular users
+if (isset($_SESSION['roles'])) {
+    $roles = $_SESSION['roles'];
+    if (strpos($roles, 'librarian') !== false) {
+        $maxEmailsPerDay = 100; // Librarians get highest limits for mass distribution
+    } elseif (strpos($roles, 'admin') !== false) {
+        $maxEmailsPerDay = 50; // Admins get moderate limits for system management
+    }
+}
 
 if (!isset($_SESSION[$sessionKey])) {
     $_SESSION[$sessionKey] = 0;
 }
 
-if ($_SESSION[$sessionKey] >= 5) {
-    http_response_code(429);
-    echo json_encode(['success' => false, 'message' => 'Rate limit exceeded. Maximum 5 emails per hour.']);
+if ($_SESSION[$sessionKey] >= $maxEmailsPerDay) {
+    // Return error as JSON with 200 status so AJAX success handler can process it
+    echo json_encode([
+        'success' => false, 
+        'message' => "Daily email limit exceeded. You can send a maximum of {$maxEmailsPerDay} emails per day. Please try again tomorrow.",
+        'retry_after' => 'You can send more emails after midnight (' . date('Y-m-d', strtotime('+1 day')) . ')'
+    ]);
     exit;
 }
 require_once(__DIR__ . '/../../config/config.php');
@@ -32,8 +46,7 @@ header('Content-Type: application/json');
 
 // Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Method not allowed']);
+    echo json_encode(['success' => false, 'message' => 'Invalid request method. Only POST requests are allowed.']);
     exit;
 }
 
@@ -64,45 +77,85 @@ if (empty($subject)) {
     exit;
 }
 
-// Anti-spam content validation
+// Anti-spam content validation (music-context aware)
 $suspiciousPatterns = [
     '/\b(viagra|cialis|casino|lottery|winner|congratulations)\b/i',
-    '/\$\d+/i', // Dollar amounts
-    '/\b(click here|urgent|act now)\b/i',
-    '/\b(free money|guaranteed|no cost)\b/i'
+    '/\$\d{3,}/i', // Large dollar amounts (but allow small amounts like $10 deposits)
+    '/\b(click here now|urgent.*act|limited.*time.*offer)\b/i',
+    '/\b(free money|guaranteed income|no cost.*money)\b/i',
+    '/\b(nigerian prince|inheritance|beneficiary)\b/i'
 ];
 
-foreach ($suspiciousPatterns as $pattern) {
-    if (preg_match($pattern, $message) || preg_match($pattern, $subject)) {
-        ferror_log("sound.php: Suspicious content detected from user: " . $_SESSION['username']);
-        echo json_encode(['success' => false, 'message' => 'Message contains content that may be flagged as spam.']);
-        exit;
+// Music-specific exceptions - don't flag these legitimate terms
+$musicExceptions = [
+    '/\b(concert|recital|performance|rehearsal|parts|score|music)\b/i',
+    '/\b(download|sheet music|pdf|conductor|musician)\b/i',
+    '/\b(playgram|section|instrument|band|orchestra|ensemble)\b/i'
+];
+
+$isMusicContent = false;
+foreach ($musicExceptions as $exception) {
+    if (preg_match($exception, $message) || preg_match($exception, $subject)) {
+        $isMusicContent = true;
+        break;
     }
 }
 
-// Improve subject line to avoid spam triggers
-if (!preg_match('/^\[' . ORGNAME . '\]/', $subject)) {
+// Only apply strict spam filtering to non-music content
+if (!$isMusicContent) {
+    foreach ($suspiciousPatterns as $pattern) {
+        if (preg_match($pattern, $message) || preg_match($pattern, $subject)) {
+            ferror_log("sound.php: Suspicious content detected from user: " . $_SESSION['username']);
+            echo json_encode(['success' => false, 'message' => 'Message contains content that may be flagged as spam by email providers. Please review and modify your message.']);
+            exit;
+        }
+    }
+}
+
+// Improve subject line to avoid spam triggers (but avoid redundancy)
+$orgNamePattern = '/\b' . preg_quote(ORGNAME, '/') . '\b/i';
+if (!preg_match('/^\[' . preg_quote(ORGNAME, '/') . '\]/', $subject) && !preg_match($orgNamePattern, $subject)) {
     $subject = '[' . ORGNAME . '] ' . $subject;
 }
 
-// Format message with professional footer
+// Format message with conditional footer
 $formattedMessage = $message;
 
-// Add professional footer
-$footer = "\n\n---\n";
-$footer .= "This message was sent from " . ORGNAME . " Music Library\n";
-$footer .= "Sender: " . $_SESSION['username'] . "\n";
-$footer .= "Time: " . date('Y-m-d H:i:s T') . "\n";
-if (defined('ORGHOME') && constant('ORGHOME')) {
-    $footer .= "Website: " . constant('ORGHOME') . "\n";
-}
+// Check if message already contains a structured footer (from HTML template)
+$hasStructuredFooter = (
+    stripos($message, 'best regards') !== false || 
+    stripos($message, '</body>') !== false ||
+    stripos($message, 'terms of use') !== false ||
+    stripos($message, ORGNAME . '</div>') !== false
+);
 
-if ($isHtml) {
-    $footer = str_replace("\n", "<br>\n", $footer);
-    $footer = str_replace("---", "<hr>", $footer);
-    $formattedMessage = $message . $footer;
+// Only add minimal footer if message doesn't already have one
+if (!$hasStructuredFooter) {
+    $footer = "\n\n---\n";
+    $footer .= "This message was sent from " . ORGNAME . " Music Library\n";
+    $footer .= "Sender: " . $_SESSION['username'] . "\n";
+    $footer .= "Time: " . date('Y-m-d H:i:s T') . "\n";
+    if (defined('ORGHOME') && constant('ORGHOME')) {
+        $footer .= "Website: " . constant('ORGHOME') . "\n";
+    }
+
+    if ($isHtml) {
+        $footer = str_replace("\n", "<br>\n", $footer);
+        $footer = str_replace("---", "<hr>", $footer);
+        $formattedMessage = $message . $footer;
+    } else {
+        $formattedMessage = $message . $footer;
+    }
 } else {
-    $formattedMessage = $message . $footer;
+    // For HTML messages with existing structure, just add minimal tracking
+    if ($isHtml && stripos($message, '</body>') !== false) {
+        // Insert tracking info before closing body tag
+        $trackingInfo = "<!-- Email sent via " . ORGNAME . " Library System by " . $_SESSION['username'] . " at " . date('Y-m-d H:i:s T') . " -->\n";
+        $formattedMessage = str_replace('</body>', $trackingInfo . '</body>', $message);
+    } else {
+        // Keep message as-is for structured content
+        $formattedMessage = $message;
+    }
 }
 
 // Build headers with anti-spam improvements

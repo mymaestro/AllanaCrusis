@@ -81,6 +81,12 @@
       flex-direction: column;
     }
 
+    #composition_header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
     .left-menu-scroll,
     .table-wrapper {
       height: calc(100vh - 324px ); /* 196px - 88px - 40px header height (32) + title + footer height, each row is 33px */

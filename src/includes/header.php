@@ -83,6 +83,8 @@
 
     #composition_header {
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         display: inline-block;
     }
     

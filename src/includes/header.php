@@ -82,6 +82,7 @@
     }
 
     #composition_header {
+        white-space: nowrap;
         display: inline-block;
     }
     

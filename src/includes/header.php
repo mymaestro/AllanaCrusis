@@ -82,8 +82,7 @@
     }
 
     #composition_header {
-        overflow: hidden;
-        text-overflow: ellipsis;
+        display: inline-block;
     }
     
     .left-menu-scroll,

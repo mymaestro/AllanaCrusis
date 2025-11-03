@@ -85,12 +85,25 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        display: inline-block;
+        max-width: 100%;
+        display: block;
+        line-height: 1.5;
+        padding-bottom: 2px;
+    }
+    
+    .table-toolbar .row {
+        align-items: center;
+    }
+    
+    .table-toolbar .col.flex-shrink-0 {
+        min-width: 0;
+        flex: 1 1 auto;
+        overflow: hidden;
     }
     
     .left-menu-scroll,
     .table-wrapper {
-      height: calc(100vh - 324px ); /* 196px - 88px - 40px header height (32) + title + footer height, each row is 33px */
+      height: calc(100vh - 310px); /* Adjusted for single-line header: navbar + title + toolbar + footer + padding */
       overflow-y: auto;
       flex-grow: 1;
     }
@@ -109,11 +122,20 @@
       background: #fff;
       z-index: 2;
       padding-bottom: 0.5rem;
+      width: 100%;
+      display: block;
+    }
+    
+    .table-toolbar .row {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
     }
 
     .table-wrapper {
       flex: 1;
       overflow-y: auto;
+      width: 100%;
     }
 
     .table thead th {

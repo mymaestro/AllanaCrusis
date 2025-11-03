@@ -47,7 +47,7 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
     </aside>
     <!-- right panel -->
     <section class="right-panel">
-        <div class="d-flex" id="parts_table">
+        <div id="parts_table">
             <p class="d-flex align-content-center flex-wrap lead">Choose a composition from the menu on the left.</p>
             <!-- gets replaced by JavaScript template -->
         </div>
@@ -298,19 +298,20 @@ mysqli_close($f_link);
 
 <script type="text/html" id="parts-table-template">
     <div class="table-toolbar">
-        <div class="row border-bottom">
-            <div class="row"><div class="col flex-shrink-0"><h4 id="composition_header">Composition parts</h4></div></div>
-            <div class="row d-flex justify-content-end"><div class="col-auto">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" value="View" id="view" class="btn btn-secondary view_data" disabled>View</button>
+        <div class="row border-bottom g-2">
+            <div class="col d-flex align-items-center" style="min-width: 0;">
+                <h4 id="composition_header" class="mb-0" title="{{title}}">Composition parts</h4>
+            </div>
+            <div class="col-auto d-flex align-items-center">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" value="View" id="view" class="btn btn-secondary view_data me-1" disabled>View</button>
             {{#u_librarian}}
-                <button type="button" id="instrumentation" class="btn btn-info instrumentation_btn">Instrumentation</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
+                <button type="button" id="instrumentation" class="btn btn-info instrumentation_btn me-1">Instrumentation</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data me-1" disabled>Edit</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data me-1" disabled>Delete</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="add" class="btn btn-warning add_data">Add</button>
             {{/u_librarian}}
-            </div></div>
-        <div>
-    </div>
+            </div>
+        </div>
     </div><!-- table-toolbar -->
     <div class="table-wrapper table-responsive mt-2">
         <table class="table table-hover table-striped" id="partsdatatable">
@@ -593,7 +594,7 @@ $(document).ready(function() {
                 }
                 var partsHtml = renderTemplate('parts-table-template', data);
                 $('#parts_table').html(partsHtml);
-                $('#composition_header').text(catno_name);
+                $('#composition_header').text(catno_name).attr('title', catno_name);
             }
         });
     });
@@ -770,7 +771,7 @@ $(document).ready(function() {
                             }
                             var partsHtml = renderTemplate('parts-table-template', data);
                             $('#parts_table').html(partsHtml);
-                            $('#composition_header').text(catno_name);
+                            $('#composition_header').text(catno_name).attr('title', catno_name);
                         }
                 });
             }
@@ -900,7 +901,7 @@ $(document).ready(function() {
                                     data.u_librarian = window.u_librarian; // Ensure template gets correct role
                                     var partsHtml = renderTemplate('parts-table-template', data);
                                     $('#parts_table').html(partsHtml);
-                                    $('#composition_header').text(catno_name);
+                                    $('#composition_header').text(catno_name).attr('title', catno_name);
                                 }
                             });
                         } else {

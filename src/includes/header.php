@@ -57,6 +57,57 @@
       height: 56px;
     }
 
+    /* Fix dropdown menu background in collapsed/mobile view */
+    @media (max-width: 991.98px) {
+        /* Main collapsed navbar background */
+        .navbar-collapse {
+            background-color: #f8f9fa !important;
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border-radius: 0.25rem;
+            border: 1px solid rgba(0,0,0,.15);
+        }
+        
+        .navbar-collapse .nav-item {
+            background-color: transparent;
+        }
+        
+        .navbar-collapse .nav-link {
+            color: #212529;
+            padding: 0.5rem 1rem;
+        }
+        
+        .navbar-collapse .nav-link:hover,
+        .navbar-collapse .nav-link:focus {
+            background-color: #e9ecef;
+            border-radius: 0.25rem;
+        }
+        
+        /* Dropdown menu styling */
+        .navbar-collapse .dropdown-menu {
+            background-color: #ffffff !important;
+            border: 1px solid rgba(0,0,0,.15);
+            border-radius: 0.25rem;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            margin-left: 1rem;
+        }
+        
+        .navbar-collapse .dropdown-menu.show {
+            background-color: #ffffff !important;
+        }
+        
+        .navbar-collapse .dropdown-item {
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+        }
+        
+        .navbar-collapse .dropdown-item:hover,
+        .navbar-collapse .dropdown-item:focus {
+            background-color: #e9ecef !important;
+        }
+    }
+
 
     footer {
       flex-shrink: 0;

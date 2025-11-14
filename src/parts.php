@@ -34,6 +34,14 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
 <!-- Main title above the panels -->
 <div class="container pt-5 pb-1 px-4 py-3 border-bottom"><h1><?php echo ORGNAME ?> Instrument Parts</h1></div>
 
+<!-- Toggle button for mobile/tablet -->
+<button class="left-panel-toggle" id="toggleLeftPanel" type="button">
+    <i class="fas fa-bars"></i> Compositions
+</button>
+
+<!-- Backdrop overlay for mobile -->
+<div class="left-panel-backdrop" id="leftPanelBackdrop"></div>
+
 <!-- main scrollable panels -->
 <main role="main" class="container">
     <!-- left panel -->
@@ -453,6 +461,29 @@ if (window._autoload_catalog_number) {
 
 // jquery functions to add/update database records
 $(document).ready(function() {
+    // Toggle left panel on mobile/tablet
+    $('#toggleLeftPanel').on('click', function() {
+        $('.left-panel').toggleClass('show');
+        $('#leftPanelBackdrop').toggleClass('show');
+        $(this).find('i').toggleClass('fa-bars fa-times');
+    });
+    
+    // Close left panel when clicking backdrop
+    $('#leftPanelBackdrop').on('click', function() {
+        $('.left-panel').removeClass('show');
+        $(this).removeClass('show');
+        $('#toggleLeftPanel').find('i').removeClass('fa-times').addClass('fa-bars');
+    });
+    
+    // Close left panel when clicking on a composition (mobile only)
+    $(document).on('click', '.left-panel .list-group-item', function() {
+        if ($(window).width() <= 991.98) {
+            $('.left-panel').removeClass('show');
+            $('#leftPanelBackdrop').removeClass('show');
+            $('#toggleLeftPanel').find('i').removeClass('fa-times').addClass('fa-bars');
+        }
+    });
+    
     // Scroll-to-top button
     let $upButton = $("#btn-back-to-top");
     // When the user scrolls down 20px from the top of the document, show the button

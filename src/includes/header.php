@@ -130,6 +130,68 @@
       background: #f8f9fa;
       display: flex;
       flex-direction: column;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    /* Mobile/Tablet: Collapsible left panel */
+    @media (max-width: 991.98px) {
+      aside.left-panel {
+        position: fixed;
+        left: 0;
+        top: 86px; /* Below navbar */
+        bottom: 0; /* Go all the way to bottom */
+        height: calc(100vh - 86px); /* Full height minus navbar */
+        z-index: 1050;
+        transform: translateX(-100%);
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      }
+      
+      aside.left-panel.show {
+        transform: translateX(0);
+      }
+      
+      .left-panel-toggle {
+        display: block !important;
+        position: fixed;
+        left: 10px;
+        top: 100px;
+        z-index: 1049;
+        background: #0d6efd;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        padding: 0.5rem 0.75rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      }
+      
+      .left-panel-toggle:hover {
+        background: #0b5ed7;
+      }
+      
+      /* Backdrop overlay */
+      .left-panel-backdrop {
+        display: none;
+        position: fixed;
+        top: 86px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 1040;
+      }
+      
+      .left-panel-backdrop.show {
+        display: block;
+      }
+      
+      section.right-panel {
+        padding: 0.5rem;
+      }
+    }
+    
+    /* Desktop: Hide toggle button */
+    .left-panel-toggle {
+      display: none;
     }
 
     #composition_header {
@@ -157,6 +219,14 @@
       height: calc(100vh - 310px); /* Adjusted for single-line header: navbar + title + toolbar + footer + padding */
       overflow-y: auto;
       flex-grow: 1;
+    }
+    
+    /* Mobile: Adjust left-menu-scroll height and add bottom padding */
+    @media (max-width: 991.98px) {
+      .left-menu-scroll {
+        height: calc(100vh - 140px); /* Account for navbar and search box */
+        padding-bottom: 2rem; /* Extra space at bottom for easier scrolling */
+      }
     }
 
     section.right-panel {

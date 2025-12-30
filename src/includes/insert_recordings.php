@@ -23,8 +23,8 @@ $uploadMax = ini_get('upload_max_filesize');
 $postMax = ini_get('post_max_size');
 
 // Check if the getID3 library is available
-if (!file_exists('../getID3/getid3/getid3.php') || !file_exists('../getID3/getid3/write.php')) {
-    ferror_log("getID3 library not found at: ".__DIR__ . "../getID3/getid3/getid3.php");
+if (!file_exists(__DIR__ . '/../getID3/getid3/getid3.php') || !file_exists(__DIR__ . '/../getID3/getid3/write.php')) {
+    ferror_log("getID3 library not found at: ".__DIR__ . "/../getID3/getid3/getid3.php");
     die("getID3 library not found. Please ensure it is installed in the correct path.");
 } else {
     ferror_log("getID3 library found at: ../getID3/getid3/getid3.php");
@@ -62,8 +62,8 @@ if(!empty($_POST)) {
         $fileSize = $_FILES['link']['size'];
         $fileType = $_FILES['link']['type'];
 
-        require_once('../getID3/getid3/getid3.php');
-        require_once('../getID3/getid3/write.php');
+        require_once(__DIR__ . '/../getID3/getid3/getid3.php');
+        require_once(__DIR__ . '/../getID3/getid3/write.php');
         
         $uploadDir = __DIR__ . "/" . ORGPUBLIC . $filedate . '/'; // Directory to save uploaded files
         // Example: www/public/recordings/2023-10-01/

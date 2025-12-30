@@ -1,5 +1,5 @@
 <?php
-//insert_recordings.php
+//upload_recording.php
 /*
 #############################################################################
 # Licensed Materials - Property of ACWE*

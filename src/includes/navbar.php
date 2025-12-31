@@ -34,6 +34,7 @@
                         <li><a class="dropdown-item" href="/enable_disable_manager"><i class="fas fa-toggle-on"></i> Enable/disable</a></li>
 '; ?><?php if (isset($_SESSION['username'])) if (strpos(htmlspecialchars($_SESSION['roles'] ?? ''), 'administrator') !== FALSE ) echo '
                         <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
                         <li><a class="dropdown-item" href="/admin_verifications"><i class="fas fa-user-check"></i> Password reset & email verification</a></li>
                         <li><a class="dropdown-item" href="/users"><i class="fas fa-users"></i> Users</a></li>
 '; ?>

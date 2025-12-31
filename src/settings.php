@@ -131,7 +131,7 @@ mysqli_close($f_link);
                                         <div class="col-md-12">
                                             <button type="button" class="btn btn-primary save-category-settings">
                                                 <span class="spinner-border spinner-border-sm me-2 d-none" role="status" aria-hidden="true"></span>
-                                                Save Settings
+                                                Save
                                             </button>
                                             <button type="reset" class="btn btn-secondary ms-2">Reset</button>
                                         </div>

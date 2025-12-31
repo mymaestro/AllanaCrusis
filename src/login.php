@@ -67,6 +67,8 @@ $(document).ready(function(){
                 success: function(data) {
                     $('#signin_form')[0].reset();
                     var text;
+                    // Trim whitespace from response
+                    data = $.trim(data);
                     switch(data) {
                         case "success":
                             $("#login-message").addClass("text-success");

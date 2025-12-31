@@ -52,9 +52,9 @@ if(isset($_POST["username"]) && isset($_POST["password"])) {
             $message = "error";
         }
     }
- 
-    // echo json_encode($rowList);
-    echo $message;
     mysqli_close($f_link);
 }
+
+// Always echo the message (must be plain text for AJAX)
+echo $message;
 ?>

@@ -253,7 +253,10 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
                                         <input type="file" class="form-control" id="image_path" name="image_path" aria-label="Image path" placeholder="https://acwe.org/parts/flute1.pdf (optional)" accept=".pdf" />
                                         <label class="input-group-text" for="image_path">Upload</label>
                                     </div>
-
+                                    <div id="uploadStatus" class="small"></div>
+                                    <div id="uploadProgress" class="progress d-none" style="height: 25px;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;">0%</div>
+                                    </div>
                                 </div>
                         </div><!-- container-fluid -->
                     </div><!-- modal-body -->
@@ -274,6 +277,7 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
 </main>
 <?php require_once(__DIR__. "/includes/footer.php"); ?>
 <!-- Load instruments data into JSON array and object -->
+<script src="js/chunked-upload.js"></script>
 <script>
 <?php
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -870,106 +874,164 @@ $(document).ready(function() {
         } else {
             catalog_number = $('#catalog_number').val();
             $('#id_instrument option').prop('selected',true);
-            // If there is a file to upload in the image_path field, we need to handle it
-            var formData = new FormData(this);
-
-            if (!$('#image_path')[0].files.length)  {
-                // If no file is selected, we can still submit the form
-                // Use the value of image_path_display as a fallback
-                $image_path_display = $('#image_path_display').text();
-                formData.append('image_path_display', $image_path_display);
-                console.log("No file selected for upload, using image_path_display value: " + $image_path_display);
-                // Clear the file input to avoid sending an empty file path
-                $('#image_path').val('');
-            } else if ($('#image_path')[0].files.length > 0) {
-                // If a file is selected, it will be handled by FormData
-                $file_name = $('#image_path')[0].files[0].name;
-                formData.append('image_path', $('#image_path')[0].files[0]);
+            
+            var file = $('#image_path')[0].files[0];
+            
+            // Check if we should use chunked upload (files > 10MB)
+            if (file && shouldUseChunkedUpload(file, 10 * 1024 * 1024)) {
+                // Use chunked upload for large files
+                handleChunkedPartUpload(file, catalog_number, catno_name);
+            } else {
+                // Use standard upload for small files or no file
+                handleStandardPartUpload(this, catalog_number, catno_name);
             }
-
-            $.ajax({
-                url: "index.php?action=insert_parts",
-                method: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                dataType: 'json',
-                beforeSend: function() {
-                    // Clear any previous error messages
-                    $('#parteditmessage').html('');
-                    // Show spinner and disable button
-                    $('#insert .spinner-border').removeClass('d-none');
-                    $('#insert-text').text($('#update').val() === "update" ? "Updating..." : "Inserting...");
-                    $('#insert').prop('disabled', true);
-                },
-                    success: function(data) {
-                        // Reset button state
-                        $('#insert .spinner-border').addClass('d-none');
-                        $('#insert-text').text("Insert");
-                        $('#insert').prop('disabled', false);
-                        
-                        if (data.success) {
-                            // Show success message briefly
-                            var action = $('#update').val() === "update" ? "updated" : "inserted";
-                            $('#parteditmessage').html('<span class="text-success"><strong>Success:</strong> Part ' + action + ' successfully!</span>');
-                            
-                            // Hide the success message and close modal after 1.5 seconds
-                            setTimeout(function() {
-                                $('#parteditmessage').html('');
-                                $('#editModal').modal('hide');
-                            }, 1500);
-                            
-                            $('#insert_form')[0].reset();
-                            $.ajax({
-                                url: "index.php?action=fetch_parts_data",
-                                method: "POST",
-                                data: {
-                                    catalog_number: catalog_number
-                                },
-                                dataType: "text",
-                                success: function(response) {
-                                    var data = JSON.parse(response);
-                                    data.u_librarian = window.u_librarian; // Ensure template gets correct role
-                                    var partsHtml = renderTemplate('parts-table-template', data);
-                                    $('#parts_table').html(partsHtml);
-                                    $('#composition_header').text(catno_name).attr('title', catno_name);
-                                }
-                            });
-                        } else {
-                            // Show error message (don't close modal)
-                            $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + (data.error || 'Unknown error occurred') + '</span>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        // Reset button state on error
-                        $('#insert .spinner-border').addClass('d-none');
-                        $('#insert-text').text("Insert");
-                        $('#insert').prop('disabled', false);
-                        
-                        // Try to parse JSON error response first
-                        var errorMessage = "Error uploading part: " + error;
-                        if (xhr.responseText) {
-                            try {
-                                var errorResponse = JSON.parse(xhr.responseText);
-                                if (errorResponse.error) {
-                                    errorMessage = errorResponse.error;
-                                } else {
-                                    errorMessage = xhr.responseText;
-                                }
-                            } catch (e) {
-                                errorMessage = xhr.responseText;
-                            }
-                        }
-                        
-                        // Display error message in the modal
-                        $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + errorMessage + '</span>');
-                        
-                        // Scroll the modal to show the error message
-                        $('#editModal .modal-body').scrollTop(0);
-                    }
-            });
         }
     });
+    
+    function handleChunkedPartUpload(file, catalog_number, catno_name) {
+        // Show progress bar and status
+        $('#uploadProgress').removeClass('d-none');
+        $('#uploadStatus').html('<span class="text-info">Preparing chunked upload...</span>');
+        $('#insert .spinner-border').removeClass('d-none');
+        $('#insert-text').text('Uploading...');
+        $('#insert').prop('disabled', true);
+        
+        var uploader = new ChunkedUploader(file, {
+            chunkSize: 2 * 1024 * 1024, // 2MB chunks
+            onProgress: function(percent, message) {
+                $('#uploadProgress .progress-bar')
+                    .css('width', percent + '%')
+                    .text(percent + '%');
+                $('#uploadStatus').html('<span class="text-info">' + message + '</span>');
+            },
+            onComplete: function(response) {
+                // File uploaded and assembled, now process it
+                $('#uploadStatus').html('<span class="text-success">Upload complete, processing...</span>');
+                
+                // Submit the form data with the assembled file path
+                var formData = new FormData($('#insert_form')[0]);
+                formData.delete('image_path'); // Remove the file input
+                formData.append('uploadedFilePath', response.filePath);
+                formData.append('uploadedFileName', response.fileName);
+                
+                processPartSubmission(formData, catalog_number, catno_name);
+            },
+            onError: function(error) {
+                $('#uploadProgress').addClass('d-none');
+                $('#uploadStatus').html('<span class="text-danger">Upload error: ' + error + '</span>');
+                $('#insert .spinner-border').addClass('d-none');
+                $('#insert-text').text('Insert');
+                $('#insert').prop('disabled', false);
+            }
+        });
+        
+        uploader.start();
+    }
+    
+    function handleStandardPartUpload(form, catalog_number, catno_name) {
+        var formData = new FormData(form);
+        
+        if (!$('#image_path')[0].files.length) {
+            // If no file is selected, we can still submit the form
+            // Use the value of image_path_display as a fallback
+            $image_path_display = $('#image_path_display').text();
+            formData.append('image_path_display', $image_path_display);
+            console.log("No file selected for upload, using image_path_display value: " + $image_path_display);
+            // Clear the file input to avoid sending an empty file path
+            $('#image_path').val('');
+        } else if ($('#image_path')[0].files.length > 0) {
+            // If a file is selected, it will be handled by FormData
+            $file_name = $('#image_path')[0].files[0].name;
+            formData.append('image_path', $('#image_path')[0].files[0]);
+        }
+        
+        $('#parteditmessage').html('');
+        $('#insert .spinner-border').removeClass('d-none');
+        $('#insert-text').text($('#update').val() === "update" ? "Updating..." : "Inserting...");
+        $('#insert').prop('disabled', true);
+        
+        processPartSubmission(formData, catalog_number, catno_name);
+    }
+    
+    function processPartSubmission(formData, catalog_number, catno_name) {
+        $.ajax({
+            url: "index.php?action=insert_parts",
+            method: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function(data) {
+                // Reset button state
+                $('#insert .spinner-border').addClass('d-none');
+                $('#insert-text').text("Insert");
+                $('#insert').prop('disabled', false);
+                $('#uploadProgress').addClass('d-none');
+                $('#uploadStatus').html('');
+                
+                if (data.success) {
+                    // Show success message briefly
+                    var action = $('#update').val() === "update" ? "updated" : "inserted";
+                    $('#parteditmessage').html('<span class="text-success"><strong>Success:</strong> Part ' + action + ' successfully!</span>');
+                    
+                    // Hide the success message and close modal after 1.5 seconds
+                    setTimeout(function() {
+                        $('#parteditmessage').html('');
+                        $('#editModal').modal('hide');
+                    }, 1500);
+                    
+                    $('#insert_form')[0].reset();
+                    $.ajax({
+                        url: "index.php?action=fetch_parts_data",
+                        method: "POST",
+                        data: {
+                            catalog_number: catalog_number
+                        },
+                        dataType: "text",
+                        success: function(response) {
+                            var data = JSON.parse(response);
+                            data.u_librarian = window.u_librarian; // Ensure template gets correct role
+                            var partsHtml = renderTemplate('parts-table-template', data);
+                            $('#parts_table').html(partsHtml);
+                            $('#composition_header').text(catno_name).attr('title', catno_name);
+                        }
+                    });
+                } else {
+                    // Show error message (don't close modal)
+                    $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + (data.error || 'Unknown error occurred') + '</span>');
+                }
+            },
+            error: function(xhr, status, error) {
+                // Reset button state on error
+                $('#insert .spinner-border').addClass('d-none');
+                $('#insert-text').text("Insert");
+                $('#insert').prop('disabled', false);
+                $('#uploadProgress').addClass('d-none');
+                $('#uploadStatus').html('');
+                
+                // Try to parse JSON error response first
+                var errorMessage = "Error uploading part: " + error;
+                if (xhr.responseText) {
+                    try {
+                        var errorResponse = JSON.parse(xhr.responseText);
+                        if (errorResponse.error) {
+                            errorMessage = errorResponse.error;
+                        } else {
+                            errorMessage = xhr.responseText;
+                        }
+                    } catch (e) {
+                        errorMessage = xhr.responseText;
+                    }
+                }
+                
+                // Display error message in the modal
+                $('#parteditmessage').html('<span class="text-danger"><strong>Error:</strong> ' + errorMessage + '</span>');
+                
+                // Scroll the modal to show the error message
+                $('#editModal .modal-body').scrollTop(0);
+            }
+        });
+    }
 });
 </script>
 </body>

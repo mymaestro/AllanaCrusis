@@ -55,13 +55,35 @@ if(!empty($_POST)) {
 
     // Handle file upload
     $link = mysqli_real_escape_string($f_link, $_POST['linkDisplay']);
+    $fileTmpPath = null;
+    $fileName = null;
+    $fileSize = null;
+    $fileType = null;
 
-    if (isset($_FILES['link']) && $_FILES['link']['error'] === UPLOAD_ERR_OK) { // There's a file to upload
+    // Check if this is a chunked upload (file already assembled on server)
+    if (isset($_POST['uploadedFilePath']) && isset($_POST['uploadedFileName'])) {
+        // Chunked upload - file is already on server
+        $fileTmpPath = $_POST['uploadedFilePath'];
+        $fileName = $_POST['uploadedFileName'];
+        $fileSize = file_exists($fileTmpPath) ? filesize($fileTmpPath) : 0;
+        
+        // Determine MIME type
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $finfo->file($fileTmpPath);
+        
+        ferror_log("Processing chunked upload: $fileName ($fileSize bytes)");
+        
+    } elseif (isset($_FILES['link']) && $_FILES['link']['error'] === UPLOAD_ERR_OK) {
+        // Standard upload
         $fileTmpPath = $_FILES['link']['tmp_name'];
         $fileName = $_FILES['link']['name'];
         $fileSize = $_FILES['link']['size'];
         $fileType = $_FILES['link']['type'];
+        
+        ferror_log("Processing standard upload: $fileName ($fileSize bytes)");
+    }
 
+    if ($fileTmpPath && $fileName) { // There's a file to process
         require_once(__DIR__ . '/../getID3/getid3/getid3.php');
         require_once(__DIR__ . '/../getID3/getid3/write.php');
         
@@ -74,9 +96,9 @@ if(!empty($_POST)) {
             ferror_log("Uploads directory already exists: " . $uploadDir);  
         }
 
-        // Check file size
-        if ($fileSize > $maxFileSize) {
-            die("File is too large. Max allowed size is 20MB.");
+        // Check file size (only enforce for standard uploads, chunked uploads already validated)
+        if (!isset($_POST['uploadedFilePath']) && $fileSize > $maxFileSize) {
+            die("File is too large. Max allowed size is 40MB.");
         }
 
         // Check MIME type
@@ -100,8 +122,22 @@ if(!empty($_POST)) {
 
         // Move the uploaded file
         ferror_log("Attempting to move uploaded file from: " . $fileTmpPath . " to: " . $destination);
-        if (!move_uploaded_file($fileTmpPath, $destination)) {
-            die("Failed to save the uploaded file.");
+        
+        // For chunked uploads, use copy + unlink instead of move_uploaded_file
+        if (isset($_POST['uploadedFilePath'])) {
+            if (!copy($fileTmpPath, $destination)) {
+                die("Failed to save the uploaded file.");
+            }
+            // Clean up the temporary file
+            @unlink($fileTmpPath);
+            // Also clean up the temp directory
+            $tempDir = dirname($fileTmpPath);
+            @rmdir($tempDir);
+        } else {
+            // Standard upload
+            if (!move_uploaded_file($fileTmpPath, $destination)) {
+                die("Failed to save the uploaded file.");
+            }
         }
 
         // We can tag these file formats

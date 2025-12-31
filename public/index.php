@@ -50,6 +50,7 @@ $actionRoleMap = [
     'delete_'  => 'librarian',
     'insert_'  => 'librarian',
     'update_'  => 'librarian',
+    'upload_'  => 'librarian',
     'download_' => 'librarian'
     // Add more as needed
 ];
@@ -91,7 +92,7 @@ if (isset($_GET['action'])) {
         }
         return null; // No restriction
     }
-    if (preg_match('/^(admin_|fetch_|insert_|delete_|download_|search_|select_|update_)[a-zA-Z0-9_]+$/', $action)) {
+    if (preg_match('/^(admin_|fetch_|insert_|delete_|download_|search_|select_|update_|upload_)[a-zA-Z0-9_]+$/', $action)) {
         $requiredRole = getRequiredRole($action, $actionRoleMap);
         if ($requiredRole) {
             if (!isset($_SESSION['roles']) || strpos($_SESSION['roles'], $requiredRole) === false) {

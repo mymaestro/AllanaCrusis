@@ -131,10 +131,13 @@
                         </div>
                         <div class="col-md-8">
                             <div class="input-group mb-3">
-                                <input type="file" class="form-control" name="link" id="link" accept=".mp3,.flac,.ogg" />
+                                <input type="file" class="form-control" name="link" id="link" accept=".mp3,.flac,.ogg,.wav" />
                                 <!-- <button class="btn btn-primary" type="button" id="uploadRecording">Upload</button> -->
                             </div>
-                            <div id="uploadStatus" class="text-info small"></div>
+                            <div id="uploadStatus" class="small"></div>
+                            <div id="uploadProgress" class="progress d-none" style="height: 25px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;">0%</div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -177,6 +180,7 @@
 <!-- script to sort and filter table views -->
 <script src="js/auto-tables.js"></script>
 <script src="js/composer_normalization.js"></script>
+<script src="js/chunked-upload.js"></script>
 <!-- Reference concerts data -->
 <?php
 // Build the reference concerts as a JSON array for JavaScript
@@ -443,11 +447,15 @@ $(document).ready(function(){
         var fileInput = this;
         if (fileInput.files && fileInput.files[0]) {
             var fileName = fileInput.files[0].name;
+            var fileSize = fileInput.files[0].size;
             $('#linkDisplay').text(fileName);
+            $('#uploadStatus').html('<span class="text-info">Selected: ' + fileName + ' (' + formatFileSize(fileSize) + ')</span>');
         } else {
             $('#linkDisplay').text('-----.---');
+            $('#uploadStatus').html('');
         }
     });
+    
     $('#insert_form').on("submit", function(event){
         event.preventDefault();
         if ($('#catalog_number').val() === "") {
@@ -462,69 +470,133 @@ $(document).ready(function(){
         } else if ($('#filedate').val() === "0000-00-00") {
             alert("Please set the file date to the concert date");
         } else {
-            var formData = new FormData(this);
-            formData.append('filedate', $('#filedate').val());
-            formData.append('linkDisplay', $('#linkDisplay').text());
-            formData.append('venue', $('#venue').val()); // Add the venue to the form data
-            $.ajax({
-                url: "index.php?action=insert_recordings",
-                method: "POST",
-                data: formData,
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                beforeSend: function () {
-                    // Show spinner, change text, and disable button
-                    $('#insertSpinner').removeClass('d-none');
-                    $('#insertText').text('Inserting...');
-                    $('#insert').prop('disabled', true);
-                },
-                success: function (data) {
-                    try {
-                        console.log("Response data: ", data);
-                        $('#insert_form')[0].reset();
-                        $('#editModal').modal('hide');
-                        if (data && typeof data === 'object' && 'success' in data && 'message' in data) {
-                            $('#message_detail').html('<p class="' + (data.success ? 'text-success' : 'text-danger') + '">' + data.message + '</p>');
-                        } else {
-                            $('#message_detail').html('<p class="text-danger">Unexpected response from server.</p>');
-                        }
-                        $('#messageModal').modal('show');
-                        // Refresh the table
-                        $.ajax({
-                            url: "index.php?action=fetch_recordings",
-                            method: "POST",
-                            data: {
-                                user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
-                            },
-                            success: function (data) {
-                                $('#recordings_table').html(data);
-                            }
-                        });
-                    } catch (e) {
-                        console.error("Error handling AJAX response:", e);
-                        $('#editModal').modal('hide');
-                        $('#message_detail').html('<p class="text-danger">Error handling server response.</p>');
-                        $('#messageModal').modal('show');
-                    }
-                    // Hide spinner, restore text, enable button
-                    $('#insertSpinner').addClass('d-none');
-                    $('#insertText').text('Insert');
-                    $('#insert').prop('disabled', false);
-                },
-                error: function (xhr, status, error) {
-                    console.error("AJAX error:", status, error, xhr.responseText);
-                    $('#editModal').modal('hide');
-                    // Hide spinner, restore text, enable button
-                    $('#insertSpinner').addClass('d-none');
-                    $('#insertText').text('Insert');
-                    $('#insert').prop('disabled', false);
-                    $('#message_detail').html('<p class="text-danger">AJAX error: ' + error + '</p>');
-                    $('#messageModal').modal('show');
-                }
-            });
+            var file = $('#link')[0].files[0];
+            var isUpdate = $('#id_recording').val() !== "" && $('#update').val() === "update";
+            
+            // Check if we should use chunked upload (files > 10MB)
+            if (file && shouldUseChunkedUpload(file, 10 * 1024 * 1024)) {
+                // Use chunked upload for large files
+                handleChunkedRecordingUpload(file, isUpdate);
+            } else {
+                // Use standard upload for small files or updates without files
+                handleStandardRecordingUpload(this, isUpdate);
+            }
         }
     });
+    
+    function handleChunkedRecordingUpload(file, isUpdate) {
+        // Show progress bar and status
+        $('#uploadProgress').removeClass('d-none');
+        $('#uploadStatus').html('<span class="text-info">Preparing chunked upload...</span>');
+        $('#insertSpinner').removeClass('d-none');
+        $('#insertText').text('Uploading...');
+        $('#insert').prop('disabled', true);
+        
+        var uploader = new ChunkedUploader(file, {
+            chunkSize: 2 * 1024 * 1024, // 2MB chunks
+            onProgress: function(percent, message) {
+                $('#uploadProgress .progress-bar')
+                    .css('width', percent + '%')
+                    .text(percent + '%');
+                $('#uploadStatus').html('<span class="text-info">' + message + '</span>');
+            },
+            onComplete: function(response) {
+                // File uploaded and assembled, now process it
+                $('#uploadStatus').html('<span class="text-success">Upload complete, processing...</span>');
+                
+                // Submit the form data with the assembled file path
+                var formData = new FormData($('#insert_form')[0]);
+                formData.delete('link'); // Remove the file input
+                formData.append('uploadedFilePath', response.filePath);
+                formData.append('uploadedFileName', response.fileName);
+                formData.append('filedate', $('#filedate').val());
+                formData.append('linkDisplay', $('#linkDisplay').text());
+                formData.append('venue', $('#venue').val());
+                
+                processRecordingSubmission(formData);
+            },
+            onError: function(error) {
+                $('#uploadProgress').addClass('d-none');
+                $('#uploadStatus').html('<span class="text-danger">Upload error: ' + error + '</span>');
+                $('#insertSpinner').addClass('d-none');
+                $('#insertText').text('Insert');
+                $('#insert').prop('disabled', false);
+            }
+        });
+        
+        uploader.start();
+    }
+    
+    function handleStandardRecordingUpload(form, isUpdate) {
+        var formData = new FormData(form);
+        formData.append('filedate', $('#filedate').val());
+        formData.append('linkDisplay', $('#linkDisplay').text());
+        formData.append('venue', $('#venue').val());
+        
+        $('#insertSpinner').removeClass('d-none');
+        $('#insertText').text('Inserting...');
+        $('#insert').prop('disabled', true);
+        
+        processRecordingSubmission(formData);
+    }
+    
+    function processRecordingSubmission(formData) {
+        $.ajax({
+            url: "index.php?action=insert_recordings",
+            method: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (data) {
+                try {
+                    console.log("Response data: ", data);
+                    $('#insert_form')[0].reset();
+                    $('#uploadProgress').addClass('d-none');
+                    $('#uploadStatus').html('');
+                    $('#editModal').modal('hide');
+                    if (data && typeof data === 'object' && 'success' in data && 'message' in data) {
+                        $('#message_detail').html('<p class="' + (data.success ? 'text-success' : 'text-danger') + '">' + data.message + '</p>');
+                    } else {
+                        $('#message_detail').html('<p class="text-danger">Unexpected response from server.</p>');
+                    }
+                    $('#messageModal').modal('show');
+                    // Refresh the table
+                    $.ajax({
+                        url: "index.php?action=fetch_recordings",
+                        method: "POST",
+                        data: {
+                            user_role: "<?php echo ($u_librarian) ? 'librarian' : 'nobody'; ?>"
+                        },
+                        success: function (data) {
+                            $('#recordings_table').html(data);
+                        }
+                    });
+                } catch (e) {
+                    console.error("Error handling AJAX response:", e);
+                    $('#uploadProgress').addClass('d-none');
+                    $('#editModal').modal('hide');
+                    $('#message_detail').html('<p class="text-danger">Error handling server response.</p>');
+                    $('#messageModal').modal('show');
+                }
+                // Hide spinner, restore text, enable button
+                $('#insertSpinner').addClass('d-none');
+                $('#insertText').text('Insert');
+                $('#insert').prop('disabled', false);
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX error:", status, error, xhr.responseText);
+                $('#uploadProgress').addClass('d-none');
+                $('#editModal').modal('hide');
+                // Hide spinner, restore text, enable button
+                $('#insertSpinner').addClass('d-none');
+                $('#insertText').text('Insert');
+                $('#insert').prop('disabled', false);
+                $('#message_detail').html('<p class="text-danger">AJAX error: ' + error + '</p>');
+                $('#messageModal').modal('show');
+            }
+        });
+    }
     $(document).on('click', '.view_data', function(e){
         e.preventDefault(); // Prevent default link behavior
         

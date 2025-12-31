@@ -202,6 +202,30 @@ if(!empty($_POST)) {
             $fileName = $_FILES['image_path']['name'];
             $fileSize = $_FILES['image_path']['size'];
             $fileType = $_FILES['image_path']['type'];
+            $isChunkedUpload = false;
+            
+            ferror_log("Processing standard upload: $fileName ($fileSize bytes)");
+        }
+    } elseif (isset($_POST['uploadedFilePath']) && isset($_POST['uploadedFileName'])) {
+        // Chunked upload - file is already on server
+        $fileTmpPath = $_POST['uploadedFilePath'];
+        $fileName = $_POST['uploadedFileName'];
+        $fileSize = file_exists($fileTmpPath) ? filesize($fileTmpPath) : 0;
+        $isChunkedUpload = true;
+        
+        // Determine MIME type
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $finfo->file($fileTmpPath);
+        
+        ferror_log("Processing chunked upload: $fileName ($fileSize bytes)");
+        $uploadError = UPLOAD_ERR_OK; // Set to OK for chunked uploads
+    } else {
+        ferror_log("No file upload field found.");
+        $uploadError = UPLOAD_ERR_NO_FILE;
+    }
+
+    // Process file if we have one
+    if (isset($uploadError) && $uploadError === UPLOAD_ERR_OK && isset($fileTmpPath)) {
 
         // Check if the file is a valid PDF or image file
         $allowedFileTypes = ['application/pdf', 'image/jpeg', 'image/png'];
@@ -231,9 +255,9 @@ if(!empty($_POST)) {
             ferror_log("Uploads directory already exists: " . $uploadDir);
         }
 
-        // Check file size
-        if ($fileSize > $maxFileSize) {
-            $errorMsg = "File is too large. Max allowed size is 40MB.";
+        // Check file size (only enforce for standard uploads, chunked uploads already validated)
+        if (!$isChunkedUpload && $fileSize > $maxFileSize) {
+            $errorMsg = "File is too large. Max allowed size is 100MB.";
             ferror_log("File too large: " . $fileSize . " bytes (max: " . $maxFileSize . ")");
             header('Content-Type: application/json');
             echo json_encode(['success' => false, 'error' => $errorMsg]);
@@ -335,6 +359,14 @@ if(!empty($_POST)) {
                     ferror_log("Cleaned up PHPdfer temporary file: " . $newFileName);
                 }
                 
+                // Clean up chunked upload temp file if applicable
+                if ($isChunkedUpload && file_exists($fileTmpPath)) {
+                    @unlink($fileTmpPath);
+                    $tempDir = dirname($fileTmpPath);
+                    @rmdir($tempDir);
+                    ferror_log("Cleaned up chunked upload temp file: " . $fileTmpPath);
+                }
+                
                 ferror_log("PDF file processed and saved successfully: " . $destination);
                 
                 // Update the image_path variable to store the file name
@@ -350,22 +382,36 @@ if(!empty($_POST)) {
         } else {
             // For non-PDF files, use the original upload process
             ferror_log("Attempting to move uploaded file from: " . $fileTmpPath . " to: " . $destination);
-            if (!move_uploaded_file($fileTmpPath, $destination)) {
-                $errorMsg = "Failed to save the uploaded file.";
-                ferror_log("Failed to move uploaded file to destination: " . $destination);
-                header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => $errorMsg]);
-                exit;
+            
+            // For chunked uploads, use copy + unlink instead of move_uploaded_file
+            if ($isChunkedUpload) {
+                if (!copy($fileTmpPath, $destination)) {
+                    $errorMsg = "Failed to save the uploaded file.";
+                    ferror_log("Failed to copy chunked upload to destination: " . $destination);
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => $errorMsg]);
+                    exit;
+                }
+                // Clean up the temporary file
+                @unlink($fileTmpPath);
+                // Also clean up the temp directory
+                $tempDir = dirname($fileTmpPath);
+                @rmdir($tempDir);
+            } else {
+                if (!move_uploaded_file($fileTmpPath, $destination)) {
+                    $errorMsg = "Failed to save the uploaded file.";
+                    ferror_log("Failed to move uploaded file to destination: " . $destination);
+                    header('Content-Type: application/json');
+                    echo json_encode(['success' => false, 'error' => $errorMsg]);
+                    exit;
+                }
             }
             ferror_log("File uploaded successfully: " . $destination);
             
             // Update the image_path variable to store the file name
             $image_path = $safeName;
         }
-        } // End of UPLOAD_ERR_OK processing
-    } else {
-        ferror_log("No file upload field found.");
-    }
+    } // End of file upload processing
 
     if($_POST["update"] == "update") {
         // Prepare UPDATE statement

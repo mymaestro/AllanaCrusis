@@ -5,33 +5,141 @@
 # (C) Copyright Austin Civic Wind Ensemble 2020, 2022, 2025. All rights reserved.
 #############################################################################
 */
-// Organization branding
-define('ORGNAME', '4th Wind'); // Short name or acronym
-define('ORGDESC', 'Fourth Wind Wind Ensemble'); // Full organization name
-define('ORGLOGO', 'images/logo.png'); // Path to logo image
-define('ORGMAIL', 'librarian@musicLibraryDB.com'); // Contact email
 
-// Download token configuration
-define('DOWNLOAD_TOKEN_EXPIRY_DAYS', 5); // Number of days download tokens remain valid
+/**
+ * INSTALLATION & SETUP INSTRUCTIONS
+ * 
+ * 1. Copy this file to config.php in the same directory
+ * 2. Edit the DATABASE SETTINGS section below with your database credentials
+ * 3. Customize the DEFAULT VALUES as needed for your organization
+ * 4. Save the file and access the application
+ * 5. Once running, log in as an admin and visit /settings to manage
+ *    configuration values through the web interface (values are stored in the database)
+ * 
+ * How it works:
+ * - This file first loads database credentials
+ * - Then attempts to load configuration from the 'config' database table
+ * - If the database is unavailable, it falls back to the defaults defined here
+ * - This allows configuration to be managed both programmatically and via web UI
+ */
 
-// Web root and public URLs (with trailing slash)
-define('ORGHOME', 'http://library.local/'); // Main site URL
-define('ORGRECORDINGS', 'http://library.local/files/recordings/'); // Public URL for recordings
+// ============================================================================
+// DATABASE CREDENTIALS (REQUIRED)
+// ============================================================================
+// Edit these to match your database setup
 
-// Secure file storage (recommended: outside web root)
-define('ORGPUBLIC', '../../public/files/recordings/'); // Directory for recordings (relative to src/includes)
-define('ORGPRIVATE', '/home/user/files/'); // Directory for parts/distributions (absolute path, outside web root)
-
-// Database settings
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'musicLibraryDB');
 define('DB_USER', 'musicLibraryDB');
 define('DB_PASS', 'superS3cretPa$$wo4d');
 define('DB_CHARSET', 'utf8mb4');
 
-// Region/homepage
-define('REGION', 'HOME');
+// ============================================================================
+// CONFIGURATION LOADER
+// ============================================================================
+// Loads settings from database with fallback to defaults below
 
-// Debug mode (set to 1 for verbose error logging)
-define('DEBUG', 1);
+/**
+ * Load configuration from database
+ * Falls back to default values if database is unavailable
+ */
+function loadConfigFromDatabase() {
+    $defaults = [
+        'ORGNAME' => '4th Wind',
+        'ORGDESC' => 'Fourth Wind Wind Ensemble',
+        'ORGHOME' => 'http://library.local/',
+        'ORGLOGO' => 'images/logo.png',
+        'ORGMAIL' => 'librarian@musicLibraryDB.com',
+        'ORGRECORDINGS' => 'http://library.local/files/recordings/',
+        'ORGPUBLIC' => '../../public/files/recordings/',
+        'ORGPRIVATE' => '/home/user/files/',
+        'DOWNLOAD_TOKEN_EXPIRY_DAYS' => 5,
+        'REGION' => 'HOME',
+        'DEBUG' => 0
+    ];
+    
+    try {
+        // Attempt to connect and load from database
+        $connection = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        
+        if ($connection->connect_error) {
+            throw new Exception("Database connection failed");
+        }
+        
+        $connection->set_charset(DB_CHARSET);
+        
+        // Check if config table exists
+        $tableCheck = $connection->query("SHOW TABLES LIKE 'config'");
+        if (!$tableCheck || $tableCheck->num_rows === 0) {
+            throw new Exception("Config table does not exist");
+        }
+        
+        // Load all config values
+        $result = $connection->query("SELECT `config_key`, `value`, `type` FROM config WHERE `config_key` IN ('" . implode("','", array_keys($defaults)) . "')");
+        
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $key = $row['config_key'];
+                $value = $row['value'];
+                $type = $row['type'];
+                
+                // Type casting
+                if ($type === 'integer') {
+                    $value = (int)$value;
+                } elseif ($type === 'boolean') {
+                    $value = (int)$value;
+                }
+                
+                define($key, $value);
+            }
+        }
+        
+        $connection->close();
+        
+        // Define any missing settings from defaults
+        foreach ($defaults as $key => $value) {
+            if (!defined($key)) {
+                define($key, $value);
+            }
+        }
+        
+    } catch (Exception $e) {
+        // Database unavailable or config table doesn't exist - use defaults
+        error_log("Config: Using default values - " . $e->getMessage());
+        foreach ($defaults as $key => $value) {
+            if (!defined($key)) {
+                define($key, $value);
+            }
+        }
+    }
+}
+
+// Load configuration
+loadConfigFromDatabase();
+
+// ============================================================================
+// DEFAULT VALUES FOR NEW INSTALLATIONS
+// ============================================================================
+// These are fallback values if database is not yet created
+// Edit these before first run, then manage via /settings page in the admin panel
+
+// Organization branding
+if (!defined('ORGNAME'))        define('ORGNAME', '4th Wind');
+if (!defined('ORGDESC'))        define('ORGDESC', 'Fourth Wind Wind Ensemble');
+if (!defined('ORGLOGO'))        define('ORGLOGO', 'images/logo.png');
+if (!defined('ORGMAIL'))        define('ORGMAIL', 'librarian@musicLibraryDB.com');
+
+// Web URLs (with trailing slashes)
+if (!defined('ORGHOME'))        define('ORGHOME', 'http://library.local/');
+if (!defined('ORGRECORDINGS'))  define('ORGRECORDINGS', 'http://library.local/files/recordings/');
+
+// File storage paths
+if (!defined('ORGPUBLIC'))      define('ORGPUBLIC', '../../public/files/recordings/');
+if (!defined('ORGPRIVATE'))     define('ORGPRIVATE', '/home/user/files/');
+
+// System settings
+if (!defined('DOWNLOAD_TOKEN_EXPIRY_DAYS')) define('DOWNLOAD_TOKEN_EXPIRY_DAYS', 5);
+if (!defined('REGION'))         define('REGION', 'HOME');
+if (!defined('DEBUG'))          define('DEBUG', 0);
+
 ?>

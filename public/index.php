@@ -38,6 +38,7 @@ $urlMap = [
    '/reports' => 'reports.php',
    '/search' => 'search.php',
    '/sections' => 'sections.php',
+   '/settings' => 'settings.php',
    '/terms-conditions' => 'terms-conditions.php',
    '/users' => 'users.php',
    '/verify_email' => 'verify_email.php',

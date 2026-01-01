@@ -259,7 +259,7 @@ function createSectionZip($f_link, $playgram_id, $section_id) {
     $skipped_files = [];
     
     foreach ($parts as $part) {
-        $partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
+        $partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE resolves to absolute path
         $source_path = $partsPath . ltrim($part['image_path'], '/\\');
 
         ferror_log("Processing part: " . $part['part_name'] . " (source: " . $source_path . ")");

@@ -237,7 +237,7 @@ if(!empty($_POST)) {
             exit;
         }
 
-        $uploadDir = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
+        $uploadDir = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE resolves to absolute path
         ferror_log("Uploading to " . $uploadDir);
 
         // Create the uploads directory if it doesn't exist

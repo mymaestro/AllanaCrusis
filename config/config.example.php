@@ -26,6 +26,7 @@
 // ============================================================================
 // DATABASE CREDENTIALS (REQUIRED)
 // ============================================================================
+// Database credentials (required for all connections)
 // Edit these to match your database setup
 
 define('DB_HOST', 'localhost');
@@ -33,6 +34,15 @@ define('DB_NAME', 'musicLibraryDB');
 define('DB_USER', 'musicLibraryDB');
 define('DB_PASS', 'superS3cretPa$$wo4d');
 define('DB_CHARSET', 'utf8mb4');
+
+// ============================================================================
+// FILE UPLOAD PATHS
+// ============================================================================
+// Edit these to match your hosting filesystem setup
+// Relative to the config.php file location for security
+
+define('ORGPUBLIC', '../../public/files/recordings/'); // Publicly accessible files, recordings
+define('ORGPRIVATE', __DIR__ . '/../files/'); // Private files, part PDFs, parts distributions
 
 // ============================================================================
 // CONFIGURATION LOADER
@@ -47,12 +57,10 @@ function loadConfigFromDatabase() {
     $defaults = [
         'ORGNAME' => '4th Wind',
         'ORGDESC' => 'Fourth Wind Wind Ensemble',
-        'ORGHOME' => 'http://library.local/',
+        'ORGHOME' => 'http://musiclibrary.local/',
         'ORGLOGO' => 'images/logo.png',
         'ORGMAIL' => 'librarian@musicLibraryDB.com',
-        'ORGRECORDINGS' => 'http://library.local/files/recordings/',
-        'ORGPUBLIC' => '../../public/files/recordings/',
-        'ORGPRIVATE' => '/home/user/files/',
+        'ORGRECORDINGS' => 'http://musiclibrary.local/files/recordings/',
         'DOWNLOAD_TOKEN_EXPIRY_DAYS' => 5,
         'REGION' => 'HOME',
         'DEBUG' => 0
@@ -122,6 +130,8 @@ loadConfigFromDatabase();
 // ============================================================================
 // These are fallback values if database is not yet created
 // Edit these before first run, then manage via /settings page in the admin panel
+// NOTE: File storage paths (ORGPUBLIC, ORGPRIVATE) are NOT stored in database
+//       for security reasons and must be edited here in the config file
 
 // Organization branding
 if (!defined('ORGNAME'))        define('ORGNAME', '4th Wind');
@@ -130,12 +140,8 @@ if (!defined('ORGLOGO'))        define('ORGLOGO', 'images/logo.png');
 if (!defined('ORGMAIL'))        define('ORGMAIL', 'librarian@musicLibraryDB.com');
 
 // Web URLs (with trailing slashes)
-if (!defined('ORGHOME'))        define('ORGHOME', 'http://library.local/');
-if (!defined('ORGRECORDINGS'))  define('ORGRECORDINGS', 'http://library.local/files/recordings/');
-
-// File storage paths
-if (!defined('ORGPUBLIC'))      define('ORGPUBLIC', '../../public/files/recordings/');
-if (!defined('ORGPRIVATE'))     define('ORGPRIVATE', '/home/user/files/');
+if (!defined('ORGHOME'))        define('ORGHOME', 'http://musiclibrary.local/');
+if (!defined('ORGRECORDINGS'))  define('ORGRECORDINGS', 'http://musiclibrary.local/files/recordings/');
 
 // System settings
 if (!defined('DOWNLOAD_TOKEN_EXPIRY_DAYS')) define('DOWNLOAD_TOKEN_EXPIRY_DAYS', 5);

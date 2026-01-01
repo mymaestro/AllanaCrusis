@@ -8,7 +8,7 @@ if (!isset($_GET['file'])) {
 }
 
 $filename = basename($_GET['file']); // Prevent directory traversal
-$partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE is an absolute path that should end with slash
+$partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE resolves to absolute path
 $filepath = $partsPath . $filename;
 
 if (!file_exists($filepath)) {

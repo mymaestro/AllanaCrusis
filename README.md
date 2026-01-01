@@ -126,7 +126,7 @@ Edit `config.php` with your settings. Key options include:
 - `ORGHOME`: Main site URL (with trailing slash)
 - `ORGRECORDINGS`: Public URL for recordings
 - `ORGPUBLIC`: Directory for recordings (relative to src/includes)
-- `ORGPRIVATE`: Directory for parts/distributions (absolute path, outside web root recommended)
+- `ORGPRIVATE`: Directory for parts/distributions (relative to config dir, e.g., `../files/`)
 - `DB_HOST`, `DB_NAME`, `DB_USER`, `DB_PASS`, `DB_CHARSET`: Database connection settings
 - `REGION`: Default region/homepage
 - `DEBUG`: Set to 1 for verbose error logging

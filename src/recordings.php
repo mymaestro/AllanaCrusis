@@ -105,8 +105,8 @@
                             <label for="ensemble" class="col-form-label">Ensemble description</label>
                          </div><!-- row -->
                         <div class="form-floating mb-1">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Musical comedy" maxlength="255"/>
-                            <label for="name" class="col-form-label">Recording name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Musical comedy" maxlength="255" required/>
+                            <label for="name" class="col-form-label">Recording name*</label>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -467,6 +467,8 @@ $(document).ready(function(){
             alert("Please choose a concert");
         } else if ($('#id_ensemble').val() === "") {
             alert("Please choose an ensemble");
+        } else if ($('#name').val().trim() === "") {
+            alert("Please enter a recording name");
         } else if (!$('#link')[0].files.length && !($('#id_recording').val() !== "" && $('#update').val() === "update")) {
             // Only require a file if not updating
             alert("Please choose a file to upload");

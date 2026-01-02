@@ -215,6 +215,9 @@ mysqli_close($f_link);
 <script>
     window.concerts = <?php echo json_encode($concerts, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
     window.ensembles = <?php echo json_encode($ensembles, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
+    // Chunked upload configuration from server
+    window.uploadConfig = <?php echo getChunkedUploadConfig(); ?>;
+    console.log('Upload config:', window.uploadConfig);
 </script>
 <!-- jquery function to add/update database records -->
 <script>
@@ -473,8 +476,9 @@ $(document).ready(function(){
             var file = $('#link')[0].files[0];
             var isUpdate = $('#id_recording').val() !== "" && $('#update').val() === "update";
             
-            // Check if we should use chunked upload (files > 10MB)
-            if (file && shouldUseChunkedUpload(file, 10 * 1024 * 1024)) {
+            // Check if we should use chunked upload based on server configuration
+            var threshold = window.uploadConfig ? window.uploadConfig.thresholdBytes : 7 * 1024 * 1024;
+            if (file && shouldUseChunkedUpload(file, threshold)) {
                 // Use chunked upload for large files
                 handleChunkedRecordingUpload(file, isUpdate);
             } else {
@@ -493,7 +497,8 @@ $(document).ready(function(){
         $('#insert').prop('disabled', true);
         
         var uploader = new ChunkedUploader(file, {
-            chunkSize: 2 * 1024 * 1024, // 2MB chunks
+            uploadUrl: '/index.php?action=upload_chunk', // Use absolute path
+            chunkSize: window.uploadConfig ? window.uploadConfig.chunkSizeBytes : (2 * 1024 * 1024), // Use config or fallback to 2MB
             onProgress: function(percent, message) {
                 $('#uploadProgress .progress-bar')
                     .css('width', percent + '%')

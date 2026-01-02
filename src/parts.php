@@ -299,6 +299,9 @@ mysqli_close($f_link);
   window.instrumentdataArray = <?php echo json_encode($instrumentdataArray, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
   window.instrumentdata = <?php echo json_encode($instrumentdata, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP); ?>;
   window.u_librarian = <?php echo ($u_librarian ? 'true' : 'false'); ?>;
+  // Chunked upload configuration from server
+  window.uploadConfig = <?php echo getChunkedUploadConfig(); ?>;
+  console.log('Upload config:', window.uploadConfig);
 </script>
 <!-- HTML Templates for dynamic content -->
 <script type="text/html" id="composition-list-template">
@@ -877,8 +880,9 @@ $(document).ready(function() {
             
             var file = $('#image_path')[0].files[0];
             
-            // Check if we should use chunked upload (files > 10MB)
-            if (file && shouldUseChunkedUpload(file, 10 * 1024 * 1024)) {
+            // Check if we should use chunked upload based on server configuration
+            var threshold = window.uploadConfig ? window.uploadConfig.thresholdBytes : 7 * 1024 * 1024;
+            if (file && shouldUseChunkedUpload(file, threshold)) {
                 // Use chunked upload for large files
                 handleChunkedPartUpload(file, catalog_number, catno_name);
             } else {
@@ -897,7 +901,8 @@ $(document).ready(function() {
         $('#insert').prop('disabled', true);
         
         var uploader = new ChunkedUploader(file, {
-            chunkSize: 2 * 1024 * 1024, // 2MB chunks
+            uploadUrl: '/index.php?action=upload_chunk', // Use absolute path
+            chunkSize: window.uploadConfig ? window.uploadConfig.chunkSizeBytes : (2 * 1024 * 1024), // Use config or fallback to 2MB
             onProgress: function(percent, message) {
                 $('#uploadProgress .progress-bar')
                     .css('width', percent + '%')

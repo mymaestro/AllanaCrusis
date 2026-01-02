@@ -102,4 +102,15 @@ function ferror_log($error){
         error_log($username."> ".$error);
     }
 }
+
+/* Get chunked upload configuration as JSON for JavaScript */
+function getChunkedUploadConfig() {
+    return json_encode([
+        'enabled' => defined('CHUNKED_UPLOAD_ENABLED') ? CHUNKED_UPLOAD_ENABLED : true,
+        'chunkSizeMB' => defined('CHUNK_SIZE_MB') ? CHUNK_SIZE_MB : 2,
+        'thresholdMB' => defined('CHUNKED_UPLOAD_THRESHOLD_MB') ? CHUNKED_UPLOAD_THRESHOLD_MB : 7,
+        'chunkSizeBytes' => (defined('CHUNK_SIZE_MB') ? CHUNK_SIZE_MB : 2) * 1024 * 1024,
+        'thresholdBytes' => (defined('CHUNKED_UPLOAD_THRESHOLD_MB') ? CHUNKED_UPLOAD_THRESHOLD_MB : 7) * 1024 * 1024
+    ]);
+}
 ?>

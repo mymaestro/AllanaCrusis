@@ -148,4 +148,18 @@ if (!defined('DOWNLOAD_TOKEN_EXPIRY_DAYS')) define('DOWNLOAD_TOKEN_EXPIRY_DAYS',
 if (!defined('REGION'))         define('REGION', 'HOME');
 if (!defined('DEBUG'))          define('DEBUG', 0);
 
+// Chunked Upload Configuration
+// Adjust these based on your PHP configuration and network conditions
+// Rule: CHUNK_SIZE should be less than post_max_size
+// Rule: CHUNKED_UPLOAD_THRESHOLD should be less than post_max_size
+if (!defined('CHUNKED_UPLOAD_ENABLED'))    define('CHUNKED_UPLOAD_ENABLED', true);
+if (!defined('CHUNK_SIZE_MB'))             define('CHUNK_SIZE_MB', 2);      // Chunk size in MB (1-50 recommended)
+if (!defined('CHUNKED_UPLOAD_THRESHOLD_MB')) define('CHUNKED_UPLOAD_THRESHOLD_MB', 7); // Use chunking for files > this size
+
+// Common configurations:
+// Development/Testing:  CHUNK_SIZE_MB=2,  THRESHOLD=7   (for post_max_size=8M)
+// Normal Production:    CHUNK_SIZE_MB=5,  THRESHOLD=50  (for post_max_size=100M)
+// High-Performance:     CHUNK_SIZE_MB=10, THRESHOLD=100 (for post_max_size=200M)
+// Enterprise/LAN:       CHUNK_SIZE_MB=20, THRESHOLD=500 (for post_max_size=500M)
+
 ?>

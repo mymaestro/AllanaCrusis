@@ -16,7 +16,7 @@ class ChunkedUploader {
     constructor(file, options = {}) {
         this.file = file;
         this.chunkSize = options.chunkSize || 2 * 1024 * 1024; // 2MB default
-        this.uploadUrl = options.uploadUrl || 'index.php?action=upload_chunk';
+        this.uploadUrl = options.uploadUrl || '/index.php?action=upload_chunk'; // Use absolute path
         this.onProgress = options.onProgress || (() => {});
         this.onComplete = options.onComplete || (() => {});
         this.onError = options.onError || (() => {});
@@ -142,10 +142,10 @@ class ChunkedUploader {
 /**
  * Helper function to determine if a file should use chunked upload
  * @param {File} file - The file to check
- * @param {number} threshold - Size threshold in bytes (default: 10MB)
+ * @param {number} threshold - Size threshold in bytes (default: 7MB)
  * @returns {boolean}
  */
-function shouldUseChunkedUpload(file, threshold = 10 * 1024 * 1024) {
+function shouldUseChunkedUpload(file, threshold = 7 * 1024 * 1024) {
     return file && file.size > threshold;
 }
 

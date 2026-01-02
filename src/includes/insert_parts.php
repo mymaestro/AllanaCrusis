@@ -331,6 +331,7 @@ if(!empty($_POST)) {
 
         // Use PHPdfer to change metadata if needed
         if ($extension === 'pdf') {
+            $metadataUpdateFailed = false;
             try {
                 ferror_log("Updating PDF metadata for file: " . $fileTmpPath);
                 $newFileName = updatePartPDFMetadata($fileTmpPath, [
@@ -346,39 +347,65 @@ if(!empty($_POST)) {
                 ferror_log("Copying PHPdfer output to destination: " . $destination);
                 
                 if (!copy($newFileName, $destination)) {
-                    $errorMsg = "Failed to save the processed PDF file.";
-                    ferror_log("Failed to copy PHPdfer output to destination: " . $destination);
-                    header('Content-Type: application/json');
-                    echo json_encode(['success' => false, 'error' => $errorMsg]);
-                    exit;
+                    ferror_log("Failed to copy PHPdfer output, will save original file instead");
+                    $metadataUpdateFailed = true;
+                } else {
+                    // Clean up the PHPdfer temporary file
+                    if (file_exists($newFileName)) {
+                        unlink($newFileName);
+                        ferror_log("Cleaned up PHPdfer temporary file: " . $newFileName);
+                    }
+                    
+                    // Clean up chunked upload temp file if applicable
+                    if ($isChunkedUpload && file_exists($fileTmpPath)) {
+                        @unlink($fileTmpPath);
+                        $tempDir = dirname($fileTmpPath);
+                        @rmdir($tempDir);
+                        ferror_log("Cleaned up chunked upload temp file: " . $fileTmpPath);
+                    }
+                    
+                    ferror_log("PDF file processed with metadata and saved successfully: " . $destination);
                 }
                 
-                // Clean up the PHPdfer temporary file
-                if (file_exists($newFileName)) {
-                    unlink($newFileName);
-                    ferror_log("Cleaned up PHPdfer temporary file: " . $newFileName);
-                }
+            } catch (Exception $e) {
+                ferror_log("WARNING: Failed to update PDF metadata (Ghostscript may have crashed): " . $e->getMessage());
+                ferror_log("Continuing with upload - file will be saved without updated metadata");
+                $metadataUpdateFailed = true;
+            }
+            
+            // If metadata update failed, save the original file
+            if ($metadataUpdateFailed) {
+                ferror_log("Saving original PDF file without metadata updates");
                 
-                // Clean up chunked upload temp file if applicable
-                if ($isChunkedUpload && file_exists($fileTmpPath)) {
+                // For chunked uploads, use copy + unlink instead of move_uploaded_file
+                if ($isChunkedUpload) {
+                    if (!copy($fileTmpPath, $destination)) {
+                        $errorMsg = "Failed to save the uploaded file.";
+                        ferror_log("Failed to copy original file to destination: " . $destination);
+                        header('Content-Type: application/json');
+                        echo json_encode(['success' => false, 'error' => $errorMsg]);
+                        exit;
+                    }
+                    // Clean up the temporary file
                     @unlink($fileTmpPath);
                     $tempDir = dirname($fileTmpPath);
                     @rmdir($tempDir);
-                    ferror_log("Cleaned up chunked upload temp file: " . $fileTmpPath);
+                } else {
+                    if (!move_uploaded_file($fileTmpPath, $destination)) {
+                        $errorMsg = "Failed to save the uploaded file.";
+                        ferror_log("Failed to move original file to destination: " . $destination);
+                        header('Content-Type: application/json');
+                        echo json_encode(['success' => false, 'error' => $errorMsg]);
+                        exit;
+                    }
                 }
                 
-                ferror_log("PDF file processed and saved successfully: " . $destination);
-                
-                // Update the image_path variable to store the file name
-                $image_path = $safeName;
-                
-            } catch (Exception $e) {
-                $errorMsg = "Failed to update PDF metadata: " . $e->getMessage();
-                ferror_log("Failed to update PDF metadata: " . $e->getMessage());
-                header('Content-Type: application/json');
-                echo json_encode(['success' => false, 'error' => $errorMsg]);
-                exit;
+                ferror_log("PDF file saved successfully without metadata: " . $destination);
             }
+            
+            // Update the image_path variable to store the file name
+            $image_path = $safeName;
+            
         } else {
             // For non-PDF files, use the original upload process
             ferror_log("Attempting to move uploaded file from: " . $fileTmpPath . " to: " . $destination);

@@ -98,7 +98,8 @@ if(!empty($_POST)) {
 
         // Check file size (only enforce for standard uploads, chunked uploads already validated)
         if (!isset($_POST['uploadedFilePath']) && $fileSize > $maxFileSize) {
-            die("File is too large. Max allowed size is 40MB.");
+            echo json_encode(['success' => false, 'message' => 'File is too large. Max allowed size is 40MB.']);
+            exit;
         }
 
         // Check MIME type
@@ -107,12 +108,14 @@ if(!empty($_POST)) {
         $allowedMimes = [
             'audio/mpeg' => 'mp3',
             'audio/wav'  => 'wav',
+            'audio/x-wav' => 'wav',   // Some systems use this instead of audio/wav
             'audio/flac' => 'flac',
             'audio/x-flac' => 'flac', // Some systems use this
             'audio/ogg'  => 'ogg'
         ];
         if (!array_key_exists($mime, $allowedMimes)) {
-            die("Only MP3, WAV, FLAC, and OGG audio files are allowed. Detected: $mime");
+            echo json_encode(['success' => false, 'message' => "Only MP3, WAV, FLAC, and OGG audio files are allowed. Detected: $mime"]);
+            exit;
         }
 
         // Generate a safe file name with the correct extension
@@ -126,7 +129,8 @@ if(!empty($_POST)) {
         // For chunked uploads, use copy + unlink instead of move_uploaded_file
         if (isset($_POST['uploadedFilePath'])) {
             if (!copy($fileTmpPath, $destination)) {
-                die("Failed to save the uploaded file.");
+                echo json_encode(['success' => false, 'message' => 'Failed to save the uploaded file.']);
+                exit;
             }
             // Clean up the temporary file
             @unlink($fileTmpPath);
@@ -136,7 +140,8 @@ if(!empty($_POST)) {
         } else {
             // Standard upload
             if (!move_uploaded_file($fileTmpPath, $destination)) {
-                die("Failed to save the uploaded file.");
+                echo json_encode(['success' => false, 'message' => 'Failed to save the uploaded file.']);
+                exit;
             }
         }
 
@@ -192,7 +197,8 @@ if(!empty($_POST)) {
         // Always analyze and save metadata, even if tagging was skipped
         $info = $audio->analyze($destination);
         if (isset($info['error'])) {
-            die("Error analyzing audio file: " . implode(', ', $info['error']));
+            echo json_encode(['success' => false, 'message' => 'Error analyzing audio file: ' . implode(', ', $info['error'])]);
+            exit;
         }
 
         $metaFile = $uploadDir . 'meta_' . $safeName . '.json';
@@ -206,7 +212,8 @@ if(!empty($_POST)) {
         $link = mysqli_real_escape_string($f_link, $_POST['linkDisplay']);
         ferror_log("No file uploaded, using link: " . $link);
     } else {
-        die("No file uploaded or an error occurred.");
+        echo json_encode(['success' => false, 'message' => 'No file uploaded or an error occurred.']);
+        exit;
     }
 
     if($_POST["update"] == "update") {

@@ -3,7 +3,7 @@
 /*
 #############################################################################
 # Licensed Materials - Property of ACWE*
-# (C) Copyright Austin Civic Wind Ensemble, 2025 All rights reserved.
+# (C) Copyright Austin Civic Wind Ensemble, 2026 All rights reserved.
 #############################################################################
 */
 

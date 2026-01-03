@@ -82,8 +82,10 @@ function loadConfigFromDatabase() {
             throw new Exception("Config table does not exist");
         }
         
-        // Load all config values
-        $result = $connection->query("SELECT `config_key`, `value`, `type` FROM config WHERE `config_key` IN ('" . implode("','", array_keys($defaults)) . "')");
+        // Load all config values including upload settings
+        $uploadKeys = ['CHUNKED_UPLOAD_ENABLED', 'CHUNK_SIZE_MB', 'CHUNKED_UPLOAD_THRESHOLD_MB'];
+        $allKeys = array_merge(array_keys($defaults), $uploadKeys);
+        $result = $connection->query("SELECT `config_key`, `value`, `type` FROM config WHERE `config_key` IN ('" . implode("','", $allKeys) . "')");
         
         if ($result) {
             while ($row = $result->fetch_assoc()) {
@@ -96,6 +98,13 @@ function loadConfigFromDatabase() {
                     $value = (int)$value;
                 } elseif ($type === 'boolean') {
                     $value = (int)$value;
+                }
+                
+                // Validate upload settings to prevent DoS/misconfiguration
+                if ($key === 'CHUNK_SIZE_MB') {
+                    $value = max(1, min(100, $value)); // Clamp to 1-100 MB
+                } elseif ($key === 'CHUNKED_UPLOAD_THRESHOLD_MB') {
+                    $value = max(1, min(500, $value)); // Clamp to 1-500 MB
                 }
                 
                 define($key, $value);
@@ -148,18 +157,28 @@ if (!defined('DOWNLOAD_TOKEN_EXPIRY_DAYS')) define('DOWNLOAD_TOKEN_EXPIRY_DAYS',
 if (!defined('REGION'))         define('REGION', 'HOME');
 if (!defined('DEBUG'))          define('DEBUG', 0);
 
-// Chunked Upload Configuration
-// Adjust these based on your PHP configuration and network conditions
-// Rule: CHUNK_SIZE should be less than post_max_size
-// Rule: CHUNKED_UPLOAD_THRESHOLD should be less than post_max_size
-if (!defined('CHUNKED_UPLOAD_ENABLED'))    define('CHUNKED_UPLOAD_ENABLED', true);
-if (!defined('CHUNK_SIZE_MB'))             define('CHUNK_SIZE_MB', 2);      // Chunk size in MB (1-50 recommended)
-if (!defined('CHUNKED_UPLOAD_THRESHOLD_MB')) define('CHUNKED_UPLOAD_THRESHOLD_MB', 7); // Use chunking for files > this size
+// ============================================================================
+// CHUNKED UPLOAD CONFIGURATION
+// ============================================================================
+// These settings are now stored in the database and can be managed via the
+// Settings page (/settings.php) in the admin panel.
+//
+// Fallback values below are used if database is unavailable.
+//
+// IMPORTANT: When adjusting via admin panel:
+//   - CHUNK_SIZE_MB should be less than PHP post_max_size
+//   - CHUNKED_UPLOAD_THRESHOLD_MB should be less than PHP post_max_size
+//   - Values are automatically clamped to safe ranges (1-100 MB for chunks, 1-500 MB for threshold)
+//
+// Current PHP settings can be checked with: php -i | grep -E "upload_max|post_max"
+//
+// Recommended presets:
+//   Development (post_max_size=8M):   CHUNK_SIZE_MB=2,  THRESHOLD=7
+//   Production (post_max_size=100M):  CHUNK_SIZE_MB=10, THRESHOLD=80
+//   Enterprise (post_max_size=500M):  CHUNK_SIZE_MB=20, THRESHOLD=300
 
-// Common configurations:
-// Development/Testing:  CHUNK_SIZE_MB=2,  THRESHOLD=7   (for post_max_size=8M)
-// Normal Production:    CHUNK_SIZE_MB=5,  THRESHOLD=50  (for post_max_size=100M)
-// High-Performance:     CHUNK_SIZE_MB=10, THRESHOLD=100 (for post_max_size=200M)
-// Enterprise/LAN:       CHUNK_SIZE_MB=20, THRESHOLD=500 (for post_max_size=500M)
+if (!defined('CHUNKED_UPLOAD_ENABLED'))       define('CHUNKED_UPLOAD_ENABLED', true);
+if (!defined('CHUNK_SIZE_MB'))                define('CHUNK_SIZE_MB', 2);      // Fallback: 2MB chunks
+if (!defined('CHUNKED_UPLOAD_THRESHOLD_MB'))  define('CHUNKED_UPLOAD_THRESHOLD_MB', 7); // Fallback: 7MB threshold
 
 ?>

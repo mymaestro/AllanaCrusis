@@ -113,4 +113,3 @@ function getChunkedUploadConfig() {
         'thresholdBytes' => (defined('CHUNKED_UPLOAD_THRESHOLD_MB') ? CHUNKED_UPLOAD_THRESHOLD_MB : 7) * 1024 * 1024
     ]);
 }
-?>

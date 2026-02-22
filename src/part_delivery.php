@@ -102,7 +102,7 @@ mysqli_close($f_link);
                                 <li><strong>Generate ZIP files:</strong> For each section (Woodwinds, Brass, Percussion, etc.), click <em>Generate ZIP</em> to create a ZIP file that contains:</li>
                                 <ul>
                                     <li>All PDF parts for that section across all compositions in the playgram</li>
-                                    <li>The PDF files insdide the ZIP are named as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
+                                    <li>The PDF files inside the ZIP are named as: <code>[Order] - [Composition Name] - [Part Name].pdf</code></li>
                                     <li>Example: <code>01 - March Grandioso - Flute 1.pdf</code></li>
                                     <li><strong>Note:</strong> Only parts with PDF files are included. Missing PDFs are noted in the generation log.</li>
                                     <li>The button changes to <em>Send ZIP</em> after generation, so that you can email the download instructions.</li>
@@ -295,7 +295,22 @@ $(function() {
     }
 });
 $(document).ready(function() {
-        // Download tokens & ZIP files report loader
+    // Download tokens & ZIP files report loader
+    function loadTokensReport() {
+        $('#tokensReportContent').html('<div class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Loading report...</div>');
+        $.ajax({
+            url: 'index.php?action=fetch_reports',
+            type: 'POST',
+            data: { report_type: 'download_tokens_zips' },
+            success: function(data) {
+                $('#tokensReportContent').html(data);
+            },
+            error: function() {
+                $('#tokensReportContent').html('<div class="alert alert-danger">Error loading report. Please try again.</div>');
+            }
+        });
+    }
+
     $('#showTokensReportBtn').on('click', function() {
         var $collapse = $('#tokensReportCollapse');
         var $icon = $('#showTokensReportIcon i');
@@ -305,20 +320,40 @@ $(document).ready(function() {
         } else {
             $collapse.collapse('show');
             $icon.removeClass('fa-plus').addClass('fa-minus');
-            // Load report via AJAX only if not loaded yet or on every open
-            $('#tokensReportContent').html('<div class="text-center text-muted"><i class="fas fa-spinner fa-spin"></i> Loading report...</div>');
-            $.ajax({
-                url: 'index.php?action=fetch_reports',
-                type: 'POST',
-                data: { report_type: 'download_tokens_zips' },
-                success: function(data) {
-                    $('#tokensReportContent').html(data);
-                },
-                error: function() {
-                    $('#tokensReportContent').html('<div class="alert alert-danger">Error loading report. Please try again.</div>');
-                }
-            });
+            loadTokensReport();
         }
+    });
+
+    // Handle cleanup button clicks in dynamically loaded report content
+    $(document).on('click', '#cleanup-tokens-btn', function() {
+        var button = $(this);
+        var resultDiv = $('#cleanup-result');
+
+        if (!confirm('Are you sure you want to clean up expired tokens and ZIP files? This action cannot be undone.')) {
+            return;
+        }
+
+        button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Cleaning...');
+        resultDiv.html('');
+
+        $.ajax({
+            url: 'index.php?action=delete_expired_tokens',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    resultDiv.html('<div class="alert alert-success"><i class="fas fa-check"></i> ' + response.message + '</div>');
+                    loadTokensReport();
+                } else {
+                    resultDiv.html('<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> ' + response.message + '</div>');
+                }
+                button.prop('disabled', false).html('<i class="fas fa-broom"></i> Clean up');
+            },
+            error: function() {
+                resultDiv.html('<div class="alert alert-danger"><i class="fas fa-times"></i> Error performing cleanup. Please try again.</div>');
+                button.prop('disabled', false).html('<i class="fas fa-broom"></i> Clean up');
+            }
+        });
     });
 
     let currentPlaygramId = null;

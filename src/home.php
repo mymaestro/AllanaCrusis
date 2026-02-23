@@ -113,23 +113,36 @@ while ($row = mysqli_fetch_assoc($res)) {
 
 // Get recent parts activity
 $sql = "SELECT 
-    p.catalog_number,
+    rg.catalog_number,
     c.name as composition_name,
     c.composer,
-    DATE(MAX(p.last_update)) as last_update_date,
+    rg.last_update_date,
     COUNT(p.id_part_type) as parts_updated,
     GROUP_CONCAT(DISTINCT pt.name ORDER BY pt.name SEPARATOR ', ') as part_types_updated,
     'part' as type
-FROM parts p
-LEFT JOIN compositions c ON p.catalog_number = c.catalog_number
+FROM (
+    SELECT
+        p.catalog_number,
+        DATE(p.last_update) as last_update_date,
+        MAX(p.last_update) as last_update_ts
+    FROM parts p
+    GROUP BY p.catalog_number, DATE(p.last_update)
+    ORDER BY last_update_date DESC, last_update_ts DESC
+    LIMIT 5
+) rg
+LEFT JOIN parts p ON p.catalog_number = rg.catalog_number
+    AND p.last_update >= rg.last_update_date
+    AND p.last_update < DATE_ADD(rg.last_update_date, INTERVAL 1 DAY)
+LEFT JOIN compositions c ON rg.catalog_number = c.catalog_number
 LEFT JOIN part_types pt ON p.id_part_type = pt.id_part_type
-GROUP BY p.catalog_number, c.name, c.composer, DATE(p.last_update)
-ORDER BY last_update_date DESC, MAX(p.last_update) DESC
-LIMIT 5";
+GROUP BY rg.catalog_number, c.name, c.composer, rg.last_update_date, rg.last_update_ts
+ORDER BY rg.last_update_date DESC, rg.last_update_ts DESC";
 $recent_parts_activity = array();
 $res = mysqli_query($f_link, $sql);
-while ($row = mysqli_fetch_assoc($res)) {
-    $recent_parts_activity[] = $row;
+if ($res) {
+    while ($row = mysqli_fetch_assoc($res)) {
+        $recent_parts_activity[] = $row;
+    }
 }
 
 // Get compositions by genre
@@ -167,15 +180,29 @@ while ($row = mysqli_fetch_assoc($res)) {
 // Get performance statistics by genre
 $sql = "SELECT 
     g.name as genre_name,
-    COUNT(DISTINCT r.id_recording) as recordings_count,
-    COUNT(DISTINCT CONCAT(ci.id_concert, '-', pi.catalog_number)) as concert_performances,
-    (COUNT(DISTINCT r.id_recording) + COUNT(DISTINCT CONCAT(ci.id_concert, '-', pi.catalog_number))) as total_performances
+    COALESCE(r.recordings_count, 0) as recordings_count,
+    COALESCE(cp.concert_performances, 0) as concert_performances,
+    (COALESCE(r.recordings_count, 0) + COALESCE(cp.concert_performances, 0)) as total_performances
 FROM genres g
-LEFT JOIN compositions c ON g.id_genre = c.genre AND c.enabled = 1
-LEFT JOIN recordings r ON c.catalog_number = r.catalog_number
-LEFT JOIN playgram_items pi ON c.catalog_number = pi.catalog_number
-LEFT JOIN playgrams p ON pi.id_playgram = p.id_playgram
-LEFT JOIN concerts ci ON p.id_playgram = ci.id_playgram
+LEFT JOIN (
+    SELECT
+        c.genre,
+        COUNT(*) as recordings_count
+    FROM recordings r
+    INNER JOIN compositions c ON c.catalog_number = r.catalog_number
+    WHERE c.enabled = 1
+    GROUP BY c.genre
+) r ON r.genre = g.id_genre
+LEFT JOIN (
+    SELECT
+        c.genre,
+        COUNT(DISTINCT ci.id_concert, pi.catalog_number) as concert_performances
+    FROM playgram_items pi
+    INNER JOIN compositions c ON c.catalog_number = pi.catalog_number
+    INNER JOIN concerts ci ON ci.id_playgram = pi.id_playgram
+    WHERE c.enabled = 1
+    GROUP BY c.genre
+) cp ON cp.genre = g.id_genre
 WHERE g.enabled = 1
 GROUP BY g.id_genre, g.name
 HAVING total_performances > 0
@@ -183,8 +210,10 @@ ORDER BY total_performances DESC
 LIMIT 10";
 $performance_stats = array();
 $res = mysqli_query($f_link, $sql);
-while ($row = mysqli_fetch_assoc($res)) {
-    $performance_stats[] = $row;
+if ($res) {
+    while ($row = mysqli_fetch_assoc($res)) {
+        $performance_stats[] = $row;
+    }
 }
 
 // Get concerts by venue

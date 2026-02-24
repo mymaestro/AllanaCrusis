@@ -1,80 +1,167 @@
--- Composer/Arranger Normalization Database Schema
--- This approach creates normalized tables for composers and arrangers
+-- COMPOSER_NORMALIZATION.sql
+--
+-- Purpose:
+--   Import-assistive normalization for composer/arranger values with a SAFE first phase.
+--
+-- Why this shape:
+--   The application currently reads/writes textual `compositions.composer` and `compositions.arranger`
+--   in many places. Immediate FK migration would be disruptive for onboarding.
+--
+-- Strategy:
+--   Phase A (non-breaking): alias/canonical mapping + review queue + cleanup updates
+--   Phase B (optional future): full normalized entity tables + foreign-key migration
 
--- Create composers table
-CREATE TABLE `composers` (
+-- ============================================================
+-- PHASE A: NON-BREAKING, IMPORT-ASSISTIVE NORMALIZATION
+-- ============================================================
+
+CREATE TABLE IF NOT EXISTS `name_aliases` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name_normalized` varchar(255) NOT NULL COMMENT 'Normalized name format: Last, First Middle',
-  `name_display` varchar(255) NOT NULL COMMENT 'Preferred display format',
-  `birth_year` int(4) DEFAULT NULL,
-  `death_year` int(4) DEFAULT NULL,
-  `nationality` varchar(100) DEFAULT NULL,
-  `notes` text DEFAULT NULL COMMENT 'Biographical notes',
+  `entity_type` enum('composer','arranger') NOT NULL,
+  `alias_name` varchar(255) NOT NULL,
+  `canonical_name` varchar(255) NOT NULL COMMENT 'Preferred canonical format, typically Last, First Middle',
+  `confidence` tinyint(3) unsigned NOT NULL DEFAULT 100 COMMENT '100=human-confirmed, lower=heuristic',
+  `source` varchar(64) DEFAULT 'manual' COMMENT 'manual|import|heuristic|seed',
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_normalized` (`name_normalized`),
-  KEY `name_display` (`name_display`)
+  UNIQUE KEY `uq_entity_alias` (`entity_type`, `alias_name`),
+  KEY `idx_entity_canonical` (`entity_type`, `canonical_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Create arrangers table (similar structure)
-CREATE TABLE `arrangers` (
+CREATE TABLE IF NOT EXISTS `name_normalization_review` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name_normalized` varchar(255) NOT NULL COMMENT 'Normalized name format: Last, First Middle',
-  `name_display` varchar(255) NOT NULL COMMENT 'Preferred display format',
-  `birth_year` int(4) DEFAULT NULL,
-  `death_year` int(4) DEFAULT NULL,
-  `nationality` varchar(100) DEFAULT NULL,
-  `notes` text DEFAULT NULL COMMENT 'Biographical notes',
+  `entity_type` enum('composer','arranger') NOT NULL,
+  `raw_name` varchar(255) NOT NULL,
+  `suggested_canonical_name` varchar(255) DEFAULT NULL,
+  `sample_catalog_number` varchar(20) DEFAULT NULL,
+  `sample_composition_name` varchar(255) DEFAULT NULL,
+  `occurrence_count` int(11) NOT NULL DEFAULT 1,
+  `status` enum('pending','approved','rejected','resolved') NOT NULL DEFAULT 'pending',
+  `review_notes` text DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `name_normalized` (`name_normalized`),
-  KEY `name_display` (`name_display`)
+  UNIQUE KEY `uq_review_entity_raw` (`entity_type`, `raw_name`),
+  KEY `idx_review_status` (`status`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Add composer/arranger aliases table for alternate spellings
-CREATE TABLE `composer_aliases` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `composer_id` int(11) NOT NULL,
-  `alias_name` varchar(255) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `composer_id` (`composer_id`),
-  KEY `alias_name` (`alias_name`),
-  CONSTRAINT `fk_composer_aliases_composer` FOREIGN KEY (`composer_id`) REFERENCES `composers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- Seed examples (idempotent)
+INSERT INTO `name_aliases` (`entity_type`, `alias_name`, `canonical_name`, `confidence`, `source`)
+VALUES
+('composer', 'Sousa, J P', 'Sousa, John Philip', 100, 'seed'),
+('composer', 'Sousa, J. P.', 'Sousa, John Philip', 100, 'seed'),
+('composer', 'John P. Sousa', 'Sousa, John Philip', 100, 'seed'),
+('composer', 'J. P. Sousa', 'Sousa, John Philip', 100, 'seed')
+ON DUPLICATE KEY UPDATE
+  `canonical_name` = VALUES(`canonical_name`),
+  `confidence` = GREATEST(`confidence`, VALUES(`confidence`)),
+  `source` = VALUES(`source`);
 
-CREATE TABLE `arranger_aliases` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `arranger_id` int(11) NOT NULL,
-  `alias_name` varchar(255) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  KEY `arranger_id` (`arranger_id`),
-  KEY `alias_name` (`alias_name`),
-  CONSTRAINT `fk_arranger_aliases_arranger` FOREIGN KEY (`arranger_id`) REFERENCES `arrangers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- ------------------------------------------------------------
+-- Operational query A: queue unknown composer names for review
+-- ------------------------------------------------------------
+INSERT INTO `name_normalization_review`
+  (`entity_type`, `raw_name`, `sample_catalog_number`, `sample_composition_name`, `occurrence_count`)
+SELECT
+  'composer' AS entity_type,
+  c.composer AS raw_name,
+  MIN(c.catalog_number) AS sample_catalog_number,
+  MIN(c.name) AS sample_composition_name,
+  COUNT(*) AS occurrence_count
+FROM compositions c
+LEFT JOIN name_aliases a
+  ON a.entity_type = 'composer'
+ AND LOWER(TRIM(a.alias_name)) = LOWER(TRIM(c.composer))
+WHERE c.composer IS NOT NULL
+  AND TRIM(c.composer) <> ''
+  AND a.id IS NULL
+GROUP BY c.composer
+ON DUPLICATE KEY UPDATE
+  `occurrence_count` = VALUES(`occurrence_count`),
+  `sample_catalog_number` = VALUES(`sample_catalog_number`),
+  `sample_composition_name` = VALUES(`sample_composition_name`);
 
--- Update compositions table to use foreign keys
-ALTER TABLE `compositions` 
-ADD COLUMN `composer_id` int(11) DEFAULT NULL AFTER `composer`,
-ADD COLUMN `arranger_id` int(11) DEFAULT NULL AFTER `arranger`,
-ADD KEY `composer_id` (`composer_id`),
-ADD KEY `arranger_id` (`arranger_id`),
-ADD CONSTRAINT `fk_compositions_composer` FOREIGN KEY (`composer_id`) REFERENCES `composers` (`id`) ON DELETE SET NULL,
-ADD CONSTRAINT `fk_compositions_arranger` FOREIGN KEY (`arranger_id`) REFERENCES `arrangers` (`id`) ON DELETE SET NULL;
+-- ------------------------------------------------------------
+-- Operational query B: queue unknown arranger names for review
+-- ------------------------------------------------------------
+INSERT INTO `name_normalization_review`
+  (`entity_type`, `raw_name`, `sample_catalog_number`, `sample_composition_name`, `occurrence_count`)
+SELECT
+  'arranger' AS entity_type,
+  c.arranger AS raw_name,
+  MIN(c.catalog_number) AS sample_catalog_number,
+  MIN(c.name) AS sample_composition_name,
+  COUNT(*) AS occurrence_count
+FROM compositions c
+LEFT JOIN name_aliases a
+  ON a.entity_type = 'arranger'
+ AND LOWER(TRIM(a.alias_name)) = LOWER(TRIM(c.arranger))
+WHERE c.arranger IS NOT NULL
+  AND TRIM(c.arranger) <> ''
+  AND a.id IS NULL
+GROUP BY c.arranger
+ON DUPLICATE KEY UPDATE
+  `occurrence_count` = VALUES(`occurrence_count`),
+  `sample_catalog_number` = VALUES(`sample_catalog_number`),
+  `sample_composition_name` = VALUES(`sample_composition_name`);
 
--- Example data
-INSERT INTO `composers` (`name_normalized`, `name_display`, `birth_year`, `death_year`, `nationality`) VALUES
-('Sousa, John Philip', 'John Philip Sousa', 1854, 1932, 'American'),
-('Mozart, Wolfgang Amadeus', 'Wolfgang Amadeus Mozart', 1756, 1791, 'Austrian'),
-('Williams, John', 'John Williams', 1932, NULL, 'American'),
-('Hall, Robert B.', 'Robert B. Hall', 1858, 1907, 'American');
+-- ----------------------------------------------------------------
+-- Operational query C: apply canonical updates using approved aliases
+-- ----------------------------------------------------------------
+UPDATE compositions c
+JOIN name_aliases a
+  ON a.entity_type = 'composer'
+ AND LOWER(TRIM(a.alias_name)) = LOWER(TRIM(c.composer))
+SET c.composer = a.canonical_name
+WHERE c.composer IS NOT NULL
+  AND TRIM(c.composer) <> ''
+  AND c.composer <> a.canonical_name;
 
--- Example aliases for common misspellings
-INSERT INTO `composer_aliases` (`composer_id`, `alias_name`) VALUES
-((SELECT id FROM composers WHERE name_normalized = 'Sousa, John Philip'), 'Sousa, J P'),
-((SELECT id FROM composers WHERE name_normalized = 'Sousa, John Philip'), 'Sousa, J. P.'),
-((SELECT id FROM composers WHERE name_normalized = 'Sousa, John Philip'), 'John P. Sousa'),
-((SELECT id FROM composers WHERE name_normalized = 'Sousa, John Philip'), 'J. P. Sousa');
+UPDATE compositions c
+JOIN name_aliases a
+  ON a.entity_type = 'arranger'
+ AND LOWER(TRIM(a.alias_name)) = LOWER(TRIM(c.arranger))
+SET c.arranger = a.canonical_name
+WHERE c.arranger IS NOT NULL
+  AND TRIM(c.arranger) <> ''
+  AND c.arranger <> a.canonical_name;
+
+-- ------------------------------------------------------------
+-- Optional reporting view for UI/MCP quality checks
+-- ------------------------------------------------------------
+CREATE OR REPLACE VIEW `v_name_normalization_health` AS
+SELECT
+  'composer' AS entity_type,
+  COUNT(*) AS total_rows,
+  SUM(CASE WHEN c.composer IS NULL OR TRIM(c.composer) = '' THEN 1 ELSE 0 END) AS blank_rows,
+  SUM(CASE WHEN r.id IS NOT NULL AND r.status = 'pending' THEN 1 ELSE 0 END) AS pending_review_rows
+FROM compositions c
+LEFT JOIN name_normalization_review r
+  ON r.entity_type = 'composer'
+ AND r.raw_name = c.composer
+UNION ALL
+SELECT
+  'arranger' AS entity_type,
+  COUNT(*) AS total_rows,
+  SUM(CASE WHEN c.arranger IS NULL OR TRIM(c.arranger) = '' THEN 1 ELSE 0 END) AS blank_rows,
+  SUM(CASE WHEN r.id IS NOT NULL AND r.status = 'pending' THEN 1 ELSE 0 END) AS pending_review_rows
+FROM compositions c
+LEFT JOIN name_normalization_review r
+  ON r.entity_type = 'arranger'
+ AND r.raw_name = c.arranger;
+
+
+-- ============================================================
+-- PHASE B: OPTIONAL FUTURE FULL NORMALIZATION (BREAKING CHANGE)
+-- ============================================================
+-- Notes:
+--   Keep this for a later modernization phase, after code has moved from
+--   text fields to FK-backed joins across UI/API/search/reporting.
+--
+-- Potential future tables:
+--   composers(id, name_normalized, name_display, ...)
+--   arrangers(id, name_normalized, name_display, ...)
+--   compositions.composer_id / compositions.arranger_id FKs
+--
+-- Do not apply Phase B until the application has explicit compatibility support.

@@ -5,205 +5,341 @@
 
 This roadmap provides a phased, best-practice approach to modernizing the AllanaCrusis application for maintainability, scalability, and future integration (API, LLM, MCP, mobile, etc.). Each phase includes rationale, key actions, and practical examples.
 
+### Strategic Outcome for 2.0
+
+By the end of this roadmap, AllanaCrusis should support:
+
+- A stable, versioned API layer over core library data
+- A role-aware MCP server for natural-language questions about the music library
+- Explainable insights for search, playgram readiness, and data quality
+- A safe path from read-only AI insights to optional workflow automation
+
+### Priority User Questions to Enable
+
+- "What grade 3-4 works do we have under 7 minutes with complete parts?"
+- "What in upcoming playgrams is missing originals or PDFs?"
+- "Suggest a balanced 40-minute program for our ensemble."
+- "Which compositions have metadata gaps that hurt discoverability?"
+
+---
+
+## Phase 0: Data Onboarding & Migration (Adoption Critical)
+
+**Why this comes first?**  
+Most community ensembles start with spreadsheets/Google Sheets. If migration is hard, adoption stalls regardless of later AI features.
+
+**Primary objective:**
+- Get new organizations from “messy spreadsheet” to “searchable library with usable metadata” in hours, not weeks.
+
+**Mechanism to implement:**
+
+1. **Template-first onboarding package**
+  - Provide canonical CSV templates for:
+    - compositions (required, first-class path)
+    - composition notes / librarian notes (required if available)
+    - parts (optional advanced template)
+    - part gap notes (optional: free-text such as "missing 2nd Trumpet")
+  - Include required columns, accepted values, and examples in row 2.
+
+2. **Two-pass import workflow**
+  - **Pass A (quick start supporting data):** preload standard genres, ensembles, instruments, part types, and paper sizes.
+  - **Pass B (library data):** compositions first; parts optional as a second step.
+  - Prevents foreign-key and lookup failures during initial migration.
+
+2.5 **Quick Start starter (recommended default)**
+  - Offer a one-click "Community Band/Orchestra starter" pack with sensible defaults for supporting data.
+  - Allow optional edits after preload, but avoid blocking composition import on full customization.
+  - Use this starter to guide mapping and validation during composition import.
+
+3. **Preview + dry-run validator**
+  - Upload CSV (or Google Sheet export) and run validation before writing data.
+  - Return row-level errors/warnings:
+    - missing required fields
+    - invalid enum/value mappings
+    - duplicate catalog numbers
+    - unresolved references (genre/ensemble/part type/paper size)
+  - Provide downloadable “fix report” CSV.
+
+4. **Column mapping UI + saved mapping profiles**
+  - Let users map source columns (e.g., "Piece Title") to system fields (`name`).
+  - Save org-specific mapping profiles to reuse for future imports.
+
+5. **Normalization and deduplication assist**
+  - Suggest canonical forms for composer/arranger names.
+  - Flag likely duplicates using rules (`catalog_number`, normalized title+composer).
+  - Allow merge/skip decisions during import review.
+  - Parse common notes patterns (e.g., "missing 2nd Trumpet") into structured part-gap flags for later remediation.
+  - Back this with alias/review tables (see `COMPOSER_NORMALIZATION.sql` Phase A) so normalization is non-breaking and repeatable.
+
+6. **Google Sheets-friendly path**
+  - Support import from:
+    - downloaded CSV files
+    - published CSV URLs from Google Sheets (read-only)
+  - Keep first implementation simple: poll CSV URL on demand, no OAuth required.
+
+7. **Chunked/background import for large libraries**
+  - Reuse chunked-upload patterns for large CSV files.
+  - Process in batches with resumable jobs and progress indicators.
+
+8. **Post-import QA report**
+  - Immediately produce a migration summary:
+    - inserted/updated/skipped/error counts
+    - missing metadata hotspots
+    - compositions imported without structured part inventories (expected for many orgs)
+    - inferred part gaps from notes (e.g., missing 2nd Trumpet)
+    - parts without files
+
+**Reinforcement for AI/MCP outcome:**
+- Better ingestion quality directly improves search relevance, recommendations, and natural-language answer reliability.
+- Mapping profiles + validation outputs become training examples for future AI-assisted import.
+
+**Success criteria for Phase 0:**
+- A first-time librarian can import at least 70-80% of composition-level legacy spreadsheet data in one session, even without structured part inventories.
+- Validation errors are actionable and row-specific.
+- Imported data is immediately usable in search, reports, and playgram workflows.
+
+**Implementation runbook:**
+- See `IMPORT_ONBOARDING_FLOW.md` for the exact import → review queue → alias approval → canonical update SQL sequence.
+- See `CSV_TEMPLATE_PACK_SPEC.md` for template headers, field rules, validation codes, and sample rows.
+
 ---
 
 ## Phase 1: Database Foundation
 
 **Why first?**  
-A robust, normalized, and well-indexed database is the foundation for all future improvements.
+A robust, normalized, and indexed data model is the foundation for reliable insights and APIs.
 
 **Actions:**
-- Review and apply database structure improvements:
+- Apply schema hardening:
   - Use utf8mb4 for all tables/columns.
-  - Add missing indexes, foreign keys, and audit columns (created_at, updated_at).
-  - Normalize tables (e.g., split user roles into a join table).
-  - Use INT/AUTO_INCREMENT for primary keys where possible.
-  - Add TINYINT(1) for booleans, TEXT for long descriptions.
-- Migrate data as needed (e.g., update charsets, split roles).
-- Add automated database backups and migration scripts.
+  - Add missing indexes, foreign keys, and audit columns (`created_at`, `updated_at`).
+  - Normalize role storage (move from string roles toward join-table model).
+  - Use `INT/AUTO_INCREMENT` primary keys where practical.
+  - Use `TINYINT(1)` for booleans and `TEXT` for long descriptions.
+- Add migration scripts and automated backups.
+- Add analytics-ready indexes for frequent insight queries:
+  - `compositions(enabled, grade, duration, genre, ensemble)`
+  - `parts(catalog_number, id_part_type, originals_count)`
+  - `playgrams(performance_date, enabled)` and `playgram_items(id_playgram, comp_order)`
+- Publish a lightweight data dictionary for core entities and join paths.
 
-**Example:**
-```sql
-ALTER TABLE users ADD COLUMN created_at DATETIME DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE users MODIFY COLUMN roles VARCHAR(255) NULL;
--- Create user_roles table for many-to-many relationship
-CREATE TABLE user_roles (
-  user_id INT UNSIGNED,
-  role_id INT UNSIGNED,
-  PRIMARY KEY (user_id, role_id),
-  FOREIGN KEY (user_id) REFERENCES users(id_users),
-  FOREIGN KEY (role_id) REFERENCES roles(id_role)
-);
-```
+**Reinforcement for AI/MCP outcome:**
+- Treat this phase as the quality contract for natural-language answers.
+- Add data-quality checks for null/invalid values in planning-critical fields (`grade`, `duration`, `genre`, `ensemble`, `enabled`).
 
 ---
 
 ## Phase 2: Preparation & Testing
 
 **Why now?**  
-Testing and code audit ensure you can safely refactor and catch regressions early.
+Testing and code audit reduce regression risk before architectural migration.
 
 **Actions:**
-- Audit all current includes, CRUD scripts, and their usage.
-- Add automated tests for critical business logic and data access.
-- Introduce PDO for new code, but keep mysqli for legacy scripts.
+- Audit all include scripts and CRUD usage patterns.
+- Add automated tests for critical business logic and data-access paths.
+- Introduce PDO for new code while keeping mysqli for legacy paths during transition.
+- Add baseline tests for AI-critical queries:
+  - Search correctness and bounds
+  - Readiness/risk report correctness
+  - Program-duration aggregation correctness
+- Create a small fixture database for deterministic insight test cases.
 
-**Example:**
-```php
-// Use PDO for new DB access
-$dsn = "mysql:host=...;dbname=...;charset=utf8mb4";
-$pdo = new PDO($dsn, $user, $pass, [
-  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-]);
-```
+**Reinforcement for AI/MCP outcome:**
+- Require repeatable test coverage for each new insight endpoint/tool query.
+- Add regression checks for role access (`administrator`, `librarian`, `user`).
 
 ---
 
 ## Phase 3: API & Architecture
 
 **Why now?**  
-A modern API unlocks integration, mobile, and LLM/MCP access.
+A clean API unlocks integration, mobile, and MCP tooling.
 
 **Actions:**
-- Set up a basic router (or micro-framework) for new API endpoints.
-- For each resource (e.g., instruments, parts), create a RESTful controller using PDO.
-- Expose new endpoints (e.g., /api/v1/instruments) alongside existing scripts.
+- Establish `/api/v1/` with shared middleware and routing.
+- Create RESTful controllers per resource domain using PDO.
+- Expose API endpoints alongside legacy include scripts during migration.
+- Standardize response envelope (`success`, `data`, `error`, `meta`).
+- Implement role-aware middleware reusable by API and MCP integration layer.
+- Add insight-oriented endpoints:
+  - `/api/v1/insights/search`
+  - `/api/v1/insights/playgram-readiness`
+  - `/api/v1/insights/library-gaps`
 
-**Example Directory Structure:**
-```
-src/
-  api/
-    v1/
-      index.php
-      InstrumentController.php
-      PartController.php
-      ...
-  includes/
-    ... (legacy or shared code)
-```
-
-**Example Router:**
-```php
-// src/api/v1/index.php
-if (preg_match('#^/api/v1/instruments(?:/(\\d+))?$#', $path, $matches)) {
-  $controller = new InstrumentController();
-  $id = $matches[1] ?? null;
-  switch ($method) {
-    case 'GET': echo $id ? $controller->show($id) : $controller->index(); break;
-    case 'POST': echo $controller->store(); break;
-    case 'PUT': case 'PATCH': echo $controller->update($id); break;
-    case 'DELETE': echo $controller->destroy($id); break;
-    default: http_response_code(405); echo json_encode(['error' => 'Method Not Allowed']);
-  }
-  exit;
-}
-```
+**Reinforcement for AI/MCP outcome:**
+- Keep insight endpoints deterministic and parameterized.
+- Include explainability in response payloads (applied filters, counts, rationale).
 
 ---
 
 ## Phase 4: Incremental Migration
 
 **Why incremental?**  
-Minimizes risk and allows for continuous delivery.
+Minimizes delivery risk while shipping value continuously.
 
 **Actions:**
-- Update frontend AJAX for one feature/page at a time to use the new API.
-- Gradually migrate more features/pages to use the new API endpoints.
-- Refactor business logic into reusable classes/services as you go.
-- Remove or archive legacy scripts as their features are replaced.
+- Migrate one page/workflow at a time from include-driven AJAX to API calls.
+- Refactor shared query/business logic into service methods.
+- Remove/archive legacy scripts once replacement paths are stable.
+- Prioritize AI-value migration order:
+  1. `search` workflows
+  2. `reports` and readiness workflows
+  3. `playgram_builder` candidate/duration workflows
 
-**Example:**
-- Migrate `instruments.php` to use `/api/v1/instruments` for all CRUD.
-- Once stable, remove `fetch_instruments.php`, `insert_instruments.php`, etc.
+**Reinforcement for AI/MCP outcome:**
+- UI and MCP must consume the same service-backed query logic to avoid drift.
 
 ---
 
 ## Phase 5: Modernization & Expansion
 
 **Why last?**  
-These steps add value once the core is modern and stable.
+These capabilities pay off after architecture is stable.
 
 **Actions:**
-- Remove old mysqli code and scripts.
-- Add authentication (OAuth2/JWT), rate limiting, and documentation to the API.
-- Optimize, test, and document the new architecture.
-- Add support for webhooks, bulk export/import, and LLM/MCP-specific endpoints.
-- Open up the API for mobile, LLM, or third-party integrations.
+- Complete mysqli retirement for migrated domains.
+- Add authentication hardening (OAuth2/JWT where needed), rate limiting, and API docs.
+- Expand support for webhooks and bulk export/import.
+- Add observability for insight behavior:
+  - Query latency and timeout rates
+  - Row count distributions
+  - Most common natural-language intents
+  - Error categories (permission, validation, data gaps)
+
+**Reinforcement for AI/MCP outcome:**
+- Progress from read-only insight tools to optional assisted actions with explicit confirmations.
 
 ---
 
-## Best Practices & Examples
+## Phase 6: MCP Delivery Track (Natural-Language Insights)
 
-- **API-First:** Use RESTful or GraphQL APIs for all data access.
-- **Authentication:** Use OAuth2/JWT for secure, token-based access.
-- **Documentation:** Use OpenAPI/Swagger for API docs.
-- **Testing:** Add unit/integration tests for all endpoints.
-- **Frontend:** Use fetch/axios and a modern JS framework for UI.
-- **Accessibility:** Follow ARIA and i18n best practices.
-- **Security:** Sanitize/validate all inputs, use HTTPS, audit dependencies.
+**Why this phase?**  
+Operationalizes AI outcomes using hardened API and data layers from Phases 1-5.
+
+**MVP scope (read-only first):**
+- Implement role-aware deterministic MCP tools:
+  - `search_compositions_nl`
+  - `playgram_readiness_report`
+  - `library_gap_analysis`
+- Ensure each tool returns:
+  - concise answer text
+  - structured evidence rows
+  - explainability metadata (filters, assumptions)
+
+**Implementation checklist:**
+1. Create MCP server project and secure DB/API connectivity.
+2. Enforce input validation, query bounds, and execution timeouts.
+3. Map app roles to tool-level permissions.
+4. Add fixture-backed deterministic tests.
+5. Publish usage examples for librarians and directors.
+
+**Phase 6.5 (next tools):**
+- Add `recommend_program_candidates` for duration/grade/genre-balanced suggestions.
+- Add metadata normalization suggestion tools.
+
+**Security guardrails:**
+- Read-only by default.
+- Parameterized queries only.
+- Enforce row limits and timeout limits.
+- Redact sensitive file-path details for non-privileged users.
 
 ---
 
-## Sample Migration Plan
+## Outcome-Driven Milestones
 
-1. Inventory all includes and their usage.
-2. Create `/api/v1/` and migrate one entity (e.g., instruments) as a test.
-3. Update JS in `instruments.php` to use the new API endpoint and handle JSON.
-4. Add token/session checks to API endpoints.
-5. Repeat for other entities (parts, users, etc.).
-6. Write API docs for each endpoint.
-7. Remove/archive old include files after migration.
+### Milestone A: API Readiness
+- Versioned API is stable for search, reports, playgrams, and parts.
+- Shared response envelope and role checks are in place.
+
+### Milestone B: Insight Readiness
+- Deterministic insight endpoints produce explainable outputs.
+- Baseline query tests pass for search/readiness/gap analysis.
+
+### Milestone C: MCP MVP Live
+- Users can ask natural-language questions and receive evidence-backed answers.
+- Librarians can triage readiness risks directly from MCP results.
+
+### Milestone D: Planning Assistant
+- Program candidate recommendations are available with explicit rationale.
 
 ---
 
-### Example: mysqli to PDO
+## Best Practices
+
+- **API-first:** centralize all data access behind versioned APIs/services.
+- **Security-first:** validate/sanitize inputs and enforce least privilege.
+- **Explainability-first:** every insight should include enough evidence to verify.
+- **Testing-first:** add unit/integration tests for core endpoints and tool paths.
+- **Documentation-first:** maintain OpenAPI specs and MCP tool contracts.
+
+---
+
+## Consolidated Migration Plan
+
+1. Inventory and classify includes by domain (`search`, `reports`, `playgrams`, `parts`, `recordings`, admin).
+2. Create `/api/v1/` foundation with middleware (auth, role checks, validation, envelope).
+3. Migrate one CRUD domain first (recommended: instruments).
+4. Migrate AI-critical read domains next (search, readiness, playgram views).
+5. Move SQL into service methods consumed by both UI and MCP.
+6. Add insight endpoints (`/insights/search`, `/insights/playgram-readiness`, `/insights/library-gaps`).
+7. Launch read-only MCP tools on these endpoints.
+8. Add fixture-backed tests for correctness, role access, and explainability fields.
+9. Add observability dashboard for usage and failures.
+10. Expand to recommendation tools after quality/security gates pass.
+
+---
+
+## Refactor Effort Estimate
+
+### Workstream Estimates
+
+| Workstream | Scope | Typical Effort |
+|---|---|---|
+| API foundation | Router, middleware, response envelope, auth hooks | 1-2 weeks |
+| CRUD migration | `fetch_*` / `select_*` / `insert_*` / `delete_*` / `update_*` | 1-2h per simple endpoint; 2-4h for complex endpoints |
+| Frontend migration | Replace include-driven AJAX with API client calls | 2-4h per major page |
+| Insight endpoints | Search/readiness/gaps deterministic read endpoints | 1-2 weeks |
+| MCP MVP | 3 read-only tools + tests + guardrails | 2-3 weeks |
+| Documentation | OpenAPI + prompt cookbook + runbooks | Ongoing, 1h+ per endpoint/tool |
+
+### Total Program Estimate (sequential baseline)
+
+- **Core API modernization:** ~4-7 weeks
+- **MCP insight MVP:** +2-3 weeks
+- **Planning-assistant extension:** +2-4 weeks
+
+Parallel work can reduce calendar time.
+
+---
+
+## Example Modernization Snippets
+
+### Example: `mysqli` to PDO
+
 ```php
+// Legacy
 $f_link = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-```php
+// Modern
 $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
 $pdo = new PDO($dsn, DB_USER, DB_PASS, [
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+]);
+
+$stmt = $pdo->prepare("SELECT * FROM instruments WHERE id_instrument = :id");
 $stmt->execute(['id' => $id]);
 $row = $stmt->fetch();
-- Replace all mysqli_connect/f_sqlConnect with PDO connection code.
-- Use `$pdo->prepare()` and `$stmt->execute()` for queries with variables.
-
-
----
-
-## 11. Example: RESTful API Structure for CRUD
-
-**Best Practice:**
-Group CRUD operations by resource/entity and use a centralized router/controller. This is more maintainable and scalable than one script per operation/table.
-
-### Example Directory Structure
-
-```
-src/
-  api/
-  v1/
-    index.php         # Main API entrypoint/router
-    InstrumentController.php
-    PartController.php
-    UserController.php
-    ...
-  includes/
-  ... (legacy or shared code)
 ```
 
-### Example Router (index.php)
+### Example: RESTful Router Pattern
+
 ```php
 // src/api/v1/index.php
-require_once 'InstrumentController.php';
-// ... other controllers
-
-$path = $_SERVER['REQUEST_URI'];
-$method = $_SERVER['REQUEST_METHOD'];
-
 if (preg_match('#^/api/v1/instruments(?:/(\d+))?$#', $path, $matches)) {
   $controller = new InstrumentController();
   $id = $matches[1] ?? null;
+
   switch ($method) {
     case 'GET':
       echo $id ? $controller->show($id) : $controller->index();
@@ -220,256 +356,18 @@ if (preg_match('#^/api/v1/instruments(?:/(\d+))?$#', $path, $matches)) {
       break;
     default:
       http_response_code(405);
-      echo json_encode(['error' => 'Method Not Allowed']);
+      echo json_encode(['success' => false, 'error' => 'Method Not Allowed']);
   }
   exit;
 }
-// ... more routes
-```
-
-### Example Controller (InstrumentController.php)
-```php
-class InstrumentController {
-  public function index() {
-    // Return all instruments as JSON
-  }
-  public function show($id) {
-    // Return a single instrument as JSON
-  }
-  public function store() {
-    // Create a new instrument from POST data
-  }
-  public function update($id) {
-    // Update instrument with PUT/PATCH data
-  }
-  public function destroy($id) {
-    // Delete instrument
-  }
-}
-```
-
-### Benefits
-- Clean, RESTful URLs
-- Centralized validation, authentication, and error handling
-- Easy to extend for new resources or endpoints
-- Ready for modern web/mobile/LLM integration
-
----
-
----
-
-## 1. List of `src/includes` Files
-
-- admin_fetch_users.php
-- admin_insert_users.php
-- admin_select_users.php
-- delete_compositions.php
-- delete_expired_tokens.php
-- delete_partcollections.php
-- delete_parts.php
-- delete_playgrams.php
-- delete_records.php
-- download_part.php
-- email_verification.php
-- fetch_composition_parts.php
-- fetch_compositions.php
-- fetch_concerts.php
-- fetch_ensembles.php
-- fetch_genres.php
-- fetch_instruments.php
-- fetch_instruments_list.php
-- fetch_login.php
-- fetch_papersizes.php
-- fetch_partcollections.php
-- fetch_parts.php
-- fetch_parts_data.php
-- fetch_parttypes.php
-- fetch_parttypes_list.php
-- fetch_playgram_distribution.php
-- fetch_playgram_items.php
-- fetch_playgrams.php
-- fetch_recordings.php
-- fetch_reports.php
-- fetch_section_instruments.php
-- fetch_sections.php
-- fetch_sections_list.php
-- footer.php
-- functions.php
-- header.php
-- insert_compositions.php
-- insert_concerts.php
-- insert_ensembles.php
-- insert_genres.php
-- insert_instrumentation.php
-- insert_instruments.php
-- insert_papersizes.php
-- insert_partcollections.php
-- insert_parts.php
-- insert_parttypes.php
-- insert_playgrams.php
-- insert_recordings.php
-- insert_section_instruments.php
-- insert_sections.php
-- navbar.php
-- passwordLibClass.php
-- password_hash.php
-- password_reset.php
-- report_missing_parts.php
-- reset_password.php
-- search_compositions.php
-- select_composition_parts.php
-- select_compositions.php
-- select_concerts.php
-- select_ensembles.php
-- select_genres.php
-- select_instruments.php
-- select_papersizes.php
-- select_partcollections.php
-- select_parts.php
-- select_parttypes.php
-- select_playgrams.php
-- select_recordings.php
-- select_sections.php
-- sound.php
-- table2CSV.js
-- update_enabled_status.php
-- update_instruments_scoreorder.php
-- update_playgramorder.php
-- update_scoreorder.php
-- upload_part.php
-- upload_recording.php
-
----
-
-## 2. Typical Usage Patterns
-
-- Most files are included via `require_once` in main PHP pages (e.g., `instruments.php`, `parts.php`).
-- They handle CRUD operations for various entities (instruments, parts, users, etc.).
-- Data is often returned as HTML fragments or JSON, depending on the file.
-
----
-
-## 3. Example Pages Using These Includes
-
-- `src/instruments.php` uses:
-  - fetch_instruments.php
-  - insert_instruments.php
-  - select_instruments.php
-  - delete_parts.php (for deletion logic)
-- `src/parts.php` uses:
-  - fetch_parts.php
-  - insert_parts.php
-  - delete_parts.php
-  - select_parts.php
-- `src/index.php` uses:
-  - fetch_compositions.php
-  - fetch_recordings.php
-- Many other pages use similar patterns for other entities.
-
----
-
-## 4. Refactor Effort Estimate
-
-### General Steps for Each File
-
-1. **Convert to API Endpoint:**
-   - Change output to JSON (not HTML).
-   - Use RESTful conventions (GET, POST, PUT, DELETE).
-   - Validate and sanitize all input.
-   - Standardize error and success responses.
-
-2. **Authentication:**
-   - Add token-based authentication (e.g., JWT or session tokens).
-
-3. **Update Frontend:**
-   - Update AJAX calls to use new API endpoints and handle JSON responses.
-   - Refactor any HTML fragment handling to use client-side rendering.
-
-4. **Documentation:**
-   - Document each endpoint (input, output, errors).
-
-### Effort by File Type
-
-| File Type                | Count | Effort per File | Notes |
-|--------------------------|-------|-----------------|-------|
-| fetch_* / select_*       | ~30   | 1-2h            | Convert to GET/POST, JSON output |
-| insert_*                 | ~12   | 1-2h            | Convert to POST, JSON output |
-| delete_*                 | ~8    | 1-2h            | Convert to DELETE, JSON output |
-| update_*                 | ~4    | 1-2h            | Convert to PUT/PATCH, JSON output |
-| Other (auth, utils, etc) | ~10   | 2-4h            | More complex, may require extra logic |
-
-**Total Estimate:**  
-- Simple CRUD includes: 1-2 hours each  
-- Complex includes (auth, file upload, reporting): 2-4 hours each  
-- Frontend refactor: 2-4 hours per main page  
-- Documentation: 1 hour per endpoint
-
----
-
-## 5. Integration Impact
-
-- All main pages using AJAX or form POSTs to includes will need to be updated to use the new API endpoints.
-- Mobile and external integrations will be much easier, as all data will be accessible via documented JSON APIs.
-- Consider using a router or micro-framework (e.g., Slim, Lumen) for cleaner API structure.
-
----
-
-## 6. Recommendations
-
-- Start with the most-used entities (instruments, parts, users).
-- Build a versioned API (e.g., `/api/v1/instruments`).
-- Gradually migrate frontend to use the new API.
-- Add automated tests for each endpoint.
-- Document all endpoints for future integrators.
-
----
-
-## 7. Sample API Refactor: `fetch_instruments.php`
-
-**Current:**
-- Accepts POST, returns HTML or JSON depending on input.
-- Used by `instruments.php` for AJAX table and detail fetches.
-
-**API Refactor Example:**
-```php
-// api/v1/instruments.php
-header('Content-Type: application/json');
-require_once(__DIR__ . '/../../config/config.php');
-require_once(__DIR__ . '/../includes/functions.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-    $id = $_GET['id_instrument'] ?? null;
-    if ($id) {
-        $sql = "SELECT * FROM instruments WHERE id_instrument = '" . mysqli_real_escape_string($f_link, $id) . "'";
-        $res = mysqli_query($f_link, $sql);
-        $row = mysqli_fetch_assoc($res);
-        echo json_encode(['success' => true, 'data' => $row]);
-    } else {
-        $sql = "SELECT id_instrument, name FROM instruments WHERE enabled = 1 ORDER BY collation;";
-        $res = mysqli_query($f_link, $sql);
-        $data = [];
-        while ($row = mysqli_fetch_assoc($res)) {
-            $data[] = $row;
-        }
-        echo json_encode(['success' => true, 'data' => $data]);
-    }
-    mysqli_close($f_link);
-    exit;
-}
-echo json_encode(['success' => false, 'error' => 'Invalid request']);
 ```
 
 ---
 
-## 8. Sample Migration Plan
+## Appendix: Include-Layer Reality (Summary)
 
-1. **Inventory:** List all includes and their usage in main pages.
-2. **API Layer:** Create `/api/v1/` directory and migrate one entity (e.g., instruments) as a test.
-3. **Frontend Update:** Update JS in `instruments.php` to use the new API endpoint and handle JSON.
-4. **Authentication:** Add token/session checks to API endpoints.
-5. **Iterate:** Repeat for other entities (parts, users, etc.).
-6. **Documentation:** Write API docs for each endpoint.
-7. **Deprecate:** Remove or archive old include files after migration.
+- The legacy include layer is broad and mostly CRUD-shaped (`fetch_*`, `select_*`, `insert_*`, `delete_*`, `update_*`).
+- Key pages (`search`, `parts`, `playgram_builder`, `reports`, `recordings`) already contain logic that should be promoted into shared API services.
+- Migrate domain-by-domain (not file-by-file) so user-visible AI/MCP value arrives earlier.
 
 ---

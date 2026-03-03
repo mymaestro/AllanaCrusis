@@ -47,7 +47,7 @@ switch($action) {
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, "ss", $email, $token);
             mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
+            safeMysqliStmtClose($stmt);
             echo json_encode(['success' => true]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Database error.']);
@@ -95,21 +95,27 @@ switch($action) {
 mysqli_close($f_link);
 
 function loadPlaygramData($f_link, $playgram_id) {
+    $stmt = null;
+    $result = null;
+
     // Get playgram info
     $sql = "SELECT id_playgram, name, description FROM playgrams WHERE id_playgram = ? AND enabled = 1";
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    if (mysqli_num_rows($result) == 0) {
-        return ['success' => false, 'message' => 'Playgram not found.'];
-    }
-    
-    $playgram = mysqli_fetch_assoc($result);
-    
-    // Get compositions in playgram with parts info
-    $sql = "SELECT 
+    try {
+        $stmt = mysqli_prepare($f_link, $sql);
+        mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) == 0) {
+            return ['success' => false, 'message' => 'Playgram not found.'];
+        }
+
+        $playgram = mysqli_fetch_assoc($result);
+        safeMysqliResultFree($result);
+        safeMysqliStmtClose($stmt);
+
+        // Get compositions in playgram with parts info
+        $sql = "SELECT 
                 pi.comp_order,
                 pi.catalog_number,
                 c.name as composition_name,
@@ -123,24 +129,26 @@ function loadPlaygramData($f_link, $playgram_id) {
             WHERE pi.id_playgram = ? AND c.enabled = 1
             GROUP BY pi.comp_order, pi.catalog_number, c.name, c.composer
             ORDER BY pi.comp_order";
-    
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    $compositions = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $compositions[] = $row;
-    }
-    
-    // Get section_ids array from POST
-    $section_ids = isset($_POST['section_ids']) && is_array($_POST['section_ids']) ? $_POST['section_ids'] : [];
 
-    if (!empty($section_ids)) {
-        // Filter by provided section IDs
-        $in = implode(',', array_map('intval', $section_ids));
-        $sql = "SELECT 
+        $stmt = mysqli_prepare($f_link, $sql);
+        mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+
+        $compositions = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $compositions[] = $row;
+        }
+        safeMysqliResultFree($result);
+        safeMysqliStmtClose($stmt);
+
+        // Get section_ids array from POST
+        $section_ids = isset($_POST['section_ids']) && is_array($_POST['section_ids']) ? $_POST['section_ids'] : [];
+
+        if (!empty($section_ids)) {
+            // Filter by provided section IDs
+            $in = implode(',', array_map('intval', $section_ids));
+            $sql = "SELECT 
                 s.id_section,
                 s.name as section_name,
                 COUNT(DISTINCT CONCAT(p.catalog_number, '-', p.id_part_type)) as total_parts,
@@ -157,52 +165,59 @@ function loadPlaygramData($f_link, $playgram_id) {
             WHERE pi.id_playgram = ? AND s.enabled = 1 AND c.enabled = 1 AND p.originals_count > 0 AND s.id_section IN ($in)
             GROUP BY s.id_section, s.name
             ORDER BY s.name";
-        $stmt = mysqli_prepare($f_link, $sql);
-        mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
-    } else {
-        // No sections
-        $sections = [];
-        goto finish_response;
+            $stmt = mysqli_prepare($f_link, $sql);
+            mysqli_stmt_bind_param($stmt, 'i', $playgram_id);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $sections = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $sections[] = $row;
+            }
+        } else {
+            $sections = [];
+        }
+
+        return [
+            'success' => true,
+            'data' => [
+                'playgram' => $playgram,
+                'compositions' => $compositions,
+                'sections' => $sections
+            ]
+        ];
+    } finally {
+        safeMysqliResultFree($result);
+        safeMysqliStmtClose($stmt);
     }
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $sections = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $sections[] = $row;
-    }
-    finish_response:
-    
-    return [
-        'success' => true,
-        'data' => [
-            'playgram' => $playgram,
-            'compositions' => $compositions,
-            'sections' => $sections
-        ]
-    ];
 }
 
 function createSectionZip($f_link, $playgram_id, $section_id) {
+    $stmt = null;
+    $result = null;
+
     // Get playgram and section info
     $sql = "SELECT pg.name as playgram_name, s.name as section_name 
             FROM playgrams pg, sections s 
             WHERE pg.id_playgram = ? AND s.id_section = ?";
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'ii', $playgram_id, $section_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    $info = mysqli_fetch_assoc($result);
-    ferror_log("Playgram info: " . json_encode($info));
+    try {
+        $stmt = mysqli_prepare($f_link, $sql);
+        mysqli_stmt_bind_param($stmt, 'ii', $playgram_id, $section_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        $info = mysqli_fetch_assoc($result);
+        safeMysqliResultFree($result);
+        safeMysqliStmtClose($stmt);
+        ferror_log("Playgram info: " . json_encode($info));
 
-    if (!$info) {
-        return ['success' => false, 'message' => 'Playgram or section not found.'];
-    }
-    
-    $playgram_name = sanitizeFilename($info['playgram_name']);
-    $section_name = sanitizeFilename($info['section_name']);
-    
-    // Get all parts for this section in this playgram
-    $sql = "SELECT 
+        if (!$info) {
+            return ['success' => false, 'message' => 'Playgram or section not found.'];
+        }
+
+        $playgram_name = sanitizeFilename($info['playgram_name']);
+        $section_name = sanitizeFilename($info['section_name']);
+
+        // Get all parts for this section in this playgram
+        $sql = "SELECT 
                 pi.comp_order,
                 c.name as composition_name,
                 pt.name as part_name,
@@ -219,90 +234,98 @@ function createSectionZip($f_link, $playgram_id, $section_id) {
                 AND c.enabled = 1 AND p.originals_count > 0 
                 AND p.image_path IS NOT NULL AND p.image_path != ''
             ORDER BY pi.comp_order, pt.collation, pt.name";
-    
-    $stmt = mysqli_prepare($f_link, $sql);
-    mysqli_stmt_bind_param($stmt, 'ii', $playgram_id, $section_id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    
-    $parts = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $parts[] = $row;
-    }
-    
-    if (empty($parts)) {
-        return ['success' => false, 'message' => 'No parts with PDF files found for this section.'];
-    }
 
-    // Create ZIP file
-    $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';
-    $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
-    $zip_path = $distrPath . $zip_filename;
+        $stmt = mysqli_prepare($f_link, $sql);
+        mysqli_stmt_bind_param($stmt, 'ii', $playgram_id, $section_id);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-    // Ensure distributions directory exists
-    $distributions_dir = $distrPath;
-
-    ferror_log("Checking distributions directory: " . $distributions_dir);
-    
-    if (!is_dir($distributions_dir)) {
-        if (!mkdir($distributions_dir, 0755, true)) {
-            return ['success' => false, 'message' => 'Could not create distributions directory.'];
+        $parts = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $parts[] = $row;
         }
-    }
-    
-    $zip = new ZipArchive();
-    if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
-        return ['success' => false, 'message' => 'Could not create ZIP file.'];
-    }
-    
-    $added_count = 0;
-    $skipped_files = [];
-    
-    foreach ($parts as $part) {
-        $partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE resolves to absolute path
-        $source_path = $partsPath . ltrim($part['image_path'], '/\\');
 
-        ferror_log("Processing part: " . $part['part_name'] . " (source: " . $source_path . ")");
-    
-        if (file_exists($source_path)) {
-            // Create new filename: Order - Composition - Part.pdf
-            $order = str_pad($part['comp_order'], 2, '0', STR_PAD_LEFT);
-            $composition = sanitizeFilename($part['composition_name']);
-            $part_name = sanitizeFilename($part['part_name']);
-            $new_filename = $order . ' - ' . $composition . ' - ' . $part_name . '.pdf';
+        if (empty($parts)) {
+            return ['success' => false, 'message' => 'No parts with PDF files found for this section.'];
+        }
 
-            ferror_log("Adding file to ZIP: " . $new_filename);
+        // Create ZIP file
+        $zip_filename = $playgram_name . '_' . $section_name . '_Parts.zip';
+        $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
+        $zip_path = $distrPath . $zip_filename;
 
-            if ($zip->addFile($source_path, $new_filename)) {
-                $added_count++;
-            } else {
-                $skipped_files[] = $part['part_name'] . ' (could not add to ZIP)';
+        // Ensure distributions directory exists
+        $distributions_dir = $distrPath;
+
+        ferror_log("Checking distributions directory: " . $distributions_dir);
+
+        if (!is_dir($distributions_dir)) {
+            if (!mkdir($distributions_dir, 0755, true)) {
+                return ['success' => false, 'message' => 'Could not create distributions directory.'];
             }
-        } else {
-            $skipped_files[] = $part['part_name'] . ' (file not found: ' . $part['image_path'] . ')';
-            ferror_log("File not found: " . $part['image_path'] . " at source path: " . $source_path);
         }
-    }
-    
-    $zip->close();
-    
-    if ($added_count == 0) {
-        unlink($zip_path);
-        return ['success' => false, 'message' => 'No PDF files could be added to ZIP.'];
-    }
 
-    return [
-        'success' => true,
-        'data' => [
-            'filename' => $zip_filename,
-            'part_count' => $added_count,
-            'skipped_files' => $skipped_files
-        ]
-    ];
+        $zip = new ZipArchive();
+        if ($zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
+            return ['success' => false, 'message' => 'Could not create ZIP file.'];
+        }
+
+        $added_count = 0;
+        $skipped_files = [];
+
+        foreach ($parts as $part) {
+            $partsPath = rtrim(ORGPRIVATE, '/') . '/parts/'; // ORGPRIVATE resolves to absolute path
+            $source_path = $partsPath . ltrim($part['image_path'], '/\\');
+
+            ferror_log("Processing part: " . $part['part_name'] . " (source: " . $source_path . ")");
+
+            if (file_exists($source_path)) {
+                // Create new filename: Order - Composition - Part.pdf
+                $order = str_pad($part['comp_order'], 2, '0', STR_PAD_LEFT);
+                $composition = sanitizeFilename($part['composition_name']);
+                $part_name = sanitizeFilename($part['part_name']);
+                $new_filename = $order . ' - ' . $composition . ' - ' . $part_name . '.pdf';
+
+                ferror_log("Adding file to ZIP: " . $new_filename);
+
+                if ($zip->addFile($source_path, $new_filename)) {
+                    $added_count++;
+                } else {
+                    $skipped_files[] = $part['part_name'] . ' (could not add to ZIP)';
+                }
+            } else {
+                $skipped_files[] = $part['part_name'] . ' (file not found: ' . $part['image_path'] . ')';
+                ferror_log("File not found: " . $part['image_path'] . " at source path: " . $source_path);
+            }
+        }
+
+        $zip->close();
+
+        if ($added_count == 0) {
+            unlink($zip_path);
+            return ['success' => false, 'message' => 'No PDF files could be added to ZIP.'];
+        }
+
+        return [
+            'success' => true,
+            'data' => [
+                'filename' => $zip_filename,
+                'part_count' => $added_count,
+                'skipped_files' => $skipped_files
+            ]
+        ];
+    } finally {
+        safeMysqliResultFree($result);
+        safeMysqliStmtClose($stmt);
+    }
 }
 
 // Function to generate a download token for a given ZIP file
 function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_filename) {
+    $stmt = null;
+    $user_stmt = null;
+    $user_result = null;
+
     // Create ZIP path name and check if it exists
     $distrPath = rtrim(ORGPRIVATE, '/') . '/distributions/';
     $zip_path = $distrPath . $zip_filename;
@@ -314,30 +337,58 @@ function generateDownloadTokenForZip($f_link, $playgram_id, $section_id, $zip_fi
     $token = bin2hex(random_bytes(16));
     $expires_at = date('Y-m-d H:i:s', strtotime('+' . DOWNLOAD_TOKEN_EXPIRY_DAYS . ' days'));
     $id_user = null;
-    if (isset($_SESSION['username'])) {
-        $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
-        mysqli_stmt_bind_param($user_stmt, "s", $_SESSION['username']);
-        mysqli_stmt_execute($user_stmt);
-        $user_result = mysqli_stmt_get_result($user_stmt);
-        if ($user_row = mysqli_fetch_assoc($user_result)) {
-            $id_user = $user_row['id_users'];
+    try {
+        if (isset($_SESSION['username'])) {
+            $user_stmt = mysqli_prepare($f_link, "SELECT id_users FROM users WHERE username = ?");
+            mysqli_stmt_bind_param($user_stmt, "s", $_SESSION['username']);
+            mysqli_stmt_execute($user_stmt);
+            $user_result = mysqli_stmt_get_result($user_stmt);
+            if ($user_row = mysqli_fetch_assoc($user_result)) {
+                $id_user = $user_row['id_users'];
+            }
+            safeMysqliResultFree($user_result);
+            safeMysqliStmtClose($user_stmt);
         }
-        mysqli_stmt_close($user_stmt);
+
+        $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
+        mysqli_stmt_bind_param($stmt, "siissi", $token, $playgram_id, $section_id, $zip_filename, $expires_at, $id_user);
+        mysqli_stmt_execute($stmt);
+
+        $download_link = '/d/' . $token;
+        return [
+            'success' => true,
+            'data' => [
+                'filename' => $zip_filename,
+                'token' => $token,
+                'download_link' => $download_link,
+                'expires_at' => $expires_at
+            ]
+        ];
+    } finally {
+        safeMysqliResultFree($user_result);
+        safeMysqliStmtClose($user_stmt);
+        safeMysqliStmtClose($stmt);
     }
-    $stmt = mysqli_prepare($f_link, "INSERT INTO download_tokens (token, id_playgram, id_section, zip_filename, expires_at, id_user) VALUES (?, ?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, "siissi", $token, $playgram_id, $section_id, $zip_filename, $expires_at, $id_user);
-    mysqli_stmt_execute($stmt);
-    $download_link = '/d/' . $token;
-    return [
-        'success' => true,
-        'data' => [
-            'filename' => $zip_filename,
-            'token' => $token,
-            'download_link' => $download_link,
-            'expires_at' => $expires_at
-        ]
-    ];
 }
+
+function safeMysqliResultFree(&$result) {
+    if ($result instanceof mysqli_result) {
+        mysqli_free_result($result);
+    }
+    $result = null;
+}
+
+function safeMysqliStmtClose(&$stmt) {
+    if ($stmt instanceof mysqli_stmt) {
+        try {
+            mysqli_stmt_close($stmt);
+        } catch (Throwable $e) {
+            ferror_log('Statement close warning: ' . $e->getMessage());
+        }
+    }
+    $stmt = null;
+}
+
 function sanitizeFilename($filename) {
     // Remove or replace characters that are problematic in filenames
     $filename = preg_replace('/[\/\\\:*?"<>|]/', '', $filename);

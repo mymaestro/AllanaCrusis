@@ -16,76 +16,113 @@ if (isset($_GET["selector"]) && isset($_GET["validator"])) {
     if (ctype_xdigit($selector) !== false && ctype_xdigit($validator) !== false) {
         
         $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        $stmt = null;
+        $result = null;
         
         // Check if verification request exists and is not expired
         $currentDate = date("U");
         $sql = "SELECT * FROM password_reset WHERE password_reset_selector=? AND password_reset_expires >= ? AND request_type='email_verification';";
-        
-        if (!$stmt = mysqli_prepare($f_link, $sql)) {
-            $verification_result = "error";
-        } else {
-            mysqli_stmt_bind_param($stmt, "ss", $selector, $currentDate);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
-            
-            if ($row = mysqli_fetch_assoc($result)) {
-                $tokenBin = hex2bin($validator);
-                $tokenCheck = password_verify($tokenBin, $row["password_reset_token"]);
-                
-                if ($tokenCheck === false) {
-                    $verification_result = "invalid";
-                } else {
-                    // Verification successful - create the user account
-                    $username = $row["username"];
-                    $name = $row["name"];
-                    $password_hash = $row["password_hash"];
-                    $email = $row["password_reset_email"];
-                    
-                    // Check if username already exists (in case someone registered while verification was pending)
-                    $sql = "SELECT id_users FROM users WHERE username = ?";
-                    if ($stmt = mysqli_prepare($f_link, $sql)) {
-                        mysqli_stmt_bind_param($stmt, "s", $username);
-                        mysqli_stmt_execute($stmt);
-                        mysqli_stmt_store_result($stmt);
-                        
-                        if (mysqli_stmt_num_rows($stmt) > 0) {
-                            $verification_result = "username_taken";
-                        } else {
-                            // Create the user account
-                            $sql = "INSERT INTO users (username, name, password, address) VALUES (?, ?, ?, ?)";
-                            if ($stmt = mysqli_prepare($f_link, $sql)) {
-                                mysqli_stmt_bind_param($stmt, "ssss", $username, $name, $password_hash, $email);
-                                
-                                if (mysqli_stmt_execute($stmt)) {
-                                    // Remove the verification request
-                                    $sql = "DELETE FROM password_reset WHERE password_reset_selector=? AND request_type='email_verification'";
-                                    if ($stmt = mysqli_prepare($f_link, $sql)) {
-                                        mysqli_stmt_bind_param($stmt, "s", $selector);
-                                        mysqli_stmt_execute($stmt);
+
+        try {
+            $stmt = mysqli_prepare($f_link, $sql);
+            if (!$stmt) {
+                $verification_result = "error";
+            } else {
+                mysqli_stmt_bind_param($stmt, "ss", $selector, $currentDate);
+                mysqli_stmt_execute($stmt);
+                $result = mysqli_stmt_get_result($stmt);
+
+                if ($row = mysqli_fetch_assoc($result)) {
+                    $tokenBin = hex2bin($validator);
+                    $tokenCheck = password_verify($tokenBin, $row["password_reset_token"]);
+
+                    if ($tokenCheck === false) {
+                        $verification_result = "invalid";
+                    } else {
+                        // Verification successful - create the user account
+                        $username = $row["username"];
+                        $name = $row["name"];
+                        $password_hash = $row["password_hash"];
+                        $email = $row["password_reset_email"];
+
+                        safeMysqliResultFree($result);
+                        safeMysqliStmtClose($stmt);
+
+                        // Check if username already exists (in case someone registered while verification was pending)
+                        $sql = "SELECT id_users FROM users WHERE username = ?";
+                        $stmt = mysqli_prepare($f_link, $sql);
+                        if ($stmt) {
+                            mysqli_stmt_bind_param($stmt, "s", $username);
+                            mysqli_stmt_execute($stmt);
+                            mysqli_stmt_store_result($stmt);
+
+                            if (mysqli_stmt_num_rows($stmt) > 0) {
+                                $verification_result = "username_taken";
+                            } else {
+                                safeMysqliStmtClose($stmt);
+
+                                // Create the user account
+                                $sql = "INSERT INTO users (username, name, password, address) VALUES (?, ?, ?, ?)";
+                                $stmt = mysqli_prepare($f_link, $sql);
+                                if ($stmt) {
+                                    mysqli_stmt_bind_param($stmt, "ssss", $username, $name, $password_hash, $email);
+
+                                    if (mysqli_stmt_execute($stmt)) {
+                                        safeMysqliStmtClose($stmt);
+
+                                        // Remove the verification request
+                                        $sql = "DELETE FROM password_reset WHERE password_reset_selector=? AND request_type='email_verification'";
+                                        $stmt = mysqli_prepare($f_link, $sql);
+                                        if ($stmt) {
+                                            mysqli_stmt_bind_param($stmt, "s", $selector);
+                                            mysqli_stmt_execute($stmt);
+                                        }
+                                        $verification_result = "success";
+                                    } else {
+                                        $verification_result = "error";
                                     }
-                                    $verification_result = "success";
                                 } else {
                                     $verification_result = "error";
                                 }
-                            } else {
-                                $verification_result = "error";
                             }
+                        } else {
+                            $verification_result = "error";
                         }
-                    } else {
-                        $verification_result = "error";
                     }
+                } else {
+                    $verification_result = "expired";
                 }
-            } else {
-                $verification_result = "expired";
+            }
+        } finally {
+            safeMysqliResultFree($result);
+            safeMysqliStmtClose($stmt);
+            if ($f_link instanceof mysqli) {
+                mysqli_close($f_link);
             }
         }
-        
-        mysqli_close($f_link);
     } else {
         $verification_result = "invalid";
     }
 } else {
     $verification_result = "missing";
+}
+
+function safeMysqliResultFree(&$result) {
+    if ($result instanceof mysqli_result) {
+        mysqli_free_result($result);
+    }
+    $result = null;
+}
+
+function safeMysqliStmtClose(&$stmt) {
+    if ($stmt instanceof mysqli_stmt) {
+        try {
+            mysqli_stmt_close($stmt);
+        } catch (Throwable $e) {
+            ferror_log('Statement close warning: ' . $e->getMessage());
+        }
+    }
+    $stmt = null;
 }
 ?>
 

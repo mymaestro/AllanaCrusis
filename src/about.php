@@ -38,41 +38,39 @@
             <div id="collapseWhatsNew" class="accordion-collapse collapse" aria-labelledby="headingWhatsNew" data-bs-parent="#whatsNewAccordion">
               <div class="accordion-body">
                 
-                <h5>October 2025</h5>
+                <h5>March 2026</h5>
                 <ul>
-                  <li><strong>Table filtering:</strong> Filter compositions by any column in real-time</li>
-                  <li><strong>Composition search:</strong> Quick search in parts management</li>
-                  <li><strong>Composer autocomplete:</strong> Smart suggestions and name formatting</li>
-                  <li><strong>Enhanced error handling:</strong> Better user feedback throughout</li>
-                  <li><strong>Edit buttons:</strong> Quick access from search results</li>
+                  <li><strong>Reliability hardening:</strong> Improved mysqli statement cleanup in password reset and email verification flows</li>
+                  <li><strong>ZIP delivery fix:</strong> Resolved response failures caused by statement close warnings during part download packaging</li>
                 </ul>
 
-                <h5>September 2025</h5>
+                <h5>February 2026</h5>
                 <ul>
-                  <li><strong>Increased upload limits:</strong> Now supports up to 100MB file uploads</li>
-                  <li><strong>Spinner buttons:</strong> Visual feedback during file operations</li>
-                  <li><strong>Configuration improvements:</strong> Better config file management</li>
-                  <li><strong>Project rename:</strong> Rebranded to AllanaCrusis</li>
+                  <li><strong>Onboarding import workflow:</strong> Added framework and normalization process for cleaner initial data imports</li>
+                  <li><strong>Dashboard performance:</strong> Optimized heavy Home page statistics queries for larger libraries</li>
+                  <li><strong>Part delivery UX:</strong> Wired token report cleanup action for smoother maintenance</li>
+                  <li><strong>Home page usability:</strong> Made section icons clickable for faster navigation</li>
+                  <li><strong>Documentation refresh:</strong> Updated branding assets and logo usage in docs</li>
                 </ul>
 
-                <h5>August 2025</h5>
+                <h5>January 2026</h5>
                 <ul>
-                  <li><strong>Part distribution system:</strong> Token-based secure part delivery</li>
-                  <li><strong>Email delivery:</strong> Send parts directly to musicians via email</li>
-                  <li><strong>Token management:</strong> Better tracking and reporting for part access</li>
-                  <li><strong>Routing improvements:</strong> Modernized URL structure and navigation</li>
-                  <li><strong>Section management:</strong> Enhanced instrument organization</li>
+                  <li><strong>Chunked upload configuration:</strong> Moved settings into database-backed configuration with validation</li>
+                  <li><strong>Upload resilience:</strong> Improved chunked upload error handling and PDF metadata recovery</li>
+                  <li><strong>Security:</strong> Converted sensitive private path handling to safer relative-path behavior and removed stored file paths where possible</li>
+                  <li><strong>Recordings quality checks:</strong> Recording name is now required to reduce incomplete entries</li>
                 </ul>
 
-                <h5>Earlier 2025</h5>
+                <h5>Late 2025 highlights</h5>
                 <ul>
-                  <li><strong>Security enhancements:</strong> Role-based access control improvements</li>
-                  <li><strong>File path fixes:</strong> Better handling of recordings and part files</li>
-                  <li><strong>Email system:</strong> User registration and password reset functionality</li>
-                  <li><strong>Core modernization:</strong> Updated architecture and error handling</li>
+                  <li><strong>Admin settings:</strong> Added settings to the navigation and implemented database-driven configuration management</li>
+                  <li><strong>Large file support:</strong> Introduced chunked upload mechanism for larger uploads</li>
+                  <li><strong>Search and filtering:</strong> Added clear filters, table column filtering, and faster composition lookup tools</li>
+                  <li><strong>Part delivery improvements:</strong> Made token expiration configurable and improved email feedback and anti-spam behavior</li>
+                  <li><strong>Responsive UI:</strong> Improved composition header behavior and parts-page mobile/tablet navigation</li>
                 </ul>
 
-                <p><small class="text-muted">Last updated: October 2025</small></p>
+                <p><small class="text-muted">Last updated: March 2026</small></p>
               </div>
             </div>
           </div>

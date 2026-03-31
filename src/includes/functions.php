@@ -6,6 +6,18 @@
 #############################################################################
 */
 
+if (!defined('FERROR_LOG_DEBUG')) define('FERROR_LOG_DEBUG', 0);
+if (!defined('FERROR_LOG_INFO')) define('FERROR_LOG_INFO', 1);
+if (!defined('FERROR_LOG_WARN')) define('FERROR_LOG_WARN', 2);
+if (!defined('FERROR_LOG_ERROR')) define('FERROR_LOG_ERROR', 3);
+
+$ferror_log_level_names = [
+    FERROR_LOG_DEBUG => 'DEBUG',
+    FERROR_LOG_INFO => 'INFO',
+    FERROR_LOG_WARN => 'WARN',
+    FERROR_LOG_ERROR => 'ERROR'
+];
+
 function f_getIP() {
     $ip_keys = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR');
     foreach ($ip_keys as $key) {
@@ -92,15 +104,35 @@ function f_fieldExists($link, $table, $column, $column_attr = "VARCHAR( 255 ) NU
 }
 
 /* Custom error logging */
-function ferror_log($error){
-    if (DEBUG == 1) {
-        if (isset($_SESSION['username'])) {
-            $username = $_SESSION['username'];
-        } else {
-            $username = 'anonymous';
-        }
-        error_log($username."> ".$error);
+function ferror_log($message, $level = FERROR_LOG_INFO) {
+    global $ferror_log_level_names;
+
+    if (is_string($level)) {
+        $level_map = [
+            'DEBUG' => FERROR_LOG_DEBUG,
+            'INFO' => FERROR_LOG_INFO,
+            'WARN' => FERROR_LOG_WARN,
+            'WARNING' => FERROR_LOG_WARN,
+            'ERROR' => FERROR_LOG_ERROR
+        ];
+        $level = $level_map[strtoupper($level)] ?? FERROR_LOG_INFO;
     }
+
+    // DEBUG is treated as the minimum log level threshold (0=DEBUG ... 3=ERROR).
+    $threshold = defined('DEBUG') ? (int) DEBUG : FERROR_LOG_INFO;
+    if ($threshold < FERROR_LOG_DEBUG || $threshold > FERROR_LOG_ERROR) {
+        return;
+    }
+    if ($level < $threshold) {
+        return;
+    }
+
+    $username = $_SESSION['username'] ?? $_SESSION['user'] ?? 'anonymous';
+    //$timestamp = date('Y-m-d H:i:s');
+    $level_name = $ferror_log_level_names[$level] ?? 'UNKNOWN';
+    $log_entry = "[$level_name] [$username] $message";
+
+    error_log($log_entry);
 }
 
 /* Get chunked upload configuration as JSON for JavaScript */

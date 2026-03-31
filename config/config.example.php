@@ -155,6 +155,7 @@ if (!defined('ORGRECORDINGS'))  define('ORGRECORDINGS', 'http://musiclibrary.loc
 // System settings
 if (!defined('DOWNLOAD_TOKEN_EXPIRY_DAYS')) define('DOWNLOAD_TOKEN_EXPIRY_DAYS', 5);
 if (!defined('REGION'))         define('REGION', 'HOME');
+// Log threshold: 0=DEBUG, 1=INFO, 2=WARN, 3=ERROR (logs level >= DEBUG value)
 if (!defined('DEBUG'))          define('DEBUG', 0);
 
 // ============================================================================

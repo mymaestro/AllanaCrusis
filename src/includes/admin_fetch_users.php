@@ -6,7 +6,7 @@ ferror_log("Running admin_fetch_users.php with id_users=". $_POST["id_users"]);
 if(isset($_POST["id_users"])) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     $sql = "SELECT * FROM users WHERE id_users = '".$_POST["id_users"]."'";
-    ferror_log("Running SQL: " . $sql);
+    ferror_log("Running SQL: " . $sql, FERROR_LOG_WARN);
     $res = mysqli_query($f_link, $sql);
     $rowList = mysqli_fetch_array($res);  
     echo json_encode($rowList);

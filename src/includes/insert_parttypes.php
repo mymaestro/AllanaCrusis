@@ -44,7 +44,7 @@ if(!empty($_POST)) {
         ";
         $message = 'Data Inserted';
     }
-    ferror_log("Running parttypes SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+    ferror_log("Running parttypes SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $referred = $_SERVER['HTTP_REFERER'];
     $referred .= "/#" . $id_part_type;
     

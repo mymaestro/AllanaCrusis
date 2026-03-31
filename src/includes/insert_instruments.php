@@ -36,7 +36,7 @@ if(!empty($_POST)) {
         ";
         $message = 'Data Inserted';
     }
-    ferror_log("Running insert_instruments SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+    ferror_log("Running insert_instruments SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $referred = $_SERVER['HTTP_REFERER']; // http://musicLibraryDB.org/instruments.php
     $referred .= '/#' . $id_instrument;
     ferror_log("Referred: " . $referred);

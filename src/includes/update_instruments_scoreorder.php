@@ -21,7 +21,7 @@ if(!empty($_POST)) {
         $sql .= "
         WHERE id_instrument = " . $id_instrument . ";";
         $message = "Data updated.";
-        ferror_log("Running SQL: ". $sql);
+        ferror_log("Running SQL: ". $sql, FERROR_LOG_WARN);
         if(mysqli_query($f_link, $sql) or die("Error: update query failed.")) {
             $updated++;
             $collation = $collation + 10;

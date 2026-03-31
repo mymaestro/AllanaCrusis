@@ -30,7 +30,7 @@ if(isset($_POST['id_part_type']) && (isset($_POST['catalog_number']))) { // User
     $part_data =  json_encode($rowList);
 
     $sql = "SELECT * FROM part_collections WHERE catalog_number_key = '" . $catalog_number . "' AND id_part_type_key = " . $id_part_type .";";
-    ferror_log("SQL: ". $sql);
+    ferror_log("SQL: ". $sql, FERROR_LOG_WARN);
     $instrument_data = array();
     $res = mysqli_query($f_link, $sql);
     while($rowList = mysqli_fetch_array($res)) {

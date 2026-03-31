@@ -105,7 +105,7 @@ ferror_log("RUNNING insert_instrumentation.php with POST ". print_r($_POST, true
                         $name = "Part-".$catalog_number."-".$id_part_type;
                         $sql = "INSERT INTO parts(catalog_number, id_part_type, name, paper_size, page_count, originals_count, copies_count)
                         VALUES('$catalog_number', '$id_part_type', '$name', '$paper_size', $page_count, $originals_count, $copies_count);";
-                        ferror_log("Running SQL ". $sql);
+                        ferror_log("Running SQL ". $sql, FERROR_LOG_WARN);
                         try {
                             if(mysqli_query($f_link, $sql)) {
                                 $output .= '<tr><td>' . $catalog_number . '</td><td>' . $id_part_type . '</td><td>Added</td><td>';

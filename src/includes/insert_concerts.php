@@ -38,7 +38,7 @@ if(!empty($_POST)) {
         ";
         $message = 'Data Inserted';
     }
-    ferror_log("Insert concerts SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+    ferror_log("Insert concerts SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $referred = $_SERVER['HTTP_REFERER'];
     
     try {

@@ -122,7 +122,7 @@ if(!empty($_POST)) {
         ";
         $message = 'Composition '.$catalog_number.' added';
     }
-    ferror_log("Running SQL ". $sql);
+    ferror_log("Running SQL ". $sql, FERROR_LOG_WARN);
     $referred = $_SERVER['HTTP_REFERER'];
     if(mysqli_query($f_link, $sql)) {
         $output .= '<label class="text-success">' . $message . '</label>';

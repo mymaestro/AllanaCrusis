@@ -223,7 +223,7 @@ if(isset($_POST["catalog_number"])) {
                 GROUP  BY c.catalog_number
                 ORDER BY c.last_update DESC;";
     }
-    ferror_log("Running search SQL: " .trim(preg_replace('/\s+/', ' ', $sql)));
+    ferror_log("Running search SQL: " .trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
     while ($rowList = mysqli_fetch_array($res)) {
         $catalog_number = $rowList['catalog_number'];

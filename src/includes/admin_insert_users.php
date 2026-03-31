@@ -57,8 +57,8 @@ if(!empty($_POST)) {
         $mysql_errno = $e->getCode();
         
         ferror_log("Error: " . $error_message . " (Error Code: " . $mysql_errno . ")");
-        ferror_log("Running SQL:" . trim(preg_replace('/\s+/', ' ', $sql)));
-        
+        ferror_log("Running SQL:" . trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
+                
         // Check for specific error types
         if ($mysql_errno == 1062) {
             $output .= '<p class="text-danger">Duplicate Entry Error: A user with this ID or name already exists. Please use a different ID or name.</p>';

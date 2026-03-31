@@ -193,7 +193,7 @@ if (isset($_SESSION['username'])) {
 <?php
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT `id_playgram`, `name`, `description` FROM playgrams WHERE `enabled` = 1 ORDER BY name;";
-ferror_log("Running " . $sql);
+ferror_log("Running " . $sql, FERROR_LOG_WARN);
 echo "// -----" . PHP_EOL;
 $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
 $playgramArray = array();

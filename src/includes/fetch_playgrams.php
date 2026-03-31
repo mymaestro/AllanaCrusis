@@ -12,7 +12,7 @@ if(isset($_POST["id_playgram"])) {
     ferror_log("Fetch playgrams with id=". $_POST["id_playgram"]);
     $id_playgram = mysqli_real_escape_string($f_link, $_POST["id_playgram"]);
     $sql = "SELECT * FROM playgrams WHERE id_playgram = ".$id_playgram.";";
-    ferror_log("SQL: ". $sql);
+    ferror_log("SQL: ". $sql, FERROR_LOG_WARN);
     $res = mysqli_query($f_link, $sql);
     $rowList = mysqli_fetch_array($res);
     $playgram_data = json_encode($rowList);

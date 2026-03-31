@@ -282,7 +282,7 @@ ferror_log("What is catalog_number? " . (isset($catalog_number) ? $catalog_numbe
 <?php
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT `id_instrument`, `collation`, `name` FROM instruments WHERE `enabled` = 1 ORDER BY collation;";
-ferror_log("Running " . $sql);
+ferror_log("Running " . $sql, FERROR_LOG_WARN);
 $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
 $instrumentdataArray = [];
 $instrumentdata = null;

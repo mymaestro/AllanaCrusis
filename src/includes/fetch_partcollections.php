@@ -23,7 +23,7 @@ if(isset($_POST["catalog_number_key"])) {
                AND pc.id_part_type_key = '".$id_part_type_key."'
                AND pc.id_instrument_key = '".$id_instrument_key."'";
 
-    ferror_log("Running SQL to fetch part collection details: " . trim(preg_replace('/\s+/', ' ', $sql)));
+    ferror_log("Running SQL to fetch part collection details: " . trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $res = mysqli_query($f_link, $sql);
     $rowList = mysqli_fetch_array($res);
     

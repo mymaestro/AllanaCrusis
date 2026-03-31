@@ -41,7 +41,7 @@ if(isset($id_instrument_key) && isset($id_part_type_key) && isset($catalog_numbe
     } else {
         $created = date('Y-m-d H:i:s.u');
         $sql = "";
-        ferror_log("Delete SQL (N/A): " . $sql);
+        ferror_log("Delete SQL (N/A): " . $sql, FERROR_LOG_WARN);
         $message = 'No data deleted';
         $output .= '<p class="text-danger">' . $message . '. Error: ' . $error_message . '</p>
           ';

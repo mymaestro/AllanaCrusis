@@ -21,7 +21,7 @@ if (isset($_POST['catalog_number'])) {
                                INNER JOIN parts p ON pc.catalog_number_key = p.catalog_number 
                                AND pc.id_part_type_key = p.id_part_type 
                                WHERE p.catalog_number = ?";
-        ferror_log("Delete part_collections SQL: " . $sql_part_collections);
+        ferror_log("Delete part_collections SQL: " . $sql_part_collections, FERROR_LOG_WARN);
         
         $stmt_pc = mysqli_prepare($f_link, $sql_part_collections);
         mysqli_stmt_bind_param($stmt_pc, "s", $catalog_number);

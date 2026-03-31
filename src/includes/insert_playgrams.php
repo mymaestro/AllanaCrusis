@@ -55,7 +55,7 @@ if(!empty($_POST)) {
                     $sql = "UPDATE playgram_items
                         SET comp_order = $comp_order
                         WHERE id_playgram_item = $id_playgram_item ;";
-                    ferror_log("58: update comp order SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+                    ferror_log("58: update comp order SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
 
                     if(!mysqli_query($f_link, $sql)) {  
                         $error_message = mysqli_error($f_link);
@@ -83,7 +83,7 @@ if(!empty($_POST)) {
                 $playgram_delete = implode(",", array_map('intval', $existing));
                 $sql = "DELETE from playgram_items
                     WHERE id_playgram_item IN ($playgram_delete) ;";
-                ferror_log("83: Delete existing PGI SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+                ferror_log("83: Delete existing PGI SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
                 if(!mysqli_query($f_link, $sql)) {  
                     $error_message = mysqli_error($f_link);
                     ferror_log("Error deleting playgram items " . $error_message);
@@ -95,7 +95,7 @@ if(!empty($_POST)) {
                 $playgram_delete = implode(",", array_map('intval', $existing));
                 $sql = "DELETE from playgram_items
                     WHERE id_playgram_item IN ($playgram_delete) ;";
-                ferror_log("95: Delete existing (none left) SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+                ferror_log("95: Delete existing (none left) SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
                 if(!mysqli_query($f_link, $sql)) {  
                     $error_message = mysqli_error($f_link);
                     ferror_log("Error deleting playgram items " . $error_message);
@@ -107,7 +107,7 @@ if(!empty($_POST)) {
         INSERT INTO playgrams(name, performance_date, description, enabled)
         VALUES('$name', '$performance_date', '$description', $enabled);
         ";
-        ferror_log("107: Insert PG SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+        ferror_log("107: Insert PG SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
         if(!mysqli_query($f_link, $sql)) {  
             $error_message = mysqli_error($f_link);
             // Send the error back, check if the error is due to a duplicate name
@@ -132,7 +132,7 @@ if(!empty($_POST)) {
                 $sql = "INSERT INTO playgram_items
                     (id_playgram, catalog_number, comp_order)
                     VALUES ( $id_playgram, '$catalog_number', $comp_order );";
-                ferror_log("122: Insert PGI SQL ". trim(preg_replace('/\s+/', ' ', $sql)));
+                ferror_log("122: Insert PGI SQL ". trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
                 if(!mysqli_query($f_link, $sql)) {  
                     $error_message = mysqli_error($f_link);
                     ferror_log("Error adding playgram items " . $error_message);

@@ -158,7 +158,7 @@
 <?php
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT `catalog_number`, `name`, `composer`,`arranger` FROM compositions WHERE `enabled` = 1 ORDER BY name;";
-ferror_log("Running " . $sql);
+ferror_log("Running " . $sql, FERROR_LOG_WARN);
 $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
 $compositionData = [];
 while($rowList = mysqli_fetch_array($res)) {

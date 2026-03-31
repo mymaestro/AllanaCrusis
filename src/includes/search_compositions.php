@@ -102,7 +102,7 @@ if (!empty($composer)) {
 
 $sql .= " GROUP BY c.catalog_number ORDER BY c.name LIMIT 100"; // Limit results to prevent overwhelming
 
-ferror_log("The search SQL: " . trim(preg_replace('/\s+/', ' ', $sql)));
+ferror_log("The search SQL: " . trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
 
 $res = mysqli_query($f_link, $sql);
 $results = [];

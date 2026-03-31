@@ -456,7 +456,7 @@ if(!empty($_POST)) {
                        last_update = CURRENT_TIMESTAMP() 
                        WHERE catalog_number = ? AND id_part_type = ?";
         
-        ferror_log("Preparing UPDATE SQL: " . $update_sql);
+        ferror_log("Preparing UPDATE SQL: " . $update_sql, FERROR_LOG_WARN);    
         
         $update_stmt = mysqli_prepare($f_link, $update_sql);
         if (!$update_stmt) {
@@ -549,8 +549,7 @@ if(!empty($_POST)) {
         copies_count, 
         last_update) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP())";
         
-        ferror_log("Preparing INSERT SQL: " . $insert_sql);
-        
+        ferror_log("Preparing INSERT SQL: " . $insert_sql, FERROR_LOG_WARN);        
         $insert_stmt = mysqli_prepare($f_link, $insert_sql);
         if (!$insert_stmt) {
             $errorMsg = "Database error: Failed to prepare insert statement.";

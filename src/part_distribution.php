@@ -52,7 +52,7 @@ $section_ids = [];
 if ($u_librarian) {
     // Librarian: all sections
     $sql = "SELECT id_section, name, description, section_leader FROM sections WHERE enabled = 1 ORDER BY name";
-    ferror_log("Fetching ALL sections for librarian with SQL: " . $sql);
+    ferror_log("Fetching ALL sections for librarian with SQL: " . $sql, FERROR_LOG_WARN);
     $sections_result = mysqli_query($f_link, $sql);
     while($row = mysqli_fetch_assoc($sections_result)) {
         $sections[] = $row;
@@ -61,7 +61,7 @@ if ($u_librarian) {
 } elseif ($user_id !== null) {
     // Section leader: only their sections
     $sql = "SELECT id_section, name, description, section_leader FROM sections WHERE enabled = 1 AND section_leader = " . intval($user_id) . " ORDER BY name";
-    ferror_log("Fetching sections for section_leader user_id " . $user_id . " with SQL: " . $sql);
+    ferror_log("Fetching sections for section_leader user_id " . $user_id . " with SQL: " . $sql, FERROR_LOG_WARN);
     $sections_result = mysqli_query($f_link, $sql);
     while($row = mysqli_fetch_assoc($sections_result)) {
         $sections[] = $row;

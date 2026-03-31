@@ -155,7 +155,7 @@ ferror_log("Running composition_instrumentation.php with catalog_number: " . $ca
                         $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
                         $sql = "SELECT `id_part_type`, `name` FROM part_types WHERE `enabled` = 1 ORDER BY collation;";
                         $rowcount = 0;
-                        ferror_log("Running " . $sql);
+                        ferror_log("Running " . $sql, FERROR_LOG_WARN);
                         $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
                         $opt = '<select class="form-select form-control" aria-label="Select part types" id="parttypes" name="parttypes[]" size="17" multiple>';
                         while ($rowList = mysqli_fetch_array($res)) {

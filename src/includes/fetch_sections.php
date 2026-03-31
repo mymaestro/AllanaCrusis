@@ -8,7 +8,7 @@ ferror_log("Running fetch_sections.php with id=". $section_id);
 if(isset($section_id)) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     $sql = "SELECT * FROM sections WHERE id_section = '".$section_id."'";
-    ferror_log("SQL: ". $sql);
+    ferror_log("SQL: ". $sql, FERROR_LOG_WARN);
     $res = mysqli_query($f_link, $sql);
     $rowList = mysqli_fetch_array($res);
     echo json_encode($rowList);

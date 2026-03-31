@@ -76,8 +76,8 @@ if (isset($_POST["id_playgram"])) {
             }
         }
     } else {
-        ferror_log("Something went wrong with " . trim(preg_replace('/\s+/', ' ', $sql)));
-    }
+        ferror_log("Something went wrong with " . trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
+        }
 
     $output .= '
         </table>

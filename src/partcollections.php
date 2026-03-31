@@ -163,8 +163,8 @@
         ORDER BY   composition_title, y.collation, i.collation;";
         
         $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
-        ferror_log("Running SQL: ". $sql);
-        
+        ferror_log("Running SQL: ". $sql, FERROR_LOG_WARN);
+                
         // Group data by composition and part
         $grouped_data = [];
         while ($rowList = mysqli_fetch_array($res)) {
@@ -360,7 +360,7 @@
                                             JOIN    part_types y
                                             ON      y.id_part_type = p.id_part_type
                                             ORDER BY catalog_number, y.collation;";
-                                    ferror_log("Running " . $sql);
+                                    ferror_log("Running " . $sql, FERROR_LOG_WARN);
                                     $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
                                     $opt = "<select class='form-select form-control' aria-label='Select parts' id='id_part' name='id_part'>\n";
                                     while ($rowList = mysqli_fetch_array($res)) {
@@ -480,7 +480,7 @@
 <?php
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT `id_instrument`, `name` FROM instruments WHERE `enabled` = 1 ORDER BY collation;";
-ferror_log("Running " . $sql);
+ferror_log("Running " . $sql, FERROR_LOG_WARN);
 $res = mysqli_query($f_link, $sql) or die('Error: ' . mysqli_error($f_link));
 $jsondata = "var instrumentdata = {";
 while($rowList = mysqli_fetch_array($res)) {
@@ -492,7 +492,7 @@ $jsondata = rtrim($jsondata, ',');
 $jsondata .= '}'.PHP_EOL;
 mysqli_close($f_link);
 echo $jsondata;
-ferror_log("returned: " . $sql);
+ferror_log("returned: " . $sql, FERROR_LOG_WARN);
 ?>
 $(document).ready(function(){
     $('#add').click(function(){

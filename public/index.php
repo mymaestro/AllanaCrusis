@@ -1,6 +1,5 @@
 <?php
 
-error_log("Accessing URL: " . $_SERVER['REQUEST_URI']);
 include(__DIR__ . '/../config/bootstrap.php');
 
 $urlMap = [
@@ -108,12 +107,12 @@ if (isset($_GET['action'])) {
             exit;
         } else {
             http_response_code(404);
-            error_log("Action file not found.");
+            error_log("Action file " . $file . " not found.");
             exit;
         }
     } else {
         http_response_code(400);
-        error_log("Invalid action.");
+        error_log("Invalid action " . json_encode((string) $action) . ".");
         exit;
     }
 }

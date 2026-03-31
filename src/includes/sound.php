@@ -194,11 +194,7 @@ $logMsg = sprintf(
     $subject,
     $mailSuccess ? 'success' : 'fail'
 );
-if (function_exists('ferror_log')) {
-    ferror_log($logMsg);
-} else {
-    error_log($logMsg);
-}
+ferror_log($logMsg);
 
 if ($mailSuccess) {
     // Increment rate limit counter

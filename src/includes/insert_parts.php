@@ -91,7 +91,7 @@ function updatePartPDFMetadata($partFilePath, $partData) {
         }
         return $newFileName;
     } catch (Exception $e) {
-        error_log("Failed to update PDF metadata: " . $e->getMessage());
+        ferror_log("Failed to update PDF metadata: " . $e->getMessage(), FERROR_LOG_ERROR);
         throw $e;
     }
 }

@@ -145,3 +145,119 @@ function getChunkedUploadConfig() {
         'thresholdBytes' => (defined('CHUNKED_UPLOAD_THRESHOLD_MB') ? CHUNKED_UPLOAD_THRESHOLD_MB : 7) * 1024 * 1024
     ]);
 }
+
+function f_mailHeaderSafe($value) {
+    return trim(str_replace(["\r", "\n"], '', (string) $value));
+}
+
+function f_mailDomainFromAddress($email) {
+    if (!is_string($email) || strpos($email, '@') === false) {
+        return '';
+    }
+    $parts = explode('@', $email);
+    $domain = strtolower(end($parts));
+    return preg_replace('/[^a-z0-9\.-]/i', '', $domain);
+}
+
+function f_mailMessageIdDomain() {
+    $orgMailDomain = f_mailDomainFromAddress(defined('ORGMAIL') ? ORGMAIL : '');
+    if ($orgMailDomain !== '') {
+        return $orgMailDomain;
+    }
+
+    $host = $_SERVER['SERVER_NAME'] ?? ($_SERVER['HTTP_HOST'] ?? 'localhost.localdomain');
+    $host = strtolower(f_mailHeaderSafe($host));
+    $host = preg_replace('/:[0-9]+$/', '', $host);
+    $host = preg_replace('/[^a-z0-9\.-]/i', '', $host);
+    return $host !== '' ? $host : 'localhost.localdomain';
+}
+
+function f_sendEmail($to, $subject, $message, $options = []) {
+    $to = trim((string) $to);
+    $subject = f_mailHeaderSafe($subject);
+
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+        ferror_log('Email send aborted: invalid recipient address', FERROR_LOG_WARN);
+        return false;
+    }
+    if ($subject === '') {
+        ferror_log('Email send aborted: empty subject', FERROR_LOG_WARN);
+        return false;
+    }
+
+    $configuredFrom = defined('ORGMAIL') ? trim((string) ORGMAIL) : '';
+    $requestedFrom = isset($options['from']) ? trim((string) $options['from']) : '';
+    $replyTo = isset($options['replyTo']) ? trim((string) $options['replyTo']) : '';
+    $isHtml = !empty($options['isHtml']);
+    $context = isset($options['context']) ? f_mailHeaderSafe($options['context']) : 'app';
+    $actor = isset($options['actor']) ? f_mailHeaderSafe($options['actor']) : 'system';
+
+    $from = $configuredFrom;
+    if ($requestedFrom !== '' && filter_var($requestedFrom, FILTER_VALIDATE_EMAIL)) {
+        $requestedDomain = f_mailDomainFromAddress($requestedFrom);
+        $configuredDomain = f_mailDomainFromAddress($configuredFrom);
+        if ($requestedDomain !== '' && $configuredDomain !== '' && $requestedDomain === $configuredDomain) {
+            $from = $requestedFrom;
+        } else {
+            if ($replyTo === '') {
+                $replyTo = $requestedFrom;
+            }
+        }
+    }
+
+    if (!filter_var($from, FILTER_VALIDATE_EMAIL)) {
+        ferror_log('Email send aborted: invalid configured sender address', FERROR_LOG_ERROR);
+        return false;
+    }
+
+    if ($replyTo !== '' && !filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+        $replyTo = '';
+    }
+
+    $fromName = defined('ORGNAME') ? f_mailHeaderSafe(ORGNAME) : 'Music Library';
+    $headers = [];
+    $headers[] = 'From: ' . $fromName . ' <' . $from . '>';
+    if ($replyTo !== '') {
+        $headers[] = 'Reply-To: ' . $replyTo;
+    }
+    $headers[] = 'MIME-Version: 1.0';
+    $headers[] = 'Date: ' . date('r');
+
+    try {
+        $messageIdLeft = bin2hex(random_bytes(12));
+    } catch (Throwable $e) {
+        $messageIdLeft = uniqid('', true);
+    }
+    $headers[] = 'Message-ID: <' . $messageIdLeft . '@' . f_mailMessageIdDomain() . '>';
+    $headers[] = 'X-Mailer: PHP/' . phpversion();
+    $headers[] = 'X-Auto-Response-Suppress: All';
+
+    if ($isHtml) {
+        $headers[] = 'Content-Type: text/html; charset=UTF-8';
+    } else {
+        $headers[] = 'Content-Type: text/plain; charset=UTF-8';
+    }
+    $headers[] = 'Content-Transfer-Encoding: 8bit';
+
+    $additionalParams = '-f ' . escapeshellarg($from);
+    $phpWarning = null;
+    set_error_handler(function ($errno, $errstr) use (&$phpWarning) {
+        $phpWarning = $errstr;
+        return true;
+    });
+
+    try {
+        $sent = mail($to, $subject, (string) $message, implode("\r\n", $headers), $additionalParams);
+    } finally {
+        restore_error_handler();
+    }
+
+    if (!$sent) {
+        $warn = $phpWarning ? (' warning=' . $phpWarning) : '';
+        ferror_log('Email send failed context=' . $context . ' actor=' . $actor . ' to=' . $to . ' subject=' . $subject . $warn, FERROR_LOG_WARN);
+        return false;
+    }
+
+    ferror_log('Email sent context=' . $context . ' actor=' . $actor . ' to=' . $to . ' subject=' . $subject . ' from=' . $from, FERROR_LOG_INFO);
+    return true;
+}

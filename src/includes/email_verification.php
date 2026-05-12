@@ -53,14 +53,15 @@ if (isset($_POST["registration-submit"])) {
             $message .= '<p>This link will expire in 1 hour.</p>';
             $message .= '<p>If you did not request this account, you can ignore this email.</p>';
             
-            $headers = "From: ". ORGNAME . "<" .ORGMAIL . ">\r\n";
-            $headers .= "Reply-To: ". ORGMAIL . "\r\n";
-            $headers .= "Content-type: text/html\r\n";
-            $headers .= "X-Mailer: PHP/" . phpversion();
-
             // Uh-oh, we need to figure out how to set the routing for the register
             // Check the routing from register to register.php
-            if (mail($to, $subject, $message, $headers)) {
+            if (f_sendEmail($to, $subject, $message, [
+                'from' => ORGMAIL,
+                'replyTo' => ORGMAIL,
+                'isHtml' => true,
+                'context' => 'email_verification.php',
+                'actor' => $username
+            ])) {
                 header("Location: /register?verification=sent");
             } else {
                 header("Location: /register?verification=email_error");

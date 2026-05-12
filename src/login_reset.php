@@ -71,6 +71,25 @@ ferror_log("Running login_reset.php");
                 </form>
             </div>
             <?php endif; ?>
+            <?php if($result == "email_error") : ?>
+            <p class="lead">We found your account, but were unable to send the reset email. Please verify your address and try again shortly.</p>
+            <div class="col-12">
+                <form action="index.php?action=password_reset" method="post">
+                <label for="username" class="col-form-label">Username*</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="username" required>
+                <span class="help-block">Username on this system.</span>
+            </div>
+            <div class="col-12">
+                <label for="address" class="col-form-label">e-mail address*</label>
+                <input type="e-mail" name="address" class="form-control" placeholder="username@example.com" required>
+                <span class="help-block">Address on this system.</span>
+            </div>
+            <hr class="my-4">
+            <div class="col-12">
+                <input type="submit" name="reset-request-submit" class="w-50 align-right btn btn-primary" value="Submit">
+                </form>
+            </div>
+            <?php endif; ?>
         </div>
         <div class="col-md-5">
             <div class="card">

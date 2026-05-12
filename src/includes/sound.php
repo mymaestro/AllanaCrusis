@@ -158,32 +158,15 @@ if (!$hasStructuredFooter) {
     }
 }
 
-// Build headers with anti-spam improvements
-$headers = "From: $from\r\n";
-$headers .= "Reply-To: $from\r\n";
-$headers .= "Return-Path: $from\r\n";
-$headers .= "X-Mailer: PHP/" . phpversion() . "\r\n";
-$headers .= "X-Priority: 3\r\n";
-$headers .= "MIME-Version: 1.0\r\n";
-
-// Add Message-ID to improve deliverability
-$messageId = '<' . uniqid() . '@' . $_SERVER['HTTP_HOST'] . '>';
-$headers .= "Message-ID: $messageId\r\n";
-
-// Add Date header
-$headers .= "Date: " . date('r') . "\r\n";
-
-// Content-Type with proper MIME structure
-if ($isHtml) {
-    $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-    $headers .= "Content-Transfer-Encoding: 8bit\r\n";
-} else {
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-    $headers .= "Content-Transfer-Encoding: 8bit\r\n";
-}
-
-// Send email with formatted message
-$mailSuccess = mail($to, $subject, $formattedMessage, $headers);
+// Send email with deliverability-safe sender alignment.
+// If user-supplied From is on another domain, it is used as Reply-To only.
+$mailSuccess = f_sendEmail($to, $subject, $formattedMessage, [
+    'from' => $from,
+    'replyTo' => $from,
+    'isHtml' => $isHtml,
+    'context' => 'sound.php',
+    'actor' => $_SESSION['username'] ?? 'anonymous'
+]);
 
 // Log the attempt
 $logUser = isset($_SESSION['username']) ? $_SESSION['username'] : 'anonymous';

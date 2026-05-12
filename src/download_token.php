@@ -6,6 +6,34 @@ require_once __DIR__ . '/../config/bootstrap.php';
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/includes/functions.php';
 
+function h($value) {
+    return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+}
+
+function renderDownloadConfirmationPage($zipFilename) {
+    $templatePath = __DIR__ . '/../config/download-confirmation.html';
+    if (!file_exists($templatePath)) {
+        http_response_code(500);
+        echo 'Download confirmation template is missing.';
+        return;
+    }
+
+    $templateHtml = file_get_contents($templatePath);
+    if ($templateHtml === false || trim($templateHtml) === '') {
+        http_response_code(500);
+        echo 'Download confirmation template is empty.';
+        return;
+    }
+
+    $replacements = [
+        '{{pageTitle}}' => 'Confirm Parts Download',
+        '{{zipFilename}}' => h($zipFilename),
+        '{{formAction}}' => h($_SERVER['REQUEST_URI'] ?? '')
+    ];
+
+    echo strtr($templateHtml, $replacements);
+}
+
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'none';
 $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'unknown';
@@ -75,11 +103,28 @@ if (!file_exists($zip_path)) {
     exit;
 }
 
+$is_confirmed_download = ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['confirm_download']) && $_POST['confirm_download'] === '1');
+if (!$is_confirmed_download) {
+    mysqli_close($f_link);
+    renderDownloadConfirmationPage($zip_filename);
+    exit;
+}
+
 // Mark token as used
-$update = mysqli_prepare($f_link, 'UPDATE download_tokens SET used = 1 WHERE token = ?');
+$update = mysqli_prepare($f_link, 'UPDATE download_tokens SET used = 1 WHERE token = ? AND used = 0');
 mysqli_stmt_bind_param($update, 's', $token);
 mysqli_stmt_execute($update);
+$rows_updated = mysqli_stmt_affected_rows($update);
 mysqli_stmt_close($update);
+
+if ($rows_updated !== 1) {
+    mysqli_close($f_link);
+    ferror_log("Download token was already consumed before confirm click.");
+    http_response_code(403);
+    echo 'This download link has already been used.';
+    exit;
+}
+
 mysqli_close($f_link);
 
 ferror_log("Serving ZIP file: " . $zip_path);

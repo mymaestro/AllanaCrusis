@@ -82,7 +82,7 @@ New state handled:
 
 Created:
 
-- scripts/resend_part_distribution_email.php
+- scripts/parts_resender.php
 
 This script lets an admin/librarian resend part-delivery emails from shell using existing token context or direct playgram/section/zip inputs.
 
@@ -115,13 +115,13 @@ This script lets an admin/librarian resend part-delivery emails from shell using
 List help:
 
 ```bash
-php scripts/resend_part_distribution_email.php --help
+php scripts/parts_resender.php --help
 ```
 
 Resend from full token (new token by default):
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=admin \
   --email=musician@example.com \
   --token=0123456789abcdef0123456789abcdef
@@ -130,7 +130,7 @@ php scripts/resend_part_distribution_email.php \
 Resend and reuse existing token:
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=admin \
   --email=musician@example.com \
   --token=0123456789abcdef0123456789abcdef \
@@ -140,7 +140,7 @@ php scripts/resend_part_distribution_email.php \
 Direct mode:
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=admin \
   --email=musician@example.com \
   --playgram-id=3 \
@@ -151,7 +151,7 @@ php scripts/resend_part_distribution_email.php \
 Dry run:
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=admin \
   --email=musician@example.com \
   --token=0123456789abcdef0123456789abcdef \
@@ -193,7 +193,7 @@ Because UI reports show only token tail (for example: ...d38b00c7), the resend s
 List all matches for a tail:
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=jarredprejean \
   --token-tail=d38b00c7 \
   --list-matches
@@ -202,7 +202,7 @@ php scripts/resend_part_distribution_email.php \
 List narrowed matches:
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=jarredprejean \
   --token-tail=d38b00c7 \
   --list-matches \
@@ -214,7 +214,7 @@ php scripts/resend_part_distribution_email.php \
 Send using suffix (new token default):
 
 ```bash
-php scripts/resend_part_distribution_email.php \
+php scripts/parts_resender.php \
   --admin-user=jarredprejean \
   --email=sethn@sbcglobal.net \
   --token-tail=d38b00c7 \
@@ -239,7 +239,21 @@ php scripts/resend_part_distribution_email.php \
      - sound.php
      - password_reset.php
      - email_verification.php
-     - scripts/resend_part_distribution_email.php
+     - scripts/parts_resender.php
+
+---
+
+## Testing & Validation (May 13, 2026)
+
+Initial testing of the delivery hardening changes has been completed:
+
+- **Part delivery emails**: Successfully sent and received via Gmail.
+  - Previously: Parts delivery was inconsistent for some recipients, particularly Gmail users.
+  - Now: Email arrived successfully with proper SPF/DMARC alignment.
+- **CLI resend script**: Tested and working as expected.
+- **Email consistency**: New shared mail helper is functioning correctly across all send paths.
+
+**Status**: Awaiting feedback from other users before declaring full success. Initial testing validates the domain alignment and delivery hardening strategy.
 
 ---
 
@@ -250,5 +264,5 @@ php scripts/resend_part_distribution_email.php \
 - src/includes/email_verification.php
 - src/includes/password_reset.php
 - src/login_reset.php
-- scripts/resend_part_distribution_email.php
+- scripts/parts_resender.php
 - EMAIL_UPDATE.md

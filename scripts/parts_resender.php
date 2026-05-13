@@ -1,14 +1,14 @@
 <?php
-// resend_part_distribution_email.php
+// parts_resender.php
 // Admin CLI utility to (re)send part distribution emails with download tokens.
 //
 // Examples:
-//   php scripts/resend_part_distribution_email.php \
+//   php scripts/parts_resender.php \
 //     --admin-user=admin \
 //     --email=musician@example.com \
 //     --token=0123456789abcdef0123456789abcdef
 //
-//   php scripts/resend_part_distribution_email.php \
+//   php scripts/parts_resender.php \
 //     --admin-user=admin \
 //     --email=musician@example.com \
 //     --playgram-id=3 \
@@ -31,7 +31,7 @@ require_once(__DIR__ . '/../src/includes/functions.php');
 function usage() {
     $help = <<<TXT
 Usage:
-    php scripts/resend_part_distribution_email.php --admin-user=USERNAME [options]
+    php scripts/parts_resender.php --admin-user=USERNAME [options]
 
 Required:
   --admin-user=USERNAME    Existing admin/librarian username running this resend
@@ -62,33 +62,33 @@ Optional:
 
 Common examples:
     1) Resend from an existing full token (create a new token by default):
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --email=musician@example.com \
              --token=0123456789abcdef0123456789abcdef
 
     2) Reuse the existing token instead of minting a new one:
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --email=musician@example.com \
              --token=0123456789abcdef0123456789abcdef \
              --reuse-token
 
     3) Find a token by last characters (suffix) without sending:
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --token-tail=d38b00c7 \
              --list-matches
 
     4) Send using suffix resolution when one match is expected:
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --email=musician@example.com \
              --token-tail=d38b00c7 \
              --pick-latest
 
     5) Build from IDs/ZIP (direct mode):
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --email=musician@example.com \
              --playgram-id=3 \
@@ -96,7 +96,7 @@ Common examples:
              --zip-filename=Spring_Concert_Flutes_Parts.zip
 
     6) Dry run (validate inputs and generated link, no send/write):
-         php scripts/resend_part_distribution_email.php \
+         php scripts/parts_resender.php \
              --admin-user=admin \
              --email=musician@example.com \
              --token-tail=d38b00c7 \
@@ -498,7 +498,7 @@ if (!$dryRun) {
         'from' => $adminEmail,
         'replyTo' => $adminEmail,
         'isHtml' => true,
-        'context' => 'scripts/resend_part_distribution_email.php',
+        'context' => 'scripts/parts_resender.php',
         'actor' => $adminUser
     ]);
 

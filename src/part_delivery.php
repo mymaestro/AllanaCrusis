@@ -564,6 +564,14 @@ $(document).ready(function() {
                     let text = html;
                      // Remove style blocks
                     text = text.replace(/<style[\s\S]*?<\/style>/gi, '');
+                    // Convert links to readable plain text with URL preserved
+                    text = text.replace(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, function(match, href, label) {
+                        const labelText = label.replace(/<[^>]+>/g, '').trim();
+                        if (!labelText || labelText === href) {
+                            return href;
+                        }
+                        return labelText + ': ' + href;
+                    });
                     // Add newlines before and after <h1>-<h6> tags
                     text = text.replace(/<(h[1-6])[^>]*>/gi, '\n');
                     text = text.replace(/<\/h[1-6]>/gi, '\n');

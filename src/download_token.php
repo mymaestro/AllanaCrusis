@@ -25,10 +25,16 @@ function renderDownloadConfirmationPage($zipFilename) {
         return;
     }
 
+    $cancelUrl = '/';
+    if (defined('ORGHOME') && ORGHOME) {
+        $cancelUrl = ORGHOME;
+    }
+
     $replacements = [
         '{{pageTitle}}' => 'Confirm Parts Download',
         '{{zipFilename}}' => h($zipFilename),
-        '{{formAction}}' => h($_SERVER['REQUEST_URI'] ?? '')
+        '{{formAction}}' => h($_SERVER['REQUEST_URI'] ?? ''),
+        '{{cancelUrl}}' => h($cancelUrl)
     ];
 
     echo strtr($templateHtml, $replacements);

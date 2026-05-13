@@ -73,19 +73,35 @@
     <h1>Confirm download</h1>
     <p class="meta">File: <strong>{{zipFilename}}</strong></p>
     <div class="notice">
-      This is a one-time secure download link. Continue only when you are ready to save or open the ZIP file on this device.
+      This is a one time secure download link. Continue only when you are ready to save or open the ZIP file on this device.
     </div>
-    <p>This link is single-use. It will be expired after you click <strong>Download now</strong> below.</p>
+    <p>This link is single use. It expires after you choose <strong>Download</strong> below.</p>
 
     <form method="post" action="{{formAction}}">
       <input type="hidden" name="confirm_download" value="1">
       <div class="actions">
-        <button type="submit" class="btn btn-primary">Download now</button>
-        <a href="javascript:history.back()" class="btn btn-secondary">Not now</a>
+        <button type="submit" class="btn btn-primary">Download</button>
+        <a href="{{cancelUrl}}" class="btn btn-secondary" id="not-now-link">Not now</a>
       </div>
     </form>
 
-    <p class="fine">If you are not ready on this device, choose Not now and come back later.</p>
+    <p class="fine">If you are not ready here, you can choose Not now, and come back later.</p>
   </div>
+
+  <script>
+    (function () {
+      var notNowLink = document.getElementById('not-now-link');
+      if (!notNowLink) {
+        return;
+      }
+
+      notNowLink.addEventListener('click', function (event) {
+        if (window.history.length > 1) {
+          event.preventDefault();
+          window.history.back();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

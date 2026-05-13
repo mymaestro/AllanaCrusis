@@ -60,6 +60,49 @@ Optional:
   --dry-run                Do everything except send email / DB writes
   --help                   Show this help
 
+Common examples:
+    1) Resend from an existing full token (create a new token by default):
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --email=musician@example.com \
+             --token=0123456789abcdef0123456789abcdef
+
+    2) Reuse the existing token instead of minting a new one:
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --email=musician@example.com \
+             --token=0123456789abcdef0123456789abcdef \
+             --reuse-token
+
+    3) Find a token by last characters (suffix) without sending:
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --token-tail=d38b00c7 \
+             --list-matches
+
+    4) Send using suffix resolution when one match is expected:
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --email=musician@example.com \
+             --token-tail=d38b00c7 \
+             --pick-latest
+
+    5) Build from IDs/ZIP (direct mode):
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --email=musician@example.com \
+             --playgram-id=3 \
+             --section-id=7 \
+             --zip-filename=Spring_Concert_Flutes_Parts.zip
+
+    6) Dry run (validate inputs and generated link, no send/write):
+         php scripts/resend_part_distribution_email.php \
+             --admin-user=admin \
+             --email=musician@example.com \
+             --token-tail=d38b00c7 \
+             --pick-latest \
+             --dry-run
+
 TXT;
     fwrite(STDOUT, $help);
 }

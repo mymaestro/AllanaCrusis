@@ -65,6 +65,31 @@ function f_sqlConnect($dbhost, $user, $pass, $db) {
     return $link;
 }
 
+/* Ensure the mysqli connection is still alive for long-running requests */
+function f_sqlEnsureConnection($link, $dbhost, $user, $pass, $db) {
+    if (!($link instanceof mysqli)) {
+        ferror_log("Database link was invalid. Creating a new connection.", FERROR_LOG_WARN);
+        return f_sqlConnect($dbhost, $user, $pass, $db);
+    }
+
+    try {
+        if (mysqli_ping($link)) {
+            return $link;
+        }
+    } catch (Throwable $e) {
+        ferror_log("Database ping failed: " . $e->getMessage(), FERROR_LOG_WARN);
+    }
+
+    ferror_log("Database connection dropped during request. Reconnecting.", FERROR_LOG_WARN);
+    try {
+        mysqli_close($link);
+    } catch (Throwable $e) {
+        // Ignore close failures and proceed with reconnect.
+    }
+
+    return f_sqlConnect($dbhost, $user, $pass, $db);
+}
+
 function f_mysqlEscape($text) {
     global $link;
     return mysqli_real_escape_string($link, $text);

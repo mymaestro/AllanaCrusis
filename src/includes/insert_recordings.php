@@ -238,6 +238,9 @@ if(!empty($_POST)) {
         ";
         $message = 'Data Inserted';
     }
+    // Long audio upload/tagging work can leave the original DB socket stale.
+    $f_link = f_sqlEnsureConnection($f_link, DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     ferror_log("Updating recordings with SQL: " . trim(preg_replace('/\s+/', ' ', $sql)), FERROR_LOG_WARN);
     $referred = $_SERVER['HTTP_REFERER'];
     $referred .= "/#" . $id_recording;

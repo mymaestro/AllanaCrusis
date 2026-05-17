@@ -440,6 +440,9 @@ if(!empty($_POST)) {
         }
     } // End of file upload processing
 
+    // Long PDF/chunk processing can exceed MySQL idle timeout; refresh the connection before writes.
+    $f_link = f_sqlEnsureConnection($f_link, DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
     if($_POST["update"] == "update") {
         // Prepare UPDATE statement
         $update_sql = "UPDATE parts SET 

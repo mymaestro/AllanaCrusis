@@ -40,6 +40,7 @@ Required:
 Token mode:
   --token=HEX32            Existing 32-char token to resend from
     --token-tail=HEX         Resolve by token suffix (4-32 hex chars, e.g. d38b00c7)
+        --token-suffix=HEX       Alias for --token-tail
     --token-end=HEX          Alias for --token-tail
   --reuse-token            Reuse the provided token (default is to mint a new token)
     --pick-latest            If suffix matches multiple tokens, pick the newest one
@@ -280,6 +281,7 @@ $options = getopt('', [
     'email:',
     'token:',
     'token-tail:',
+    'token-suffix:',
     'token-end:',
     'reuse-token',
     'pick-latest',
@@ -303,7 +305,7 @@ if (isset($options['help'])) {
 $adminUser = $options['admin-user'] ?? '';
 $email = $options['email'] ?? '';
 $providedToken = $options['token'] ?? '';
-$tokenTail = strtolower(trim((string)($options['token-tail'] ?? ($options['token-end'] ?? ''))));
+$tokenTail = strtolower(trim((string)($options['token-tail'] ?? ($options['token-suffix'] ?? ($options['token-end'] ?? '')))));
 $reuseToken = isset($options['reuse-token']);
 $pickLatest = isset($options['pick-latest']);
 $listMatches = isset($options['list-matches']);
@@ -325,6 +327,11 @@ if ($tokenTail !== '' && !preg_match('/^[a-f0-9]{4,32}$/', $tokenTail)) {
 }
 if ($matchEmail !== '' && !filter_var($matchEmail, FILTER_VALIDATE_EMAIL)) {
     fail('Invalid --match-email value.');
+}
+
+$hasDirectModeArgs = isset($options['playgram-id']) || isset($options['section-id']) || isset($options['zip-filename']);
+if (!$listMatches && $providedToken === '' && $tokenTail === '' && !$hasDirectModeArgs) {
+    fail('Missing lookup arguments. Use token mode (--token, --token-tail, --token-suffix, or --token-end) or direct mode (--playgram-id, --section-id, --zip-filename).');
 }
 
 $sendMode = !$listMatches;
@@ -376,7 +383,7 @@ if ($providedToken === '' && $tokenTail !== '') {
 }
 
 if ($listMatches && $tokenTail === '') {
-    fwrite(STDERR, "Use --token-tail (or --token-end) with --list-matches.\n");
+    fwrite(STDERR, "Use --token-tail (or --token-suffix / --token-end) with --list-matches.\n");
     mysqli_close($db);
     usage();
     exit(1);

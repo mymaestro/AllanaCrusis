@@ -194,6 +194,12 @@ function loadPlaygramData($f_link, $playgram_id) {
 function createSectionZip($f_link, $playgram_id, $section_id) {
     $stmt = null;
     $result = null;
+    $zip_start = microtime(true);
+
+    // Building ZIPs of many large PDFs can exceed default request limits.
+    @ignore_user_abort(true);
+    @set_time_limit(0);
+    @ini_set('max_execution_time', '0');
 
     // Get playgram and section info
     $sql = "SELECT pg.name as playgram_name, s.name as section_name 
@@ -289,6 +295,10 @@ function createSectionZip($f_link, $playgram_id, $section_id) {
                 ferror_log("Adding file to ZIP: " . $new_filename);
 
                 if ($zip->addFile($source_path, $new_filename)) {
+                    // PDFs are already compressed; store mode avoids expensive recompression.
+                    if (method_exists($zip, 'setCompressionName')) {
+                        @$zip->setCompressionName($new_filename, ZipArchive::CM_STORE);
+                    }
                     $added_count++;
                 } else {
                     $skipped_files[] = $part['part_name'] . ' (could not add to ZIP)';
@@ -299,7 +309,15 @@ function createSectionZip($f_link, $playgram_id, $section_id) {
             }
         }
 
-        $zip->close();
+        $zip_close_result = $zip->close();
+        $zip_elapsed = round(microtime(true) - $zip_start, 2);
+
+        if ($zip_close_result !== TRUE) {
+            ferror_log("ZIP close failed after " . $zip_elapsed . "s for " . $zip_filename, FERROR_LOG_ERROR);
+            return ['success' => false, 'message' => 'Could not finalize ZIP file.'];
+        }
+
+        ferror_log("ZIP created successfully: " . $zip_filename . " with " . $added_count . " files in " . $zip_elapsed . "s");
 
         if ($added_count == 0) {
             unlink($zip_path);

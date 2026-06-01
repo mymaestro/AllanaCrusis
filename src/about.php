@@ -37,6 +37,13 @@
             </h2>
             <div id="collapseWhatsNew" class="accordion-collapse collapse" aria-labelledby="headingWhatsNew" data-bs-parent="#whatsNewAccordion">
               <div class="accordion-body">
+                <h5>May 2026</h5>
+                <ul>
+                  <li><strong>Email delivery hardening:</strong> Unified major email flows under a shared send helper with safer headers and stronger sender-domain alignment.</li>
+                  <li><strong>Admin resend workflow:</strong> Added a CLI tool to resend part-delivery links from existing token context or direct playgram/section inputs.</li>
+                  <li><strong>Token support improvements:</strong> Added token-tail lookup and match listing to simplify resend support when only a suffix is available.</li>
+                  <li><strong>Initial validation:</strong> Verified improved part-delivery email behavior in early Gmail testing.</li>
+                </ul>
                 
                 <h5>March 2026</h5>
                 <ul>
@@ -70,7 +77,7 @@
                   <li><strong>Responsive UI:</strong> Improved composition header behavior and parts-page mobile/tablet navigation</li>
                 </ul>
 
-                <p><small class="text-muted">Last updated: March 2026</small></p>
+                <p><small class="text-muted">Last updated: May 2026</small></p>
               </div>
             </div>
           </div>
@@ -353,6 +360,7 @@
             </ul>
           </div>
         </div>
+
       </div>
     </div>
 

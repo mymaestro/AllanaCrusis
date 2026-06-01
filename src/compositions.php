@@ -39,9 +39,9 @@ ferror_log("RUNNING compositions.php");
             <div class="col">
                 <div class="float-end">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#viewData" id="view" class="btn btn-secondary view_data" disabled>Details</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#partsData" id="parts" class="btn btn-success parts_data" disabled>Parts</button>
                 <?php if($u_librarian) : ?>
                     <button type="button" id="instrumentation" class="btn btn-info instrumentation_btn" disabled>Instrumentation</button>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#partsData" id="parts" class="btn btn-success parts_data" disabled>Parts</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="add"  class="btn btn-warning">Add</button>

@@ -1,6 +1,6 @@
 {
-  "name": "Music Library DB",
-  "short_name": "MusicLibDB",
+  "name": "AllanaCrusis music library",
+  "short_name": "AllanaCrusis",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

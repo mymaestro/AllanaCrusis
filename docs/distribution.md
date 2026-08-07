@@ -15,6 +15,7 @@ This section covers how to share musical parts with performers, students, and ot
 - [Physical Distribution Tracking](#physical-distribution-tracking)
 - [User Experience](#user-experience)
 - [Monitoring and Analytics](#monitoring-and-analytics)
+- [Reducing False Positives](#reducing-false-positives)
 
 ---
 
@@ -338,6 +339,56 @@ While AllanaCrusis primarily focuses on digital distribution, it can also track 
 
 ![Analytics dashboard showing usage patterns](images/screenshots/reports.png)
 *Figure 9: Analytics dashboard displaying distribution statistics*
+
+---
+
+## Reducing false positives
+
+In this context, a "false positive" means the system reports a token as expired or unusable even though the recipient intended to use a valid link and simply missed timing or steps.
+
+These are usually workflow errors, not software defects.
+
+### common Human-Error Patterns
+- **Late open**: Recipient opens email after token validity window has passed.
+- **Device handoff delays**: Recipient opens message on phone, then waits to download later on a different device.
+- **Inbox stacking**: Newer messages push the active link down; recipient clicks an older token.
+- **Interruption during confirmation**: Recipient reaches confirmation page, gets interrupted, and returns too late.
+- **Forwarded email confusion**: Link sent to one person is forwarded, then opened by someone else after delay.
+
+### prevention Playbook for Librarians
+Use this checklist each time you send section ZIP links:
+
+1. **Send close to rehearsal/use window** instead of days early.
+2. **Include a clear deadline line** near the top of the message.
+3. **Tell users to download immediately** once they open the link.
+4. **Send one fresh link per recipient** instead of forwarding old links.
+5. **Avoid bulk follow-up threads** that bury the latest valid link.
+6. **Track delivery in the Download Tokens report** and proactively resend before expiry when needed.
+
+### recommended Email Copy Pattern
+Add this short block near the top of every distribution message:
+
+"This link is single-use and time-limited. Please open it and download your ZIP now. If the link has expired, reply to this email and we will send a fresh link right away."
+
+### resend and Recovery Workflow
+When a user reports an expired link:
+
+1. **Do not troubleshoot the old link first**; generate/send a fresh token immediately.
+2. **Use the latest token context** (same playgram/section/ZIP) to avoid mismatches.
+3. **Update the token email field after successful send** so audit/reporting remains accurate.
+4. **Log repetitive misses** (same recipient, same section) for targeted user coaching.
+
+For admin resend operations and token-tail lookup process, see [EMAIL_UPDATE.md](../EMAIL_UPDATE.md).
+
+### lightweight KPIs (Process Quality)
+Track these monthly to measure improvement:
+
+- **Expired-before-first-open rate** = expired unused tokens / tokens sent
+- **Resend-to-success rate** = links that succeed after first resend / resend requests
+- **Repeat-recipient miss rate** = users with 2+ expired links in a period
+- **Median time-to-download** from send timestamp
+
+If these metrics trend in the wrong direction, adjust messaging cadence and send timing before changing software behavior.
 
 ### reporting Capabilities
 **Standard Reports:**

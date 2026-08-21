@@ -12,14 +12,27 @@ if (!$is_librarian) {
 
 $catalog_number = trim($_POST['catalog_number'] ?? '');
 $action = $_POST['action'] ?? '';
-if ($catalog_number === '' || !in_array($action, ['create_zip', 'generate_download_token'], true)) {
+if ($catalog_number === '' || !in_array($action, ['create_zip', 'generate_download_token', 'update_token_email'], true)) {
     echo json_encode(['success' => false, 'message' => 'A composition and valid action are required.']);
     exit;
 }
 
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-if ($action === 'create_zip') {
+if ($action === 'update_token_email') {
+    $token = $_POST['token'] ?? '';
+    $email = trim($_POST['email'] ?? '');
+    if (!preg_match('/^[a-f0-9]{32}$/', $token) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(['success' => false, 'message' => 'Valid token and email are required.']);
+    } else {
+        $stmt = mysqli_prepare($f_link, 'UPDATE download_tokens SET email = ? WHERE token = ? AND catalog_number = ?');
+        mysqli_stmt_bind_param($stmt, 'sss', $email, $token, $catalog_number);
+        mysqli_stmt_execute($stmt);
+        $updated = mysqli_stmt_affected_rows($stmt);
+        mysqli_stmt_close($stmt);
+        echo json_encode(['success' => $updated === 1, 'message' => $updated === 1 ? 'Recipient saved.' : 'Download token was not found.']);
+    }
+} elseif ($action === 'create_zip') {
     echo json_encode(createCompositionZip($f_link, $catalog_number));
 } else {
     $zip_filename = basename($_POST['zip_filename'] ?? '');
@@ -123,6 +136,7 @@ function generateCompositionDownloadToken($f_link, $catalog_number, $zip_filenam
 
     return ['success' => true, 'data' => [
         'filename' => $zip_filename,
+        'token' => $token,
         'download_link' => '/d/' . $token,
         'expires_at' => $expires_at
     ]];

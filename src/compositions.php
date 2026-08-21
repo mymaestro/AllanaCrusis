@@ -427,15 +427,30 @@ ferror_log("RUNNING compositions.php");
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- messageModal -->
-        <div class="modal" id="distributionModal">
-            <div class="modal-dialog">
+        <div class="modal" id="compositionEmailModal" tabindex="-1" role="dialog" aria-labelledby="compositionEmailModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Composition package</h3>
+                        <h4 class="modal-title" id="compositionEmailModalTitle">Send composition parts</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body" id="distribution_detail"></div>
-                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                    <div class="modal-body">
+                        <form id="composition_send_email_form">
+                            <div class="mb-3">
+                                <label for="composition_email_recipient" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="composition_email_recipient" required>
+                            </div>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#compositionHtmlTab" type="button">HTML</button></li>
+                                <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#compositionTextTab" type="button">Plain text</button></li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="compositionHtmlTab"><textarea class="form-control" id="composition_email_html" rows="15"></textarea></div>
+                                <div class="tab-pane fade" id="compositionTextTab"><textarea class="form-control" id="composition_email_text" rows="15"></textarea></div>
+                            </div>
+                            <button type="submit" class="btn btn-success mt-3" id="composition_send_email">Send</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -449,6 +464,7 @@ ferror_log("RUNNING compositions.php");
 $(document).ready(function() {
     // Declare global variable for selected catalog number
     let catalog_number = null;
+    let compositionPackageData = null;
     
     // Check for edit parameter in URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -724,8 +740,6 @@ $(document).ready(function() {
             alert('No composition selected. Please select a composition first.');
             return;
         }
-        $('#distribution_detail').html('<p><i class="fas fa-spinner fa-spin"></i> Building package...</p>');
-        $('#distributionModal').modal('show');
         $.ajax({
             url: 'index.php?action=fetch_composition_distribution',
             type: 'POST',
@@ -733,7 +747,7 @@ $(document).ready(function() {
             data: { action: 'create_zip', catalog_number: catalog_number },
             success: function(response) {
                 if (!response.success) {
-                    $('#distribution_detail').html('<p class="text-danger">' + response.message + '</p>');
+                    alert(response.message);
                     return;
                 }
                 $.ajax({
@@ -743,24 +757,82 @@ $(document).ready(function() {
                     data: { action: 'generate_download_token', catalog_number: catalog_number, zip_filename: response.data.filename },
                     success: function(tokenResponse) {
                         if (!tokenResponse.success) {
-                            $('#distribution_detail').html('<p class="text-danger">' + tokenResponse.message + '</p>');
+                            alert(tokenResponse.message);
                             return;
                         }
                         var link = window.location.origin + tokenResponse.data.download_link;
-                        $('#distribution_detail').html('<p class="text-success">Package ready with ' + response.data.part_count + ' PDF parts.</p>' +
-                            '<label for="distribution_link" class="form-label">One-time download link</label>' +
-                            '<div class="input-group"><input id="distribution_link" class="form-control" readonly value="' + link + '"><button type="button" class="btn btn-outline-primary" id="copy_distribution_link">Copy</button></div>' +
-                            '<small class="text-muted">This link expires ' + tokenResponse.data.expires_at + ' and can be used once.</small>');
+                        compositionPackageData = {
+                            token: tokenResponse.data.token,
+                            downloadLink: link,
+                            expiresAt: tokenResponse.data.expires_at,
+                            partCount: response.data.part_count
+                        };
+                        openCompositionEmail();
                     },
-                    error: function() { $('#distribution_detail').html('<p class="text-danger">Could not create download link.</p>'); }
+                    error: function() { alert('Could not create download link.'); }
                 });
             },
-            error: function() { $('#distribution_detail').html('<p class="text-danger">Could not build composition package.</p>'); }
+            error: function() { alert('Could not build composition package.'); }
         });
     });
-    $(document).on('click', '#copy_distribution_link', function(){
-        navigator.clipboard.writeText($('#distribution_link').val());
-        $(this).text('Copied');
+    function openCompositionEmail(){
+        const packageData = compositionPackageData;
+        const compositionName = $('#composition_table tbody tr[data-id="' + catalog_number + '"] td:eq(2)').text().trim();
+        const bandName = <?php echo json_encode(defined('ORGDESC') ? ORGDESC : 'Your Band'); ?>;
+        const contactName = <?php echo json_encode($username ?? 'the Librarian'); ?>;
+        const logoUrl = <?php echo json_encode((defined('ORGHOME') ? rtrim(ORGHOME, '/') . '/' : '') . (defined('ORGLOGO') ? ltrim(ORGLOGO, '/') : '')); ?>;
+        const template = <?php echo json_encode(file_exists(__DIR__ . '/../config/download-contract.html') ? file_get_contents(__DIR__ . '/../config/download-contract.html') : ''); ?>;
+        const htmlMessage = template
+            .replace(/\{\{bandName\}\}/g, bandName)
+            .replace(/\{\{sectionName\}\}/g, 'complete composition')
+            .replace(/\{\{playgramName\}\}/g, compositionName)
+            .replace(/\{\{download_link\}\}/g, packageData.downloadLink)
+            .replace(/\{\{contactName\}\}/g, contactName)
+            .replace(/\{\{logoUrl\}\}/g, logoUrl)
+            .replace(/\{\{expiryDays\}\}/g, <?php echo DOWNLOAD_TOKEN_EXPIRY_DAYS; ?>);
+        $('#composition_email_html').val(htmlMessage);
+        $('#composition_email_text').val(htmlToPlainText(htmlMessage));
+        $('#composition_send_email_form').data({
+            token: packageData.token,
+            subject: 'Your complete composition parts: ' + compositionName
+        });
+        $('#composition_email_recipient').val('').trigger('input');
+        $('#compositionEmailModal').modal('show');
+    }
+    function htmlToPlainText(html) {
+        return html.replace(/<style[\s\S]*?<\/style>/gi, '')
+            .replace(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, '$2: $1')
+            .replace(/<br\s*\/?>|<\/(p|div|li|h[1-6])>/gi, '\n')
+            .replace(/<[^>]+>/g, '')
+            .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+            .replace(/[ \t]+/g, ' ').replace(/\n{2,}/g, '\n').trim();
+    }
+    $('#composition_send_email_form').on('submit', function(e){
+        e.preventDefault();
+        const form = $(this);
+        const email = $('#composition_email_recipient').val().trim();
+        const isHtml = $('#compositionHtmlTab').hasClass('show');
+        const message = isHtml ? $('#composition_email_html').val() : $('#composition_email_text').val();
+        $('#composition_send_email').prop('disabled', true).text('Sending...');
+        $.ajax({
+            url: 'index.php?action=sound',
+            type: 'POST',
+            dataType: 'json',
+            data: { email: email, message: message, from: <?php echo json_encode(defined('ORGMAIL') ? ORGMAIL : ''); ?>, subject: form.data('subject'), is_html: isHtml ? 1 : 0 },
+            success: function(response) {
+                if (!response.success) {
+                    alert(response.message || 'Email could not be sent.');
+                    return;
+                }
+                $.post('index.php?action=fetch_composition_distribution', {
+                    action: 'update_token_email', catalog_number: catalog_number, token: form.data('token'), email: email
+                });
+                alert('Email sent successfully.');
+                $('#compositionEmailModal').modal('hide');
+            },
+            error: function() { alert('Error sending email.'); },
+            complete: function() { $('#composition_send_email').prop('disabled', false).text('Send'); }
+        });
     });
     $(document).on('click', '.instrumentation_btn', function(){
         if(catalog_number != '')

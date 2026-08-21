@@ -1,4 +1,5 @@
 .env
+.htaccess-dev
 error_log
 *-backup.php
 musicLibraryDB.sql

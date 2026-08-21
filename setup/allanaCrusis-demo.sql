@@ -142,8 +142,9 @@ CREATE TABLE download_tokens (
   id_download_token INT AUTO_INCREMENT PRIMARY KEY,
   token VARCHAR(64) NOT NULL UNIQUE COMMENT 'The unique download token (use a secure random string).',
   email VARCHAR(255) DEFAULT NULL COMMENT 'Optional: email address to which the token was sent.',
-    id_playgram INT(11) NOT NULL COMMENT 'The ID of the playgram this token is for.',
-    id_section INT(10) UNSIGNED NOT NULL COMMENT 'The ID of the section this token is for.',
+    id_playgram INT(11) DEFAULT NULL COMMENT 'The ID of the playgram this token is for.',
+    id_section INT(10) UNSIGNED DEFAULT NULL COMMENT 'The ID of the section this token is for.',
+    catalog_number VARCHAR(5) DEFAULT NULL COMMENT 'The composition catalog number for a composition loan.',
     zip_filename VARCHAR(255) NOT NULL COMMENT 'The name of the ZIP file to serve.',
     expires_at DATETIME NOT NULL COMMENT 'When the token expires.',
     used TINYINT(1) DEFAULT 0 COMMENT '0 = not used, 1 = used.',
@@ -152,6 +153,7 @@ CREATE TABLE download_tokens (
     INDEX (token),
     INDEX (id_playgram),
     INDEX (id_section),
+    INDEX (catalog_number),
     INDEX (id_user),
     CONSTRAINT fk_download_tokens_playgram
         FOREIGN KEY (id_playgram) REFERENCES playgrams(id_playgram)
@@ -159,6 +161,9 @@ CREATE TABLE download_tokens (
     CONSTRAINT fk_download_tokens_section
         FOREIGN KEY (id_section) REFERENCES sections(id_section)
         ON DELETE CASCADE,
+    CONSTRAINT fk_download_tokens_composition
+      FOREIGN KEY (catalog_number) REFERENCES compositions(catalog_number)
+      ON DELETE CASCADE,
     CONSTRAINT fk_download_tokens_user
         FOREIGN KEY (id_user) REFERENCES users(id_users)
         ON DELETE SET NULL

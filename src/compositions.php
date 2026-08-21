@@ -41,6 +41,7 @@ ferror_log("RUNNING compositions.php");
                     <button type="button" data-bs-toggle="modal" data-bs-target="#viewData" id="view" class="btn btn-secondary view_data" disabled>Details</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#partsData" id="parts" class="btn btn-success parts_data" disabled>Parts</button>
                 <?php if($u_librarian) : ?>
+                    <button type="button" id="package_parts" class="btn btn-success package_parts" disabled><i class="fas fa-file-archive"></i> Package parts</button>
                     <button type="button" id="instrumentation" class="btn btn-info instrumentation_btn" disabled>Instrumentation</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
@@ -426,6 +427,18 @@ ferror_log("RUNNING compositions.php");
                 </div><!-- modal-content -->
             </div><!-- modal-dialog -->
         </div><!-- messageModal -->
+        <div class="modal" id="distributionModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Composition package</h3>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="distribution_detail"></div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                </div>
+            </div>
+        </div>
     </div><!-- container -->
 </main>
 <?php require_once(__DIR__. "/includes/footer.php"); ?>
@@ -628,7 +641,7 @@ $(document).ready(function() {
             $targetRow.addClass('table-active');
             
             // Enable buttons
-            $('#view, #edit, #delete, #parts, #instrumentation').prop('disabled', false);
+            $('#view, #edit, #delete, #parts, #instrumentation, #package_parts').prop('disabled', false);
             
             // Set global catalog_number
             catalog_number = catalogNumber;
@@ -647,7 +660,7 @@ $(document).ready(function() {
     // Enable the edit and delete buttons, and get the composition ID when a table row is clicked
     $(document).on('click', '#composition_table tbody tr', function(){
         $(this).find('input[type="radio"]').prop('checked',true);
-        $('#view, #edit, #delete, #parts, #instrumentation').prop('disabled',false);
+        $('#view, #edit, #delete, #parts, #instrumentation, #package_parts').prop('disabled',false);
         catalog_number = $(this).data('id'); // data-id attribute
         console.log("Selected catalog number: " + catalog_number);
     });
@@ -667,7 +680,7 @@ $(document).ready(function() {
             // Also select the radio button
             if (clicked_id) {
                 $row.find('input[type="radio"]').prop('checked', true);
-                $('#view, #edit, #delete, #parts, #instrumentation').prop('disabled', false);
+                $('#view, #edit, #delete, #parts, #instrumentation, #package_parts').prop('disabled', false);
                 catalog_number = clicked_id; // Update the global variable
             }
         }
@@ -705,6 +718,49 @@ $(document).ready(function() {
                 }
             });
         }
+    });
+    $(document).on('click', '.package_parts', function(){
+        if (!catalog_number) {
+            alert('No composition selected. Please select a composition first.');
+            return;
+        }
+        $('#distribution_detail').html('<p><i class="fas fa-spinner fa-spin"></i> Building package...</p>');
+        $('#distributionModal').modal('show');
+        $.ajax({
+            url: 'index.php?action=fetch_composition_distribution',
+            type: 'POST',
+            dataType: 'json',
+            data: { action: 'create_zip', catalog_number: catalog_number },
+            success: function(response) {
+                if (!response.success) {
+                    $('#distribution_detail').html('<p class="text-danger">' + response.message + '</p>');
+                    return;
+                }
+                $.ajax({
+                    url: 'index.php?action=fetch_composition_distribution',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { action: 'generate_download_token', catalog_number: catalog_number, zip_filename: response.data.filename },
+                    success: function(tokenResponse) {
+                        if (!tokenResponse.success) {
+                            $('#distribution_detail').html('<p class="text-danger">' + tokenResponse.message + '</p>');
+                            return;
+                        }
+                        var link = window.location.origin + tokenResponse.data.download_link;
+                        $('#distribution_detail').html('<p class="text-success">Package ready with ' + response.data.part_count + ' PDF parts.</p>' +
+                            '<label for="distribution_link" class="form-label">One-time download link</label>' +
+                            '<div class="input-group"><input id="distribution_link" class="form-control" readonly value="' + link + '"><button type="button" class="btn btn-outline-primary" id="copy_distribution_link">Copy</button></div>' +
+                            '<small class="text-muted">This link expires ' + tokenResponse.data.expires_at + ' and can be used once.</small>');
+                    },
+                    error: function() { $('#distribution_detail').html('<p class="text-danger">Could not create download link.</p>'); }
+                });
+            },
+            error: function() { $('#distribution_detail').html('<p class="text-danger">Could not build composition package.</p>'); }
+        });
+    });
+    $(document).on('click', '#copy_distribution_link', function(){
+        navigator.clipboard.writeText($('#distribution_link').val());
+        $(this).text('Copied');
     });
     $(document).on('click', '.instrumentation_btn', function(){
         if(catalog_number != '')

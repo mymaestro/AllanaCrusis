@@ -2,248 +2,209 @@
 
 ## Overview
 
-This document outlines a plan to migrate audio recordings from local filesystem storage to Google Drive, with a focus on a Google for Nonprofits environment. It is designed to be a practical alternative to the AWS S3 migration path while preserving existing AllanaCrusis upload and playback workflows.
+AllanaCrusis should treat its recordings as an archive of historical performance material, not as a media delivery platform. The project’s purpose is to preserve and catalog the organization’s audio heritage while keeping a familiar ingestion and metadata workflow for librarians and administrators.
 
-## Important Platform Note
+This plan covers only audio recordings. PDF documents and other non-audio materials remain local to the project and are not part of this cloud archive strategy. A future, separate project may evaluate Dropbox or another document-storage service for PDFs.
 
-Google Drive can work for archival and internal sharing, but it is not a CDN-style object store. For public, high-volume playback, Google Cloud Storage + Cloud CDN is generally a better long-term fit.
+This document is a technical implementation guide for using Google Drive as the archival backend for recordings. It assumes the project will remain archive-first and metadata-first, with AllanaCrusis as the intake point for all recordings and with public-facing slideshow or video outputs kept separate from the core app.
 
-If this project chooses Google Drive anyway, the architecture below minimizes disruption and keeps a future migration path open.
+## Core Operating Principle
 
-## Current Architecture
+AllanaCrusis is the first point of contact for all media ingestion. All uploaded source audio files should flow through the app, where the system writes ID3 metadata directly into the file and stores catalog-level context in the database.
 
-### Storage Structure
-- **Local Path**: `ORGPUBLIC` directory (currently `../../public/files/recordings/`)
-- **Web Access**: `ORGRECORDINGS` URL (currently `http://library1.local/files/recordings/`)
-- **Organization**: Date-based folder structure (`/recordings/YYYY-MM-DD/filename.mp3`)
-- **File Types**: MP3, WAV, FLAC, OGG audio files
-- **Size Limit**: 40MB per file
+This is a critical operational requirement: the source audio file must remain self-describing and usable by standard media players, external scanners, and downstream automation even when it is no longer being served by the application.
 
-### Current File Flow
-1. User uploads audio file via recordings form
-2. File saved to `ORGPUBLIC/YYYY-MM-DD/` directory
-3. ID3 metadata written using getID3 library
-4. Database stores filename and date for URL construction
-5. Audio served directly via `ORGRECORDINGS` base URL
+## Why Google Drive Fits This Project
 
-## Target Architecture (Google Drive)
+Google Drive is a valid archival choice when the project values:
 
-### Drive Structure
-- **Shared Drive**: `AllanaCrusis Recordings` (recommended over personal My Drive)
-- **Folder Structure**: `recordings/YYYY-MM-DD/filename.mp3`
-- **Identity**: Service account with domain-wide delegation or explicit Shared Drive access
-- **Access**: Application-controlled access via Drive API and a local proxy endpoint
-- **Optional Public Access**: Per-file sharing where policy permits (not preferred)
+- low operational overhead
+- shared access for team members
+- nonprofit-friendly storage capacity
+- simple collaboration and administration
+- a managed cloud archive without a complex infrastructure plan
 
-### New File Flow
-1. User uploads audio file via recordings form
-2. Application uploads file to Google Drive folder via Drive API
-3. ID3 metadata processing remains local temp-file based
-4. Database stores Drive file ID and normalized path metadata
-5. Audio served through application endpoint (recommended) or shared link strategy
+Google Drive is not a CDN and is not a high-volume public media delivery platform. It is best used as a durable, managed archive backend for historical recordings, not as a streaming service.
 
-## Implementation Plan
+## Storage and Access Model
 
-### Phase 1: Google Workspace and API Setup
+### Recommended Architecture
+- Shared Drive: `AllanaCrusis Recordings`
+- Folder pattern: `recordings/YYYY-MM-DD/filename.ext`
+- Application-managed access through the Drive API
+- Optional local cache or fallback retained during migration only
+- Public-facing video exports kept outside the application
 
-#### Google Resources
-- [ ] Confirm Google for Nonprofits eligibility and plan limits
-- [ ] Create Shared Drive for recordings
-- [ ] Enable Google Drive API in Google Cloud project
-- [ ] Create service account and secure key material
-- [ ] Grant service account least-privilege access to Shared Drive
+### Recommended File Flow
+1. Upload audio file through the AllanaCrusis app
+2. Validate MIME type and file size
+3. Write ID3 metadata directly into the source file
+4. Save the canonical file into the Google Drive archive
+5. Record the Drive file ID and storage metadata in the database
+6. Serve audio through a controlled app endpoint when in-app playback is needed
 
-#### Application Environment
-- [ ] Install Google API client library for PHP: `composer require google/apiclient:^2.17`
-- [ ] Add Google Drive configuration to `config.php` and `config.example.php`
-- [ ] Define secure location for service account credentials JSON
+## Technical Requirements
 
-### Phase 2: Configuration Changes
+### Google Workspace and API Setup
+- [ ] Confirm Google Workspace or Google for Nonprofits eligibility
+- [ ] Create a Shared Drive for recordings
+- [ ] Create a folder structure matching the archive organization pattern
+- [ ] Enable the Google Drive API in the Google Cloud project
+- [ ] Create a service account with least-privilege access
+- [ ] Store service account credentials outside the web root
+- [ ] Grant the service account access only to the relevant Shared Drive
 
-#### New Configuration Constants
+### Application Configuration
+Add the following configuration values to `config.php` and `config.example.php`:
+
 ```php
-// Add to config.php
+// config.php
+if (!defined('RECORDINGS_STORAGE_PROVIDER')) {
+    define('RECORDINGS_STORAGE_PROVIDER', 'drive');
+}
+
 define('GOOGLE_DRIVE_ENABLED', true);
-define('GOOGLE_DRIVE_SHARED_DRIVE_ID', 'your_shared_drive_id');
-define('GOOGLE_DRIVE_ROOT_FOLDER_ID', 'your_root_recordings_folder_id');
+define('GOOGLE_DRIVE_SHARED_DRIVE_ID', 'shared_drive_id_here');
+define('GOOGLE_DRIVE_ROOT_FOLDER_ID', 'root_folder_id_here');
 define('GOOGLE_DRIVE_SERVICE_ACCOUNT_JSON', '/secure/path/service-account.json');
-
-// Playback mode: 'proxy' (recommended), 'public_link' (limited use)
-define('GOOGLE_DRIVE_PLAYBACK_MODE', 'proxy');
 ```
 
-#### Backward Compatibility
+### Database Schema Additions
+Add provider-aware metadata while keeping the existing fields intact for compatibility:
+
+- `storage_provider` (`local`, `drive`, `s3`)
+- `storage_object_id` (Drive file ID or other object key)
+- `storage_path` (relative archive path)
+- `last_sync_at` (optional)
+- `is_public_export_ready` (optional)
+- `youtube_url` or `external_media_url` (optional)
+
+The older fields such as `link` and date can remain as legacy fields during transition.
+
+## ID3 Metadata Requirements
+
+All uploads should be processed through the existing ID3 logic in the app. This should be considered a required step, not a secondary feature.
+
+Recommended fields:
+
+- title
+- artist / performer
+- album / concert or performance collection
+- date
+- genre
+- comments or historical notes
+- track/recording identifier
+- related catalog number when available
+
+These tags should be written directly into the audio file at ingest time.
+
+## App-Level Changes Needed
+
+### Files to update
+- [config/config.php](config/config.php)
+- [src/includes/upload_recording.php](src/includes/upload_recording.php)
+- [src/includes/select_recordings.php](src/includes/select_recordings.php)
+- [src/recordings.php](src/recordings.php)
+- [src/index.php](src/index.php) if playback URLs are generated there
+- [src/download_token.php](src/download_token.php) or a new stream endpoint
+
+### New helper layer
+Create a lightweight provider abstraction:
+
+- `src/includes/storage/storage_interface.php`
+- `src/includes/storage/local_storage.php`
+- `src/includes/storage/drive_storage.php`
+
+Minimum methods:
+
 ```php
-if (defined('GOOGLE_DRIVE_ENABLED') && GOOGLE_DRIVE_ENABLED) {
-    // Local endpoint that streams bytes from Drive to audio player
-    define('ORGRECORDINGS', '/src/download_token.php?provider=drive&key=');
-} else {
-    define('ORGRECORDINGS', 'http://library1.local/files/recordings/');
+interface RecordingStorageInterface {
+    public function saveUpload($tempPath, $filename, $date, $mimeType);
+    public function deleteFile($recordingId, $path);
+    public function buildPlaybackUrl($recording);
+    public function streamFile($recording, $rangeHeader = null);
+    public function getMetadata($recording);
 }
 ```
 
-## Phase 3: Code Modifications
+## Playback and Access Strategy
 
-### Files to Modify
+The app should not depend on raw public Google Drive links as the primary access method.
 
-**1. `src/includes/insert_recordings.php`**
-- Replace local file write with Drive API upload
-- Preserve date-based folder organization in Drive
-- Persist Drive file ID for each upload
-- Add retry/error handling for API quota and transient failures
+Instead:
 
-**2. `src/includes/select_recordings.php`**
-- Generate playback URL based on provider (`local`, `s3`, or `drive`)
-- Keep existing player markup and behavior unchanged
+- the browser requests a controlled app endpoint
+- the app resolves the recording to its object and provider
+- the app streams the file with the proper headers and range support
+- the app keeps the same user-facing audio player experience
 
-**3. `src/includes/upload_recording.php`**
-- Reuse centralized provider upload logic
-- Standardize validation across storage backends
+This is necessary because Drive is not designed as a public CDN-style audio host for volume playback.
 
-**4. `src/download_token.php`**
-- Extend to support `provider=drive`
-- Stream bytes from Drive API with range request support for audio seek
+## Migration Strategy
 
-**5. `scripts/find_unreferenced_audio.php`**
-- Add Drive folder traversal mode
-- Compare DB references against Drive file IDs/paths
+### Recommended rollout plan
+1. Back up the current recording directory and database
+2. Run a dry-run inventory of all existing recordings
+3. Upload files to the Drive Shared Drive in batches
+4. Record the Drive file ID and the archive path in the DB
+5. Validate playback through the application endpoint
+6. Keep a local fallback copy until acceptance testing passes
+7. Switch the app to the drive provider in staging
+8. Cut over to production only after validation
 
-### New Helper Functions
-```php
-// src/includes/drive_functions.php
-function getDriveClient() {
-    // Create and return authenticated Google Drive client
-}
+### Migration script
+Create a script such as `scripts/migrate_recordings_to_drive.php` with the following responsibilities:
 
-function uploadRecordingToDrive($tempFile, $targetFolderId, $filename, $mimeType) {
-    // Upload and return Drive file metadata including file ID
-}
+- scan the local recordings directory
+- map files to the intended date-based Drive path
+- create missing date folders in the Shared Drive
+- upload each file and capture the file ID
+- update the database with provider and storage metadata
+- generate a CSV or JSON report of results and failures
 
-function ensureDateFolder($parentFolderId, $dateFolderName) {
-    // Find or create YYYY-MM-DD folder and return folder ID
-}
+## Operational Risks and Mitigations
 
-function streamDriveFileToOutput($fileId) {
-    // Proxy file stream to HTTP response with range support
-}
-```
+### Risk: Drive quota and rate limits
+Mitigation: keep the archive process batch-based and monitor API activity.
 
-### Database Notes
-- Add nullable columns where useful:
-  - `storage_provider` (`local`, `s3`, `drive`)
-  - `storage_object_id` (Drive file ID)
-  - `storage_path` (`recordings/YYYY-MM-DD/filename.mp3`)
-- Keep existing fields for backward compatibility during migration window
+### Risk: broken or brittle public links
+Mitigation: do not rely on public file URLs for app playback; use app-controlled access.
 
-## Phase 4: Migration Script
+### Risk: overbuilding the app
+Mitigation: keep the storage abstraction minimal and archive-first.
 
-### Data Migration
-Create `scripts/migrate_recordings_to_drive.php`:
-- [ ] Scan existing recordings directory
-- [ ] Create/fetch corresponding date folder in Drive
-- [ ] Upload each file and capture Drive file ID
-- [ ] Update database `storage_provider` and `storage_object_id`
-- [ ] Emit CSV/JSON report for audit
+### Risk: metadata inconsistency
+Mitigation: write ID3 tags during intake and keep DB metadata as a secondary reference layer.
 
-### Migration Steps
-1. **Backup existing recordings** (tar/zip local files)
-2. **Run dry-run mode** to validate path mapping only
-3. **Run upload mode** in batches (for quota safety)
-4. **Verify playback** via application proxy endpoint
-5. **Enable GOOGLE_DRIVE_ENABLED** in staging
-6. **Production cutover** after validation
-7. **Retain local files** until sign-off
+## Rollback Plan
 
-## Phase 5: Testing and Validation
+- retain the original local files until sign-off
+- keep `storage_provider` nullable during transition
+- support a fallback order such as `drive -> local`
+- keep a feature flag to switch providers back immediately
 
-### Functional Tests
-- [ ] Upload new recording via web interface
-- [ ] Playback including seek/scrub in browser audio player
-- [ ] Edit metadata and confirm no file regression
-- [ ] Delete recording and confirm Drive delete policy
-- [ ] Homepage random playback compatibility
-- [ ] Permissions by user role
+## Final Recommendation
 
-### Resilience and Performance Tests
-- [ ] Verify behavior under Drive API transient errors
-- [ ] Test rate-limit handling and retries
-- [ ] Compare first-byte latency local vs Drive proxy
-- [ ] Validate partial-content (`206`) responses for seeking
+Google Drive is a strong archival backend for this project when the goal is durable storage, team access, low operational overhead, and historical preservation. It should not be treated as a public media CDN.
 
-## Risk Mitigation
+The correct implementation approach is:
 
-### Operational Risks
-- **API Quotas**: Drive API request limits can throttle playback-heavy workloads
-- **Public Link Fragility**: Link permission changes can break playback
-- **Latency Variability**: Proxying through app can increase server load
-- **Governance Changes**: Workspace policy changes can affect sharing behavior
+- AllanaCrusis as the intake and cataloging system
+- embedded ID3 metadata at upload time
+- Google Drive as the canonical archive backend
+- a separate external media-production workflow for slideshow videos and YouTube content
 
-### Rollback Plan
-- Keep local files intact until acceptance testing is complete
-- Feature flag (`GOOGLE_DRIVE_ENABLED`) for instant fallback
-- Database backup before schema migration
-
-### Security Considerations
-- Store service account JSON outside web root
-- Restrict service account to required Shared Drive scope only
-- Audit and rotate credentials periodically
-- Prefer app-mediated access over broad public sharing
-
-## Cost and Nonprofit Considerations
-
-### Google for Nonprofits Notes
-- Workspace nonprofit plans may reduce operational cost for collaboration tools
-- Storage and sharing policy limits vary by edition and organization settings
-- Confirm whether expected recording volume and public traffic fit your plan
-
-### Expected Cost Profile
-- **Drive itself**: Often attractive for internal storage and team workflows
-- **App proxy overhead**: Increased app-server bandwidth and CPU compared with direct CDN delivery
-- **Potential add-ons**: If traffic grows, Cloud Storage + CDN may become cheaper and faster
-
-## Timeline
-
-### Estimated Effort
-- **Development**: 3-5 days
-- **Google setup and security review**: 1-2 days
-- **Testing**: 1-2 days
-- **Migration and cutover**: 1 day
-- **Total**: ~1-2 weeks
-
-### Dependencies
-- Google Workspace admin support
-- Cloud project and API approval process
-- Staging environment for load/performance validation
-- User communication for cutover window
-
-## Future Enhancements
-
-### If Staying on Google Ecosystem
-- Migrate runtime storage backend from Drive to Google Cloud Storage
-- Add Cloud CDN for lower latency and global delivery
-- Introduce signed URLs for restricted recordings
-- Add background jobs for metadata extraction and validation
-
-### Cross-Provider Abstraction
-- Implement provider-agnostic storage interface (`local`, `s3`, `drive`)
-- Keep migration scripts reusable for future backend shifts
-- Centralize URL generation and file lifecycle operations
-
-## Maintenance
-
-### Ongoing Tasks
-- Monitor Drive API quota usage and error rates
-- Clean up unreferenced files regularly
-- Rotate service account credentials and review IAM-like access
-- Validate Shared Drive permissions after admin policy changes
-
-### Documentation Updates
-- Update deployment docs with service account setup steps
-- Add troubleshooting guide for Drive API and auth failures
-- Document fallback/cutover procedures for support users
+This preserves the historical record while keeping the application focused on cataloging and metadata rather than public media hosting.
 
 ---
 
-**Last Updated**: July 21, 2026  
-**Document Version**: 1.0  
-**Next Review**: After proof-of-concept and staging validation
+**Last Updated**: September 21, 2026  
+**Document Version**: 3.0  
+**Next Review**: Before implementation of the Google Drive archival migration
+If usage remains low and the archive remains primarily historical/reference, the most cost-effective and least-risky path is a Google Drive-backed archive with controlled app access, not a more elaborate CDN-style delivery system.
+
+---
+
+**Last Updated**: September 21, 2026  
+**Document Version**: 2.1  
+**Next Review**: Before any archival migration to Google Drive

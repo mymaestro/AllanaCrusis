@@ -2,230 +2,203 @@
 
 ## Overview
 
-This document outlines the plan to migrate audio recordings from local filesystem storage to AWS S3, providing better scalability, reliability, and performance for the AllanaCrusis music library system.
+AllanaCrusis should treat its recordings as an archive of historical performance material, not as a media delivery platform. The project’s purpose is to preserve and catalog the organization’s audio heritage while keeping a familiar ingestion and metadata workflow for librarians and administrators.
 
-## Current Architecture
+This plan covers only audio recordings. PDF documents and other non-audio materials remain local to the project and are not part of this cloud archive strategy. A future, separate project may evaluate Dropbox or another document-storage service for PDFs.
 
-### Storage Structure
-- **Local Path**: `ORGPUBLIC` directory (currently `../../public/files/recordings/`)
-- **Web Access**: `ORGRECORDINGS` URL (currently `http://library1.local/files/recordings/`)
-- **Organization**: Date-based folder structure (`/recordings/YYYY-MM-DD/filename.mp3`)
-- **File Types**: MP3, WAV, FLAC, OGG audio files
-- **Size Limit**: 40MB per file
+This document is a technical implementation guide for using Amazon S3 as the archival backend for recordings. It assumes the project will remain archive-first and metadata-first, with AllanaCrusis as the intake point for all recordings and with public-facing slideshow or video outputs kept separate from the core app.
 
-### Current File Flow
-1. User uploads audio file via recordings form
-2. File saved to `ORGPUBLIC/YYYY-MM-DD/` directory
-3. ID3 metadata written using getID3 library
-4. Database stores filename and date for URL construction
-5. Audio served directly via `ORGRECORDINGS` base URL
+## Core Operating Principle
 
-## Target Architecture
+AllanaCrusis is the first point of contact for all media ingestion. All uploaded source audio files should flow through the app, where the system writes ID3 metadata directly into the file and stores catalog-level context in the database.
 
-### S3 Structure
-- **Bucket**: `allanacrusis-recordings` (or organization-specific name)
-- **Key Structure**: `recordings/YYYY-MM-DD/filename.mp3`
-- **Access**: Public read via S3 URLs or CloudFront distribution
-- **Backup**: S3 versioning and cross-region replication
-- **CDN**: CloudFront distribution for global performance
+This is a critical operational requirement: the source audio file must remain self-describing and usable by standard media players, external scanners, and downstream automation even when it is no longer being served by the application.
 
-### New File Flow
-1. User uploads audio file via recordings form
-2. File uploaded directly to S3 bucket
-3. ID3 metadata processing (local temp file or S3-based)
-4. Database stores S3 key path
-5. Audio served via CloudFront or S3 URLs
+## Why S3 Fits This Project
 
-## Implementation Plan
+Amazon S3 is a valid archival choice when the project values:
 
-### Phase 1: Infrastructure Setup
+- durable object storage
+- strong lifecycle management
+- scalable long-term retention
+- a future-ready path for automation and integrations
+- infrastructure-level control over storage policy and access
 
-#### AWS Resources
-- [ ] Create S3 bucket with appropriate naming
-- [ ] Configure bucket policy for public read access
-- [ ] Set up CloudFront distribution (optional but recommended)
-- [ ] Create IAM user/role with minimal S3 permissions
-- [ ] Generate access keys for application use
+S3 is not a CDN and is not a public media delivery platform by default. It is best used as a durable cloud archive backend for historical recordings, not as a streaming service.
 
-#### Local Environment
-- [ ] Install AWS SDK for PHP via Composer: `composer require aws/aws-sdk-php`
-- [ ] Add S3 configuration to `config.php` and `config.example.php`
+## Storage and Access Model
 
-### Phase 2: Configuration Changes
+### Recommended Architecture
+- Bucket: `allanacrusis-recordings` or organization-specific equivalent
+- Key pattern: `recordings/YYYY-MM-DD/filename.ext`
+- Optional CloudFront or application-managed endpoint for playback
+- Versioning and lifecycle controls enabled for archive integrity
+- Public-facing video exports kept outside the application
 
-#### New Configuration Constants
+### Recommended File Flow
+1. Upload audio file through the AllanaCrusis app
+2. Validate MIME type and file size
+3. Write ID3 metadata directly into the source file
+4. Save the canonical file into the S3 archive
+5. Record the object key and storage metadata in the database
+6. Serve audio through a controlled app endpoint when in-app playback is needed
+
+## Technical Requirements
+
+### AWS Setup
+- [ ] Create the S3 bucket for recordings
+- [ ] Configure bucket lifecycle rules and versioning
+- [ ] Define access policy for archival use
+- [ ] Add CloudFront if managed playback delivery is needed
+- [ ] Create an IAM user or role with least-privilege permissions
+- [ ] Store credentials outside the web root and rotate them periodically
+
+### Application Configuration
+Add the following configuration values to `config.php` and `config.example.php`:
+
 ```php
-// Add to config.php
+// config.php
+if (!defined('RECORDINGS_STORAGE_PROVIDER')) {
+    define('RECORDINGS_STORAGE_PROVIDER', 's3');
+}
+
 define('AWS_S3_ENABLED', true);
 define('AWS_S3_BUCKET', 'allanacrusis-recordings');
 define('AWS_S3_REGION', 'us-east-1');
 define('AWS_ACCESS_KEY_ID', 'your_access_key');
 define('AWS_SECRET_ACCESS_KEY', 'your_secret_key');
-define('AWS_CLOUDFRONT_DOMAIN', 'https://d1234567890.cloudfront.net'); // Optional
+define('AWS_CLOUDFRONT_DOMAIN', 'https://d1234567890.cloudfront.net'); // optional
 ```
 
-#### Backward Compatibility
+### Database Schema Additions
+Add provider-aware metadata while keeping the existing fields intact for compatibility:
+
+- `storage_provider` (`local`, `drive`, `s3`)
+- `storage_object_id` (S3 object key or object ID)
+- `storage_path` (relative archive path)
+- `last_sync_at` (optional)
+- `is_public_export_ready` (optional)
+- `youtube_url` or `external_media_url` (optional)
+
+The older fields such as `link` and date can remain as legacy fields during transition.
+
+## ID3 Metadata Requirements
+
+All uploads should be processed through the existing ID3 logic in the app. This should be considered a required step, not a secondary feature.
+
+Recommended fields:
+
+- title
+- artist / performer
+- album / concert or performance collection
+- date
+- genre
+- comments or historical notes
+- track/recording identifier
+- related catalog number when available
+
+These tags should be written directly into the audio file at ingest time.
+
+## App-Level Changes Needed
+
+### Files to update
+- [config/config.php](config/config.php)
+- [src/includes/upload_recording.php](src/includes/upload_recording.php)
+- [src/includes/select_recordings.php](src/includes/select_recordings.php)
+- [src/recordings.php](src/recordings.php)
+- [src/index.php](src/index.php) if playback URLs are generated there
+- [src/download_token.php](src/download_token.php) or a new stream endpoint
+
+### New helper layer
+Create a lightweight provider abstraction:
+
+- `src/includes/storage/storage_interface.php`
+- `src/includes/storage/local_storage.php`
+- `src/includes/storage/s3_storage.php`
+
+Minimum methods:
+
 ```php
-// Modified ORGRECORDINGS for S3 or local
-if (AWS_S3_ENABLED) {
-    define('ORGRECORDINGS', AWS_CLOUDFRONT_DOMAIN . '/recordings/');
-} else {
-    define('ORGRECORDINGS', 'http://library1.local/files/recordings/');
+interface RecordingStorageInterface {
+    public function saveUpload($tempPath, $filename, $date, $mimeType);
+    public function deleteFile($recordingId, $path);
+    public function buildPlaybackUrl($recording);
+    public function streamFile($recording, $rangeHeader = null);
+    public function getMetadata($recording);
 }
 ```
 
-### Phase 3: Code Modifications
+## Playback and Access Strategy
 
-#### Files to Modify
+The app should not depend on raw public S3 object URLs as the primary access method.
 
-**1. `src/includes/insert_recordings.php`**
-- Replace local file upload with S3 putObject
-- Maintain same folder structure in S3 keys
-- Handle ID3 metadata (temp file approach)
-- Error handling for S3 operations
+Instead:
 
-**2. `src/includes/select_recordings.php`**
-- Update URL generation for S3/CloudFront
-- Maintain same audio player functionality
+- the browser requests a controlled app endpoint
+- the app resolves the recording to its object and provider
+- the app streams the file with the proper headers and range support
+- the app keeps the same user-facing audio player experience
 
-**3. `src/includes/upload_recording.php`**
-- Similar S3 upload modifications
-- Unified upload function
+This keeps playback stable without treating S3 as a public CDN.
 
-**4. `src/index.php`**
-- Update homepage audio player URLs
+## Migration Strategy
 
-**5. `scripts/find_unreferenced_audio.php`**
-- Modify to work with S3 bucket listing
-- Update cleanup logic for S3 objects
+### Recommended rollout plan
+1. Back up the current recording directory and database
+2. Run a dry-run inventory of all existing recordings
+3. Upload files to the S3 bucket in batches
+4. Record the object key and storage metadata in the DB
+5. Validate playback through the application endpoint
+6. Keep a local fallback copy until acceptance testing passes
+7. Switch the app to the S3 provider in staging
+8. Cut over to production only after validation
 
-#### New Helper Functions
-```php
-// src/includes/s3_functions.php
-function uploadRecordingToS3($tempFile, $s3Key, $metadata = []) {
-    // S3 upload logic
-}
+### Migration script
+Create a script such as `scripts/migrate_recordings_to_s3.php` with the following responsibilities:
 
-function getRecordingUrl($dateFolder, $filename) {
-    // Generate S3 or CloudFront URL
-}
+- scan the local recordings directory
+- map files to the intended date-based S3 key path
+- create any required prefixes or folders in the bucket structure
+- upload each file and capture the result
+- update the database with provider and storage metadata
+- generate a CSV or JSON report of results and failures
 
-function deleteRecordingFromS3($s3Key) {
-    // S3 deletion logic
-}
-```
+## Operational Risks and Mitigations
 
-### Phase 4: Migration Script
+### Risk: object lifecycle or permission mistakes
+Mitigation: configure bucket policies carefully and test access before cutover.
 
-#### Data Migration
-Create `scripts/migrate_recordings_to_s3.php`:
-- [ ] Scan existing recordings directory
-- [ ] Upload each file to S3 with proper key structure
-- [ ] Verify successful upload
-- [ ] Update database if needed (URLs vs. paths)
-- [ ] Generate migration report
+### Risk: public access becoming too brittle
+Mitigation: do not rely on public object URLs for primary playback; use app-managed access.
 
-#### Migration Steps
-1. **Backup existing recordings** (tar/zip local files)
-2. **Run migration script** in test mode first
-3. **Verify all files accessible** via S3 URLs
-4. **Update configuration** to enable S3
-5. **Test upload/playback functionality**
-6. **Clean up local files** after verification
+### Risk: overbuilding the app
+Mitigation: keep the storage abstraction minimal and archive-first.
 
-### Phase 5: Testing & Validation
+### Risk: metadata inconsistency
+Mitigation: write ID3 tags during intake and keep DB metadata as a secondary reference layer.
 
-#### Test Cases
-- [ ] Upload new recording via web interface
-- [ ] Play existing migrated recordings
-- [ ] Edit recording metadata
-- [ ] Delete recordings (both UI and cleanup script)
-- [ ] Homepage random recording playback
-- [ ] Permission checks for different user roles
+## Rollback Plan
 
-#### Performance Testing
-- [ ] Compare load times: local vs S3 vs CloudFront
-- [ ] Test with multiple concurrent audio streams
-- [ ] Verify mobile/responsive playback
+- retain the original local files until sign-off
+- keep `storage_provider` nullable during transition
+- support a fallback order such as `s3 -> local`
+- keep a feature flag to switch providers back immediately
 
-## Risk Mitigation
+## Final Recommendation
 
-### Rollback Plan
-- Keep local files until migration fully verified
-- Configuration flag to switch back to local storage
-- Database backup before any schema changes
+S3 is a strong archival backend for this project when the goal is durable storage, lifecycle control, and a future-ready cloud architecture. It should not be treated as a public media CDN.
 
-### Error Handling
-- Graceful fallback if S3 unavailable
-- Proper error messages for upload failures
-- Logging for S3 operations
+The correct implementation approach is:
 
-### Security Considerations
-- Minimal IAM permissions (S3 bucket access only)
-- Secure credential storage (environment variables)
-- Public read-only access to recordings bucket
-- Consider signed URLs for private recordings (future enhancement)
+- AllanaCrusis as the intake and cataloging system
+- embedded ID3 metadata at upload time
+- S3 as the canonical archive backend
+- a separate external media-production workflow for slideshow videos and YouTube content
 
-## Cost Analysis
-
-### AWS Costs (Estimated Monthly)
-- **S3 Storage**: ~$0.023/GB for standard storage
-- **S3 Requests**: ~$0.0004 per 1,000 GET requests
-- **CloudFront**: ~$0.085/GB for first 10TB transfer
-- **Estimated Total**: $5-20/month depending on usage
-
-### Benefits vs. Costs
-- **Eliminated**: Local storage requirements
-- **Improved**: Global performance via CDN
-- **Enhanced**: Reliability and backup
-- **Scalable**: No server storage limits
-
-## Timeline
-
-### Estimated Effort
-- **Development**: 2-3 days
-- **Infrastructure Setup**: 1 day
-- **Testing**: 1 day
-- **Migration**: 1 day
-- **Total**: ~1 week
-
-### Dependencies
-- AWS account setup and billing
-- Testing environment for validation
-- Backup strategy for existing recordings
-- User communication for potential downtime
-
-## Future Enhancements
-
-### Advanced Features (Post-Migration)
-- **Transcoding**: Automatic format conversion via AWS MediaConvert
-- **Streaming**: Adaptive bitrate streaming for better performance
-- **Analytics**: CloudWatch metrics for usage tracking
-- **Private Recordings**: Signed URLs for restricted access
-- **Compression**: Automatic audio compression/optimization
-
-### Integration Opportunities
-- **Lambda Functions**: Automated processing workflows
-- **API Gateway**: RESTful API for recordings management
-- **ElasticSearch**: Enhanced audio metadata search
-- **Machine Learning**: Audio analysis and categorization
-
-## Maintenance
-
-### Ongoing Tasks
-- Monitor S3 costs and usage
-- Regular cleanup of unreferenced recordings
-- Update AWS SDK and dependencies
-- Review and rotate access credentials
-- Monitor CloudFront performance metrics
-
-### Documentation Updates
-- Update user documentation for any workflow changes
-- Document new deployment procedures
-- Update troubleshooting guides for S3-related issues
+This preserves the historical record while keeping the application focused on cataloging and metadata rather than public media hosting.
 
 ---
 
-**Last Updated**: October 15, 2025  
-**Document Version**: 1.0  
-**Next Review**: After implementation completion
+**Last Updated**: September 21, 2026  
+**Document Version**: 3.0  
+**Next Review**: Before implementation of the S3 archival migration

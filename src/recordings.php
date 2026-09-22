@@ -396,7 +396,7 @@ $(document).ready(function(){
                 $('#id_ensemble').val(result.id_ensemble);
                 $('#ensemble').val(result.ensemble);
                 $('#date').val(result.date);
-                $('#notes').val(result.concert_notes);
+                $('#notes').val(result.recording_notes);
                 $('#venue').val(result.venue);
                 $('#composer').val(result.composer);
                 $('#arranger').val(result.arranger);

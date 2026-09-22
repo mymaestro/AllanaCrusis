@@ -17,6 +17,7 @@ if (isset($_POST["id_recording"])) {
         r.id_ensemble        AS id_ensemble,
         r.composer           AS composer,
         r.arranger           AS arranger,
+        r.notes              AS recording_notes,
         r.link               AS link,
         con.performance_date AS date,
         con.venue            AS venue,
@@ -59,6 +60,10 @@ if (isset($_POST["id_recording"])) {
             <tr>
                 <td><label>Information</label></td>
                 <td>'.$rowList["concert_notes"] .'</td>
+            </tr>
+            <tr>
+                <td><label>Recording notes</label></td>
+                <td>'.nl2br(htmlspecialchars($rowList["recording_notes"] ?? '')).'</td>
             </tr>
             <tr>
                 <td><label>Composer</label></td>

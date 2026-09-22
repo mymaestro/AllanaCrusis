@@ -22,6 +22,7 @@ if(isset($_POST["id_recording"])) {  // EDIT
         r.id_ensemble        AS id_ensemble,
         r.composer           AS composer,
         r.arranger           AS arranger,
+        r.notes              AS recording_notes,
         r.link               AS link,
         con.performance_date AS date,
         con.venue            AS venue,

@@ -13,6 +13,10 @@ if (!$id_concert && isset($_GET['id_concert']) && ctype_digit((string)$_GET['id_
 $concert = null;
 $playgram_items = [];
 $ensembles = [];
+$existing_recordings = [];
+$saved_ensemble_id = '';
+$saved_ensemble = '';
+$saved_notes = '';
 
 if ($is_librarian && $id_concert) {
     $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
@@ -30,6 +34,23 @@ if ($is_librarian && $id_concert) {
         $items_result = mysqli_stmt_get_result($stmt);
         while ($item = mysqli_fetch_assoc($items_result)) {
             $playgram_items[] = $item;
+        }
+        mysqli_stmt_close($stmt);
+
+        $stmt = mysqli_prepare($f_link, 'SELECT id_recording, catalog_number, name, ensemble, id_ensemble, notes, link FROM recordings WHERE id_concert = ? ORDER BY id_recording');
+        mysqli_stmt_bind_param($stmt, 'i', $id_concert);
+        mysqli_stmt_execute($stmt);
+        $recordings_result = mysqli_stmt_get_result($stmt);
+        while ($recording = mysqli_fetch_assoc($recordings_result)) {
+            $recording_key = $recording['catalog_number'] ?? '__OTHER__';
+            if (!isset($existing_recordings[$recording_key])) {
+                $existing_recordings[$recording_key] = $recording;
+            }
+            if ($saved_ensemble_id === '') {
+                $saved_ensemble_id = $recording['id_ensemble'] ?? '';
+                $saved_ensemble = $recording['ensemble'] ?? '';
+                $saved_notes = $recording['notes'] ?? '';
+            }
         }
         mysqli_stmt_close($stmt);
     }
@@ -81,17 +102,17 @@ require_once(__DIR__ . "/includes/navbar.php");
                     <select class="form-select" id="id_ensemble" required>
                         <option value="">Select ensemble</option>
 <?php foreach ($ensembles as $ensemble) : ?>
-                        <option value="<?php echo htmlspecialchars($ensemble['id_ensemble']); ?>"><?php echo htmlspecialchars($ensemble['name']); ?></option>
+                        <option value="<?php echo htmlspecialchars($ensemble['id_ensemble']); ?>"<?php echo ((string)$ensemble['id_ensemble'] === (string)$saved_ensemble_id) ? ' selected' : ''; ?>><?php echo htmlspecialchars($ensemble['name']); ?></option>
 <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="col-md-7">
                     <label class="form-label" for="ensemble">Ensemble description</label>
-                    <input class="form-control" type="text" id="ensemble" value="" maxlength="2048" placeholder="Community Concert Band">
+                    <input class="form-control" type="text" id="ensemble" value="<?php echo htmlspecialchars($saved_ensemble); ?>" maxlength="2048" placeholder="Community Concert Band">
                 </div>
                 <div class="col-12">
                     <label class="form-label" for="notes">Recording notes</label>
-                    <textarea class="form-control" id="notes" rows="2" placeholder="Notes shared by the recordings from this concert"></textarea>
+                    <textarea class="form-control" id="notes" rows="2" placeholder="Notes shared by the recordings from this concert"><?php echo htmlspecialchars($saved_notes); ?></textarea>
                 </div>
             </div>
 
@@ -109,17 +130,31 @@ require_once(__DIR__ . "/includes/navbar.php");
                     </thead>
                     <tbody>
 <?php foreach ($playgram_items as $item) : ?>
+<?php $existing = $existing_recordings[$item['catalog_number']] ?? null; ?>
                         <tr class="recording-row" data-catalog-number="<?php echo htmlspecialchars($item['catalog_number']); ?>" data-composer="<?php echo htmlspecialchars($item['composer'] ?? ''); ?>" data-arranger="<?php echo htmlspecialchars($item['arranger'] ?? ''); ?>">
                             <td>
                                 <strong><?php echo htmlspecialchars($item['name']); ?></strong>
                                 <div class="small text-muted"><?php echo htmlspecialchars($item['catalog_number']); ?></div>
                             </td>
-                            <td><input class="form-control recording-name" type="text" value="<?php echo htmlspecialchars($item['name']); ?>" maxlength="255"></td>
-                            <td><input class="form-control recording-file" type="file" accept=".mp3,audio/mpeg" /></td>
-                            <td class="recording-status text-muted">Waiting for file</td>
-                            <td><button type="button" class="btn btn-primary upload-recording">Upload</button></td>
+                            <td><input class="form-control recording-name" type="text" value="<?php echo htmlspecialchars($existing['name'] ?? $item['name']); ?>" maxlength="255"></td>
+                            <td><input class="form-control recording-file" type="file" accept=".mp3,audio/mpeg"<?php echo $existing ? ' disabled' : ''; ?> /></td>
+                            <td class="recording-status <?php echo $existing ? 'text-success' : 'text-muted'; ?>"><?php echo $existing ? 'Uploaded: ' . htmlspecialchars($existing['link']) : 'Waiting for file'; ?></td>
+                            <td><button type="button" class="btn btn-primary upload-recording"<?php echo $existing ? ' disabled' : ''; ?>><?php echo $existing ? 'Uploaded' : 'Upload'; ?></button></td>
                         </tr>
 <?php endforeach; ?>
+<?php $existing_other = $existing_recordings['__OTHER__'] ?? null; ?>
+<?php if ($existing_other) : ?>
+                        <tr class="recording-row" data-catalog-number="" data-composer="" data-arranger="">
+                            <td>
+                                <strong>Other</strong>
+                                <div class="small text-muted">Non-music recording</div>
+                            </td>
+                            <td><input class="form-control recording-name" type="text" value="<?php echo htmlspecialchars($existing_other['name']); ?>" maxlength="255" disabled></td>
+                            <td><input class="form-control recording-file" type="file" accept=".mp3,audio/mpeg" disabled /></td>
+                            <td class="recording-status text-success">Uploaded: <?php echo htmlspecialchars($existing_other['link']); ?></td>
+                            <td><button type="button" class="btn btn-primary upload-recording" disabled>Uploaded</button></td>
+                        </tr>
+<?php endif; ?>
                         <tr class="recording-row" data-catalog-number="" data-composer="" data-arranger="">
                             <td>
                                 <strong>Other</strong>

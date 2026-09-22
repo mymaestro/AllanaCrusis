@@ -37,6 +37,14 @@
             </h2>
             <div id="collapseWhatsNew" class="accordion-collapse collapse" aria-labelledby="headingWhatsNew" data-bs-parent="#whatsNewAccordion">
               <div class="accordion-body">
+                <h5>September 2026</h5>
+                <ul>
+                  <li><strong>ACB annual performance report:</strong> Added reporting by performance year with formatted dates and CSV export for Association of Concert Bands submissions.</li>
+                  <li><strong>Concert recording workflow:</strong> Added a concert-specific page for uploading recordings from a complete performance, with the concert and playgram details filled in automatically.</li>
+                  <li><strong>Piece-by-piece uploads:</strong> Added one upload row for each playgram item so recordings can be uploaded individually while keeping the performance order visible.</li>
+                  <li><strong>Non-music recordings:</strong> Added an Other option for emcee remarks, song introductions, and other concert audio that is not tied to a cataloged composition.</li>
+                </ul>
+
                 <h5>May 2026</h5>
                 <ul>
                   <li><strong>Email delivery hardening:</strong> Unified major email flows under a shared send helper with safer headers and stronger sender-domain alignment.</li>
@@ -77,7 +85,7 @@
                   <li><strong>Responsive UI:</strong> Improved composition header behavior and parts-page mobile/tablet navigation</li>
                 </ul>
 
-                <p><small class="text-muted">Last updated: May 2026</small></p>
+                <p><small class="text-muted">Last updated: September 2026</small></p>
               </div>
             </div>
           </div>

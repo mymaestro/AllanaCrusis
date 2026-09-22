@@ -40,6 +40,7 @@ if(!empty($_POST)) {
     // Columns in the recordings table
     $id_recording = mysqli_real_escape_string($f_link, $_POST['id_recording']);
     $catalog_number = mysqli_real_escape_string($f_link, $_POST['catalog_number']);
+    $catalog_number_sql = ($catalog_number === '' || $catalog_number === '__OTHER__') ? 'NULL' : "'$catalog_number'";
     $id_concert = mysqli_real_escape_string($f_link, $_POST['concert']);
     $id_ensemble = mysqli_real_escape_string($f_link, $_POST['id_ensemble']);
     $name = mysqli_real_escape_string($f_link, $_POST['name']);
@@ -219,7 +220,7 @@ if(!empty($_POST)) {
     if($_POST["update"] == "update") {
         $sql = "
         UPDATE recordings 
-        SET catalog_number = '$catalog_number',
+        SET catalog_number = $catalog_number_sql,
         id_concert = '$id_concert',
         name ='$name',
         ensemble = '$ensemble',
@@ -234,7 +235,7 @@ if(!empty($_POST)) {
     } elseif($_POST["update"] == "add") {
         $sql = "
         INSERT INTO recordings(catalog_number, id_concert, name, ensemble, id_ensemble, link, notes, composer, arranger, enabled)
-        VALUES('$catalog_number', $id_concert, '$name', '$ensemble', '$id_ensemble', '$link', '$notes', '$composer', '$arranger', $enabled);
+        VALUES($catalog_number_sql, $id_concert, '$name', '$ensemble', '$id_ensemble', '$link', '$notes', '$composer', '$arranger', $enabled);
         ";
         $message = 'Data Inserted';
     }

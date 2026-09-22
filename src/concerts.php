@@ -30,6 +30,7 @@ if (isset($_SESSION['username'])) {
                 <button type="button" data-bs-toggle="modal" data-bs-target="#dataModal" id="view" class="btn btn-secondary view_data" disabled>Details</button>
 <?php if($u_librarian) : ?>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="edit" class="btn btn-primary edit_data" disabled>Edit</button>
+                <button type="button" id="add-recordings" class="btn btn-success" disabled>Add recordings</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" id="delete" class="btn btn-danger delete_data" disabled>Delete</button>
                 <button type="button" data-bs-toggle="modal" data-bs-target="#editModal" id="add"  class="btn btn-warning">Add</button>
 <?php endif; ?>
@@ -246,8 +247,14 @@ $(document).ready(function(){
     // Enable the edit and delete buttons, and get the playgram ID when a table row is clicked
     $(document).on('click', '#concert_table tbody tr', function(){
         $(this).find('input[type="radio"]').prop('checked',true);
-        $('#view, #edit, #delete').prop('disabled',false);
+        $('#view, #edit, #add-recordings, #delete').prop('disabled',false);
         id_concert = $(this).data('id'); // data-id attribute
+    });
+
+    $('#add-recordings').click(function(){
+        if (id_concert !== null) {
+            window.location.href = '/concert_recordings?id_concert=' + encodeURIComponent(id_concert);
+        }
     });
 
     $(document).on('click', '.edit_data', function() {

@@ -9,6 +9,7 @@ $urlMap = [
    '/compositions' => 'compositions.php',
    '/comps2csv' => 'comps2csv.php',
    '/concerts' => 'concerts.php',
+    '/concert_recordings' => 'concert_recordings.php',
    '/enable_disable_manager' => 'enable_disable_manager.php',
    '/ensembles' => 'ensembles.php',
    '/genres' => 'genres.php',

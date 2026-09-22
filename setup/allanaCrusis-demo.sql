@@ -717,7 +717,7 @@ DROP TABLE IF EXISTS `recordings`;
 /*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recordings` (
   `id_recording` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for this recording',
-  `catalog_number` varchar(5) NOT NULL COMMENT 'Catalog number of the composition',
+  `catalog_number` varchar(5) DEFAULT NULL COMMENT 'Catalog number of the composition; NULL for non-music recordings',
   `id_concert` int(11) NOT NULL COMMENT 'Which concert this recording is from',
   `name` varchar(255) DEFAULT NULL COMMENT 'Name of the piece or excerpt on the recording',
   `ensemble` varchar(2048) DEFAULT NULL COMMENT 'Ensemble or performer name',

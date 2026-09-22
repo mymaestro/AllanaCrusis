@@ -92,7 +92,7 @@
                             <select class='form-select form-control' aria-label='Choose composition' id='catalog_number' name='catalog_number'>
                                 <option value="">Select catalog number</option>
                             </select>
-                            <label for="catalog_number" class="col-form-label">Catalog number*</label>
+                            <label for="catalog_number" class="col-form-label">Piece or other recording*</label>
                         </div><!-- row -->
                         <div class="form-floating">
                             <select class='form-select form-control' aria-label='Select ensemble' id='id_ensemble' name='id_ensemble'>
@@ -246,9 +246,9 @@ $("#id_concert").change(function(){
         data: { id_concert: selectedConcert },
         success: function(options) {
             if (options.trim() !== "") {
-                $('#catalog_number').html(options);
+                $('#catalog_number').html('<option value="">Select piece or other recording</option>' + options);
             } else {
-                $('#catalog_number').html('<option value="">No compositions for this concert</option>');
+                $('#catalog_number').html('<option value="">Select piece or other recording</option><option value="__OTHER__">Other / non-music recording</option>');
             }
         }
     });
@@ -327,6 +327,14 @@ $(document).ready(function(){
         // and fetch its details via AJAX
         var catalog_number = this.value;
         console.log("Catalog number changed to " + catalog_number);
+        if (catalog_number === "__OTHER__") {
+            $('#composer').val('');
+            $('#arranger').val('');
+            if (!$('#name').val().trim()) {
+                $('#name').val('Other');
+            }
+            return;
+        }
         $.ajax({
             url: "index.php?action=fetch_recordings",
             method: "POST",
@@ -381,7 +389,7 @@ $(document).ready(function(){
                 // Wait for AJAX call to finish before setting catalog number
                 // Use a small timeout to ensure the concert options are loaded
                 setTimeout(function() {
-                    $('#catalog_number').val(result.catalog_number);
+                    $('#catalog_number').val(result.catalog_number || '__OTHER__');
                 }, 300);
 
                 $('#name').val(result.name);
@@ -462,7 +470,7 @@ $(document).ready(function(){
     $('#insert_form').on("submit", function(event){
         event.preventDefault();
         if ($('#catalog_number').val() === "") {
-            alert("Please choose a composition (catalog number)");
+            alert("Please choose a piece or other recording");
         } else if ($('#id_concert').val() === "") {
             alert("Please choose a concert");
         } else if ($('#id_ensemble').val() === "") {

@@ -47,6 +47,7 @@ if (isset($_POST['id_concert'])) {
     } else {
         $options = "<option value=''>No playgram items found for this concert</option>";
     }
+    $options .= "<option value='__OTHER__'>Other / non-music recording</option>";
     echo $options;
     mysqli_close($f_link);
 }

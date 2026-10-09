@@ -291,7 +291,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         <th>Title</th>
                                         <th>Composer</th>
                                         <th>Genre</th>
-                                        <th>Grade</th>
                                         <th>Duration</th>
                                         <th>Parts</th>
                                         <th>Action</th>
@@ -421,7 +420,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT c.catalog_number, c.name, c.composer, c.arranger, c.duration, c.grade, 
                g.name AS genre_name, c.genre,
-               COUNT(DISTINCT p.id_part_type) AS part_count
+               COUNT(DISTINCT p.id_part_type) AS part_count,
+               MAX(CASE WHEN p.image_path IS NOT NULL AND p.image_path != '' THEN 1 ELSE 0 END) AS pdf_available
         FROM compositions c 
         LEFT JOIN genres g ON c.genre = g.id_genre 
         LEFT JOIN parts p ON c.catalog_number = p.catalog_number
@@ -461,6 +461,7 @@ while($row = mysqli_fetch_array($res)) {
         'genre' => $row['genre'],
         'genre_name' => $row['genre_name'] ?: 'Unknown',
         'part_count' => $part_count,
+        'pdf_available' => (bool) intval($row['pdf_available'] ?? 0),
         'complexity' => $complexity,
         'searchable' => strtolower($row['name'] . ' ' . $row['composer'] . ' ' . $row['arranger'] . ' ' . $row['catalog_number'])
     ];
@@ -649,10 +650,13 @@ $(document).ready(function() {
         let tableHtml = '';
         filteredCompositions.forEach(function(comp) {
             const durationDisplay = comp.duration_minutes > 0 ? `${comp.duration_minutes}m` : 'Unknown';
-            const gradeDisplay = comp.grade > 0 ? comp.grade : 'N/A';
             
-            // Format parts count with complexity indicator
+            // Format parts count with complexity indicator and PDF status
             let partsDisplay = '';
+            let pdfBadge = comp.pdf_available
+                ? '<span class="badge bg-success ms-1">PDF</span>'
+                : '<span class="badge bg-secondary ms-1">No PDF</span>';
+
             if (comp.part_count > 0) {
                 let complexityClass = '';
                 let complexityIcon = '';
@@ -670,9 +674,15 @@ $(document).ready(function() {
                         complexityIcon = 'fas fa-guitar';
                         break;
                 }
-                partsDisplay = `<span class="badge ${complexityClass}"><i class="${complexityIcon}"></i> ${comp.part_count} parts</span>`;
+                partsDisplay = `<div class="d-flex flex-wrap gap-1">
+                    <span class="badge ${complexityClass}">${comp.part_count} parts</span>
+                    ${pdfBadge}
+                </div>`;
             } else {
-                partsDisplay = '<span class="badge bg-secondary"><i class="fas fa-question"></i> Unknown</span>';
+                partsDisplay = `<div class="d-flex flex-wrap gap-1">
+                    <span class="badge bg-secondary">Unknown</span>
+                    ${pdfBadge}
+                </div>`;
             }
             
             tableHtml += `
@@ -680,7 +690,6 @@ $(document).ready(function() {
                     <td><strong>${comp.name}</strong><br><small class="text-muted">${comp.catalog_number}</small></td>
                     <td>${comp.composer}${comp.arranger ? `<br><small class="text-muted">arr. ${comp.arranger}</small>` : ''}</td>
                     <td><span class="badge bg-light text-dark">${comp.genre_name}</span></td>
-                    <td><span class="badge bg-primary">${gradeDisplay}</span></td>
                     <td>${durationDisplay}</td>
                     <td>${partsDisplay}</td>
                     <td><button class="btn btn-sm btn-success add-composition" data-catalog="${comp.catalog_number}">

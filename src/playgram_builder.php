@@ -421,7 +421,7 @@ $f_link = f_sqlConnect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 $sql = "SELECT c.catalog_number, c.name, c.composer, c.arranger, c.duration, c.grade, 
                g.name AS genre_name, c.genre,
                COUNT(DISTINCT p.id_part_type) AS part_count,
-               MAX(CASE WHEN p.image_path IS NOT NULL AND p.image_path != '' THEN 1 ELSE 0 END) AS pdf_available
+               COUNT(DISTINCT CASE WHEN p.image_path IS NOT NULL AND p.image_path != '' THEN p.id_part_type END) AS pdf_part_count
         FROM compositions c 
         LEFT JOIN genres g ON c.genre = g.id_genre 
         LEFT JOIN parts p ON c.catalog_number = p.catalog_number
@@ -461,7 +461,7 @@ while($row = mysqli_fetch_array($res)) {
         'genre' => $row['genre'],
         'genre_name' => $row['genre_name'] ?: 'Unknown',
         'part_count' => $part_count,
-        'pdf_available' => (bool) intval($row['pdf_available'] ?? 0),
+        'pdf_part_count' => intval($row['pdf_part_count'] ?? 0),
         'complexity' => $complexity,
         'searchable' => strtolower($row['name'] . ' ' . $row['composer'] . ' ' . $row['arranger'] . ' ' . $row['catalog_number'])
     ];
@@ -653,9 +653,7 @@ $(document).ready(function() {
             
             // Format parts count with complexity indicator and PDF status
             let partsDisplay = '';
-            let pdfBadge = comp.pdf_available
-                ? '<span class="badge bg-success ms-1">PDF</span>'
-                : '<span class="badge bg-secondary ms-1">No PDF</span>';
+            let pdfBadge = `<span class="badge ${comp.pdf_part_count > 0 ? 'bg-success' : 'bg-secondary'} ms-1">${comp.pdf_part_count} PDFs</span>`;
 
             if (comp.part_count > 0) {
                 let complexityClass = '';

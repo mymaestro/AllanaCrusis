@@ -429,7 +429,11 @@ define('DB_NAME', 'allanaCrusis_dev');
 
 ## 📝 License
 
-This project is licensed under the terms specified in the source files. Please see individual file headers for copyright and licensing information.
+AllanaCrusis is licensed under the GNU Affero General Public License, version 3 or (at your option) any later version. See [LICENSE](LICENSE) for the full license text.
+
+Copyright (C) 2026 Warren Gill.
+
+This license covers the AllanaCrusis project software. Bundled third-party software, music, PDFs, recordings, and other content may be subject to separate licenses or rights; see their respective notices and obtain any permissions needed for their use.
 
 ## 🙋 Support
 

@@ -1,7 +1,7 @@
 <?php
 // Include config file
-define('PAGE_TITLE', 'Privacy statement');
-define('PAGE_NAME', 'privacy');
+define('PAGE_TITLE', 'Terms and Conditions');
+define('PAGE_NAME', 'terms');
 require_once(__DIR__ . "/../config/config.php");
 require_once(__DIR__ . "/includes/functions.php");
 require_once(__DIR__ . "/includes/header.php");
@@ -53,7 +53,21 @@ ferror_log("RUNNING terms-conditions.php");
   <h2>8. Modifications to Terms</h2>
   <p>These terms may be updated periodically. Continued use of the site implies acceptance of the most current version.</p>
 
-  <h2>9. Contact Us</h2>
+  <h2>9. AllanaCrusis Software License and Attribution</h2>
+  <p>The AllanaCrusis application software is licensed under the <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU Affero General Public License, version 3 or (at your option) any later version (AGPL-3.0-or-later)</a>. The copyright notice is: <strong>Copyright &copy; 2026 Warren Gill.</strong> The software is provided without warranty as stated in the license. The license permits copying, modifying, and conveying covered versions subject to its terms.</p>
+  <ul>
+    <li>When copying or distributing the software, retain its copyright, license, warranty, and other legal notices, and include a copy of the AGPL.</li>
+    <li>When distributing modified versions, mark that you changed the software and include the date of the changes. The modified work must be provided under the AGPL-3.0-or-later.</li>
+    <li>If you run a modified version of the software for users over a network, the AGPL requires you to offer those users access to the corresponding source code. The source must match the version they are using, including your modifications.</li>
+  </ul>
+  <p>
+    <strong>Source code:</strong>
+    <a href="https://github.com/mymaestro/AllanaCrusis">AllanaCrusis repository on GitHub</a>
+    · <a href="https://github.com/mymaestro/AllanaCrusis/blob/main/LICENSE">Full license text</a>
+  </p>
+  <p>This software license applies to the AllanaCrusis application, not to sheet music, PDFs, recordings, or other library content. Those materials may have separate copyright owners and usage terms; follow the notices associated with each item.</p>
+
+  <h2>10. Contact Us</h2>
   <p>For questions about these Terms and Conditions, or to report a concern, please contact:</p>
   <p>
     <strong><?php echo ORGDESC ?></strong><br>
